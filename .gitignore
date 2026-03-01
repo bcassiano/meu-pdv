@@ -1,0 +1,20 @@
+# Dependências
+node_modules/
+dist/
+build/
+.next/
+out/
+
+# Arquivos de Sistema e Temp
+Thumbs.db
+.DS_Store
+*.log
+*.tmp
+*.zip
+
+# IDEs
+.vscode/
+.idea/
+
+# Projeto específico
+/stitch_meu_pdv.zip
