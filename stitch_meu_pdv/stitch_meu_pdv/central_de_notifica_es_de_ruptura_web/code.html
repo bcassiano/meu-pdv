@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Central de Notificações de Ruptura</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#3b82f6", // Blue-500 for primary actions
+                        "background-light": "#f8fafc", // Slate-50
+                        "background-dark": "#0f172a", // Slate-900
+                        "surface-dark": "#1e293b", // Slate-800 for sidebar/cards
+                        "surface-light": "#ffffff",
+                        "danger": "#ef4444", // Red-500 for alerts
+                        "warning": "#f59e0b", // Amber-500 for warnings
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="w-64 bg-surface-dark flex-shrink-0 flex flex-col justify-between border-r border-slate-700/50 z-20">
+<div class="flex flex-col h-full">
+<!-- User Profile Header -->
+<div class="p-6 border-b border-slate-700/50">
+<div class="flex items-center gap-3">
+<div class="relative w-10 h-10 rounded-full bg-slate-600 overflow-hidden" data-alt="Portrait of a manager in business attire">
+<img alt="Admin User" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuRRVP0XH_6FoWcmgGD2M15Iihb8OLVm7-AzlqK5Itz2V4TkB5lMawV8l8bD1YqPvor8Mtez9_ECWsZZeTtUl7JV9CF9dbQX31DgIBikIqsAsGUHdJuGt63oIWPWsJ5saxd5qzPfrRqqoxp1KevtzIiu_ddNuZ3qjceYg8FhF3cAseqJ6_LpOI1xs_vIz8DMg9Sjw_gGleol5rHA6DvIdsMQARbDZ6fV6pipILdQq3v-lZ4cm_XKW6tF7APK5y1gdsoSEhD5qpuBY"/>
+</div>
+<div>
+<h2 class="text-white text-sm font-semibold">Carlos Silva</h2>
+<p class="text-slate-400 text-xs">Gerente Regional</p>
+</div>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 px-3 py-6 space-y-1 overflow-y-auto">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">storefront</span>
+<span class="text-sm font-medium">Lojas</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">inventory_2</span>
+<span class="text-sm font-medium">Produtos</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/20 text-primary transition-colors" href="#">
+<div class="relative">
+<span class="material-symbols-outlined text-primary">notifications_active</span>
+<span class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-danger text-[10px] font-bold text-white ring-2 ring-surface-dark">3</span>
+</div>
+<span class="text-sm font-medium">Alertas</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">groups</span>
+<span class="text-sm font-medium">Equipes</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">settings</span>
+<span class="text-sm font-medium">Configurações</span>
+</a>
+</nav>
+<!-- Bottom Actions -->
+<div class="p-4 border-t border-slate-700/50">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">logout</span>
+<span class="text-sm font-medium">Sair</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col relative h-screen overflow-hidden">
+<!-- Header -->
+<header class="h-16 bg-white dark:bg-surface-dark border-b border-slate-200 dark:border-slate-700/50 flex items-center justify-between px-6 shrink-0">
+<h1 class="text-xl font-bold text-slate-800 dark:text-white tracking-tight">Monitoramento de Rupturas</h1>
+<div class="flex items-center gap-4">
+<div class="relative group cursor-pointer">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 hover:text-primary transition-colors">help</span>
+</div>
+<div class="h-8 w-[1px] bg-slate-200 dark:bg-slate-700"></div>
+<div class="text-sm text-slate-500 dark:text-slate-400">
+                    Última atualização: <span class="font-medium text-slate-700 dark:text-slate-300">Hoje, 10:55 AM</span>
+</div>
+</div>
+</header>
+<!-- Notification Panel Overlay (Simulated Open State) -->
+<div class="flex flex-1 overflow-hidden relative">
+<!-- Map Background Placeholder -->
+<div class="absolute inset-0 z-0 bg-slate-100 dark:bg-slate-900 flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-900 dark:to-slate-800 opacity-50"></div>
+<!-- Mock Map Elements -->
+<div class="relative w-full h-full p-8" data-location="São Paulo" style="">
+<div class="absolute top-1/4 left-1/4 animate-pulse">
+<div class="w-4 h-4 bg-danger rounded-full ring-4 ring-danger/30"></div>
+<div class="absolute -top-8 -left-12 bg-surface-dark text-white text-xs px-2 py-1 rounded shadow-lg whitespace-nowrap">Ruptura Crítica</div>
+</div>
+<div class="absolute top-1/2 left-1/2">
+<div class="w-4 h-4 bg-warning rounded-full ring-4 ring-warning/30"></div>
+</div>
+<div class="absolute bottom-1/3 right-1/4">
+<div class="w-4 h-4 bg-primary rounded-full ring-4 ring-primary/30"></div>
+</div>
+<!-- Grid Pattern for Abstract Map Feel -->
+<div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#64748b 1px, transparent 1px); background-size: 24px 24px;"></div>
+</div>
+</div>
+<!-- Content Overlay for context (Optional) -->
+<div class="relative z-10 p-8 pointer-events-none w-full h-full flex items-start justify-start">
+<!-- Empty area to focus on the sidebar panel -->
+</div>
+<!-- Notification Popover / Side Panel -->
+<div class="absolute top-4 right-4 bottom-4 w-[400px] bg-white dark:bg-surface-dark rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 flex flex-col z-30 overflow-hidden animate-fade-in-right">
+<!-- Panel Header -->
+<div class="p-5 border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-danger">fmd_bad</span>
+<h2 class="text-lg font-bold text-slate-800 dark:text-white">Notificações</h2>
+<span class="bg-danger text-white text-xs font-bold px-2 py-0.5 rounded-full">3 Novas</span>
+</div>
+<button class="text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-white transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors py-1 px-2 rounded hover:bg-slate-200 dark:hover:bg-slate-700 text-left">
+                            Marcar todas como lidas
+                        </button>
+<button class="text-xs font-medium text-primary hover:text-primary/80 transition-colors flex items-center gap-1 py-1 px-2 rounded hover:bg-primary/10">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+                            Configurar
+                        </button>
+</div>
+</div>
+<!-- Alert List -->
+<div class="flex-1 overflow-y-auto p-2 space-y-2">
+<!-- Alert Item 1: Critical -->
+<div class="group relative bg-white dark:bg-slate-800/40 hover:bg-slate-50 dark:hover:bg-slate-700/40 p-4 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm transition-all cursor-pointer">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-danger rounded-l-lg"></div>
+<div class="flex gap-3 pl-2">
+<div class="flex-shrink-0 mt-1">
+<div class="w-10 h-10 rounded-lg bg-danger/10 flex items-center justify-center text-danger">
+<span class="material-symbols-outlined">priority_high</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-sm font-semibold text-slate-900 dark:text-slate-100 truncate">Coca-Cola 2L Original</h3>
+<span class="text-[10px] font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-600">10:45</span>
+</div>
+<p class="text-xs text-danger font-medium mb-1">Ruptura Crítica Detectada</p>
+<div class="flex items-center gap-1 mb-3 text-xs text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[14px]">store</span>
+<span>Loja Centro - PDV 04</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex-1 bg-primary text-white text-xs font-medium py-1.5 px-3 rounded shadow-sm hover:bg-primary/90 transition-colors">
+                                        Ver Detalhes
+                                    </button>
+<button class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors" title="Ignorar">
+<span class="material-symbols-outlined text-[18px]">visibility_off</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Alert Item 2: Critical -->
+<div class="group relative bg-white dark:bg-slate-800/40 hover:bg-slate-50 dark:hover:bg-slate-700/40 p-4 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm transition-all cursor-pointer">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-danger rounded-l-lg"></div>
+<div class="flex gap-3 pl-2">
+<div class="flex-shrink-0 mt-1">
+<div class="w-10 h-10 rounded-lg bg-danger/10 flex items-center justify-center text-danger">
+<span class="material-symbols-outlined">no_food</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-sm font-semibold text-slate-900 dark:text-slate-100 truncate">Arroz Branco 5kg Tipo 1</h3>
+<span class="text-[10px] font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-600">10:30</span>
+</div>
+<p class="text-xs text-danger font-medium mb-1">Estoque Zerado</p>
+<div class="flex items-center gap-1 mb-3 text-xs text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[14px]">store</span>
+<span>Supermercado Norte - Gôndola 3</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex-1 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 text-xs font-medium py-1.5 px-3 rounded shadow-sm hover:bg-slate-50 dark:hover:bg-slate-600 transition-colors">
+                                        Ver Detalhes
+                                    </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Alert Item 3: Warning -->
+<div class="group relative bg-white dark:bg-slate-800/40 hover:bg-slate-50 dark:hover:bg-slate-700/40 p-4 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm transition-all cursor-pointer opacity-75">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-warning rounded-l-lg"></div>
+<div class="flex gap-3 pl-2">
+<div class="flex-shrink-0 mt-1">
+<div class="w-10 h-10 rounded-lg bg-warning/10 flex items-center justify-center text-warning">
+<span class="material-symbols-outlined">trending_down</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-sm font-semibold text-slate-900 dark:text-slate-100 truncate">Leite Integral 1L</h3>
+<span class="text-[10px] font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-600">09:15</span>
+</div>
+<p class="text-xs text-warning font-medium mb-1">Baixo Giro Detectado</p>
+<div class="flex items-center gap-1 mb-3 text-xs text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[14px]">store</span>
+<span>Loja Express - Geladeira 2</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex-1 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 text-xs font-medium py-1.5 px-3 rounded shadow-sm hover:bg-slate-50 dark:hover:bg-slate-600 transition-colors">
+                                        Analisar
+                                    </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Divider for older notifications -->
+<div class="py-2 flex items-center gap-2">
+<div class="h-[1px] bg-slate-200 dark:bg-slate-700 flex-1"></div>
+<span class="text-[10px] font-medium text-slate-400 uppercase tracking-wider">Lidas Anteriormente</span>
+<div class="h-[1px] bg-slate-200 dark:bg-slate-700 flex-1"></div>
+</div>
+<!-- Alert Item 4: Read -->
+<div class="group relative bg-slate-50 dark:bg-slate-800/20 p-4 rounded-lg border border-slate-100 dark:border-slate-800 transition-all opacity-60">
+<div class="flex gap-3">
+<div class="flex-shrink-0 mt-1">
+<div class="w-10 h-10 rounded-lg bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-sm font-medium text-slate-700 dark:text-slate-300 truncate">Sabão em Pó 1kg</h3>
+<span class="text-[10px] text-slate-400">Ontem</span>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400 mb-1">Reposição Concluída</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="p-3 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50">
+<button class="w-full text-center text-xs text-primary hover:text-primary/80 font-medium py-2">
+                        Ver histórico completo
+                    </button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

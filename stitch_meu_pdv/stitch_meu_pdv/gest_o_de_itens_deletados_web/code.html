@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gestão de Itens Deletados</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "sidebar-bg": "#1e293b", // Custom requested slate
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px",
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-hidden">
+<div class="relative flex h-screen w-full flex-row overflow-hidden">
+<!-- Sidebar -->
+<aside class="flex w-72 flex-col justify-between bg-sidebar-bg border-r border-slate-700/50">
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-3 p-6 pb-4">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-12 shadow-md ring-2 ring-slate-600/50" data-alt="Profile photo of admin user" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCLuDRh07sSFLgrORUwLa07911a2rT7xCcEmiLRQW8n1EcYE5_F3fwoXyjHxCOpRtcswYHa8514bSF9Iw12xAL4tqlaQ1snT87OHu8SpMl8_8_B7Wa44MAE-65F3T8ZTAYiwtD72nzIQIjQJEvvnIG-pvpoWNwoCkDtbHuTWJFWhZYkf6BmV9X4udHyPDd_-a7eIaV1c8HPnzk7npP9KYMyAgloxev1eGZgoEFXyHVIu8ciFpXXNCj6ddgn0JHo7PNnj9cP8qMHilg");'></div>
+<div class="flex flex-col">
+<h1 class="text-white text-base font-semibold leading-tight">Admin Console</h1>
+<p class="text-slate-400 text-xs font-medium uppercase tracking-wider">Governança de TI</p>
+</div>
+</div>
+<nav class="flex flex-col gap-1 px-3">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] text-slate-400 group-hover:text-white transition-colors">pie_chart</span>
+<p class="text-sm font-medium">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] text-slate-400 group-hover:text-white transition-colors">assignment</span>
+<p class="text-sm font-medium">Auditoria</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/20 text-white shadow-sm ring-1 ring-primary/30" href="#">
+<span class="material-symbols-outlined text-[24px] text-primary">delete</span>
+<p class="text-sm font-medium">Lixeira</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] text-slate-400 group-hover:text-white transition-colors">settings</span>
+<p class="text-sm font-medium">Configurações</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] text-slate-400 group-hover:text-white transition-colors">verified_user</span>
+<p class="text-sm font-medium">Segurança</p>
+</a>
+</nav>
+</div>
+<div class="p-4">
+<div class="flex items-center gap-3 px-3 py-3 rounded-lg bg-slate-800/50 border border-slate-700/50">
+<span class="material-symbols-outlined text-amber-400">database</span>
+<div class="flex flex-col">
+<span class="text-xs text-slate-400 font-medium">Status do Banco</span>
+<span class="text-sm text-white font-bold">Saudável (98%)</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden bg-background-light dark:bg-background-dark relative">
+<!-- Header -->
+<header class="flex flex-col gap-6 px-8 py-8 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111722]">
+<div class="flex flex-wrap items-end justify-between gap-4">
+<div class="flex flex-col gap-2">
+<h2 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Lixeira do Sistema</h2>
+<p class="text-slate-500 dark:text-slate-400 text-base max-w-2xl">
+                            Gerencie registros excluídos logicamente (soft-delete). Restaure dados críticos ou realize expurgo permanente para conformidade com a LGPD.
+                        </p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 border border-red-500/20 transition-all font-medium text-sm">
+<span class="material-symbols-outlined text-[20px]">delete_forever</span>
+                            Esvaziar Lixeira
+                        </button>
+</div>
+</div>
+<!-- Filters -->
+<div class="flex flex-wrap items-center justify-between gap-4 pt-2">
+<div class="flex items-center gap-2 bg-slate-100 dark:bg-slate-800/50 p-1 rounded-lg border border-slate-200 dark:border-slate-700">
+<button class="px-4 py-1.5 rounded bg-white dark:bg-slate-700 shadow-sm text-slate-900 dark:text-white text-sm font-medium transition-all">Todos</button>
+<button class="px-4 py-1.5 rounded hover:bg-slate-200 dark:hover:bg-slate-700/50 text-slate-600 dark:text-slate-400 text-sm font-medium transition-all">Coletas</button>
+<button class="px-4 py-1.5 rounded hover:bg-slate-200 dark:hover:bg-slate-700/50 text-slate-600 dark:text-slate-400 text-sm font-medium transition-all">Usuários</button>
+<button class="px-4 py-1.5 rounded hover:bg-slate-200 dark:hover:bg-slate-700/50 text-slate-600 dark:text-slate-400 text-sm font-medium transition-all">Configurações</button>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">search</span>
+<input class="pl-10 pr-4 py-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none w-64 transition-all" placeholder="Buscar por ID ou usuário..." type="text"/>
+</div>
+<button class="p-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-primary hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Content Table Area -->
+<div class="flex-1 overflow-auto p-8">
+<div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#151b28] shadow-sm overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-[#1e293b]/50 border-b border-slate-200 dark:border-slate-800">
+<th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 w-[25%]">Registro</th>
+<th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 w-[20%]">Deletado Por</th>
+<th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 w-[20%]">Motivo</th>
+<th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 w-[15%]">Data Exclusão</th>
+<th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 w-[20%] text-right">Ações</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-900 dark:text-white">Coleta #9482</span>
+<span class="text-xs text-slate-500 font-mono">ID: 8a92-b4c1</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-indigo-500 flex items-center justify-center text-[10px] text-white font-bold">JS</div>
+<span class="text-sm text-slate-600 dark:text-slate-300">João Silva</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
+                                        Erro de digitação
+                                    </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm text-slate-600 dark:text-slate-300">Hoje</span>
+<span class="text-xs text-slate-400">10:42 AM</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="flex items-center gap-1 px-2.5 py-1.5 rounded text-xs font-medium bg-primary/10 text-primary hover:bg-primary/20 transition-colors" title="Visualizar Conteúdo">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+                                            Ver
+                                        </button>
+<button class="flex items-center gap-1 px-2.5 py-1.5 rounded text-xs font-medium bg-green-500/10 text-green-600 dark:text-green-400 hover:bg-green-500/20 transition-colors" title="Restaurar Registro">
+<span class="material-symbols-outlined text-[16px]">restore_from_trash</span>
+                                            Restaurar
+                                        </button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-900 dark:text-white">Usuário: m.souza</span>
+<span class="text-xs text-slate-500 font-mono">ID: user_102</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-purple-500 flex items-center justify-center text-[10px] text-white font-bold">SY</div>
+<span class="text-sm text-slate-600 dark:text-slate-300">System (Auto)</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800">
+                                        Inativo &gt; 90 dias
+                                    </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm text-slate-600 dark:text-slate-300">Ontem</span>
+<span class="text-xs text-slate-400">15:30 PM</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="flex items-center gap-1 px-2.5 py-1.5 rounded text-xs font-medium bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+                                            Ver
+                                        </button>
+<button class="flex items-center gap-1 px-2.5 py-1.5 rounded text-xs font-medium bg-green-500/10 text-green-600 dark:text-green-400 hover:bg-green-500/20 transition-colors">
+<span class="material-symbols-outlined text-[16px]">restore_from_trash</span>
+                                            Restaurar
+                                        </button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-900 dark:text-white">Relatório Trimestral Q3</span>
+<span class="text-xs text-slate-500 font-mono">ID: doc_pdf_391</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-pink-500 flex items-center justify-center text-[10px] text-white font-bold">AP</div>
+<span class="text-sm text-slate-600 dark:text-slate-300">Ana Pereira</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
+                                        Duplicidade
+                                    </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm text-slate-600 dark:text-slate-300">12 Out</span>
+<span class="text-xs text-slate-400">09:15 AM</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="flex items-center gap-1 px-2.5 py-1.5 rounded text-xs font-medium bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+                                            Ver
+                                        </button>
+<button class="flex items-center gap-1 px-2.5 py-1.5 rounded text-xs font-medium bg-green-500/10 text-green-600 dark:text-green-400 hover:bg-green-500/20 transition-colors">
+<span class="material-symbols-outlined text-[16px]">restore_from_trash</span>
+                                            Restaurar
+                                        </button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-900 dark:text-white">Config_Rede #112</span>
+<span class="text-xs text-slate-500 font-mono">ID: cfg_net_112</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-blue-500 flex items-center justify-center text-[10px] text-white font-bold">SJ</div>
+<span class="text-sm text-slate-600 dark:text-slate-300">System Job</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800">
+                                        Limpeza Auto
+                                    </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm text-slate-600 dark:text-slate-300">10 Out</span>
+<span class="text-xs text-slate-400">02:00 AM</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="flex items-center gap-1 px-2.5 py-1.5 rounded text-xs font-medium bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+                                            Ver
+                                        </button>
+<button class="flex items-center gap-1 px-2.5 py-1.5 rounded text-xs font-medium bg-red-500/10 text-red-600 dark:text-red-400 hover:bg-red-500/20 transition-colors">
+<span class="material-symbols-outlined text-[16px]">delete_forever</span>
+                                            Purgar
+                                        </button>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-900 dark:text-white">Coleta #9401</span>
+<span class="text-xs text-slate-500 font-mono">ID: 8a92-b2a1</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-teal-500 flex items-center justify-center text-[10px] text-white font-bold">CL</div>
+<span class="text-sm text-slate-600 dark:text-slate-300">Carlos Lima</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
+                                        Teste incorreto
+                                    </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm text-slate-600 dark:text-slate-300">09 Out</span>
+<span class="text-xs text-slate-400">14:20 PM</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="flex items-center gap-1 px-2.5 py-1.5 rounded text-xs font-medium bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+                                            Ver
+                                        </button>
+<button class="flex items-center gap-1 px-2.5 py-1.5 rounded text-xs font-medium bg-green-500/10 text-green-600 dark:text-green-400 hover:bg-green-500/20 transition-colors">
+<span class="material-symbols-outlined text-[16px]">restore_from_trash</span>
+                                            Restaurar
+                                        </button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="flex items-center justify-between mt-6">
+<p class="text-sm text-slate-500 dark:text-slate-400">
+                        Mostrando <span class="font-medium text-slate-900 dark:text-white">1</span> a <span class="font-medium text-slate-900 dark:text-white">5</span> de <span class="font-medium text-slate-900 dark:text-white">128</span> resultados
+                    </p>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 disabled:opacity-50 transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="size-8 rounded-lg bg-primary text-white text-sm font-medium flex items-center justify-center">1</button>
+<button class="size-8 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 text-sm font-medium flex items-center justify-center transition-colors">2</button>
+<button class="size-8 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 text-sm font-medium flex items-center justify-center transition-colors">3</button>
+<span class="text-slate-400 px-1">...</span>
+<button class="size-8 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 text-sm font-medium flex items-center justify-center transition-colors">12</button>
+<button class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

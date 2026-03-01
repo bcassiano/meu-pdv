@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Status da Fila de Sincronização</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0d59f2",
+                        "primary-dark": "#0a46c2",
+                        "background-light": "#f8f9fc",
+                        "background-dark": "#101622",
+                        "amber-warning": "#f59e0b",
+                        "amber-soft": "#fffbeb",
+                        "neutral-border": "#e2e8f0",
+                        "neutral-text": "#475569",
+                        "neutral-dark": "#1e293b",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px",
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light text-neutral-dark font-body min-h-screen flex flex-col antialiased">
+<div class="bg-amber-soft border-b border-amber-warning/20 px-4 py-3 flex items-center justify-between gap-4 sticky top-0 z-10">
+<div class="flex items-center gap-3 text-amber-800">
+<span class="material-symbols-outlined text-amber-600">cloud_off</span>
+<span class="font-medium text-sm sm:text-base">Sincronização Pausada: Conexão Instável</span>
+</div>
+<div class="text-xs font-semibold text-amber-700 bg-amber-100 px-2 py-1 rounded">
+            5 Itens Não Sincronizados
+        </div>
+</div>
+<header class="bg-white border-b border-neutral-border px-4 py-4 sm:px-6 lg:px-8">
+<div class="max-w-5xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<button class="text-neutral-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div>
+<h1 class="text-xl font-bold text-neutral-dark leading-tight">Fila de Sincronização</h1>
+<p class="text-sm text-neutral-text">Gerenciar uploads de dados pendentes</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-xs text-neutral-500 font-medium hidden sm:block">Última tentativa: 2 min atrás</span>
+<button class="bg-primary hover:bg-primary-dark text-white text-sm font-semibold py-2 px-4 rounded shadow-sm flex items-center gap-2 transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+<span class="material-symbols-outlined text-[18px]">refresh</span>
+<span>Tentar Tudo Agora</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-1 px-4 py-6 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+<div class="bg-white p-4 rounded border border-neutral-border shadow-sm flex flex-col">
+<span class="text-xs font-medium text-neutral-500 uppercase tracking-wider">TOTAL PENDENTE</span>
+<span class="text-2xl font-bold text-neutral-dark mt-1">5</span>
+</div>
+<div class="bg-white p-4 rounded border border-neutral-border shadow-sm flex flex-col">
+<span class="text-xs font-medium text-neutral-500 uppercase tracking-wider">FALHA</span>
+<span class="text-2xl font-bold text-red-600 mt-1">2</span>
+</div>
+<div class="bg-white p-4 rounded border border-neutral-border shadow-sm flex flex-col">
+<span class="text-xs font-medium text-neutral-500 uppercase tracking-wider">NA FILA</span>
+<span class="text-2xl font-bold text-amber-600 mt-1">3</span>
+</div>
+<div class="bg-white p-4 rounded border border-neutral-border shadow-sm flex flex-col">
+<span class="text-xs font-medium text-neutral-500 uppercase tracking-wider">TAMANHO EST. DOS DADOS</span>
+<span class="text-2xl font-bold text-blue-600 mt-1">~1.2 MB</span>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-3 mb-4">
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 text-[20px]">search</span>
+<input class="w-full pl-10 pr-4 py-2 border border-neutral-border rounded text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none" placeholder="Pesquisar por SKU ou Loja..." type="text"/>
+</div>
+<select class="px-3 py-2 border border-neutral-border rounded text-sm bg-white focus:border-primary outline-none">
+<option>Todos os Status</option>
+<option>Falha</option>
+<option>Pendente</option>
+</select>
+</div>
+<div class="bg-white rounded border border-neutral-border shadow-sm overflow-hidden">
+<div class="hidden sm:grid grid-cols-12 gap-4 px-4 py-3 bg-neutral-50 border-b border-neutral-border text-xs font-semibold text-neutral-500 uppercase tracking-wider">
+<div class="col-span-4">TIPO DE DADO / REFERÊNCIA</div>
+<div class="col-span-3">DATA/HORA</div>
+<div class="col-span-2">STATUS</div>
+<div class="col-span-3 text-right">AÇÕES</div>
+</div>
+<ul class="divide-y divide-neutral-border">
+<li class="group hover:bg-neutral-50 transition-colors">
+<div class="p-4 sm:px-4 sm:py-3 grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-4 items-start sm:items-center">
+<div class="col-span-1 sm:col-span-4 flex items-center gap-3">
+<div class="bg-blue-100 text-primary p-2 rounded shrink-0">
+<span class="material-symbols-outlined text-[20px]">sell</span>
+</div>
+<div>
+<h3 class="font-medium text-sm text-neutral-dark">Atualização de Preço</h3>
+<p class="text-xs text-neutral-500">SKU: 1234-8859 • Loja #402</p>
+</div>
+</div>
+<div class="col-span-1 sm:col-span-3 text-sm text-neutral-500 flex items-center gap-1 sm:block">
+<span class="material-symbols-outlined text-[16px] sm:hidden">schedule</span>
+                            24 Out, 10:30
+                        </div>
+<div class="col-span-1 sm:col-span-2">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800 border border-red-200">
+<span class="size-1.5 rounded-full bg-red-600"></span>
+                                Falha
+                            </span>
+</div>
+<div class="col-span-1 sm:col-span-3 flex justify-end gap-2 mt-2 sm:mt-0">
+<button class="text-neutral-400 hover:text-red-600 p-1 rounded hover:bg-red-50 transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+<button class="text-primary hover:text-primary-dark text-sm font-medium px-3 py-1 rounded hover:bg-blue-50 transition-colors border border-transparent hover:border-blue-100">
+                                Tentar Novamente
+                            </button>
+</div>
+</div>
+<div class="px-4 pb-3 sm:px-14 sm:pb-3">
+<p class="text-xs text-red-600 bg-red-50 p-2 rounded border border-red-100 flex items-start gap-2">
+<span class="material-symbols-outlined text-[16px] mt-0.5">error</span>
+                            tempo esgotado: conexão abortada
+                        </p>
+</div>
+</li>
+<li class="group hover:bg-neutral-50 transition-colors">
+<div class="p-4 sm:px-4 sm:py-3 grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-4 items-start sm:items-center">
+<div class="col-span-1 sm:col-span-4 flex items-center gap-3">
+<div class="bg-amber-100 text-amber-700 p-2 rounded shrink-0">
+<span class="material-symbols-outlined text-[20px]">inventory_2</span>
+</div>
+<div>
+<h3 class="font-medium text-sm text-neutral-dark">Relatório de Ruptura</h3>
+<p class="text-xs text-neutral-500">Loja A • 12 Itens</p>
+</div>
+</div>
+<div class="col-span-1 sm:col-span-3 text-sm text-neutral-500 flex items-center gap-1 sm:block">
+<span class="material-symbols-outlined text-[16px] sm:hidden">schedule</span>
+                            24 Out, 10:45
+                        </div>
+<div class="col-span-1 sm:col-span-2">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-medium bg-amber-100 text-amber-800 border border-amber-200">
+<span class="size-1.5 rounded-full bg-amber-600 animate-pulse"></span>
+                                Pendente
+                            </span>
+</div>
+<div class="col-span-1 sm:col-span-3 flex justify-end gap-2 mt-2 sm:mt-0">
+<button class="text-neutral-400 hover:text-red-600 p-1 rounded hover:bg-red-50 transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+<button class="text-primary hover:text-primary-dark text-sm font-medium px-3 py-1 rounded hover:bg-blue-50 transition-colors border border-transparent hover:border-blue-100">
+                                Tentar Novamente
+                            </button>
+</div>
+</div>
+</li>
+<li class="group hover:bg-neutral-50 transition-colors">
+<div class="p-4 sm:px-4 sm:py-3 grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-4 items-start sm:items-center">
+<div class="col-span-1 sm:col-span-4 flex items-center gap-3">
+<div class="bg-blue-100 text-primary p-2 rounded shrink-0">
+<span class="material-symbols-outlined text-[20px]">sell</span>
+</div>
+<div>
+<h3 class="font-medium text-sm text-neutral-dark">Atualização de Preço</h3>
+<p class="text-xs text-neutral-500">SKU: 5678-1123 • Loja #405</p>
+</div>
+</div>
+<div class="col-span-1 sm:col-span-3 text-sm text-neutral-500 flex items-center gap-1 sm:block">
+<span class="material-symbols-outlined text-[16px] sm:hidden">schedule</span>
+                            24 Out, 11:00
+                        </div>
+<div class="col-span-1 sm:col-span-2">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-medium bg-amber-100 text-amber-800 border border-amber-200">
+<span class="size-1.5 rounded-full bg-amber-600 animate-pulse"></span>
+                                Pendente
+                            </span>
+</div>
+<div class="col-span-1 sm:col-span-3 flex justify-end gap-2 mt-2 sm:mt-0">
+<button class="text-neutral-400 hover:text-red-600 p-1 rounded hover:bg-red-50 transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+<button class="text-primary hover:text-primary-dark text-sm font-medium px-3 py-1 rounded hover:bg-blue-50 transition-colors border border-transparent hover:border-blue-100">
+                                Tentar Novamente
+                            </button>
+</div>
+</div>
+</li>
+<li class="group hover:bg-neutral-50 transition-colors">
+<div class="p-4 sm:px-4 sm:py-3 grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-4 items-start sm:items-center">
+<div class="col-span-1 sm:col-span-4 flex items-center gap-3">
+<div class="bg-purple-100 text-purple-700 p-2 rounded shrink-0">
+<span class="material-symbols-outlined text-[20px]">campaign</span>
+</div>
+<div>
+<h3 class="font-medium text-sm text-neutral-dark">Promoção Concorrente</h3>
+<p class="text-xs text-neutral-500">Marca X • Desconto 20%</p>
+</div>
+</div>
+<div class="col-span-1 sm:col-span-3 text-sm text-neutral-500 flex items-center gap-1 sm:block">
+<span class="material-symbols-outlined text-[16px] sm:hidden">schedule</span>
+                            24 Out, 11:15
+                        </div>
+<div class="col-span-1 sm:col-span-2">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800 border border-red-200">
+<span class="size-1.5 rounded-full bg-red-600"></span>
+                                Falha
+                            </span>
+</div>
+<div class="col-span-1 sm:col-span-3 flex justify-end gap-2 mt-2 sm:mt-0">
+<button class="text-neutral-400 hover:text-red-600 p-1 rounded hover:bg-red-50 transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+<button class="text-primary hover:text-primary-dark text-sm font-medium px-3 py-1 rounded hover:bg-blue-50 transition-colors border border-transparent hover:border-blue-100">
+                                Tentar Novamente
+                            </button>
+</div>
+</div>
+<div class="px-4 pb-3 sm:px-14 sm:pb-3">
+<p class="text-xs text-red-600 bg-red-50 p-2 rounded border border-red-100 flex items-start gap-2">
+<span class="material-symbols-outlined text-[16px] mt-0.5">error</span>
+                            Erro 500: Erro Interno do Servidor
+                        </p>
+</div>
+</li>
+<li class="group hover:bg-neutral-50 transition-colors">
+<div class="p-4 sm:px-4 sm:py-3 grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-4 items-start sm:items-center">
+<div class="col-span-1 sm:col-span-4 flex items-center gap-3">
+<div class="bg-green-100 text-green-700 p-2 rounded shrink-0">
+<span class="material-symbols-outlined text-[20px]">image</span>
+</div>
+<div>
+<h3 class="font-medium text-sm text-neutral-dark">Foto da Gôndola</h3>
+<p class="text-xs text-neutral-500">Corredor 4 • Detergentes</p>
+</div>
+</div>
+<div class="col-span-1 sm:col-span-3 text-sm text-neutral-500 flex items-center gap-1 sm:block">
+<span class="material-symbols-outlined text-[16px] sm:hidden">schedule</span>
+                            24 Out, 11:20
+                        </div>
+<div class="col-span-1 sm:col-span-2">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-medium bg-amber-100 text-amber-800 border border-amber-200">
+<span class="size-1.5 rounded-full bg-amber-600 animate-pulse"></span>
+                                Pendente
+                            </span>
+</div>
+<div class="col-span-1 sm:col-span-3 flex justify-end gap-2 mt-2 sm:mt-0">
+<button class="text-neutral-400 hover:text-red-600 p-1 rounded hover:bg-red-50 transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+<button class="text-primary hover:text-primary-dark text-sm font-medium px-3 py-1 rounded hover:bg-blue-50 transition-colors border border-transparent hover:border-blue-100">
+                                Tentar Novamente
+                            </button>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="sm:hidden fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-neutral-border shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+<button class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-3 px-4 rounded shadow-lg flex justify-center items-center gap-2">
+<span class="material-symbols-outlined">refresh</span>
+                Tentar Tudo Agora (5)
+            </button>
+</div>
+</main>
+
+</body></html>

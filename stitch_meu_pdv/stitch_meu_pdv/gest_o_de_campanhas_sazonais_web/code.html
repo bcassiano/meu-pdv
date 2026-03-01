@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gestão de Campanhas Sazonais</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b', // Sidebar specific request
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px",
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for high density table if needed */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #475569; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 bg-slate-800 dark:bg-[#111722] border-r border-slate-700/50 flex flex-col h-screen fixed left-0 top-0 z-50 transition-all duration-300">
+<!-- Brand / User Profile -->
+<div class="p-6 border-b border-slate-700/50">
+<div class="flex items-center gap-3 mb-6">
+<div class="size-10 rounded-full bg-gradient-to-tr from-primary to-blue-400 p-[2px]">
+<div class="h-full w-full rounded-full bg-slate-800 flex items-center justify-center overflow-hidden">
+<img alt="User Profile" class="h-full w-full object-cover" data-alt="User avatar profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRB7icOsKW_QV1J7K3zkzR9bjNkO659YBwViXR2J66jJwbI4LHp_VydUaOBA0CLO4NMzwkzy0jiiQFfBxwwpQU9xMd0rhEXM6k3SedzSoBo9k2W1ALVOPGjhS1lyWWJYZ-wPiyA4BN7LMr4DW76-CcyAgxtZtFLgBqHAAzvsNffJbTuYbW2-_LoBht5jv9L-0MSLNajA7VCuqkZ4yo1UyY7qvvPVHO3Lag9_vWfXB4gCXU5LmsQcAyncqq_DLYPmQILK5G0ukSXVE"/>
+</div>
+</div>
+<div class="flex flex-col">
+<h1 class="text-white text-sm font-semibold leading-tight">Trade Marketing</h1>
+<p class="text-slate-400 text-xs font-normal">Gestão Sazonal</p>
+</div>
+</div>
+<button class="w-full flex items-center justify-center gap-2 bg-primary hover:bg-blue-700 text-white text-xs font-bold py-2.5 px-4 rounded-lg transition-colors shadow-lg shadow-blue-900/20">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                NOVA CAMPANHA
+            </button>
+</div>
+<!-- Navigation -->
+<nav class="flex-1 overflow-y-auto py-4 px-3 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">pie_chart</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary border border-primary/20 transition-colors" href="#">
+<span class="material-symbols-outlined">campaign</span>
+<span class="text-sm font-medium">Campanhas</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">storefront</span>
+<span class="text-sm font-medium">PDVs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">groups</span>
+<span class="text-sm font-medium">Equipes</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">description</span>
+<span class="text-sm font-medium">Relatórios</span>
+</a>
+<div class="pt-4 mt-4 border-t border-slate-700/50">
+<p class="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Configurações</p>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">settings</span>
+<span class="text-sm font-medium">Geral</span>
+</a>
+</div>
+</nav>
+<!-- Footer Info -->
+<div class="p-4 border-t border-slate-700/50 text-center">
+<p class="text-[10px] text-slate-500">v2.4.0 • TradeForce</p>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 ml-64 min-h-screen flex flex-col bg-background-light dark:bg-background-dark">
+<!-- Header Section -->
+<header class="sticky top-0 z-40 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800 px-8 py-5">
+<div class="flex flex-col gap-6 max-w-[1400px] mx-auto">
+<!-- Breadcrumb & Title -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 font-medium mb-1">
+<span>Trade Marketing</span>
+<span class="material-symbols-outlined text-[12px]">chevron_right</span>
+<span class="text-primary">Campanhas</span>
+</div>
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Gestão de Campanhas Sazonais</h1>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Configure, monitore e gerencie ativações temporárias em todos os seus pontos de venda.</p>
+</div>
+<!-- Filters & Search Bar -->
+<div class="flex flex-wrap items-center justify-between gap-4">
+<div class="relative flex-1 max-w-md min-w-[300px]">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-400">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2.5 border border-slate-300 dark:border-slate-700 rounded-lg leading-5 bg-white dark:bg-slate-800/50 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm transition-all" placeholder="Buscar por campanha, rede ou ID..." type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2">
+<span class="text-xs text-slate-500 font-medium uppercase tracking-wide">Status:</span>
+<select class="bg-transparent border-none text-sm text-slate-700 dark:text-slate-200 focus:ring-0 p-0 cursor-pointer">
+<option>Todos</option>
+<option>Ativa</option>
+<option>Agendada</option>
+<option>Finalizada</option>
+</select>
+</div>
+<div class="flex items-center gap-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2">
+<span class="text-xs text-slate-500 font-medium uppercase tracking-wide">Ano:</span>
+<select class="bg-transparent border-none text-sm text-slate-700 dark:text-slate-200 focus:ring-0 p-0 cursor-pointer">
+<option>2024</option>
+<option>2023</option>
+</select>
+</div>
+<button class="p-2 text-slate-400 hover:text-primary transition-colors border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<!-- Table Content -->
+<div class="flex-1 p-8 overflow-auto">
+<div class="max-w-[1400px] mx-auto">
+<div class="bg-white dark:bg-[#151b26] rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700">
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider w-[25%]">Nome da Campanha</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider w-[20%]">Período</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider w-[20%]">Redes Participantes</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider w-[15%]">Status</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider w-[10%]">Meta Exec.</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider w-[10%] text-right">Ações</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-lg bg-orange-500/10 flex items-center justify-center text-orange-500">
+<span class="material-symbols-outlined text-lg">wb_sunny</span>
+</div>
+<div>
+<p class="text-sm font-semibold text-slate-900 dark:text-white">Verão 2024</p>
+<p class="text-xs text-slate-500">Sazonalidade Alta</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm text-slate-700 dark:text-slate-300 font-medium">01 Dez 23 - 28 Fev 24</span>
+<span class="text-xs text-slate-500">90 dias de duração</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex -space-x-2 overflow-hidden">
+<div class="inline-flex items-center justify-center size-7 rounded-full bg-blue-100 dark:bg-blue-900 text-[10px] font-bold ring-2 ring-white dark:ring-slate-900 text-blue-700 dark:text-blue-200" title="Carrefour">CR</div>
+<div class="inline-flex items-center justify-center size-7 rounded-full bg-green-100 dark:bg-green-900 text-[10px] font-bold ring-2 ring-white dark:ring-slate-900 text-green-700 dark:text-green-200" title="Walmart">WM</div>
+<div class="inline-flex items-center justify-center size-7 rounded-full bg-slate-100 dark:bg-slate-700 text-[10px] font-medium ring-2 ring-white dark:ring-slate-900 text-slate-600 dark:text-slate-300">+3</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                            Ativa
+                                        </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="flex-1 h-1.5 w-16 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 65%"></div>
+</div>
+<span class="text-xs font-bold text-primary">65%</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-slate-400 hover:text-primary hover:bg-primary/10 rounded-md transition-colors" title="Editar">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-primary hover:bg-primary/10 rounded-md transition-colors" title="Duplicar">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-500">
+<span class="material-symbols-outlined text-lg">school</span>
+</div>
+<div>
+<p class="text-sm font-semibold text-slate-900 dark:text-white">Volta às Aulas</p>
+<p class="text-xs text-slate-500">Material Escolar</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm text-slate-700 dark:text-slate-300 font-medium">15 Jan 24 - 15 Fev 24</span>
+<span class="text-xs text-slate-500">30 dias de duração</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex -space-x-2 overflow-hidden">
+<div class="inline-flex items-center justify-center size-7 rounded-full bg-red-100 dark:bg-red-900 text-[10px] font-bold ring-2 ring-white dark:ring-slate-900 text-red-700 dark:text-red-200" title="Americanas">AM</div>
+<div class="inline-flex items-center justify-center size-7 rounded-full bg-blue-100 dark:bg-blue-900 text-[10px] font-bold ring-2 ring-white dark:ring-slate-900 text-blue-700 dark:text-blue-200" title="Kalunga">KL</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-amber-500/10 text-amber-500 border border-amber-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                                            Agendada
+                                        </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="flex-1 h-1.5 w-16 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 0%"></div>
+</div>
+<span class="text-xs font-bold text-slate-400">0%</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-slate-400 hover:text-primary hover:bg-primary/10 rounded-md transition-colors" title="Editar">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-primary hover:bg-primary/10 rounded-md transition-colors" title="Duplicar">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-lg bg-slate-500/10 flex items-center justify-center text-slate-500">
+<span class="material-symbols-outlined text-lg">shopping_bag</span>
+</div>
+<div>
+<p class="text-sm font-semibold text-slate-900 dark:text-white">Black Friday 2023</p>
+<p class="text-xs text-slate-500">Promoção Geral</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm text-slate-700 dark:text-slate-300 font-medium">20 Nov 23 - 26 Nov 23</span>
+<span class="text-xs text-slate-500">7 dias de duração</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="text-xs font-medium text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">Todas as Redes</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-500/10 text-slate-500 border border-slate-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
+                                            Finalizada
+                                        </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="flex-1 h-1.5 w-16 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 100%"></div>
+</div>
+<span class="text-xs font-bold text-primary">100%</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-slate-400 hover:text-primary hover:bg-primary/10 rounded-md transition-colors" title="Editar">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-primary hover:bg-primary/10 rounded-md transition-colors" title="Duplicar">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-lg bg-pink-500/10 flex items-center justify-center text-pink-500">
+<span class="material-symbols-outlined text-lg">volunteer_activism</span>
+</div>
+<div>
+<p class="text-sm font-semibold text-slate-900 dark:text-white">Dia das Mães</p>
+<p class="text-xs text-slate-500">Campanha Premium</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm text-slate-700 dark:text-slate-300 font-medium">01 Mai 23 - 14 Mai 23</span>
+<span class="text-xs text-slate-500">14 dias de duração</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex -space-x-2 overflow-hidden">
+<div class="inline-flex items-center justify-center size-7 rounded-full bg-teal-100 dark:bg-teal-900 text-[10px] font-bold ring-2 ring-white dark:ring-slate-900 text-teal-700 dark:text-teal-200" title="Pão de Açúcar">PA</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-500/10 text-slate-500 border border-slate-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
+                                            Finalizada
+                                        </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="flex-1 h-1.5 w-16 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 92%"></div>
+</div>
+<span class="text-xs font-bold text-primary">92%</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-slate-400 hover:text-primary hover:bg-primary/10 rounded-md transition-colors" title="Editar">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-primary hover:bg-primary/10 rounded-md transition-colors" title="Duplicar">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-lg bg-red-500/10 flex items-center justify-center text-red-500">
+<span class="material-symbols-outlined text-lg">celebration</span>
+</div>
+<div>
+<p class="text-sm font-semibold text-slate-900 dark:text-white">Natal 2023</p>
+<p class="text-xs text-slate-500">Fim de Ano</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm text-slate-700 dark:text-slate-300 font-medium">01 Dez 23 - 25 Dez 23</span>
+<span class="text-xs text-slate-500">25 dias de duração</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex -space-x-2 overflow-hidden">
+<div class="inline-flex items-center justify-center size-7 rounded-full bg-purple-100 dark:bg-purple-900 text-[10px] font-bold ring-2 ring-white dark:ring-slate-900 text-purple-700 dark:text-purple-200" title="Extra">EX</div>
+<div class="inline-flex items-center justify-center size-7 rounded-full bg-indigo-100 dark:bg-indigo-900 text-[10px] font-bold ring-2 ring-white dark:ring-slate-900 text-indigo-700 dark:text-indigo-200" title="Big">BG</div>
+<div class="inline-flex items-center justify-center size-7 rounded-full bg-slate-100 dark:bg-slate-700 text-[10px] font-medium ring-2 ring-white dark:ring-slate-900 text-slate-600 dark:text-slate-300">+5</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-500/10 text-slate-500 border border-slate-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
+                                            Finalizada
+                                        </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="flex-1 h-1.5 w-16 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 88%"></div>
+</div>
+<span class="text-xs font-bold text-primary">88%</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-slate-400 hover:text-primary hover:bg-primary/10 rounded-md transition-colors" title="Editar">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-primary hover:bg-primary/10 rounded-md transition-colors" title="Duplicar">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="border-t border-slate-200 dark:border-slate-800 px-6 py-4 flex items-center justify-between bg-slate-50 dark:bg-slate-900/50">
+<div class="text-xs text-slate-500">
+                            Mostrando <span class="font-medium text-slate-900 dark:text-slate-200">1</span> a <span class="font-medium text-slate-900 dark:text-slate-200">5</span> de <span class="font-medium text-slate-900 dark:text-slate-200">24</span> resultados
+                        </div>
+<div class="flex items-center gap-2">
+<button class="size-8 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-400 hover:text-primary hover:border-primary disabled:opacity-50 disabled:hover:text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[16px]">chevron_left</span>
+</button>
+<button class="size-8 flex items-center justify-center rounded-lg bg-primary text-white text-xs font-medium">1</button>
+<button class="size-8 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-primary hover:border-primary text-xs font-medium transition-colors">2</button>
+<button class="size-8 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-primary hover:border-primary text-xs font-medium transition-colors">3</button>
+<span class="text-slate-400">...</span>
+<button class="size-8 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-400 hover:text-primary hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

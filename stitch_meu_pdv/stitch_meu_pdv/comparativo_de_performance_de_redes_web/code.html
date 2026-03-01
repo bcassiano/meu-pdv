@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Comparativo de Performance de Redes Web</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0f172a", // Darker slate for main bg
+                        "surface-dark": "#1e293b", // Slate for cards/sidebar
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display antialiased overflow-hidden">
+<div class="flex h-screen w-full">
+<!-- Sidebar -->
+<div class="w-64 flex-shrink-0 flex flex-col justify-between bg-surface-dark border-r border-slate-700/50">
+<div class="flex flex-col gap-4 p-4">
+<!-- User Profile -->
+<div class="flex gap-3 items-center pb-4 border-b border-slate-700/50">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 ring-2 ring-primary/30" data-alt="Profile picture of a business manager" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDc-duMC4D2oqVo25Qk0uXE0JSqkwVvDMfyc6cOiFNF7f-RqjQP4XFHnO852vH2joaKCoVZ0vxPcR6sBMDIqeiRDpNzaBGLeGZ5esTJHKWtU-FGAlmLK68g1segm-fwEK1I-d-v8D58mJHfWFXV5WfaefJgcMJ4zIGomh_QTRyahdp7VNWOviNh90NPLByvV6FVnP0Np1qzV1Kbn9ZUjFUjfVAvLVMqtD5iIeDbLRVq6Uqz4N5jJ8-Q1loQKlix3bv4xmxB29-uGag");'></div>
+<div class="flex flex-col">
+<h1 class="text-white text-sm font-bold leading-tight">Admin</h1>
+<p class="text-slate-400 text-xs font-normal">Gerente de BI</p>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white" style="font-size: 20px;">donut_large</span>
+<p class="text-sm font-medium">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary border border-primary/20" href="#">
+<span class="material-symbols-outlined text-primary" style="font-size: 20px;">compare_arrows</span>
+<p class="text-sm font-medium">Comparativo</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white" style="font-size: 20px;">storefront</span>
+<p class="text-sm font-medium">Redes</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white" style="font-size: 20px;">sell</span>
+<p class="text-sm font-medium">Produtos</p>
+</a>
+</nav>
+</div>
+<div class="p-4 border-t border-slate-700/50">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white" style="font-size: 20px;">settings</span>
+<p class="text-sm font-medium">Configurações</p>
+</a>
+</div>
+</div>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col overflow-y-auto bg-background-light dark:bg-background-dark">
+<!-- Header -->
+<header class="sticky top-0 z-20 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur border-b border-slate-200 dark:border-slate-800 px-6 py-4">
+<div class="flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div>
+<h2 class="text-2xl font-bold text-slate-900 dark:text-white">Comparativo de Performance de Redes</h2>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Análise competitiva de indicadores principais entre redes varejistas.</p>
+</div>
+<div class="flex gap-2">
+<button class="p-2 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</div>
+<!-- Filters Bar -->
+<div class="flex flex-wrap items-center gap-3">
+<!-- Period Filter -->
+<div class="relative group">
+<button class="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:border-primary/50 transition-colors">
+<span class="material-symbols-outlined text-slate-400" style="font-size: 18px;">calendar_today</span>
+<span>Período: Últimos 30 dias</span>
+<span class="material-symbols-outlined text-slate-400" style="font-size: 18px;">expand_more</span>
+</button>
+</div>
+<!-- Category Filter -->
+<div class="relative group">
+<button class="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:border-primary/50 transition-colors">
+<span class="material-symbols-outlined text-slate-400" style="font-size: 18px;">category</span>
+<span>Categoria: Bebidas</span>
+<span class="material-symbols-outlined text-slate-400" style="font-size: 18px;">expand_more</span>
+</button>
+</div>
+<!-- Network Selector (Focus) -->
+<div class="relative group flex-1 max-w-md ml-auto">
+<div class="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-surface-dark border border-primary/50 rounded-lg text-sm font-medium shadow-sm ring-1 ring-primary/20">
+<span class="material-symbols-outlined text-primary" style="font-size: 18px;">store</span>
+<span class="text-slate-500 dark:text-slate-400">Comparar:</span>
+<div class="flex gap-2">
+<span class="px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-bold border border-blue-200 dark:border-blue-800">Carrefour</span>
+<span class="text-slate-400 text-xs flex items-center">vs</span>
+<span class="px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 text-xs font-bold border border-emerald-200 dark:border-emerald-800">Pão de Açúcar</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 ml-auto cursor-pointer" style="font-size: 18px;">edit</span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="p-6 grid grid-cols-12 gap-6 pb-12">
+<!-- KPI Comparison Chart (Bar Chart) -->
+<div class="col-span-12 lg:col-span-8 bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-700 p-5 shadow-sm">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">KPIs Principais</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400">Ruptura, Mix de Produtos e Preço Médio</p>
+</div>
+<button class="text-primary text-xs font-medium hover:underline">Ver detalhes</button>
+</div>
+<!-- Mock Chart Container -->
+<div class="h-64 w-full flex items-end justify-between gap-8 px-4 relative">
+<!-- Y Axis Lines -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none z-0 px-4">
+<div class="w-full h-px bg-slate-100 dark:bg-slate-700/50"></div>
+<div class="w-full h-px bg-slate-100 dark:bg-slate-700/50"></div>
+<div class="w-full h-px bg-slate-100 dark:bg-slate-700/50"></div>
+<div class="w-full h-px bg-slate-100 dark:bg-slate-700/50"></div>
+<div class="w-full h-px bg-slate-100 dark:bg-slate-700/50"></div>
+</div>
+<!-- Group 1: Ruptura -->
+<div class="flex flex-col items-center gap-2 z-10 w-full">
+<div class="flex items-end gap-2 h-48 w-full justify-center">
+<div class="w-8 bg-blue-500 rounded-t-sm hover:bg-blue-400 transition-all relative group" style="height: 35%;">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 whitespace-nowrap z-20">3.5%</div>
+</div>
+<div class="w-8 bg-emerald-500 rounded-t-sm hover:bg-emerald-400 transition-all relative group" style="height: 25%;">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 whitespace-nowrap z-20">2.5%</div>
+</div>
+</div>
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Ruptura (%)</span>
+</div>
+<!-- Group 2: Mix -->
+<div class="flex flex-col items-center gap-2 z-10 w-full">
+<div class="flex items-end gap-2 h-48 w-full justify-center">
+<div class="w-8 bg-blue-500 rounded-t-sm hover:bg-blue-400 transition-all relative group" style="height: 85%;">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 whitespace-nowrap z-20">85%</div>
+</div>
+<div class="w-8 bg-emerald-500 rounded-t-sm hover:bg-emerald-400 transition-all relative group" style="height: 92%;">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 whitespace-nowrap z-20">92%</div>
+</div>
+</div>
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Mix de Produtos</span>
+</div>
+<!-- Group 3: Preço -->
+<div class="flex flex-col items-center gap-2 z-10 w-full">
+<div class="flex items-end gap-2 h-48 w-full justify-center">
+<div class="w-8 bg-blue-500 rounded-t-sm hover:bg-blue-400 transition-all relative group" style="height: 65%;">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 whitespace-nowrap z-20">R$ 145</div>
+</div>
+<div class="w-8 bg-emerald-500 rounded-t-sm hover:bg-emerald-400 transition-all relative group" style="height: 60%;">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 whitespace-nowrap z-20">R$ 138</div>
+</div>
+</div>
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Preço Médio</span>
+</div>
+</div>
+<div class="flex justify-center gap-6 mt-6">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+<span class="text-xs text-slate-600 dark:text-slate-300">Carrefour</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 bg-emerald-500 rounded-full"></div>
+<span class="text-xs text-slate-600 dark:text-slate-300">Pão de Açúcar</span>
+</div>
+</div>
+</div>
+<!-- Radar Chart Card -->
+<div class="col-span-12 lg:col-span-4 bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-700 p-5 shadow-sm flex flex-col">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Maturidade de Execução</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400">Radar de performance operacional</p>
+</div>
+</div>
+<div class="flex-1 flex items-center justify-center relative min-h-[240px]">
+<!-- CSS/SVG Radar Chart Simulation -->
+<div class="relative w-56 h-56">
+<!-- Background Grid -->
+<svg class="w-full h-full text-slate-200 dark:text-slate-700 fill-none stroke-current stroke-[0.5]" viewbox="0 0 100 100">
+<polygon points="50,5 95,27 95,73 50,95 5,73 5,27"></polygon>
+<polygon points="50,20 80,35 80,65 50,80 20,65 20,35"></polygon>
+<polygon points="50,35 65,42 65,58 50,65 35,58 35,42"></polygon>
+<line x1="50" x2="50" y1="50" y2="5"></line>
+<line x1="50" x2="95" y1="50" y2="27"></line>
+<line x1="50" x2="95" y1="50" y2="73"></line>
+<line x1="50" x2="50" y1="50" y2="95"></line>
+<line x1="50" x2="5" y1="50" y2="73"></line>
+<line x1="50" x2="5" y1="50" y2="27"></line>
+</svg>
+<!-- Data Shape 1 (Blue) -->
+<svg class="absolute inset-0 w-full h-full drop-shadow-md" viewbox="0 0 100 100">
+<polygon class="fill-blue-500/30 stroke-blue-500 stroke-2" points="50,15 85,35 80,70 50,85 15,65 25,35"></polygon>
+</svg>
+<!-- Data Shape 2 (Emerald) -->
+<svg class="absolute inset-0 w-full h-full drop-shadow-md" viewbox="0 0 100 100">
+<polygon class="fill-emerald-500/30 stroke-emerald-500 stroke-2" points="50,25 75,40 88,68 50,75 25,68 15,40"></polygon>
+</svg>
+<!-- Labels -->
+<span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-4 text-[10px] font-bold text-slate-500">Planograma</span>
+<span class="absolute top-[20%] right-[-10%] text-[10px] font-bold text-slate-500">Promoção</span>
+<span class="absolute bottom-[20%] right-[-10%] text-[10px] font-bold text-slate-500">Preço</span>
+<span class="absolute bottom-[-10px] left-1/2 -translate-x-1/2 text-[10px] font-bold text-slate-500">Estoque</span>
+<span class="absolute bottom-[20%] left-[-15%] text-[10px] font-bold text-slate-500">Sortimento</span>
+<span class="absolute top-[20%] left-[-10%] text-[10px] font-bold text-slate-500">Visibilidade</span>
+</div>
+</div>
+<div class="flex justify-center gap-6 mt-2">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 bg-blue-500/50 border border-blue-500"></div>
+<span class="text-xs text-slate-600 dark:text-slate-300">Carrefour (4.2)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 bg-emerald-500/50 border border-emerald-500"></div>
+<span class="text-xs text-slate-600 dark:text-slate-300">Pão de Açúcar (3.8)</span>
+</div>
+</div>
+</div>
+<!-- Benchmarking Table -->
+<div class="col-span-12 bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+<div class="p-5 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Benchmarking Detalhado</h3>
+<button class="flex items-center gap-1 text-sm text-primary font-medium hover:bg-primary/10 px-3 py-1.5 rounded transition-colors">
+<span class="material-symbols-outlined" style="font-size: 18px;">download</span>
+                            Exportar Relatório
+                        </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-sm text-left">
+<thead class="text-xs text-slate-500 dark:text-slate-400 uppercase bg-slate-50 dark:bg-slate-800/50">
+<tr>
+<th class="px-6 py-4 font-semibold" scope="col">Rede Varejista</th>
+<th class="px-6 py-4 font-semibold text-center" scope="col">Nota Média</th>
+<th class="px-6 py-4 font-semibold" scope="col">Tendência</th>
+<th class="px-6 py-4 font-semibold text-center" scope="col">% de Conformidade</th>
+<th class="px-6 py-4 font-semibold" scope="col">Ranking Regional</th>
+<th class="px-6 py-4 font-semibold text-right" scope="col">Ação</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+<!-- Row 1 -->
+<tr class="bg-white dark:bg-surface-dark hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-white p-1 flex items-center justify-center border border-slate-200">
+<!-- Placeholder for Logo -->
+<div class="w-4 h-4 rounded-full bg-blue-600"></div>
+</div>
+                                        Carrefour
+                                    </td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300">
+                                            4.5
+                                        </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center text-emerald-500">
+<span class="material-symbols-outlined" style="font-size: 16px;">trending_up</span>
+<span class="ml-1 text-xs">+2.4%</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2.5 max-w-[100px]">
+<div class="bg-blue-600 h-2.5 rounded-full" style="width: 88%"></div>
+</div>
+<span class="text-xs font-medium text-slate-600 dark:text-slate-300">88%</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-yellow-500" style="font-size: 18px;">emoji_events</span>
+                                            1º Lugar (SP)
+                                        </div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="bg-white dark:bg-surface-dark hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-white p-1 flex items-center justify-center border border-slate-200">
+<div class="w-4 h-4 rounded-full bg-emerald-600"></div>
+</div>
+                                        Pão de Açúcar
+                                    </td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-300">
+                                            4.2
+                                        </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center text-red-500">
+<span class="material-symbols-outlined" style="font-size: 16px;">trending_down</span>
+<span class="ml-1 text-xs">-1.1%</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2.5 max-w-[100px]">
+<div class="bg-emerald-500 h-2.5 rounded-full" style="width: 75%"></div>
+</div>
+<span class="text-xs font-medium text-slate-600 dark:text-slate-300">75%</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-slate-400" style="font-size: 18px;">military_tech</span>
+                                            3º Lugar (SP)
+                                        </div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="bg-white dark:bg-surface-dark hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-white p-1 flex items-center justify-center border border-slate-200">
+<div class="w-4 h-4 rounded-full bg-red-600"></div>
+</div>
+                                        Assaí Atacadista
+                                    </td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-800 dark:bg-slate-700 dark:text-slate-300">
+                                            3.8
+                                        </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center text-emerald-500">
+<span class="material-symbols-outlined" style="font-size: 16px;">trending_flat</span>
+<span class="ml-1 text-xs">0.0%</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2.5 max-w-[100px]">
+<div class="bg-red-500 h-2.5 rounded-full" style="width: 62%"></div>
+</div>
+<span class="text-xs font-medium text-slate-600 dark:text-slate-300">62%</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-slate-400" style="font-size: 18px;">military_tech</span>
+                                            5º Lugar (SP)
+                                        </div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 border-t border-slate-200 dark:border-slate-700 flex justify-center">
+<button class="text-sm text-slate-500 dark:text-slate-400 font-medium hover:text-primary transition-colors flex items-center gap-1">
+                            Carregar mais redes
+                            <span class="material-symbols-outlined" style="font-size: 18px;">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

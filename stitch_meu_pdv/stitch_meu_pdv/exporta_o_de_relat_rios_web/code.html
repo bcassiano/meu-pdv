@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Exportação de Relatórios</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0d59f2",
+                        "primary-dark": "#0b4bc7",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101622",
+                        "slate-custom": "#1E293B",
+                        "surface-dark": "#1e293b", 
+                        "surface-darker": "#0f172a"
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px",
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-hidden">
+<div class="flex h-screen w-full">
+<!-- Sidebar -->
+<aside class="flex w-64 flex-col bg-slate-custom border-r border-slate-700/50 shrink-0 h-full overflow-y-auto">
+<div class="flex h-full flex-col justify-between p-4">
+<div class="flex flex-col gap-6">
+<!-- User Profile -->
+<div class="flex items-center gap-3 px-2">
+<div class="h-10 w-10 rounded-full bg-slate-600 bg-cover bg-center shrink-0" data-alt="Portrait of a male manager" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAVJJJJ7mPxrKNSmaa9CvD-7fqjtv9E_SvBZvAWyX_rNjTbN4aIcpmIP-uDaSXA91NWTwN_nmGHbuk5D1NKn1-yovr15unHf6IPFmUQ8UIhgOW4PYVFMyPk_0km5F9CDf271qiHfmdLuaLI7lMc0fLthK9pAfnVodhpdoHWp84a-ox5w0be77aV8ami2lU-haDANwlQEaB6G_B7ZFeaKMPL5XNR_18KZUHgZAsg0_J4dkYJLgExu_SMJNsn2KUxIIKc7gI4V2WbBTE");'></div>
+<div class="flex flex-col">
+<h1 class="text-white text-sm font-semibold leading-tight">Roberto Silva</h1>
+<p class="text-slate-400 text-xs font-normal">Gerente Regional</p>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">pie_chart</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary text-white shadow-lg shadow-primary/20" href="#">
+<span class="material-symbols-outlined text-[22px] fill-1">description</span>
+<span class="text-sm font-medium">Relatórios</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">storefront</span>
+<span class="text-sm font-medium">Lojas</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">group</span>
+<span class="text-sm font-medium">Equipe</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">settings</span>
+<span class="text-sm font-medium">Configurações</span>
+</a>
+</nav>
+</div>
+<div class="px-2">
+<button class="flex w-full items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[22px]">logout</span>
+<span class="text-sm font-medium">Sair</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 h-full overflow-y-auto bg-background-light dark:bg-background-dark">
+<div class="mx-auto max-w-7xl px-8 py-8">
+<!-- Header -->
+<div class="mb-8 flex flex-col gap-2">
+<h2 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Exportação de Relatórios</h2>
+<p class="text-slate-500 dark:text-slate-400 text-base">Configure filtros e baixe dados detalhados das visitas e auditorias.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Left Column: Configuration Form -->
+<div class="lg:col-span-2 space-y-6">
+<!-- 1. Período -->
+<div class="rounded-xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700/50 p-6 shadow-sm">
+<div class="flex items-center gap-3 mb-6">
+<div class="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-sm font-bold">calendar_month</span>
+</div>
+<h3 class="text-lg font-semibold text-slate-900 dark:text-white">1. Período de Análise</h3>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">Data Inicial</label>
+<div class="relative">
+<input class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white px-4 py-2.5 focus:border-primary focus:ring-primary text-sm" type="date" value="2023-10-01"/>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">Data Final</label>
+<div class="relative">
+<input class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white px-4 py-2.5 focus:border-primary focus:ring-primary text-sm" type="date" value="2023-10-31"/>
+</div>
+</div>
+</div>
+</div>
+<!-- 2. Filtros e Checklist -->
+<div class="rounded-xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700/50 p-6 shadow-sm">
+<div class="flex items-center gap-3 mb-6">
+<div class="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-sm font-bold">filter_alt</span>
+</div>
+<h3 class="text-lg font-semibold text-slate-900 dark:text-white">2. Filtros e Dados</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Filtros em Cascata -->
+<div class="flex flex-col gap-4">
+<h4 class="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Localização</h4>
+<div class="space-y-4">
+<div class="group">
+<label class="block text-xs font-medium text-slate-500 mb-1.5 ml-1">Estado (UF)</label>
+<select class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white px-4 py-2.5 focus:border-primary focus:ring-primary text-sm appearance-none cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors">
+<option>Todos os Estados</option>
+<option>São Paulo</option>
+<option>Rio de Janeiro</option>
+<option>Minas Gerais</option>
+</select>
+</div>
+<div class="group">
+<label class="block text-xs font-medium text-slate-500 mb-1.5 ml-1">Rede / Bandeira</label>
+<select class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white px-4 py-2.5 focus:border-primary focus:ring-primary text-sm appearance-none cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors">
+<option>Todas as Redes</option>
+<option>Supermercados A</option>
+<option>Express B</option>
+</select>
+</div>
+<div class="group">
+<label class="block text-xs font-medium text-slate-500 mb-1.5 ml-1">Loja</label>
+<select class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white px-4 py-2.5 focus:border-primary focus:ring-primary text-sm appearance-none cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors" disabled="">
+<option>Selecione uma rede primeiro</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Checklist de Campos -->
+<div class="flex flex-col gap-4">
+<h4 class="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Campos do Relatório</h4>
+<div class="flex flex-col gap-3">
+<label class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-colors">
+<input checked="" class="h-5 w-5 rounded border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">Preços Coletados</span>
+</label>
+<label class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-colors">
+<input checked="" class="h-5 w-5 rounded border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">Rupturas (Out of Stock)</span>
+</label>
+<label class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-colors">
+<input class="h-5 w-5 rounded border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">Links das Fotos</span>
+</label>
+<label class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-colors">
+<input class="h-5 w-5 rounded border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">Geolocalização (Lat/Long)</span>
+</label>
+</div>
+</div>
+</div>
+</div>
+<!-- 3. Formato e Ação -->
+<div class="rounded-xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700/50 p-6 shadow-sm">
+<div class="flex items-center gap-3 mb-6">
+<div class="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-sm font-bold">download</span>
+</div>
+<h3 class="text-lg font-semibold text-slate-900 dark:text-white">3. Formato e Exportação</h3>
+</div>
+<div class="flex flex-col md:flex-row gap-6 items-end">
+<div class="flex-1 w-full">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-3 block">Formato do Arquivo</label>
+<div class="grid grid-cols-2 gap-4">
+<button class="flex flex-col items-center justify-center gap-2 p-4 rounded-xl border-2 border-primary bg-primary/5 text-primary transition-all">
+<span class="material-symbols-outlined text-3xl">table_view</span>
+<span class="text-sm font-bold">Excel (.xlsx)</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-2 p-4 rounded-xl border-2 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-slate-300 dark:hover:border-slate-600 transition-all">
+<span class="material-symbols-outlined text-3xl">csv</span>
+<span class="text-sm font-bold">CSV</span>
+</button>
+</div>
+</div>
+<div class="flex-1 w-full">
+<button class="w-full flex items-center justify-center gap-3 bg-slate-900 dark:bg-primary hover:bg-slate-800 dark:hover:bg-primary-dark text-white font-bold py-4 px-6 rounded-xl shadow-lg transition-transform active:scale-[0.98]">
+<span class="material-symbols-outlined">bolt</span>
+                                        GERAR RELATÓRIO
+                                    </button>
+<p class="mt-3 text-xs text-center text-slate-500 dark:text-slate-400">
+                                        O arquivo será enviado para seu e-mail e disponibilizado abaixo.
+                                    </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Status & History -->
+<div class="lg:col-span-1 space-y-6">
+<!-- Status Card (Processing) -->
+<div class="rounded-xl bg-slate-900 dark:bg-surface-darker border border-slate-800 dark:border-slate-700 p-5 shadow-lg relative overflow-hidden">
+<!-- Abstract background pattern -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/20 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
+<div class="flex items-start gap-4 relative z-10">
+<div class="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/20">
+<span class="material-symbols-outlined text-primary animate-spin">sync</span>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="text-sm font-bold text-white">Processando Exportação</h3>
+<p class="text-xs text-slate-400">Preparando dados no servidor... (45%)</p>
+<div class="w-full bg-slate-700 rounded-full h-1.5 mt-2">
+<div class="bg-primary h-1.5 rounded-full" style="width: 45%"></div>
+</div>
+<p class="text-[10px] text-slate-500 mt-1.5">ID: req_8823_exp • Iniciado há 2 min</p>
+</div>
+</div>
+</div>
+<!-- Recent Exports List -->
+<div class="rounded-xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700/50 flex flex-col shadow-sm h-fit">
+<div class="p-5 border-b border-slate-100 dark:border-slate-700/50 flex justify-between items-center">
+<h3 class="font-bold text-slate-900 dark:text-white">Exportações Recentes</h3>
+<button class="text-xs font-medium text-primary hover:text-primary-dark">Ver todas</button>
+</div>
+<div class="flex flex-col divide-y divide-slate-100 dark:divide-slate-700/50">
+<!-- Item 1 -->
+<div class="p-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-lg bg-green-500/10 flex items-center justify-center text-green-500 shrink-0">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+<div class="flex flex-col">
+<p class="text-sm font-medium text-slate-900 dark:text-slate-200">Relatório de Preços</p>
+<p class="text-xs text-slate-500">24 Out • 14:30 • XLSX (2.4MB)</p>
+</div>
+</div>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">download</span>
+</button>
+</div>
+<!-- Item 2 -->
+<div class="p-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-lg bg-green-500/10 flex items-center justify-center text-green-500 shrink-0">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+<div class="flex flex-col">
+<p class="text-sm font-medium text-slate-900 dark:text-slate-200">Auditoria Ruptura</p>
+<p class="text-xs text-slate-500">23 Out • 09:15 • CSV (800KB)</p>
+</div>
+</div>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">download</span>
+</button>
+</div>
+<!-- Item 3 -->
+<div class="p-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-lg bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-400 shrink-0">
+<span class="material-symbols-outlined">cancel</span>
+</div>
+<div class="flex flex-col">
+<p class="text-sm font-medium text-slate-900 dark:text-slate-200 line-through decoration-slate-400">Relatório Completo</p>
+<p class="text-xs text-red-400">Falha na geração • 22 Out</p>
+</div>
+</div>
+<button class="text-slate-300 cursor-not-allowed">
+<span class="material-symbols-outlined">download</span>
+</button>
+</div>
+<!-- Item 4 -->
+<div class="p-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-lg bg-green-500/10 flex items-center justify-center text-green-500 shrink-0">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+<div class="flex flex-col">
+<p class="text-sm font-medium text-slate-900 dark:text-slate-200">Fotos de Gôndola</p>
+<p class="text-xs text-slate-500">20 Out • 18:45 • ZIP (450MB)</p>
+</div>
+</div>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">download</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Help Box -->
+<div class="rounded-xl bg-primary/10 border border-primary/20 p-5">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-0.5">info</span>
+<div class="flex flex-col gap-1">
+<h4 class="text-sm font-bold text-slate-900 dark:text-white">Precisa de dados mais antigos?</h4>
+<p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                                        Exportações com mais de 3 meses são arquivadas. Solicite acesso ao arquivo morto entrando em contato com o suporte de TI.
+                                    </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

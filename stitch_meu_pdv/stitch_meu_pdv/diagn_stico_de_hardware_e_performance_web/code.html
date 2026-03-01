@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Diagnóstico de Hardware e Performance Web</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#1152d4",
+              "background-light": "#f8fafc",
+              "background-dark": "#101622",
+              "sidebar": "#1E293B",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"],
+              "body": ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              "DEFAULT": "0.25rem",
+              "lg": "0.5rem",
+              "xl": "0.75rem",
+              "2xl": "1rem",
+              "full": "9999px"
+            },
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 flex min-h-screen font-display overflow-x-hidden">
+<!-- Sidebar -->
+<aside class="w-64 bg-sidebar flex-shrink-0 flex flex-col h-screen fixed left-0 top-0 z-50 text-white">
+<div class="p-6 flex items-center gap-3 border-b border-slate-700/50">
+<div class="size-10 rounded-full bg-primary/20 flex items-center justify-center text-primary-200" data-alt="App Logo">
+<span class="material-symbols-outlined text-white">monitor_heart</span>
+</div>
+<div>
+<h1 class="text-sm font-semibold leading-tight text-white">Diagnóstico PWA</h1>
+<p class="text-xs text-slate-400">Admin Console</p>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto py-4 px-3 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary text-white shadow-sm transition-colors" href="#">
+<span class="material-symbols-outlined">memory</span>
+<span class="text-sm font-medium">Auditoria de Hardware</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">bolt</span>
+<span class="text-sm font-medium">Performance Web</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">bug_report</span>
+<span class="text-sm font-medium">Logs de Erro</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-700/50">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">settings</span>
+<span class="text-sm font-medium">Configurações</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 ml-64 p-8">
+<div class="max-w-7xl mx-auto space-y-8">
+<!-- Header -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+<div class="space-y-1">
+<h2 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Auditoria de Hardware e Recursos</h2>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Monitoramento da frota de dispositivos 2GB RAM em campo</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+                        Últimos 30 dias
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors shadow-sm shadow-primary/20">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                        Exportar Relatório
+                    </button>
+</div>
+</div>
+<!-- KPI Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="p-5 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Total de Dispositivos</p>
+<span class="material-symbols-outlined text-slate-400">devices</span>
+</div>
+<div class="flex items-baseline gap-2">
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white">1,245</h3>
+<span class="text-xs font-medium text-green-600 bg-green-50 dark:bg-green-900/30 px-1.5 py-0.5 rounded flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">trending_up</span> 12%
+                        </span>
+</div>
+</div>
+<div class="p-5 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm relative overflow-hidden">
+<div class="absolute right-0 top-0 h-full w-1 bg-amber-500"></div>
+<div class="flex items-center justify-between mb-4">
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Memória Crítica (&lt;500MB)</p>
+<span class="material-symbols-outlined text-amber-500">warning</span>
+</div>
+<div class="flex items-baseline gap-2">
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white">156</h3>
+<span class="text-xs font-medium text-amber-600 bg-amber-50 dark:bg-amber-900/30 px-1.5 py-0.5 rounded flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">trending_up</span> 5%
+                        </span>
+</div>
+</div>
+<div class="p-5 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Armazenamento Baixo</p>
+<span class="material-symbols-outlined text-slate-400">sd_storage</span>
+</div>
+<div class="flex items-baseline gap-2">
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white">89</h3>
+<span class="text-xs font-medium text-green-600 bg-green-50 dark:bg-green-900/30 px-1.5 py-0.5 rounded flex items-center gap-0.5">
+                             2%
+                        </span>
+</div>
+</div>
+<div class="p-5 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Crash Rate (PWA)</p>
+<span class="material-symbols-outlined text-slate-400">bug_report</span>
+</div>
+<div class="flex items-baseline gap-2">
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white">1.2%</h3>
+<span class="text-xs font-medium text-green-600 bg-green-50 dark:bg-green-900/30 px-1.5 py-0.5 rounded flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">trending_down</span> -0.4%
+                        </span>
+</div>
+</div>
+</div>
+<!-- Charts Section -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- RAM Chart -->
+<div class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="mb-6">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Distribuição de RAM Disponível</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-2xl font-bold text-slate-900 dark:text-white">Méd: 850MB</span>
+<span class="text-sm text-red-500 font-medium flex items-center">
+<span class="material-symbols-outlined text-sm mr-0.5">trending_down</span>
+                                -5% Estabilidade
+                            </span>
+</div>
+</div>
+<div class="h-48 flex items-end justify-between gap-4 px-2">
+<!-- Bar 1 -->
+<div class="flex flex-col items-center gap-2 w-full group cursor-pointer">
+<div class="w-full bg-red-100 dark:bg-red-900/20 rounded-t-sm h-full flex items-end relative overflow-hidden">
+<div class="w-full bg-red-500 h-[40%] transition-all duration-500 group-hover:bg-red-600"></div>
+</div>
+<span class="text-xs font-semibold text-slate-500 dark:text-slate-400">&lt;500MB</span>
+</div>
+<!-- Bar 2 -->
+<div class="flex flex-col items-center gap-2 w-full group cursor-pointer">
+<div class="w-full bg-amber-100 dark:bg-amber-900/20 rounded-t-sm h-full flex items-end relative overflow-hidden">
+<div class="w-full bg-amber-500 h-[25%] transition-all duration-500 group-hover:bg-amber-600"></div>
+</div>
+<span class="text-xs font-semibold text-slate-500 dark:text-slate-400">500-800MB</span>
+</div>
+<!-- Bar 3 -->
+<div class="flex flex-col items-center gap-2 w-full group cursor-pointer">
+<div class="w-full bg-blue-100 dark:bg-blue-900/20 rounded-t-sm h-full flex items-end relative overflow-hidden">
+<div class="w-full bg-blue-500 h-[65%] transition-all duration-500 group-hover:bg-blue-600"></div>
+</div>
+<span class="text-xs font-semibold text-slate-500 dark:text-slate-400">800MB-1.2GB</span>
+</div>
+<!-- Bar 4 -->
+<div class="flex flex-col items-center gap-2 w-full group cursor-pointer">
+<div class="w-full bg-green-100 dark:bg-green-900/20 rounded-t-sm h-full flex items-end relative overflow-hidden">
+<div class="w-full bg-green-500 h-[85%] transition-all duration-500 group-hover:bg-green-600"></div>
+</div>
+<span class="text-xs font-semibold text-slate-500 dark:text-slate-400">&gt;1.2GB</span>
+</div>
+</div>
+</div>
+<!-- Disk Space Chart -->
+<div class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="mb-6">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Espaço em Disco Livre</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-2xl font-bold text-slate-900 dark:text-white">Méd: 3.2GB</span>
+<span class="text-sm text-green-600 font-medium flex items-center">
+<span class="material-symbols-outlined text-sm mr-0.5">trending_up</span>
+                                +2% Limpeza
+                            </span>
+</div>
+</div>
+<div class="h-48 flex items-end justify-between gap-4 px-2">
+<!-- Bar 1 -->
+<div class="flex flex-col items-center gap-2 w-full group cursor-pointer">
+<div class="w-full bg-red-100 dark:bg-red-900/20 rounded-t-sm h-full flex items-end relative overflow-hidden">
+<div class="w-full bg-red-500 h-[15%] transition-all duration-500 group-hover:bg-red-600"></div>
+</div>
+<span class="text-xs font-semibold text-slate-500 dark:text-slate-400">&lt;500MB</span>
+</div>
+<!-- Bar 2 -->
+<div class="flex flex-col items-center gap-2 w-full group cursor-pointer">
+<div class="w-full bg-amber-100 dark:bg-amber-900/20 rounded-t-sm h-full flex items-end relative overflow-hidden">
+<div class="w-full bg-amber-500 h-[30%] transition-all duration-500 group-hover:bg-amber-600"></div>
+</div>
+<span class="text-xs font-semibold text-slate-500 dark:text-slate-400">500MB-2GB</span>
+</div>
+<!-- Bar 3 -->
+<div class="flex flex-col items-center gap-2 w-full group cursor-pointer">
+<div class="w-full bg-blue-100 dark:bg-blue-900/20 rounded-t-sm h-full flex items-end relative overflow-hidden">
+<div class="w-full bg-blue-500 h-[60%] transition-all duration-500 group-hover:bg-blue-600"></div>
+</div>
+<span class="text-xs font-semibold text-slate-500 dark:text-slate-400">2GB-5GB</span>
+</div>
+<!-- Bar 4 -->
+<div class="flex flex-col items-center gap-2 w-full group cursor-pointer">
+<div class="w-full bg-green-100 dark:bg-green-900/20 rounded-t-sm h-full flex items-end relative overflow-hidden">
+<div class="w-full bg-green-500 h-[75%] transition-all duration-500 group-hover:bg-green-600"></div>
+</div>
+<span class="text-xs font-semibold text-slate-500 dark:text-slate-400">&gt;5GB</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Two Column Layout for Lists -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Performance Critical List -->
+<div class="lg:col-span-1 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col">
+<div class="p-5 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center bg-red-50/50 dark:bg-red-900/10 rounded-t-xl">
+<h3 class="text-base font-bold text-red-900 dark:text-red-100 flex items-center gap-2">
+<span class="material-symbols-outlined">speed</span>
+                            Performance Crítica
+                        </h3>
+<span class="text-xs font-medium bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 px-2 py-1 rounded-full">Lentidão</span>
+</div>
+<div class="flex-1 overflow-auto max-h-[400px]">
+<ul class="divide-y divide-slate-100 dark:divide-slate-700">
+<li class="p-4 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer group">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden shrink-0">
+<div class="w-full h-full bg-gradient-to-br from-indigo-400 to-cyan-400" data-alt="User Avatar Gradient"></div>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-semibold text-slate-900 dark:text-white truncate">Carlos Mendes</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 truncate">Samsung Galaxy A03 Core</p>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold text-red-600">920ms</p>
+<p class="text-[10px] text-slate-400 uppercase tracking-wide">TTI</p>
+</div>
+</div>
+</li>
+<li class="p-4 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer group">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden shrink-0">
+<div class="w-full h-full bg-gradient-to-br from-orange-400 to-pink-400" data-alt="User Avatar Gradient"></div>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-semibold text-slate-900 dark:text-white truncate">Ana Paula Souza</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 truncate">Motorola Moto E7</p>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold text-red-600">850ms</p>
+<p class="text-[10px] text-slate-400 uppercase tracking-wide">TTI</p>
+</div>
+</div>
+</li>
+<li class="p-4 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer group">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden shrink-0">
+<div class="w-full h-full bg-gradient-to-br from-emerald-400 to-teal-400" data-alt="User Avatar Gradient"></div>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-semibold text-slate-900 dark:text-white truncate">Roberto Silva</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 truncate">Xiaomi Redmi 9A</p>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold text-red-600">810ms</p>
+<p class="text-[10px] text-slate-400 uppercase tracking-wide">TTI</p>
+</div>
+</div>
+</li>
+<li class="p-4 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer group">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden shrink-0">
+<div class="w-full h-full bg-gradient-to-br from-purple-400 to-blue-400" data-alt="User Avatar Gradient"></div>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-semibold text-slate-900 dark:text-white truncate">Mariana Lima</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 truncate">LG K41S</p>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold text-red-600">795ms</p>
+<p class="text-[10px] text-slate-400 uppercase tracking-wide">TTI</p>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="p-3 border-t border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 rounded-b-xl text-center">
+<button class="text-sm font-medium text-primary hover:text-primary/80 transition-colors">Ver todos (42)</button>
+</div>
+</div>
+<!-- Error Logs Table -->
+<div class="lg:col-span-2 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col">
+<div class="p-5 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Logs de Erro e Compatibilidade</h3>
+<div class="flex gap-2">
+<div class="relative">
+<span class="absolute left-2.5 top-2.5 text-slate-400 material-symbols-outlined text-[18px]">search</span>
+<input class="pl-9 pr-4 py-1.5 text-sm border border-slate-200 dark:border-slate-600 rounded-lg bg-slate-50 dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="Buscar erro..." type="text"/>
+</div>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider font-semibold border-b border-slate-200 dark:border-slate-700">
+<th class="px-6 py-4">Evento</th>
+<th class="px-6 py-4">Navegador/Versão</th>
+<th class="px-6 py-4">SO</th>
+<th class="px-6 py-4">Frequência</th>
+<th class="px-6 py-4 text-right">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-700 text-sm">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+<td class="px-6 py-4">
+<div class="font-medium text-slate-900 dark:text-white">Instalação Falhou</div>
+<div class="text-xs text-slate-500 mt-0.5">Code: PWA_INSTALL_REJECT</div>
+</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-300">Chrome 112.0</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-300">Android 11</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-300">156 ocorrências</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300">
+                                            Crítico
+                                        </span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+<td class="px-6 py-4">
+<div class="font-medium text-slate-900 dark:text-white">WebGL Context Lost</div>
+<div class="text-xs text-slate-500 mt-0.5">Out of Memory</div>
+</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-300">Samsung Internet 21.0</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-300">Android 12</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-300">89 ocorrências</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300">
+                                            Alerta
+                                        </span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+<td class="px-6 py-4">
+<div class="font-medium text-slate-900 dark:text-white">Service Worker Error</div>
+<div class="text-xs text-slate-500 mt-0.5">Registration Failed</div>
+</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-300">Chrome 108.0</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-300">Android 10</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-300">42 ocorrências</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-800 dark:bg-slate-700 dark:text-slate-300">
+                                            Investigando
+                                        </span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+<td class="px-6 py-4">
+<div class="font-medium text-slate-900 dark:text-white">Camera Permission Denied</div>
+<div class="text-xs text-slate-500 mt-0.5">User Action</div>
+</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-300">Opera Mobile</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-300">Android 13</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-300">23 ocorrências</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300">
+                                            Resolvido
+                                        </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

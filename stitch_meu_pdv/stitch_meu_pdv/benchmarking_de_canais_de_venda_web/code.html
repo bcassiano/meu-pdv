@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Benchmarking de Canais de Venda Web</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "sans": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display overflow-x-hidden">
+<div class="relative flex min-h-screen w-full flex-row">
+<!-- Sidebar -->
+<div class="w-72 bg-slate-900 dark:bg-[#1E293B] flex-shrink-0 flex flex-col justify-between border-r border-slate-800">
+<div class="flex flex-col gap-4 p-4">
+<div class="flex items-center gap-3 px-2">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-10 w-10 border-2 border-primary" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBFLHsikzm4c4PKNhefOQxhBUX4VCIPdFYwV0iSx93YAfXBYPJFNo2zy4sQx-YZHFXFGWmIZLLBhFqvLOSZWOzsnTHtstM1Bm2A6ofnd1mXuI5NFDAk3uYRPyu_lsTeVJEVL37JzkI0Da38ZEDYyREHLtrMxJAQHHqHyZ6se9kzONMge-qTzZA_ZheydXdECM6ZuQLVMNSGdnxW6Z-4Vo-D9JHs-UnOAQeED7QMI6LGRYIKT99nMsSv0X1eEbLfNqwC9Rt3PTJ3uQw");'></div>
+<div class="flex flex-col">
+<h1 class="text-white text-base font-medium leading-normal">Sales Intel</h1>
+<p class="text-slate-400 text-sm font-normal leading-normal">Analista de Canais</p>
+</div>
+</div>
+<div class="h-px bg-slate-700 my-2"></div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">donut_small</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary text-white shadow-lg shadow-primary/20" href="#">
+<span class="material-symbols-outlined text-xl">balance</span>
+<span class="text-sm font-medium">Benchmarking</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">map</span>
+<span class="text-sm font-medium">Geografia</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">warning</span>
+<span class="text-sm font-medium">Desafios</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">settings</span>
+<span class="text-sm font-medium">Configurações</span>
+</a>
+</nav>
+</div>
+<div class="p-4">
+<div class="rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 p-4 border border-primary/20">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-2xl">rocket_launch</span>
+<div>
+<p class="text-white text-sm font-bold">Upgrade Pro</p>
+<p class="text-slate-400 text-xs mt-1">Acesse relatórios avançados de auditoria.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col min-h-0 overflow-y-auto">
+<header class="h-16 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-8 bg-white dark:bg-[#101622] sticky top-0 z-10">
+<div class="flex items-center gap-4">
+<h2 class="text-slate-900 dark:text-white text-lg font-semibold">Benchmarking de Canais</h2>
+<span class="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 text-xs font-medium border border-emerald-500/20">Atualizado hoje</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="p-2 text-slate-500 hover:text-primary transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full"></span>
+</button>
+<div class="h-8 w-px bg-slate-200 dark:bg-slate-700"></div>
+<button class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300 font-medium hover:text-primary transition-colors">
+<span>Exportar Relatório</span>
+<span class="material-symbols-outlined text-lg">download</span>
+</button>
+</div>
+</header>
+<div class="p-8 flex flex-col gap-8 max-w-[1400px] mx-auto w-full">
+<!-- KPI Header -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-white dark:bg-[#1E293B] p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total PDVs Auditados</p>
+<span class="material-symbols-outlined text-primary bg-primary/10 p-1.5 rounded-lg text-lg">storefront</span>
+</div>
+<div class="flex items-baseline gap-2">
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white">12.450</h3>
+<span class="text-emerald-500 text-sm font-medium flex items-center">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+                                5.2%
+                            </span>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1E293B] p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Nota Média Geral</p>
+<span class="material-symbols-outlined text-primary bg-primary/10 p-1.5 rounded-lg text-lg">star</span>
+</div>
+<div class="flex items-baseline gap-2">
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white">8.4<span class="text-lg text-slate-400 font-normal">/10</span></h3>
+<span class="text-emerald-500 text-sm font-medium flex items-center">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+                                0.1%
+                            </span>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1E293B] p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Canal Líder</p>
+<span class="material-symbols-outlined text-primary bg-primary/10 p-1.5 rounded-lg text-lg">emoji_events</span>
+</div>
+<div class="flex items-baseline gap-2">
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white">Atacarejo</h3>
+<span class="text-slate-500 text-sm font-medium">Estável</span>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1E293B] p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Ruptura Média</p>
+<span class="material-symbols-outlined text-orange-500 bg-orange-500/10 p-1.5 rounded-lg text-lg">warning</span>
+</div>
+<div class="flex items-baseline gap-2">
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white">12%</h3>
+<span class="text-emerald-500 text-sm font-medium flex items-center">
+<span class="material-symbols-outlined text-sm">trending_down</span>
+                                -2.1%
+                            </span>
+</div>
+</div>
+</div>
+<!-- Main Analysis Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
+<!-- Donut Chart & Legend -->
+<div class="bg-white dark:bg-[#1E293B] p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm lg:col-span-1 flex flex-col">
+<div class="mb-6">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Distribuição de PDVs por Canal</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Participação relativa na base auditada.</p>
+</div>
+<div class="flex-1 flex flex-col items-center justify-center relative min-h-[250px]">
+<!-- CSS Donut Chart representation -->
+<div class="relative w-48 h-48 rounded-full" style="background: conic-gradient(#3b82f6 0% 35%, #10b981 35% 60%, #f59e0b 60% 80%, #6366f1 80% 100%);">
+<div class="absolute inset-4 bg-white dark:bg-[#1E293B] rounded-full flex flex-col items-center justify-center">
+<span class="text-3xl font-bold text-slate-900 dark:text-white">100%</span>
+<span class="text-xs text-slate-500">Base Total</span>
+</div>
+</div>
+</div>
+<div class="mt-6 grid grid-cols-2 gap-4">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-blue-500"></div>
+<div>
+<p class="text-xs text-slate-400">Atacarejo</p>
+<p class="text-sm font-semibold text-slate-900 dark:text-white">35%</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+<div>
+<p class="text-xs text-slate-400">Supermercado</p>
+<p class="text-sm font-semibold text-slate-900 dark:text-white">25%</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-amber-500"></div>
+<div>
+<p class="text-xs text-slate-400">Farmácia</p>
+<p class="text-sm font-semibold text-slate-900 dark:text-white">20%</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-indigo-500"></div>
+<div>
+<p class="text-xs text-slate-400">Conveniência</p>
+<p class="text-sm font-semibold text-slate-900 dark:text-white">20%</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Line Chart -->
+<div class="bg-white dark:bg-[#1E293B] p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm lg:col-span-2 flex flex-col">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Tendência Histórica de Nota de Auditoria</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Comparativo mensal entre canais (Últimos 6 meses).</p>
+</div>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">Trimestral</button>
+<button class="px-3 py-1.5 text-xs font-medium rounded-lg bg-primary text-white shadow-sm shadow-primary/30">Mensal</button>
+</div>
+</div>
+<div class="flex-1 min-h-[300px] w-full relative">
+<!-- SVG Line Chart -->
+<svg class="w-full h-full overflow-visible" viewbox="0 0 800 300">
+<!-- Grid lines -->
+<g class="text-slate-200 dark:text-slate-700" stroke="currentColor" stroke-dasharray="4 4" stroke-width="1">
+<line x1="0" x2="800" y1="250" y2="250"></line>
+<line x1="0" x2="800" y1="200" y2="200"></line>
+<line x1="0" x2="800" y1="150" y2="150"></line>
+<line x1="0" x2="800" y1="100" y2="100"></line>
+<line x1="0" x2="800" y1="50" y2="50"></line>
+</g>
+<!-- Line 1: Atacarejo (Blue) -->
+<path d="M0,200 C100,180 200,120 300,140 S500,80 600,60 S700,40 800,30" fill="none" stroke="#3b82f6" stroke-linecap="round" stroke-width="3"></path>
+<!-- Line 2: Supermercado (Green) -->
+<path d="M0,220 C100,210 200,190 300,180 S500,160 600,140 S700,130 800,120" fill="none" stroke="#10b981" stroke-linecap="round" stroke-width="3"></path>
+<!-- Line 3: Farmácia (Amber) - More volatile -->
+<path d="M0,150 C100,170 200,240 300,200 S500,180 600,220 S700,190 800,180" fill="none" stroke="#f59e0b" stroke-dasharray="5 5" stroke-linecap="round" stroke-width="3"></path>
+<!-- Data Points (Last Month) -->
+<circle cx="800" cy="30" fill="#3b82f6" r="6" stroke="white" stroke-width="2"></circle>
+<circle cx="800" cy="120" fill="#10b981" r="6" stroke="white" stroke-width="2"></circle>
+<circle cx="800" cy="180" fill="#f59e0b" r="6" stroke="white" stroke-width="2"></circle>
+<!-- Labels on Hover area representation -->
+<g transform="translate(730, 20)">
+<rect fill="#3b82f6" height="26" rx="4" width="70"></rect>
+<text fill="white" font-size="12" font-weight="bold" text-anchor="middle" x="35" y="18">9.2</text>
+</g>
+</svg>
+<!-- X Axis Labels -->
+<div class="flex justify-between mt-4 px-2 text-xs text-slate-500 font-medium">
+<span>Jan</span>
+<span>Fev</span>
+<span>Mar</span>
+<span>Abr</span>
+<span>Mai</span>
+<span>Jun</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Challenges Section -->
+<div class="bg-white dark:bg-[#1E293B] p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex items-center gap-3 mb-6">
+<span class="p-2 bg-red-500/10 rounded-lg text-red-500 material-symbols-outlined">warning</span>
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Principais Desafios do Canal</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Causa raiz de ruptura mais frequente por segmento.</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<div class="flex flex-col p-5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer group">
+<div class="flex justify-between items-center mb-4">
+<span class="text-xs font-bold uppercase tracking-wider text-blue-500 bg-blue-500/10 px-2 py-1 rounded">Atacarejo</span>
+<span class="material-symbols-outlined text-slate-400 group-hover:text-blue-500 transition-colors">arrow_forward</span>
+</div>
+<h4 class="text-slate-900 dark:text-white font-bold text-lg mb-1">Logística &amp; Abastecimento</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm mb-4">Problemas de doca e agendamento de entrega representam 60% das falhas.</p>
+<div class="mt-auto">
+<div class="flex justify-between text-xs mb-1">
+<span class="text-slate-500">Impacto na Ruptura</span>
+<span class="text-red-500 font-bold">Alta Crítica</span>
+</div>
+<div class="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-red-500 w-3/4 rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="flex flex-col p-5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer group">
+<div class="flex justify-between items-center mb-4">
+<span class="text-xs font-bold uppercase tracking-wider text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded">Supermercado</span>
+<span class="material-symbols-outlined text-slate-400 group-hover:text-emerald-500 transition-colors">arrow_forward</span>
+</div>
+<h4 class="text-slate-900 dark:text-white font-bold text-lg mb-1">Execução em Loja</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm mb-4">Produto no estoque virtual mas não na gôndola. Falha de reposição interna.</p>
+<div class="mt-auto">
+<div class="flex justify-between text-xs mb-1">
+<span class="text-slate-500">Impacto na Ruptura</span>
+<span class="text-orange-500 font-bold">Moderada</span>
+</div>
+<div class="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-orange-500 w-1/2 rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="flex flex-col p-5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer group">
+<div class="flex justify-between items-center mb-4">
+<span class="text-xs font-bold uppercase tracking-wider text-amber-500 bg-amber-500/10 px-2 py-1 rounded">Farmácia</span>
+<span class="material-symbols-outlined text-slate-400 group-hover:text-amber-500 transition-colors">arrow_forward</span>
+</div>
+<h4 class="text-slate-900 dark:text-white font-bold text-lg mb-1">Mix Inadequado</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm mb-4">Sortimento enviado não condiz com o perfil demográfico da região da loja.</p>
+<div class="mt-auto">
+<div class="flex justify-between text-xs mb-1">
+<span class="text-slate-500">Impacto na Ruptura</span>
+<span class="text-yellow-500 font-bold">Atenção</span>
+</div>
+<div class="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-yellow-500 w-1/3 rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

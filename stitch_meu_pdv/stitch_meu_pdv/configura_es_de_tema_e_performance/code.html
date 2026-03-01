@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Configurações de Tema e Performance - Audit System</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display antialiased min-h-screen flex flex-col">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Top Navigation / Header -->
+<div class="px-4 md:px-10 lg:px-40 flex flex-1 justify-center py-5">
+<div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 px-4 md:px-10 py-3 bg-white dark:bg-slate-900 rounded-t-xl shadow-sm">
+<div class="flex items-center gap-4">
+<div class="size-8 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-3xl">verified_user</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Audit System</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8 items-center">
+<div class="hidden md:flex gap-2">
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary hover:bg-blue-700 transition-colors text-white text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Salvar</span>
+</button>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors text-slate-900 dark:text-slate-100 text-sm font-bold leading-normal tracking-[0.015em] border border-slate-200 dark:border-slate-700">
+<span class="truncate">Redefinir para Padrões</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-slate-200 dark:ring-slate-700" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDFmQLXiIG5Y09acaOydmB5UCqR2jTFVeR47WiV7qIsk7PIYGCe1CMDTGAvV5Ip7gVmy76TMvCGz0qE0Bsky617qyQf4eQfPDJcGAzK7LjR_Z2j4J6MDuZh7aWQ69vimImGfETLYHHsdE1MempHejg33oxBIi9okwDBpWsnj03E9DeNzrI56sOBYo0UVb-rXUnTo_4ua6xUfmtS8AcZmgqbuGb8oJ6458s5Q06o9wgpfvfbFEozPWob_-aBU7slfVRUYjYvUry3Xqw");'></div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="bg-white dark:bg-slate-900 px-4 md:px-10 pb-10 rounded-b-xl shadow-sm min-h-[80vh]">
+<!-- Title Section -->
+<div class="flex flex-wrap justify-between gap-3 p-4 pt-8">
+<div class="flex min-w-72 flex-col gap-3">
+<h1 class="text-slate-900 dark:text-white text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">Configurações de Tema e Performance</h1>
+<p class="text-slate-500 dark:text-slate-400 text-base font-normal leading-normal max-w-2xl">Personalize sua experiência visual e otimize o desempenho do sistema para garantir eficiência em qualquer dispositivo.</p>
+</div>
+</div>
+<!-- Performance Section -->
+<div class="mt-6">
+<div class="flex items-center gap-3 px-4 pb-3 pt-5 border-b border-slate-100 dark:border-slate-800 mb-4">
+<span class="material-symbols-outlined text-primary">speed</span>
+<h2 class="text-slate-900 dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em]">Modo de Performance</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
+<!-- Reduce Motion -->
+<div class="flex items-start justify-between gap-4 p-5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50">
+<div class="flex flex-col gap-1">
+<h3 class="text-slate-900 dark:text-white text-base font-bold">Reduzir Animações</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Desativa transições suaves e efeitos de movimento para economizar CPU.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Low Quality Images -->
+<div class="flex items-start justify-between gap-4 p-5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50">
+<div class="flex flex-col gap-1">
+<h3 class="text-slate-900 dark:text-white text-base font-bold">Otimização de Imagens</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Carrega versões de baixa resolução das evidências de auditoria para economizar memória.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Disable Live Updates -->
+<div class="flex items-start justify-between gap-4 p-5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50">
+<div class="flex flex-col gap-1">
+<h3 class="text-slate-900 dark:text-white text-base font-bold">Pausar Atualizações em Tempo Real</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Interrompe o recebimento automático de novos dados para reduzir uso de rede.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Data Cache -->
+<div class="flex items-start justify-between gap-4 p-5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50">
+<div class="flex flex-col gap-1">
+<h3 class="text-slate-900 dark:text-white text-base font-bold">Cache Local Agressivo</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Armazena mais dados no navegador para evitar recarregamentos.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</div>
+<!-- Appearance Section -->
+<div class="mt-8">
+<div class="flex items-center gap-3 px-4 pb-3 pt-5 border-b border-slate-100 dark:border-slate-800 mb-4">
+<span class="material-symbols-outlined text-primary">palette</span>
+<h2 class="text-slate-900 dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em]">Temas</h2>
+</div>
+<!-- Theme Selection Radios -->
+<div class="flex flex-wrap gap-3 px-4 mb-6">
+<label class="group flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 px-4 h-11 text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-800 has-[:checked]:border-primary has-[:checked]:ring-1 has-[:checked]:ring-primary relative cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700 transition-all select-none">
+<span class="text-sm font-bold mr-2 material-symbols-outlined text-[18px]">light_mode</span>
+<span class="text-sm font-medium">Claro</span>
+<input checked="" class="invisible absolute" name="theme-select" type="radio"/>
+</label>
+<label class="group flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 px-4 h-11 text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-800 has-[:checked]:border-primary has-[:checked]:ring-1 has-[:checked]:ring-primary relative cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700 transition-all select-none">
+<span class="text-sm font-bold mr-2 material-symbols-outlined text-[18px]">dark_mode</span>
+<span class="text-sm font-medium">Escuro</span>
+<input class="invisible absolute" name="theme-select" type="radio"/>
+</label>
+<label class="group flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 px-4 h-11 text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-800 has-[:checked]:border-primary has-[:checked]:ring-1 has-[:checked]:ring-primary relative cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700 transition-all select-none">
+<span class="text-sm font-bold mr-2 material-symbols-outlined text-[18px]">contrast</span>
+<span class="text-sm font-medium">Alto Contraste</span>
+<input class="invisible absolute" name="theme-select" type="radio"/>
+</label>
+</div>
+<!-- Theme Previews Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+<!-- Light Theme Preview -->
+<div class="group relative flex flex-col gap-3 rounded-xl border-2 border-primary bg-slate-50 dark:bg-slate-800 p-4 cursor-pointer overflow-hidden transition-all hover:shadow-md">
+<div class="absolute top-4 right-4 text-primary">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+<div class="h-32 w-full rounded-lg bg-white border border-slate-200 shadow-inner overflow-hidden flex flex-col relative" data-alt="Preview of light interface theme">
+<!-- Mini UI Mockup Light -->
+<div class="h-4 w-full bg-slate-100 border-b border-slate-200 flex items-center px-2 gap-1">
+<div class="size-1.5 rounded-full bg-slate-300"></div>
+<div class="size-1.5 rounded-full bg-slate-300"></div>
+</div>
+<div class="flex-1 flex">
+<div class="w-1/4 bg-slate-50 border-r border-slate-200"></div>
+<div class="flex-1 p-2 space-y-2">
+<div class="h-2 w-1/2 bg-slate-200 rounded"></div>
+<div class="h-12 w-full bg-blue-50/50 rounded border border-blue-100"></div>
+<div class="h-2 w-3/4 bg-slate-200 rounded"></div>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="text-slate-900 dark:text-white text-base font-bold leading-tight">Padrão Claro</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal">Otimizado para produtividade diurna.</p>
+</div>
+</div>
+<!-- Dark Theme Preview -->
+<div class="group relative flex flex-col gap-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-4 cursor-pointer hover:border-primary/50 transition-all hover:shadow-md">
+<div class="h-32 w-full rounded-lg bg-slate-900 border border-slate-700 shadow-inner overflow-hidden flex flex-col relative" data-alt="Preview of dark interface theme">
+<!-- Mini UI Mockup Dark -->
+<div class="h-4 w-full bg-slate-800 border-b border-slate-700 flex items-center px-2 gap-1">
+<div class="size-1.5 rounded-full bg-slate-600"></div>
+<div class="size-1.5 rounded-full bg-slate-600"></div>
+</div>
+<div class="flex-1 flex">
+<div class="w-1/4 bg-slate-800/50 border-r border-slate-700"></div>
+<div class="flex-1 p-2 space-y-2">
+<div class="h-2 w-1/2 bg-slate-700 rounded"></div>
+<div class="h-12 w-full bg-blue-900/20 rounded border border-blue-900/30"></div>
+<div class="h-2 w-3/4 bg-slate-700 rounded"></div>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="text-slate-900 dark:text-white text-base font-bold leading-tight">Padrão Escuro</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal">Conforto visual para ambientes com pouca luz.</p>
+</div>
+</div>
+<!-- High Contrast Preview -->
+<div class="group relative flex flex-col gap-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-4 cursor-pointer hover:border-primary/50 transition-all hover:shadow-md">
+<div class="h-32 w-full rounded-lg bg-white border-2 border-black overflow-hidden flex flex-col relative" data-alt="Preview of high contrast interface theme">
+<!-- Mini UI Mockup High Contrast -->
+<div class="h-4 w-full bg-black border-b-2 border-black flex items-center px-2 gap-1">
+<div class="size-1.5 rounded-full bg-white"></div>
+</div>
+<div class="flex-1 flex">
+<div class="w-1/4 bg-white border-r-2 border-black"></div>
+<div class="flex-1 p-2 space-y-2">
+<div class="h-2 w-1/2 bg-black rounded-none"></div>
+<div class="h-12 w-full bg-white rounded-none border-2 border-black"></div>
+<div class="h-2 w-3/4 bg-black rounded-none"></div>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="text-slate-900 dark:text-white text-base font-bold leading-tight">Alto Contraste</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal">Máxima distinção entre elementos.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- System Info Footer -->
+<div class="mt-8 mx-4 p-4 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-900/30 flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-0.5">info</span>
+<div class="text-sm">
+<p class="text-slate-900 dark:text-white font-semibold">Uso de Recursos Atual</p>
+<p class="text-slate-600 dark:text-slate-300 mt-1">O navegador está usando aproximadamente <span class="font-mono font-bold">128MB</span> de memória. O Modo de Performance está <span class="text-green-600 dark:text-green-400 font-bold">Ativo</span>.</p>
+</div>
+</div>
+</main>
+<!-- Mobile Save Button (Sticky Footer) -->
+<div class="md:hidden sticky bottom-0 left-0 right-0 p-4 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] mt-auto z-10 flex gap-3">
+<button class="flex-1 flex items-center justify-center rounded-lg h-12 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white text-sm font-bold border border-slate-200 dark:border-slate-700">
+                           Redefinir
+                        </button>
+<button class="flex-[2] flex items-center justify-center rounded-lg h-12 bg-primary text-white text-sm font-bold shadow-lg shadow-primary/30">
+                            Salvar Alterações
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

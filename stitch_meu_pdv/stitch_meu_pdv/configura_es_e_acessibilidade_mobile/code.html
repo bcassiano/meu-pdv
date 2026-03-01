@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Configurações e Acessibilidade Mobile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#eca413",
+                        "background-light": "#fcfaf8",
+                        "background-dark": "#221c10",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#2d261a",
+                        "text-primary-light": "#1b170d",
+                        "text-primary-dark": "#f3efe7",
+                        "text-secondary-light": "#9a804c",
+                        "text-secondary-dark": "#d4c5a3",
+                        "border-light": "#e7dfcf",
+                        "border-dark": "#4a3f2b",
+                        "warning": "#ef4444",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-primary-light dark:text-text-primary-dark min-h-screen flex flex-col">
+<!-- Persistent Sync Bar -->
+<div class="bg-primary px-4 py-3 text-background-dark font-medium flex items-center justify-between sticky top-0 z-50 shadow-sm">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px]">cloud_off</span>
+<span class="text-sm font-bold">5 coletas pendentes</span>
+</div>
+<button class="bg-black/20 hover:bg-black/30 text-xs font-bold py-1.5 px-3 rounded-full transition-colors">
+            Sincronizar
+        </button>
+</div>
+<!-- Header -->
+<header class="flex items-center gap-4 px-4 py-4 border-b border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark sticky top-[48px] z-40">
+<button class="flex items-center justify-center p-2 -ml-2 rounded-full hover:bg-border-light dark:hover:bg-border-dark transition-colors text-text-primary-light dark:text-text-primary-dark">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="text-xl font-bold tracking-tight flex-1">Configurações</h1>
+</header>
+<main class="flex-1 max-w-md mx-auto w-full pb-20 p-4 space-y-6">
+<!-- User Profile Card -->
+<div class="flex items-center gap-4 p-4 bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm border border-border-light dark:border-border-dark">
+<div class="relative w-14 h-14 rounded-full overflow-hidden bg-border-light dark:bg-border-dark shrink-0">
+<div class="w-full h-full bg-cover bg-center" data-alt="Portrait of a smiling man" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDsNaGnJcw-FaVpeFfahQYbz8HdFFnOXaubcmi6VV1cMR4uuL2wv7Tgijy_XBB9O3EbZl8TGKQ8T91Olbq5NQLLp1K59_zxQHF4PM-tu6gFq-LSFWDAevk3W173nUTK_XIHwGnS2zFgbhG5mT6PcEDP1Nq0VD6oyYegj542n1HOc4f-_MMsexr97mGFGCMKsGhD_ZJZArHPgu-bdfbjy7YtSjpCFoNQswaOuUeWVVz2T_I6RfDDqiEHb8AznrMWodHCE2AWiW9JeSU');"></div>
+</div>
+<div class="flex-1 min-w-0">
+<h2 class="text-lg font-bold truncate">Carlos Silva</h2>
+<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark truncate">Promotor Regional - Sul</p>
+</div>
+<button class="text-primary font-medium text-sm p-2">Editar</button>
+</div>
+<!-- Visual Settings Section -->
+<section class="space-y-3">
+<h3 class="text-sm font-bold uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark px-1">Visual e Acessibilidade</h3>
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark overflow-hidden divide-y divide-border-light dark:divide-border-dark">
+<!-- Font Size -->
+<div class="p-4 space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-text-secondary-light dark:text-text-secondary-dark">format_size</span>
+<span class="font-medium">Tamanho da Fonte</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2 pt-2">
+<label class="cursor-pointer group">
+<input checked="" class="peer sr-only" name="fontsize" type="radio"/>
+<div class="h-10 flex items-center justify-center rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark text-sm peer-checked:bg-primary peer-checked:text-background-dark peer-checked:border-primary peer-checked:font-bold transition-all">
+                                Aa
+                            </div>
+</label>
+<label class="cursor-pointer group">
+<input class="peer sr-only" name="fontsize" type="radio"/>
+<div class="h-10 flex items-center justify-center rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark text-base peer-checked:bg-primary peer-checked:text-background-dark peer-checked:border-primary peer-checked:font-bold transition-all">
+                                Aa
+                            </div>
+</label>
+<label class="cursor-pointer group">
+<input class="peer sr-only" name="fontsize" type="radio"/>
+<div class="h-10 flex items-center justify-center rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark text-lg peer-checked:bg-primary peer-checked:text-background-dark peer-checked:border-primary peer-checked:font-bold transition-all">
+                                Aa
+                            </div>
+</label>
+</div>
+</div>
+<!-- High Contrast Dark Mode -->
+<div class="flex items-center justify-between p-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-text-secondary-light dark:text-text-secondary-dark">contrast</span>
+<div class="flex flex-col">
+<span class="font-medium">Alto Contraste</span>
+<span class="text-xs text-text-secondary-light dark:text-text-secondary-dark">Melhor legibilidade em sol forte</span>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-border-light peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 rounded-full peer dark:bg-border-dark peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</section>
+<!-- Data & Performance Section -->
+<section class="space-y-3">
+<h3 class="text-sm font-bold uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark px-1">Dados e Performance</h3>
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark overflow-hidden divide-y divide-border-light dark:divide-border-dark">
+<!-- Data Saver Mode -->
+<div class="flex items-center justify-between p-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-text-secondary-light dark:text-text-secondary-dark">data_saver_on</span>
+<div class="flex flex-col">
+<span class="font-medium">Economia de Dados</span>
+<span class="text-xs text-text-secondary-light dark:text-text-secondary-dark">Reduz qualidade das fotos</span>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-border-light peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 rounded-full peer dark:bg-border-dark peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Offline Mode Indicator (Info Only) -->
+<div class="flex items-center justify-between p-4 bg-background-light dark:bg-background-dark/50">
+<div class="flex items-center gap-3 opacity-70">
+<span class="material-symbols-outlined text-text-secondary-light dark:text-text-secondary-dark">wifi_off</span>
+<div class="flex flex-col">
+<span class="font-medium">Modo Offline Automático</span>
+<span class="text-xs text-text-secondary-light dark:text-text-secondary-dark">Ativo quando sinal fraco</span>
+</div>
+</div>
+<span class="text-xs font-bold text-primary px-2 py-1 bg-primary/10 rounded">AUTO</span>
+</div>
+</div>
+</section>
+<!-- Feedback Section -->
+<section class="space-y-3">
+<h3 class="text-sm font-bold uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark px-1">Feedback do Sistema</h3>
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark overflow-hidden divide-y divide-border-light dark:divide-border-dark">
+<!-- Sound Confirmation -->
+<div class="flex items-center justify-between p-4 hover:bg-background-light dark:hover:bg-background-dark/50 transition-colors cursor-pointer">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-text-secondary-light dark:text-text-secondary-dark">volume_up</span>
+<div class="flex flex-col">
+<span class="font-medium">Som ao Concluir</span>
+<span class="text-xs text-text-secondary-light dark:text-text-secondary-dark">Confirmação auditiva de coleta</span>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer pointer-events-none">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-border-light peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 rounded-full peer dark:bg-border-dark peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Vibrate on Sync -->
+<div class="flex items-center justify-between p-4 hover:bg-background-light dark:hover:bg-background-dark/50 transition-colors cursor-pointer">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-text-secondary-light dark:text-text-secondary-dark">vibration</span>
+<div class="flex flex-col">
+<span class="font-medium">Vibrar ao Sincronizar</span>
+<span class="text-xs text-text-secondary-light dark:text-text-secondary-dark">Feedback tátil de sucesso</span>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer pointer-events-none">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-border-light peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 rounded-full peer dark:bg-border-dark peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</section>
+<!-- System Info -->
+<div class="flex flex-col items-center justify-center pt-8 pb-4 text-center opacity-60">
+<p class="text-xs text-text-secondary-light dark:text-text-secondary-dark">Versão 2.4.1 (Build 8902)</p>
+<p class="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-1">ID do Dispositivo: A78-B99-C01</p>
+<button class="mt-6 text-warning hover:text-red-600 text-sm font-medium flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors">
+<span class="material-symbols-outlined text-[18px]">logout</span>
+                Sair da Conta
+            </button>
+</div>
+</main>
+<!-- Bottom Navigation (Mobile) -->
+<nav class="fixed bottom-0 left-0 w-full bg-surface-light dark:bg-surface-dark border-t border-border-light dark:border-border-dark flex justify-around items-center py-2 px-2 z-50 pb-[env(safe-area-inset-bottom)]">
+<a class="flex flex-col items-center gap-1 p-2 w-16 text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">home</span>
+<span class="text-[10px] font-medium">Início</span>
+</a>
+<a class="flex flex-col items-center gap-1 p-2 w-16 text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">add_circle</span>
+<span class="text-[10px] font-medium">Coleta</span>
+</a>
+<a class="flex flex-col items-center gap-1 p-2 w-16 text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">history</span>
+<span class="text-[10px] font-medium">Histórico</span>
+</a>
+<a class="flex flex-col items-center gap-1 p-2 w-16 text-primary" href="#">
+<span class="material-symbols-outlined text-[24px] font-variation-settings-fill">settings</span>
+<span class="text-[10px] font-bold">Config</span>
+</a>
+</nav>
+<style>
+        .font-variation-settings-fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</body></html>

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Trade Analytics - Auditoria e Benchmarking</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "slate-800": "#1e293b", 
+                        "slate-700": "#334155",
+                        "slate-600": "#475569",
+                        "slate-400": "#94a3b8",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for table container */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased overflow-hidden">
+<div class="flex h-screen w-full flex-row overflow-hidden">
+<!-- Sidebar -->
+<div class="flex h-full w-72 flex-col bg-[#111722] border-r border-slate-800 flex-shrink-0 transition-all duration-300">
+<div class="flex h-full flex-col justify-between p-4">
+<div class="flex flex-col gap-6">
+<div class="flex items-center gap-3 px-2">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-10 w-10 border border-slate-700 shadow-sm" data-alt="User profile avatar image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCw_gm9aOcQLyPDp_6h4lmR8S1AvbJJWT-0tTD22mPlNFZH2M549T5xLA-gSiYDT-6yE9SORS4toMq8lUv6B-yi_9xVLbtE--QHAyB6e1KJFZg1gRQlRIjzQJytbbP2FG5rgit_1AhJDZRsVEcQiIFCOzxtLXUzak7N49mRs01cIRXG4iKtH7WLv5RfF8-AJe4cxk5qFTxdR3sJpmI2thu45FmcAeTH824BP2jw9s_qg91-Wjux_Fas5laYIwrDdHlMB5FTWQMPiy0");'></div>
+<div class="flex flex-col">
+<h1 class="text-white text-base font-semibold leading-tight">Trade Analytics</h1>
+<p class="text-slate-400 text-xs font-normal">Auditoria &amp; Benchmarks</p>
+</div>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">pie_chart</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">view_in_ar</span>
+<span class="text-sm font-medium">Auditoria de SKU</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/20 text-white border-l-4 border-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px] text-primary">balance</span>
+<span class="text-sm font-medium">Benchmarking</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">notifications</span>
+<span class="text-sm font-medium">Alertas</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">settings</span>
+<span class="text-sm font-medium">Configurações</span>
+</a>
+</nav>
+</div>
+<div class="mt-auto px-2 pb-4">
+<div class="p-4 rounded-xl bg-gradient-to-br from-slate-800 to-[#151b2b] border border-slate-700/50">
+<div class="flex items-center gap-2 mb-2 text-primary">
+<span class="material-symbols-outlined text-[20px]">trending_up</span>
+<span class="text-xs font-bold uppercase tracking-wider">Insight do Dia</span>
+</div>
+<p class="text-sm text-slate-300 leading-snug">Ruptura no Carrefour caiu 2% na última semana. Bom trabalho!</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<div class="flex flex-1 flex-col h-full overflow-hidden bg-background-light dark:bg-background-dark relative">
+<!-- Header/Breadcrumbs -->
+<header class="flex items-center justify-between px-8 py-5 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-[#101622] z-10">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 text-sm">
+<a class="text-slate-500 hover:text-primary transition-colors" href="#">Home</a>
+<span class="text-slate-600">/</span>
+<a class="text-slate-500 hover:text-primary transition-colors" href="#">Auditoria</a>
+<span class="text-slate-600">/</span>
+<span class="text-slate-900 dark:text-white font-medium">Coca-Cola Lata 350ml</span>
+</div>
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Benchmarking de Redes</h1>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span>
+</span>
+<select class="pl-10 pr-8 py-2 bg-slate-100 dark:bg-slate-800 border-none rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-primary cursor-pointer">
+<option>Últimos 30 dias</option>
+<option>Este Mês</option>
+<option>Último Trimestre</option>
+</select>
+</div>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-blue-700 text-white text-sm font-semibold rounded-lg shadow-lg shadow-primary/20 transition-all">
+<span class="material-symbols-outlined text-[20px]">download</span>
+<span>Exportar Relatório</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Content Area -->
+<main class="flex-1 overflow-y-auto p-8 scrollbar-hide">
+<div class="flex flex-col gap-8 max-w-[1400px] mx-auto">
+<!-- KPI Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="p-5 rounded-xl bg-white dark:bg-[#161e2e] border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<p class="text-slate-500 text-sm font-medium">Preço Médio Nacional</p>
+<span class="material-symbols-outlined text-slate-400 text-[20px]">attach_money</span>
+</div>
+<div class="flex items-baseline gap-2">
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white">R$ 4,59</h3>
+<span class="text-emerald-500 text-xs font-semibold bg-emerald-500/10 px-1.5 py-0.5 rounded flex items-center">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span> 2.1%
+                                </span>
+</div>
+</div>
+<div class="p-5 rounded-xl bg-white dark:bg-[#161e2e] border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<p class="text-slate-500 text-sm font-medium">Presença Total</p>
+<span class="material-symbols-outlined text-slate-400 text-[20px]">visibility</span>
+</div>
+<div class="flex items-baseline gap-2">
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white">88%</h3>
+<span class="text-emerald-500 text-xs font-semibold bg-emerald-500/10 px-1.5 py-0.5 rounded flex items-center">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span> 5.0%
+                                </span>
+</div>
+</div>
+<div class="p-5 rounded-xl bg-white dark:bg-[#161e2e] border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<p class="text-slate-500 text-sm font-medium">Ruptura Média</p>
+<span class="material-symbols-outlined text-slate-400 text-[20px]">production_quantity_limits</span>
+</div>
+<div class="flex items-baseline gap-2">
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white">12%</h3>
+<span class="text-emerald-500 text-xs font-semibold bg-emerald-500/10 px-1.5 py-0.5 rounded flex items-center">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span> 1.5%
+                                </span>
+</div>
+</div>
+<div class="p-5 rounded-xl bg-white dark:bg-[#161e2e] border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<p class="text-slate-500 text-sm font-medium">Share de Gôndola</p>
+<span class="material-symbols-outlined text-slate-400 text-[20px]">shelves</span>
+</div>
+<div class="flex items-baseline gap-2">
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white">35%</h3>
+<span class="text-emerald-500 text-xs font-semibold bg-emerald-500/10 px-1.5 py-0.5 rounded flex items-center">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span> 0.8%
+                                </span>
+</div>
+</div>
+</div>
+<!-- Main Table Section -->
+<div class="bg-white dark:bg-[#161e2e] rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+<div class="px-6 py-5 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
+<h2 class="text-lg font-bold text-slate-900 dark:text-white">Performance por Varejista</h2>
+<button class="text-primary text-sm font-medium hover:underline flex items-center gap-1">
+                                Ver análise completa <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-[#111722] text-xs uppercase text-slate-500 font-semibold border-b border-slate-200 dark:border-slate-800">
+<th class="px-6 py-4">Rede Varejista</th>
+<th class="px-6 py-4 text-center">Presença</th>
+<th class="px-6 py-4 text-right">Preço Médio</th>
+<th class="px-6 py-4 text-right">Preço Mín</th>
+<th class="px-6 py-4 text-right">Preço Máx</th>
+<th class="px-6 py-4 text-center">Ruptura</th>
+<th class="px-6 py-4 text-center">Status</th>
+</tr>
+</thead>
+<tbody class="text-sm">
+<tr class="border-b border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-xs">CR</div>
+<span class="font-medium text-slate-900 dark:text-white">Carrefour</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center justify-center gap-2">
+<div class="w-24 h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-emerald-500 w-[92%]"></div>
+</div>
+<span class="text-xs font-medium text-slate-600 dark:text-slate-400">92%</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right font-medium text-slate-900 dark:text-slate-200">R$ 4,49</td>
+<td class="px-6 py-4 text-right text-slate-500">R$ 4,29</td>
+<td class="px-6 py-4 text-right text-slate-500">R$ 4,89</td>
+<td class="px-6 py-4 text-center text-rose-500 font-medium">8%</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
+                                                Excelente
+                                            </span>
+</td>
+</tr>
+<tr class="border-b border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 font-bold text-xs">GP</div>
+<span class="font-medium text-slate-900 dark:text-white">Grupo Pão de Açúcar</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center justify-center gap-2">
+<div class="w-24 h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-emerald-500 w-[85%]"></div>
+</div>
+<span class="text-xs font-medium text-slate-600 dark:text-slate-400">85%</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right font-medium text-slate-900 dark:text-slate-200">R$ 4,89</td>
+<td class="px-6 py-4 text-right text-slate-500">R$ 4,59</td>
+<td class="px-6 py-4 text-right text-slate-500">R$ 5,19</td>
+<td class="px-6 py-4 text-center text-amber-500 font-medium">15%</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                                                Bom
+                                            </span>
+</td>
+</tr>
+<tr class="border-b border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center text-red-600 dark:text-red-400 font-bold text-xs">AS</div>
+<span class="font-medium text-slate-900 dark:text-white">Assaí Atacadista</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center justify-center gap-2">
+<div class="w-24 h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-yellow-500 w-[78%]"></div>
+</div>
+<span class="text-xs font-medium text-slate-600 dark:text-slate-400">78%</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right font-medium text-slate-900 dark:text-slate-200">R$ 4,19</td>
+<td class="px-6 py-4 text-right text-slate-500">R$ 3,99</td>
+<td class="px-6 py-4 text-right text-slate-500">R$ 4,39</td>
+<td class="px-6 py-4 text-center text-rose-500 font-medium">22%</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400">
+                                                Atenção
+                                            </span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400 font-bold text-xs">MT</div>
+<span class="font-medium text-slate-900 dark:text-white">Mateus Supermercados</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center justify-center gap-2">
+<div class="w-24 h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-emerald-500 w-[95%]"></div>
+</div>
+<span class="text-xs font-medium text-slate-600 dark:text-slate-400">95%</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right font-medium text-slate-900 dark:text-slate-200">R$ 4,35</td>
+<td class="px-6 py-4 text-right text-slate-500">R$ 4,15</td>
+<td class="px-6 py-4 text-right text-slate-500">R$ 4,55</td>
+<td class="px-6 py-4 text-center text-emerald-500 font-medium">5%</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
+                                                Excelente
+                                            </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Examples Section -->
+<div class="flex flex-col gap-4">
+<div class="flex justify-between items-end">
+<div>
+<h2 class="text-xl font-bold text-slate-900 dark:text-white mb-1">Exemplos de Execução</h2>
+<p class="text-slate-500 text-sm">Registro fotográfico da gôndola em pontos de venda auditados.</p>
+</div>
+<div class="flex gap-2">
+<button class="p-2 rounded-full border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[20px]">arrow_back</span>
+</button>
+<button class="p-2 rounded-full border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Card 1 -->
+<div class="group relative aspect-[4/3] rounded-xl overflow-hidden cursor-pointer shadow-lg border border-slate-200 dark:border-slate-800">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Supermarket shelf full of products" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDHcyDn4DHqOwTqMQ60-X5L-VAhmaiDrupZohEAfVr4oJTHzMMFJpV3Q9UeA0Jau1Ql9Vj11QAoQ8a6ABvP4_CV6e9i-9sb1CL5pe4Zzri2kGeZb9W2zZD6Lo_vegCPzXB8tuGm3orZF-zpHzm1fCKxQGSOwdDNXAi98GNcWQcaGHT0-SKvbjVqmFA07x9kaqlFpR9flF9kh-ABWL-O-NeuuBuIPRmHQgi0SjYT7CNFOMSdbYjMe5xs5sdlQjcEss3Ft3cc4Ud3Ldo");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90"></div>
+<div class="absolute bottom-0 left-0 p-4 w-full">
+<div class="flex justify-between items-end">
+<div>
+<span class="inline-block px-2 py-1 rounded bg-blue-600/90 text-white text-[10px] font-bold mb-1">CARREFOUR</span>
+<p class="text-white text-sm font-medium">Loja Pinheiros - SP</p>
+<p class="text-slate-300 text-xs">15 Ago, 14:30</p>
+</div>
+<div class="h-8 w-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[18px]">zoom_in</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group relative aspect-[4/3] rounded-xl overflow-hidden cursor-pointer shadow-lg border border-slate-200 dark:border-slate-800">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Grocery store aisle with various products" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBdRp5ck0o_EHumkMbg1HeJPB0X9V01XRZddbQzWgQykaI2LWmT9RDkTIyv7CyrMCgVbGdZKRiJRVrp-SH4sFsxpIJQn6r7wiIhibux3h_3qTp7WE4Q0LMBkKNttFfFnUlzHfBAUNKcY5JPaaUxb_pfqaNiiGL0rX1Uj2TT0YsZfHr6aVv-Fw8LgDXXHvM6k_xq4rLnS4tFZm3oUAEai1JuIuB5Oq9kAilysQirvurQxV1NqWIspXOf7AQw4sJCjjfNHdArl9IBcdA");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90"></div>
+<div class="absolute top-3 right-3">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-rose-500/90 text-white text-[10px] font-bold">
+<span class="material-symbols-outlined text-[12px]">warning</span> RUPTURA
+                                     </span>
+</div>
+<div class="absolute bottom-0 left-0 p-4 w-full">
+<div class="flex justify-between items-end">
+<div>
+<span class="inline-block px-2 py-1 rounded bg-green-600/90 text-white text-[10px] font-bold mb-1">PÃO DE AÇÚCAR</span>
+<p class="text-white text-sm font-medium">Loja Leblon - RJ</p>
+<p class="text-slate-300 text-xs">14 Ago, 10:15</p>
+</div>
+<div class="h-8 w-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[18px]">zoom_in</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="group relative aspect-[4/3] rounded-xl overflow-hidden cursor-pointer shadow-lg border border-slate-200 dark:border-slate-800">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Shelves stocked with beverage cans" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDJfgRTVftFs4ZSKdV0QdqTE3Hcl1v1XPgxeGhNX3sZcd3S78W0Jd7ecqMVSTcdsZbVjaoKTdvfQIWssv12iiMqLOf58oiJ0TQxYcDrhzyepWd2mzOb9pV7yqWhWsbFoxkzHqSFApwsqqogvbDCVYpDu_aU9M6fw-7a_0e0kfygOJchoGSAKS_ExNxO3eWDybZzUgbOCEm_A5TDWnESbStFVNNupBZ7hYcMEosmrSqi7ITFOzU-U_QCiQauhCMR8q3GvN3XWAdJYuk");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90"></div>
+<div class="absolute bottom-0 left-0 p-4 w-full">
+<div class="flex justify-between items-end">
+<div>
+<span class="inline-block px-2 py-1 rounded bg-yellow-600/90 text-white text-[10px] font-bold mb-1">ASSAÍ</span>
+<p class="text-white text-sm font-medium">Loja Barra Funda - SP</p>
+<p class="text-slate-300 text-xs">14 Ago, 16:45</p>
+</div>
+<div class="h-8 w-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[18px]">zoom_in</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="group relative aspect-[4/3] rounded-xl overflow-hidden cursor-pointer shadow-lg border border-slate-200 dark:border-slate-800">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Organized supermarket shelf with red branding" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAKMk0ekwmQMh8UQAYENniXy7wmuujjQgwdT0M5RilK-aMgkKStmpaxRGBPw9BgqPT5U4-3RvOLOcwE1hxCd5Bu7nDutAbnBSrJfT4N03yL__Apxe4Z8s5QozHWxi3qwKF3_xIq5jW5o0Rq1Fex6BtsHM74rnKeNKdIeainEEtsNlKXydkG37Mq9ItCUEufpRamu3F_RakgwvMeI8SrwN6jPVWvtATgWoIUct-DXp1AyRH6x_GBRhFwo4EO6NJwyDX81KJqPMyJoFw");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90"></div>
+<div class="absolute bottom-0 left-0 p-4 w-full">
+<div class="flex justify-between items-end">
+<div>
+<span class="inline-block px-2 py-1 rounded bg-orange-600/90 text-white text-[10px] font-bold mb-1">MATEUS</span>
+<p class="text-white text-sm font-medium">Loja Renascença - MA</p>
+<p class="text-slate-300 text-xs">13 Ago, 09:20</p>
+</div>
+<div class="h-8 w-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[18px]">zoom_in</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

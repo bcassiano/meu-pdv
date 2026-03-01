@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Log de Auditoria de Treinamentos</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "primary-hover": "#0d42af",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0f172a", /* Using slate-900 as base to match slate sidebar feel better */
+                        "sidebar-bg": "#1e293b", /* Specific request for Slate sidebar */
+                        "surface-dark": "#1e293b",
+                        "border-dark": "#334155",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased overflow-hidden">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Side Navigation -->
+<aside class="w-64 flex-shrink-0 flex flex-col bg-sidebar-bg border-r border-slate-700/50">
+<div class="flex h-16 items-center px-6 border-b border-slate-700/50">
+<div class="flex items-center gap-3">
+<div class="flex items-center justify-center size-8 rounded bg-primary text-white">
+<span class="material-symbols-outlined text-xl">security</span>
+</div>
+<h1 class="text-white text-lg font-bold tracking-tight">Admin Portal</h1>
+</div>
+</div>
+<div class="flex flex-col gap-1 p-4 flex-1 overflow-y-auto">
+<div class="px-2 py-3 mb-2">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 ring-2 ring-slate-600" data-alt="Portrait of admin user" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDCHi58nypHSyVAJaVyrX1Xk5tiE9s1LIo6GwY6Ozr5aIueqm5BnXOVS2hkY0NYC2HET5CPK0oCi6Ykk-HM9BFTH_P-CRKzf9bK8x5r0CsnW9VaSjTSd2agTErLTd1sf_g8U_Sg-qA1UuPzTSGSqxGcUUWn37LX99weczW516ak9Jji9H6hMP_hbiOvUGsqjUrYkT7816MyuxgYajeAHIkvNiZCjxIRlrzItJtQom6JG_WAu-k3-VZSJRJTBWier4PRp8d_rasV8lE");'></div>
+<div class="flex flex-col">
+<span class="text-slate-200 text-sm font-semibold">Roberto Mendes</span>
+<span class="text-slate-400 text-xs">Auditoria &amp; Compliance</span>
+</div>
+</div>
+</div>
+<p class="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mt-2 mb-1">Menu Principal</p>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary border border-primary/20 transition-colors" href="#">
+<span class="material-symbols-outlined fill-1">fact_check</span>
+<span class="text-sm font-semibold">Auditoria de Treinamentos</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">groups</span>
+<span class="text-sm font-medium">Equipe</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">description</span>
+<span class="text-sm font-medium">Relatórios</span>
+</a>
+<p class="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mt-6 mb-1">Sistema</p>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">settings</span>
+<span class="text-sm font-medium">Configurações</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-red-400 transition-colors">logout</span>
+<span class="text-sm font-medium">Sair</span>
+</a>
+</div>
+<div class="p-4 border-t border-slate-700/50">
+<div class="bg-slate-800/50 rounded-lg p-3 border border-slate-700">
+<p class="text-xs text-slate-400 mb-2">Armazenamento de Certificados</p>
+<div class="w-full bg-slate-700 rounded-full h-1.5 mb-1">
+<div class="bg-primary h-1.5 rounded-full" style="width: 75%"></div>
+</div>
+<p class="text-xs text-right text-slate-300">75% usado</p>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Header -->
+<header class="h-16 flex items-center justify-between px-6 bg-background-dark/80 backdrop-blur-md border-b border-border-dark z-10 sticky top-0">
+<div>
+<nav aria-label="Breadcrumb" class="flex text-sm text-slate-400 mb-1">
+<ol class="flex items-center space-x-2">
+<li><a class="hover:text-primary transition-colors" href="#">Home</a></li>
+<li><span class="text-slate-600">/</span></li>
+<li><span class="text-slate-100 font-medium">Log de Auditoria</span></li>
+</ol>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="relative p-2 text-slate-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 size-2 bg-red-500 rounded-full border-2 border-background-dark"></span>
+</button>
+<button class="flex items-center gap-2 px-3 py-1.5 rounded bg-primary text-white text-sm font-medium hover:bg-primary-hover transition-colors shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span>Exportar Relatório</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Content Area -->
+<div class="flex-1 overflow-y-auto p-6 md:p-8 lg:px-12">
+<div class="max-w-[1400px] mx-auto space-y-6">
+<!-- Title Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div class="space-y-1">
+<h2 class="text-2xl font-bold text-white tracking-tight">Log de Auditoria de Treinamentos</h2>
+<p class="text-slate-400 text-sm max-w-2xl">
+                                Acompanhe a conformidade, notas e emissão de certificados dos promotores em tempo real para garantir o compliance operacional.
+                            </p>
+</div>
+</div>
+<!-- Filters Section -->
+<div class="bg-surface-dark border border-border-dark rounded-xl p-4 shadow-sm">
+<div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-4">
+<div class="md:col-span-2 lg:col-span-2 relative">
+<label class="absolute -top-2 left-2 px-1 bg-surface-dark text-xs text-slate-400 font-medium">Buscar Promotor</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-slate-500 text-[20px]">search</span>
+<input class="w-full bg-background-dark border border-border-dark rounded-lg py-2 pl-10 pr-4 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="Nome ou matrícula..." type="text"/>
+</div>
+</div>
+<div class="relative">
+<label class="absolute -top-2 left-2 px-1 bg-surface-dark text-xs text-slate-400 font-medium">Status Certificado</label>
+<select class="w-full bg-background-dark border border-border-dark rounded-lg py-2 pl-3 pr-8 text-sm text-slate-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary appearance-none cursor-pointer">
+<option>Todos</option>
+<option>Emitido</option>
+<option>Pendente</option>
+<option>Expirando</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-2.5 text-slate-500 text-[20px] pointer-events-none">expand_more</span>
+</div>
+<div class="relative">
+<label class="absolute -top-2 left-2 px-1 bg-surface-dark text-xs text-slate-400 font-medium">Regional</label>
+<select class="w-full bg-background-dark border border-border-dark rounded-lg py-2 pl-3 pr-8 text-sm text-slate-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary appearance-none cursor-pointer">
+<option>Todas</option>
+<option>São Paulo (SP)</option>
+<option>Rio de Janeiro (RJ)</option>
+<option>Sul</option>
+<option>Nordeste</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-2.5 text-slate-500 text-[20px] pointer-events-none">expand_more</span>
+</div>
+<div class="relative">
+<label class="absolute -top-2 left-2 px-1 bg-surface-dark text-xs text-slate-400 font-medium">Módulo</label>
+<select class="w-full bg-background-dark border border-border-dark rounded-lg py-2 pl-3 pr-8 text-sm text-slate-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary appearance-none cursor-pointer">
+<option>Todos</option>
+<option>Coleta de Preços</option>
+<option>Ruptura</option>
+<option>Merchandising</option>
+<option>Segurança</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-2.5 text-slate-500 text-[20px] pointer-events-none">expand_more</span>
+</div>
+<div class="flex items-center">
+<button class="w-full h-[38px] flex items-center justify-center gap-2 text-slate-300 hover:text-white border border-border-dark hover:bg-slate-800 rounded-lg transition-colors text-sm font-medium">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+<span>Mais Filtros</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Table Section -->
+<div class="bg-surface-dark border border-border-dark rounded-xl shadow-sm overflow-hidden flex flex-col">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-800/50 border-b border-border-dark text-xs uppercase text-slate-400 font-semibold tracking-wide">
+<th class="px-6 py-4 min-w-[160px]">
+<div class="flex items-center gap-1 cursor-pointer hover:text-slate-200">
+                                                Data Conclusão
+                                                <span class="material-symbols-outlined text-[16px]">arrow_drop_down</span>
+</div>
+</th>
+<th class="px-6 py-4 min-w-[200px]">Promotor</th>
+<th class="px-6 py-4 min-w-[220px]">Módulo de Treinamento</th>
+<th class="px-6 py-4 text-center">Nota Quiz</th>
+<th class="px-6 py-4">Status Certificado</th>
+<th class="px-6 py-4">Tempo Estudo</th>
+<th class="px-6 py-4 text-right">Ações</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-dark text-sm">
+<!-- Row 1 -->
+<tr class="group hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4 text-slate-300 whitespace-nowrap">
+                                            12 Out 2023 <span class="text-slate-500 text-xs ml-1">14:30</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xs">JS</div>
+<div>
+<div class="text-slate-200 font-medium">João Silva</div>
+<div class="text-slate-500 text-xs">ID: 48291 • SP</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-300">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-500 text-[18px]">price_check</span>
+                                                Coleta de Preços
+                                            </div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                                                95%
+                                            </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1.5 text-emerald-400">
+<span class="material-symbols-outlined text-[18px] fill-1">verified</span>
+<span class="font-medium text-xs">Emitido</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-400">45 min</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary hover:text-primary-hover font-medium text-xs hover:underline">Ver Detalhes</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="group hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4 text-slate-300 whitespace-nowrap">
+                                            12 Out 2023 <span class="text-slate-500 text-xs ml-1">10:15</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 font-bold text-xs">MS</div>
+<div>
+<div class="text-slate-200 font-medium">Maria Souza</div>
+<div class="text-slate-500 text-xs">ID: 48295 • RJ</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-300">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-500 text-[18px]">inventory_2</span>
+                                                Ruptura de Gôndola
+                                            </div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                                                88%
+                                            </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1.5 text-amber-400">
+<span class="material-symbols-outlined text-[18px]">pending</span>
+<span class="font-medium text-xs">Pendente</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-400">30 min</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary hover:text-primary-hover font-medium text-xs hover:underline">Ver Detalhes</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4 text-slate-300 whitespace-nowrap">
+                                            11 Out 2023 <span class="text-slate-500 text-xs ml-1">16:45</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-cyan-500/20 flex items-center justify-center text-cyan-400 font-bold text-xs">CL</div>
+<div>
+<div class="text-slate-200 font-medium">Carlos Lima</div>
+<div class="text-slate-500 text-xs">ID: 48301 • Sul</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-300">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-500 text-[18px]">storefront</span>
+                                                Merchandising
+                                            </div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                                                100%
+                                            </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1.5 text-emerald-400">
+<span class="material-symbols-outlined text-[18px] fill-1">verified</span>
+<span class="font-medium text-xs">Emitido</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-400">55 min</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary hover:text-primary-hover font-medium text-xs hover:underline">Ver Detalhes</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="group hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4 text-slate-300 whitespace-nowrap">
+                                            10 Out 2023 <span class="text-slate-500 text-xs ml-1">09:00</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-rose-500/20 flex items-center justify-center text-rose-400 font-bold text-xs">AP</div>
+<div>
+<div class="text-slate-200 font-medium">Ana Paula</div>
+<div class="text-slate-500 text-xs">ID: 48310 • NE</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-300">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-500 text-[18px]">health_and_safety</span>
+                                                Segurança no Trabalho
+                                            </div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                                                92%
+                                            </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1.5 text-yellow-400" title="Renovação Necessária em 5 dias">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+<span class="font-medium text-xs">Expirando</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-400">40 min</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary hover:text-primary-hover font-medium text-xs hover:underline">Ver Detalhes</button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="group hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4 text-slate-300 whitespace-nowrap">
+                                            09 Out 2023 <span class="text-slate-500 text-xs ml-1">11:20</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400 font-bold text-xs">PS</div>
+<div>
+<div class="text-slate-200 font-medium">Pedro Santos</div>
+<div class="text-slate-500 text-xs">ID: 48322 • SP</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-300">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-500 text-[18px]">support_agent</span>
+                                                Atendimento ao Cliente
+                                            </div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                                                85%
+                                            </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1.5 text-emerald-400">
+<span class="material-symbols-outlined text-[18px] fill-1">verified</span>
+<span class="font-medium text-xs">Emitido</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-400">35 min</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary hover:text-primary-hover font-medium text-xs hover:underline">Ver Detalhes</button>
+</td>
+</tr>
+<!-- Row 6 -->
+<tr class="group hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4 text-slate-300 whitespace-nowrap">
+                                            08 Out 2023 <span class="text-slate-500 text-xs ml-1">15:10</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-orange-500/20 flex items-center justify-center text-orange-400 font-bold text-xs">LC</div>
+<div>
+<div class="text-slate-200 font-medium">Luiza Costa</div>
+<div class="text-slate-500 text-xs">ID: 48333 • MG</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-300">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-500 text-[18px]">inventory</span>
+                                                Controle de Estoque
+                                            </div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-500/10 text-red-400 border border-red-500/20">
+                                                78%
+                                            </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1.5 text-red-400">
+<span class="material-symbols-outlined text-[18px]">block</span>
+<span class="font-medium text-xs">Reprovado</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-400">50 min</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary hover:text-primary-hover font-medium text-xs hover:underline">Ver Detalhes</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="bg-slate-800/50 border-t border-border-dark px-6 py-4 flex items-center justify-between">
+<p class="text-sm text-slate-400">Mostrando <span class="font-medium text-slate-200">1</span> a <span class="font-medium text-slate-200">6</span> de <span class="font-medium text-slate-200">128</span> resultados</p>
+<div class="flex items-center gap-2">
+<button class="flex items-center justify-center size-8 rounded border border-border-dark text-slate-400 hover:text-white hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="flex items-center justify-center size-8 rounded bg-primary text-white text-sm font-medium">1</button>
+<button class="flex items-center justify-center size-8 rounded border border-border-dark text-slate-400 hover:text-white hover:bg-slate-700 text-sm">2</button>
+<button class="flex items-center justify-center size-8 rounded border border-border-dark text-slate-400 hover:text-white hover:bg-slate-700 text-sm">3</button>
+<span class="text-slate-500 text-sm px-1">...</span>
+<button class="flex items-center justify-center size-8 rounded border border-border-dark text-slate-400 hover:text-white hover:bg-slate-700 text-sm">12</button>
+<button class="flex items-center justify-center size-8 rounded border border-border-dark text-slate-400 hover:text-white hover:bg-slate-700">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Detalhe e Validação de Foto Web</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d59f2",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen flex flex-col overflow-hidden">
+<!-- Header -->
+<header class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-[#101623] px-6 py-4 z-10 shrink-0">
+<div class="flex items-center gap-4">
+<button class="flex h-10 w-10 items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-400">arrow_back</span>
+</button>
+<div>
+<h2 class="text-xl font-bold leading-tight tracking-tight">Auditoria de Foto - Detalhes</h2>
+<p class="text-sm text-slate-500 dark:text-slate-400">Validar evidência fotográfica ID #9382</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex h-10 items-center justify-center gap-2 rounded-lg bg-red-500/10 px-4 text-red-600 dark:text-red-400 hover:bg-red-500/20 transition-colors font-medium text-sm">
+<span class="material-symbols-outlined text-[20px]">flag</span>
+                Reportar Problema
+            </button>
+<button class="flex h-10 w-10 items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-400">close</span>
+</button>
+</div>
+</header>
+<!-- Main Content Grid -->
+<main class="flex flex-1 overflow-hidden h-full">
+<!-- Left Side: Photo Viewer -->
+<section class="flex-1 bg-slate-900 dark:bg-black relative flex items-center justify-center overflow-hidden p-8 group/photo">
+<!-- Image Container -->
+<div class="relative w-full h-full flex items-center justify-center">
+<img alt="Shelf stocked with products in a supermarket aisle" class="max-w-full max-h-full object-contain rounded-lg shadow-2xl transition-transform duration-300 ease-out hover:scale-[1.02] cursor-zoom-in" data-alt="Shelf stocked with products in a supermarket aisle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBydFHErnhbQV8x5Axqh9afb8fkLx1lA5VJjlyT7A10Y0wZsdE20aZ-uJw4BiHXq9Zk9ywk0WdpZiQm3J-8-QEmuesiceH8UFVVJVsNQ8J-QyrGd93A19ASPT-FYQi3z_2tmRtoSvoIJHKqmNjSpGEzb05laLQUPOOzl2OIZzl_TNJm0vyhXKAZTEOM6L8bJt2cSv8G0rGNxS78ZHxWB8ELnBGRh9ZLgueZ31nS3JnWcgZgG9LXvzCC66FYoJCpmjbUiMb7O95rjgc"/>
+</div>
+<!-- Image Controls Overlay -->
+<div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-slate-800/90 backdrop-blur rounded-full px-4 py-2 border border-slate-700 shadow-lg opacity-0 group-hover/photo:opacity-100 transition-opacity">
+<button class="p-2 hover:bg-white/10 rounded-full text-white transition-colors" title="Zoom Out">
+<span class="material-symbols-outlined text-[20px]">remove</span>
+</button>
+<span class="text-xs font-medium text-slate-300 w-12 text-center">100%</span>
+<button class="p-2 hover:bg-white/10 rounded-full text-white transition-colors" title="Zoom In">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+<div class="w-px h-4 bg-slate-600 mx-1"></div>
+<button class="p-2 hover:bg-white/10 rounded-full text-white transition-colors" title="Fullscreen">
+<span class="material-symbols-outlined text-[20px]">fullscreen</span>
+</button>
+</div>
+<!-- Photo Timestamp Overlay -->
+<div class="absolute top-6 left-6 bg-black/60 backdrop-blur px-3 py-1.5 rounded text-xs font-mono text-white/90">
+                15 OUT 2023 • 14:30:42
+            </div>
+</section>
+<!-- Right Side: Metadata & Validation -->
+<section class="w-[480px] bg-white dark:bg-[#101623] border-l border-slate-200 dark:border-slate-800 flex flex-col overflow-hidden shrink-0">
+<div class="flex-1 overflow-y-auto custom-scrollbar">
+<!-- Status Header -->
+<div class="p-6 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
+<div class="flex items-center gap-3 mb-4">
+<div class="h-10 w-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center overflow-hidden shrink-0">
+<img alt="Portrait of a promoter" class="w-full h-full object-cover" data-alt="Portrait of a promoter" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA18FIp3vrJmdam2C__ksbTn35VNWSWU5yI0sYV2q0YHfPOhRjfNFvIUCxWsE51Nd7fN1F0IZotMzPoZB2lzd1rEjU_JXHVrHyVjsKNy-wGEg7ZekPu8LBfmFXeVxYpH0xn3GQRjxiSGV43cuFfcP8BP72IqCtBAR6dEPC07O1_W41pKoiJg9qmkKmhz-OA5eMgNT8m6z9jieLXboJwUMkWAgqJO43Uqy1ehPlRXZPPV3g3Z7EtfMuevsYuc1HAzAzuWIGDVUMaFE4"/>
+</div>
+<div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Promotor</p>
+<p class="text-base font-bold text-slate-900 dark:text-white">Carlos Silva</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Loja</p>
+<p class="text-sm font-semibold text-slate-900 dark:text-slate-100 truncate">Supermercado Central - Loja 01</p>
+</div>
+<div>
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">ID da Visita</p>
+<p class="text-sm font-semibold text-slate-900 dark:text-slate-100">#8842-BV</p>
+</div>
+</div>
+</div>
+<!-- Geolocation Section -->
+<div class="p-6 border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between mb-3">
+<h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">location_on</span>
+                            Geolocalização
+                        </h3>
+<span class="inline-flex items-center rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-xs font-medium text-emerald-600 dark:text-emerald-400 ring-1 ring-inset ring-emerald-500/20">
+                            No raio aceitável
+                        </span>
+</div>
+<!-- Map Visualization -->
+<div class="relative w-full h-40 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 mb-4 bg-slate-100 dark:bg-slate-800">
+<img alt="Map showing location pin" class="w-full h-full object-cover opacity-80" data-alt="Map showing location pin" data-location="Sao Paulo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJIRgxa6jNK5F6FQwHjM1gca1TSrVDnB3mGL1KxNz58UWsbbh4KDzENpln5_WQtZgVOT0keUeAinwzCG18IQFAFINf0qkilSuacyVS7fECk8tr4EfS9Q91n40q2bKMkW1-80ehVymNk3EXYZ5WifAml-o2BXg-aAWKmuoz7TWZ8z0pfA2Z6_tapyqZyXwSZx170R59eBMYo3chlO8TSOE2VAG5apsqQboDwoh9l223vG2jWEeAyybBpj6LdM4gOvHufqRgqdG25WQ"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="relative">
+<div class="absolute -inset-4 bg-primary/20 rounded-full animate-pulse"></div>
+<span class="material-symbols-outlined text-primary text-3xl drop-shadow-md">location_on</span>
+</div>
+</div>
+<div class="absolute bottom-2 right-2 bg-white/90 dark:bg-slate-900/90 backdrop-blur px-2 py-1 rounded text-[10px] font-mono shadow-sm border border-slate-200 dark:border-slate-700">
+                            LAT: -23.5505 | LNG: -46.6333
+                        </div>
+</div>
+<!-- Distance Metrics -->
+<div class="space-y-3">
+<div class="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-800/50 border-dashed">
+<span class="text-sm text-slate-500 dark:text-slate-400">Distância do PDV</span>
+<span class="text-sm font-mono font-medium text-slate-900 dark:text-white">15 metros</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-800/50 border-dashed">
+<span class="text-sm text-slate-500 dark:text-slate-400">Precisão do GPS</span>
+<span class="text-sm font-mono font-medium text-slate-900 dark:text-white">High (±3m)</span>
+</div>
+<div class="flex justify-between items-center py-2">
+<span class="text-sm text-slate-500 dark:text-slate-400">Dispositivo</span>
+<span class="text-sm font-medium text-slate-900 dark:text-white">Samsung S23</span>
+</div>
+</div>
+</div>
+<!-- Validation Form -->
+<div class="p-6">
+<h3 class="text-sm font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">fact_check</span>
+                        Avaliação
+                    </h3>
+<form class="space-y-5" onsubmit="event.preventDefault();">
+<div class="space-y-3">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300">
+                                Status da Avaliação
+                            </label>
+<div class="grid grid-cols-2 gap-3">
+<label class="relative flex cursor-pointer rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 p-4 shadow-sm focus:outline-none has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-500/5 has-[:checked]:ring-1 has-[:checked]:ring-emerald-500">
+<input checked="" class="sr-only" name="status" type="radio" value="approved"/>
+<span class="flex flex-1">
+<span class="flex flex-col">
+<span class="block text-sm font-medium text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-emerald-500">check_circle</span>
+                                                Aprovado
+                                            </span>
+</span>
+</span>
+<span aria-hidden="true" class="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent"></span>
+</label>
+<label class="relative flex cursor-pointer rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 p-4 shadow-sm focus:outline-none has-[:checked]:border-red-500 has-[:checked]:bg-red-500/5 has-[:checked]:ring-1 has-[:checked]:ring-red-500">
+<input class="sr-only" name="status" type="radio" value="rejected"/>
+<span class="flex flex-1">
+<span class="flex flex-col">
+<span class="block text-sm font-medium text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-red-500">cancel</span>
+                                                Rejeitado
+                                            </span>
+</span>
+</span>
+<span aria-hidden="true" class="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent"></span>
+</label>
+</div>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300" for="reason">
+                                Motivo da Rejeição <span class="text-slate-400 font-normal">(Opcional se aprovado)</span>
+</label>
+<div class="relative">
+<select class="block w-full rounded-lg border-0 py-3 pl-3 pr-10 text-slate-900 dark:text-white ring-1 ring-inset ring-slate-300 dark:ring-slate-700 focus:ring-2 focus:ring-primary bg-white dark:bg-slate-800 sm:text-sm sm:leading-6 appearance-none shadow-sm" id="reason" name="reason">
+<option>Selecione um motivo...</option>
+<option>Foto embaçada ou fora de foco</option>
+<option>PDV incorreto</option>
+<option>Iluminação insuficiente</option>
+<option>Produto não visível</option>
+<option>Ângulo incorreto</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300" for="comment">
+                                Observações Adicionais
+                            </label>
+<textarea class="block w-full rounded-lg border-0 py-2 text-slate-900 dark:text-white ring-1 ring-inset ring-slate-300 dark:ring-slate-700 placeholder:text-slate-400 focus:ring-2 focus:ring-primary bg-white dark:bg-slate-800 sm:text-sm sm:leading-6 shadow-sm resize-none" id="comment" name="comment" placeholder="Digite uma observação..." rows="3"></textarea>
+</div>
+</form>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="p-6 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#101623]">
+<button class="flex w-full items-center justify-center rounded-lg bg-primary px-3 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-all active:scale-[0.98]" type="button">
+                    Confirmar Avaliação
+                </button>
+<button class="mt-3 flex w-full items-center justify-center rounded-lg bg-transparent px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors" type="button">
+                    Pular para próxima
+                </button>
+</div>
+</section>
+</main>
+</body></html>

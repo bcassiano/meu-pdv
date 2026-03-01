@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Auditoria de Loja</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FFFFFF",
+                        "primary-foreground": "#000000",
+                        "background-dark": "#000000",
+                        "surface-dark": "#1A1A1A",
+                        "border-dark": "#404040",
+                        "status-amber": "#D97706",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+    @layer utilities {
+        .text-shadow-none {
+            text-shadow: none;
+        }
+        .no-shadow {
+            box-shadow: none !important;
+        }
+    }
+</style>
+</head>
+<body class="bg-[#000000] font-display text-white min-h-screen flex flex-col antialiased selection:bg-white selection:text-black">
+<div class="flex-1 flex flex-col max-w-5xl mx-auto w-full bg-[#000000] min-h-screen">
+<div class="bg-[#D97706] text-black px-4 py-3 flex items-center justify-center gap-2 border-b border-[#000000] sticky top-0 z-20 font-bold">
+<span class="material-symbols-outlined text-xl">wifi_off</span>
+<p class="text-sm">Modo Offline: Alterações salvas localmente. Sincronizará quando online.</p>
+</div>
+<header class="flex items-center justify-between border-b border-[#404040] px-6 py-4 bg-[#000000] sticky top-[48px] z-10">
+<div class="flex items-center gap-3">
+<button class="text-white hover:text-gray-300 transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div>
+<h2 class="text-white text-xl font-bold leading-tight">Auditoria de Loja: 7-Eleven #492</h2>
+<p class="text-gray-400 text-xs mt-0.5">Última sincronização: 2 horas atrás</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 px-3 py-1.5 bg-[#1A1A1A] text-white rounded text-xs font-bold border border-[#404040]">
+<span class="material-symbols-outlined text-base">check_circle</span>
+<span>Salvo Localmente</span>
+</div>
+<button class="flex items-center justify-center bg-white hover:bg-gray-200 text-black px-4 h-10 rounded font-bold text-sm transition-colors border border-white">
+                    Sincronizar
+                </button>
+</div>
+</header>
+<main class="flex-1 p-4 md:p-6 lg:p-8 space-y-8">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div class="space-y-1">
+<h1 class="text-white text-2xl font-bold">Coleta de Bebidas</h1>
+<p class="text-gray-400 text-sm">Atualize preços e disponibilidade de estoque para a visita atual.</p>
+</div>
+<div class="w-full md:w-auto">
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-white material-symbols-outlined text-lg">search</span>
+<input class="w-full md:w-64 pl-10 pr-4 py-2 bg-[#1A1A1A] border border-[#404040] text-white rounded text-sm focus:ring-1 focus:ring-white focus:border-white outline-none placeholder-gray-500" placeholder="Pesquisar produto..." type="text"/>
+</div>
+</div>
+</div>
+<div class="bg-[#1A1A1A] rounded-lg border border-[#404040] overflow-hidden">
+<div class="p-4 md:p-6 border-b border-[#404040] bg-[#1A1A1A] flex flex-wrap justify-between items-start gap-4">
+<div class="flex gap-4">
+<div class="w-16 h-16 rounded bg-[#000000] border border-[#404040] flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-white text-3xl">local_drink</span>
+</div>
+<div>
+<h3 class="text-lg font-bold text-white">Cola Classic 1L</h3>
+<p class="text-gray-400 text-sm">SKU: 8839201 • Prateleira A2</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="bg-[#000000] border border-[#404040] text-white text-xs font-bold px-2 py-1 rounded uppercase tracking-wide">No Planograma</span>
+</div>
+</div>
+<div class="p-4 md:p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="space-y-4">
+<label class="block text-sm font-bold text-white uppercase tracking-wide">COMPARATIVO DE PREÇO</label>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-[#000000] p-4 rounded border border-[#404040] text-center">
+<span class="block text-xs font-bold text-gray-400 mb-2">Meu Preço</span>
+<div class="flex items-center justify-center gap-3">
+<button class="w-8 h-8 flex items-center justify-center rounded-full bg-[#1A1A1A] border border-[#404040] text-white hover:border-white active:bg-white active:text-black transition-colors">
+<span class="material-symbols-outlined text-lg">remove</span>
+</button>
+<span class="text-xl font-bold text-white w-16 text-center">R$1,50</span>
+<button class="w-8 h-8 flex items-center justify-center rounded-full bg-[#1A1A1A] border border-[#404040] text-white hover:border-white active:bg-white active:text-black transition-colors">
+<span class="material-symbols-outlined text-lg">add</span>
+</button>
+</div>
+</div>
+<div class="bg-[#000000] p-4 rounded border border-[#404040] text-center relative overflow-hidden">
+<div class="absolute top-0 right-0 w-3 h-3 bg-white rounded-bl border-l border-b border-[#404040]"></div>
+<span class="block text-xs font-bold text-gray-400 mb-2">Concorrente</span>
+<div class="flex items-center justify-center gap-3">
+<button class="w-8 h-8 flex items-center justify-center rounded-full bg-[#1A1A1A] border border-[#404040] text-white hover:border-white active:bg-white active:text-black transition-colors">
+<span class="material-symbols-outlined text-lg">remove</span>
+</button>
+<span class="text-xl font-bold text-white w-16 text-center">R$1,45</span>
+<button class="w-8 h-8 flex items-center justify-center rounded-full bg-[#1A1A1A] border border-[#404040] text-white hover:border-white active:bg-white active:text-black transition-colors">
+<span class="material-symbols-outlined text-lg">add</span>
+</button>
+</div>
+</div>
+</div>
+<p class="text-xs text-white font-medium flex items-center gap-1 mt-2">
+<span class="material-symbols-outlined text-sm">trending_down</span>
+                             Preço R$0,05 acima do concorrente
+                        </p>
+</div>
+<div class="space-y-4 border-t md:border-t-0 md:border-l border-[#404040] pt-6 md:pt-0 md:pl-8">
+<label class="block text-sm font-bold text-white uppercase tracking-wide">DISPONIBILIDADE EM ESTOQUE</label>
+<div class="flex gap-2 mb-4">
+<button class="flex-1 py-2 px-3 rounded border border-[#404040] bg-[#000000] text-white text-sm font-bold hover:bg-[#1A1A1A] transition-colors">
+                                Em Estoque
+                            </button>
+<button class="flex-1 py-2 px-3 rounded bg-white text-black border border-white text-sm font-bold transition-all">
+                                Baixo Estoque
+                            </button>
+<button class="flex-1 py-2 px-3 rounded border border-[#404040] bg-[#000000] text-white text-sm font-bold hover:bg-[#1A1A1A] transition-colors">
+                                Falta
+                            </button>
+</div>
+<div class="bg-[#000000] p-4 rounded border border-[#404040]">
+<label class="block text-xs font-bold text-white mb-3 uppercase tracking-wide">Motivo Baixo Estoque</label>
+<div class="space-y-2">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="w-4 h-4 text-white bg-black border-[#404040] focus:ring-white focus:ring-2 focus:ring-offset-0" name="justification1" type="radio"/>
+<span class="text-sm text-white font-medium group-hover:text-gray-300 transition-colors">Aguardando Entrega</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 text-white bg-black border-[#404040] focus:ring-white focus:ring-2 focus:ring-offset-0" name="justification1" type="radio"/>
+<span class="text-sm text-white font-medium group-hover:text-gray-300 transition-colors">Problema no Espaço em Gôndola</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 text-white bg-black border-[#404040] focus:ring-white focus:ring-2 focus:ring-offset-0" name="justification1" type="radio"/>
+<span class="text-sm text-white font-medium group-hover:text-gray-300 transition-colors">Produtos Danificados</span>
+</label>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-[#1A1A1A] rounded-lg border border-[#404040] opacity-60 hover:opacity-100 transition-opacity">
+<div class="p-4 md:p-6 border-b border-[#404040] bg-[#1A1A1A] flex flex-wrap justify-between items-start gap-4">
+<div class="flex gap-4">
+<div class="w-16 h-16 rounded bg-[#000000] border border-[#404040] flex items-center justify-center shrink-0 overflow-hidden">
+<div class="w-full h-full bg-[#333333]" data-alt="Placeholder for Orange Juice"></div>
+</div>
+<div>
+<h3 class="text-lg font-bold text-white">Orange Juice Premium</h3>
+<p class="text-gray-400 text-sm">SKU: 8839205 • Prateleira A3</p>
+</div>
+</div>
+</div>
+<div class="p-4 md:p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="space-y-4">
+<label class="block text-sm font-bold text-white uppercase tracking-wide">COMPARATIVO DE PREÇO</label>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-[#000000] p-4 rounded border border-[#404040] text-center">
+<span class="block text-xs font-bold text-gray-400 mb-2">Meu Preço</span>
+<div class="flex items-center justify-center gap-3">
+<button class="w-8 h-8 flex items-center justify-center rounded-full bg-[#1A1A1A] border border-[#404040] text-white hover:border-white active:bg-white active:text-black transition-colors">
+<span class="material-symbols-outlined text-lg">remove</span>
+</button>
+<span class="text-xl font-bold text-white w-16 text-center">R$2,00</span>
+<button class="w-8 h-8 flex items-center justify-center rounded-full bg-[#1A1A1A] border border-[#404040] text-white hover:border-white active:bg-white active:text-black transition-colors">
+<span class="material-symbols-outlined text-lg">add</span>
+</button>
+</div>
+</div>
+<div class="bg-[#000000] p-4 rounded border border-[#404040] text-center">
+<span class="block text-xs font-bold text-gray-400 mb-2">Concorrente</span>
+<div class="flex items-center justify-center gap-3">
+<button class="w-8 h-8 flex items-center justify-center rounded-full bg-[#1A1A1A] border border-[#404040] text-white hover:border-white active:bg-white active:text-black transition-colors">
+<span class="material-symbols-outlined text-lg">remove</span>
+</button>
+<span class="text-xl font-bold text-white w-16 text-center">R$2,10</span>
+<button class="w-8 h-8 flex items-center justify-center rounded-full bg-[#1A1A1A] border border-[#404040] text-white hover:border-white active:bg-white active:text-black transition-colors">
+<span class="material-symbols-outlined text-lg">add</span>
+</button>
+</div>
+</div>
+</div>
+<p class="text-xs text-white font-medium flex items-center gap-1 mt-2">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+                             Preço competitivo
+                        </p>
+</div>
+<div class="space-y-4 border-t md:border-t-0 md:border-l border-[#404040] pt-6 md:pt-0 md:pl-8">
+<label class="block text-sm font-bold text-white uppercase tracking-wide">DISPONIBILIDADE EM ESTOQUE</label>
+<div class="flex gap-2 mb-4">
+<button class="flex-1 py-2 px-3 rounded bg-white text-black border border-white text-sm font-bold transition-all">
+                                Em Estoque
+                            </button>
+<button class="flex-1 py-2 px-3 rounded border border-[#404040] bg-[#000000] text-white text-sm font-bold hover:bg-[#1A1A1A] transition-colors">
+                                Baixo Estoque
+                            </button>
+<button class="flex-1 py-2 px-3 rounded border border-[#404040] bg-[#000000] text-white text-sm font-bold hover:bg-[#1A1A1A] transition-colors">
+                                Falta
+                            </button>
+</div>
+<div class="p-4 rounded border border-transparent flex items-center justify-center h-[106px] text-gray-500 text-sm italic">
+                            Selecione Baixo Estoque ou Falta para adicionar detalhes
+                        </div>
+</div>
+</div>
+</div>
+<div class="bg-[#1A1A1A] rounded-lg border border-[#404040] overflow-hidden">
+<div class="p-4 md:p-6 border-b border-[#404040] bg-[#1A1A1A] flex flex-wrap justify-between items-start gap-4">
+<div class="flex gap-4">
+<div class="w-16 h-16 rounded bg-[#000000] border border-[#404040] flex items-center justify-center shrink-0 overflow-hidden">
+<div class="w-full h-full bg-[#333333]" data-alt="Placeholder for Lemon Soda"></div>
+</div>
+<div>
+<h3 class="text-lg font-bold text-white">Lemon Soda Can</h3>
+<p class="text-gray-400 text-sm">SKU: 8839210 • Prateleira B1</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="bg-[#000000] text-white border border-white text-xs font-bold px-2 py-1 rounded uppercase tracking-wide flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">warning</span> AÇÃO NECESSÁRIA
+                        </span>
+</div>
+</div>
+<div class="p-4 md:p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="space-y-4">
+<label class="block text-sm font-bold text-white uppercase tracking-wide">COMPARATIVO DE PREÇO</label>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-[#000000] p-4 rounded border border-[#404040] text-center">
+<span class="block text-xs font-bold text-gray-400 mb-2">Meu Preço</span>
+<div class="flex items-center justify-center gap-3">
+<button class="w-8 h-8 flex items-center justify-center rounded-full bg-[#1A1A1A] border border-[#404040] text-white hover:border-white active:bg-white active:text-black transition-colors">
+<span class="material-symbols-outlined text-lg">remove</span>
+</button>
+<span class="text-xl font-bold text-white w-16 text-center">R$1,20</span>
+<button class="w-8 h-8 flex items-center justify-center rounded-full bg-[#1A1A1A] border border-[#404040] text-white hover:border-white active:bg-white active:text-black transition-colors">
+<span class="material-symbols-outlined text-lg">add</span>
+</button>
+</div>
+</div>
+<div class="bg-[#000000] p-4 rounded border border-[#404040] text-center">
+<span class="block text-xs font-bold text-gray-400 mb-2">Concorrente</span>
+<div class="flex items-center justify-center gap-3">
+<button class="w-8 h-8 flex items-center justify-center rounded-full bg-[#1A1A1A] border border-[#404040] text-white hover:border-white active:bg-white active:text-black transition-colors">
+<span class="material-symbols-outlined text-lg">remove</span>
+</button>
+<span class="text-xl font-bold text-white w-16 text-center">R$1,20</span>
+<button class="w-8 h-8 flex items-center justify-center rounded-full bg-[#1A1A1A] border border-[#404040] text-white hover:border-white active:bg-white active:text-black transition-colors">
+<span class="material-symbols-outlined text-lg">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-4 border-t md:border-t-0 md:border-l border-[#404040] pt-6 md:pt-0 md:pl-8">
+<label class="block text-sm font-bold text-white uppercase tracking-wide">DISPONIBILIDADE EM ESTOQUE</label>
+<div class="flex gap-2 mb-4">
+<button class="flex-1 py-2 px-3 rounded border border-[#404040] bg-[#000000] text-white text-sm font-bold hover:bg-[#1A1A1A] transition-colors">
+                                Em Estoque
+                            </button>
+<button class="flex-1 py-2 px-3 rounded border border-[#404040] bg-[#000000] text-white text-sm font-bold hover:bg-[#1A1A1A] transition-colors">
+                                Baixo Estoque
+                            </button>
+<button class="flex-1 py-2 px-3 rounded bg-white text-black border border-white text-sm font-bold transition-all">
+                                Falta
+                            </button>
+</div>
+<div class="bg-[#000000] p-4 rounded border border-white">
+<label class="block text-xs font-bold text-white mb-3 uppercase tracking-wide">Motivo da Falta</label>
+<div class="space-y-2">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 text-white bg-black border-[#404040] focus:ring-white focus:ring-2 focus:ring-offset-0" name="justification3" type="radio"/>
+<span class="text-sm text-white font-medium group-hover:text-gray-300 transition-colors">Não Entregue</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="w-4 h-4 text-white bg-black border-[#404040] focus:ring-white focus:ring-2 focus:ring-offset-0" name="justification3" type="radio"/>
+<span class="text-sm text-white font-medium group-hover:text-gray-300 transition-colors">Esgotado</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 text-white bg-black border-[#404040] focus:ring-white focus:ring-2 focus:ring-offset-0" name="justification3" type="radio"/>
+<span class="text-sm text-white font-medium group-hover:text-gray-300 transition-colors">Descontinuado</span>
+</label>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sticky bottom-4 z-10 flex justify-end">
+<button class="bg-white text-black border border-white rounded-full px-6 h-12 flex items-center gap-2 hover:scale-105 transition-transform font-bold">
+<span class="material-symbols-outlined">save</span>
+<span>Salvar Progresso</span>
+</button>
+</div>
+</main>
+</div>
+
+</body></html>

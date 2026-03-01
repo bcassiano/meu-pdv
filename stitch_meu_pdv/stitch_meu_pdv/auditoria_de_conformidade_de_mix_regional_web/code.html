@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Auditoria de Conformidade de Mix Regional</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#3b82f6", // Blue-500 for better visibility on dark
+                        "background-light": "#f1f5f9", // Slate-100
+                        "background-dark": "#0f172a", // Slate-900
+                        "sidebar-bg": "#1e293b", // Slate-800
+                        "card-bg": "#1e293b", // Slate-800 for cards
+                        "border-color": "#334155", // Slate-700
+                        "text-main": "#f8fafc", // Slate-50
+                        "text-secondary": "#94a3b8", // Slate-400
+                        "accent-green": "#10b981",
+                        "accent-red": "#ef4444",
+                        "accent-orange": "#f97316",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen text-slate-900 dark:text-slate-100 overflow-hidden">
+<div class="flex h-screen w-full">
+<!-- Sidebar -->
+<aside class="w-72 flex-shrink-0 flex flex-col bg-sidebar-bg border-r border-border-color">
+<div class="p-6 pb-2">
+<div class="flex items-center gap-3 mb-8">
+<div class="h-10 w-10 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-xl">
+                        M
+                    </div>
+<div>
+<h1 class="text-white text-lg font-bold leading-tight">MixAudit</h1>
+<p class="text-text-secondary text-xs uppercase tracking-wider">Enterprise</p>
+</div>
+</div>
+<div class="flex items-center gap-3 p-3 mb-6 bg-slate-800/50 rounded-xl border border-slate-700/50">
+<div class="h-10 w-10 rounded-full bg-cover bg-center" data-alt="Portrait of regional manager" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDAg9PCqNes90cWRJ18St5XmvA2EiH9Nm69inEiP1mbbrE1J88_VlUvfM2WST56w7wKKUJKkUBgorxhw1evK9R0blYcoVzJsX_7mOxrQ5ar_O1N0o6nlaJoG0vo4FYKV2GsVK-QzrJJPMlhRwcT6tzr43ZHh9iwrXZeCh9qrFVuKYmj5A1yJjWpzZcO0nb8I6YZSAZAK7r0ZXvJyKPS--JZM9cR16tg1oPcM16VZpO-NP4C5sHK8xwU6rcXRCX9pAyT3E0isI2-ZZc');"></div>
+<div class="flex flex-col">
+<h2 class="text-white text-sm font-medium">Carlos Mendes</h2>
+<p class="text-text-secondary text-xs">Gerente Regional Sul</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 px-4 flex flex-col gap-1 overflow-y-auto">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-secondary hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-xl group-hover:text-primary transition-colors">pie_chart</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-secondary hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-xl group-hover:text-primary transition-colors">checklist</span>
+<span class="text-sm font-medium">Auditoria de Mix</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary border border-primary/20" href="#">
+<span class="material-symbols-outlined text-xl font-variation-settings-FILL-1">trending_up</span>
+<span class="text-sm font-medium">Análise de Lacunas</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-secondary hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-xl group-hover:text-primary transition-colors">description</span>
+<span class="text-sm font-medium">Relatórios</span>
+</a>
+<div class="mt-4 mb-2 px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Sistema</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-secondary hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-xl group-hover:text-primary transition-colors">settings</span>
+<span class="text-sm font-medium">Configurações</span>
+</a>
+</nav>
+<div class="p-4 border-t border-border-color">
+<button class="flex w-full items-center justify-center gap-2 rounded-lg bg-slate-700/50 py-2 text-sm font-medium text-text-secondary hover:bg-slate-700 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-lg">logout</span>
+<span>Sair</span>
+</button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Header -->
+<header class="flex-shrink-0 px-8 py-6 border-b border-border-color bg-background-dark/50 backdrop-blur-sm z-10">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h1 class="text-2xl md:text-3xl font-bold text-white tracking-tight">Análise de Lacunas</h1>
+<p class="text-text-secondary mt-1 text-sm">Auditoria de conformidade de sortimento - Regional Sul</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="hidden md:flex items-center px-3 py-1.5 bg-card-bg rounded border border-border-color text-xs text-text-secondary">
+<span class="w-2 h-2 rounded-full bg-accent-green mr-2 animate-pulse"></span>
+                            Atualizado: Há 15 min
+                        </div>
+<button class="flex items-center gap-2 bg-primary hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-lg shadow-blue-500/20">
+<span class="material-symbols-outlined text-lg">download</span>
+                            Exportar PDF
+                        </button>
+</div>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
+<div class="max-w-7xl mx-auto space-y-6">
+<!-- KPI Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-card-bg rounded-xl p-5 border border-border-color shadow-sm relative overflow-hidden group hover:border-primary/50 transition-all">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-primary">analytics</span>
+</div>
+<p class="text-text-secondary text-sm font-medium mb-1">Aderência Global</p>
+<div class="flex items-baseline gap-2">
+<h3 class="text-3xl font-bold text-white">85%</h3>
+<span class="flex items-center text-xs font-medium text-accent-green bg-accent-green/10 px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-sm mr-0.5">arrow_upward</span>
+                                    2.5%
+                                </span>
+</div>
+<div class="w-full bg-slate-700 h-1 mt-4 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 85%"></div>
+</div>
+</div>
+<div class="bg-card-bg rounded-xl p-5 border border-border-color shadow-sm relative overflow-hidden group hover:border-primary/50 transition-all">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-white">storefront</span>
+</div>
+<p class="text-text-secondary text-sm font-medium mb-1">Lojas Auditadas</p>
+<div class="flex items-baseline gap-2">
+<h3 class="text-3xl font-bold text-white">42</h3>
+<span class="flex items-center text-xs font-medium text-text-secondary bg-slate-700/50 px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-sm mr-0.5">remove</span>
+                                    0%
+                                </span>
+</div>
+<p class="text-xs text-slate-500 mt-4">Total de 42 lojas na regional</p>
+</div>
+<div class="bg-card-bg rounded-xl p-5 border border-border-color shadow-sm relative overflow-hidden group hover:border-primary/50 transition-all">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-accent-orange">inventory_2</span>
+</div>
+<p class="text-text-secondary text-sm font-medium mb-1">Produtos Faltantes</p>
+<div class="flex items-baseline gap-2">
+<h3 class="text-3xl font-bold text-white">156</h3>
+<span class="flex items-center text-xs font-medium text-accent-orange bg-accent-orange/10 px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-sm mr-0.5">arrow_upward</span>
+                                    12%
+                                </span>
+</div>
+<p class="text-xs text-slate-500 mt-4">SKUs críticos identificados</p>
+</div>
+<div class="bg-card-bg rounded-xl p-5 border border-border-color shadow-sm relative overflow-hidden group hover:border-primary/50 transition-all">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-accent-red">warning</span>
+</div>
+<p class="text-text-secondary text-sm font-medium mb-1">Risco de Ruptura</p>
+<div class="flex items-baseline gap-2">
+<h3 class="text-3xl font-bold text-white">Alta</h3>
+<span class="flex items-center text-xs font-medium text-accent-green bg-accent-green/10 px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-sm mr-0.5">arrow_downward</span>
+                                    5%
+                                </span>
+</div>
+<p class="text-xs text-slate-500 mt-4">Nível crítico em 3 categorias</p>
+</div>
+</div>
+<!-- Chart Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="lg:col-span-2 bg-card-bg rounded-xl border border-border-color p-6 shadow-sm">
+<div class="flex items-center justify-between mb-6">
+<div>
+<h3 class="text-lg font-bold text-white">Presença Real vs. Mix Planejado</h3>
+<p class="text-sm text-text-secondary">Comparativo de aderência por estado (Regional Sul)</p>
+</div>
+<div class="flex items-center gap-2 bg-slate-800 rounded-lg p-1 border border-border-color">
+<button class="px-3 py-1 text-xs font-medium rounded bg-slate-700 text-white shadow">Mensal</button>
+<button class="px-3 py-1 text-xs font-medium rounded text-text-secondary hover:text-white transition-colors">Semanal</button>
+</div>
+</div>
+<div class="h-64 w-full flex items-end justify-between gap-4 sm:gap-8 px-4">
+<!-- Chart Bars - PR -->
+<div class="flex flex-col items-center flex-1 gap-2 group h-full justify-end">
+<div class="relative w-full max-w-[60px] flex items-end justify-center h-[90%] bg-slate-800/50 rounded-t-lg border border-b-0 border-slate-700/50 overflow-hidden">
+<!-- Planned Marker (Background) -->
+<div class="absolute bottom-0 w-full bg-slate-700 h-[95%] opacity-30"></div>
+<!-- Real Value (Foreground) -->
+<div class="w-full bg-primary h-[82%] relative group-hover:bg-blue-400 transition-colors">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-xs py-1 px-2 rounded border border-slate-700 whitespace-nowrap z-10">
+                                                Real: 82%
+                                            </div>
+</div>
+</div>
+<div class="text-center">
+<span class="block text-sm font-bold text-white">PR</span>
+<span class="text-xs text-text-secondary">Paraná</span>
+</div>
+</div>
+<!-- Chart Bars - SC -->
+<div class="flex flex-col items-center flex-1 gap-2 group h-full justify-end">
+<div class="relative w-full max-w-[60px] flex items-end justify-center h-[90%] bg-slate-800/50 rounded-t-lg border border-b-0 border-slate-700/50 overflow-hidden">
+<!-- Planned Marker (Background) -->
+<div class="absolute bottom-0 w-full bg-slate-700 h-[92%] opacity-30"></div>
+<div class="w-full bg-primary h-[88%] relative group-hover:bg-blue-400 transition-colors">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-xs py-1 px-2 rounded border border-slate-700 whitespace-nowrap z-10">
+                                                Real: 88%
+                                            </div>
+</div>
+</div>
+<div class="text-center">
+<span class="block text-sm font-bold text-white">SC</span>
+<span class="text-xs text-text-secondary">Sta. Catarina</span>
+</div>
+</div>
+<!-- Chart Bars - RS -->
+<div class="flex flex-col items-center flex-1 gap-2 group h-full justify-end">
+<div class="relative w-full max-w-[60px] flex items-end justify-center h-[90%] bg-slate-800/50 rounded-t-lg border border-b-0 border-slate-700/50 overflow-hidden">
+<!-- Planned Marker (Background) -->
+<div class="absolute bottom-0 w-full bg-slate-700 h-[98%] opacity-30"></div>
+<div class="w-full bg-accent-orange h-[65%] relative group-hover:bg-orange-400 transition-colors">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-xs py-1 px-2 rounded border border-slate-700 whitespace-nowrap z-10">
+                                                Real: 65% (Crítico)
+                                            </div>
+</div>
+</div>
+<div class="text-center">
+<span class="block text-sm font-bold text-white">RS</span>
+<span class="text-xs text-text-secondary">Rio G. Sul</span>
+</div>
+</div>
+</div>
+<div class="mt-4 flex items-center justify-center gap-6 text-xs text-text-secondary">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 bg-primary rounded-sm"></div>
+<span>Presença Real</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 bg-slate-700 rounded-sm opacity-50"></div>
+<span>Meta / Planejado</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 bg-accent-orange rounded-sm"></div>
+<span>Abaixo da Meta (-15%)</span>
+</div>
+</div>
+</div>
+<!-- Mini Stats / Highlights -->
+<div class="lg:col-span-1 flex flex-col gap-4">
+<div class="bg-gradient-to-br from-primary/20 to-sidebar-bg rounded-xl p-6 border border-primary/20 relative overflow-hidden">
+<div class="relative z-10">
+<h4 class="text-primary font-bold text-sm uppercase tracking-wide mb-2">Insight Rápido</h4>
+<p class="text-white text-lg font-medium leading-relaxed">
+                                        O estado do <span class="text-accent-orange font-bold">Rio Grande do Sul</span> apresenta a maior lacuna de mix em <span class="text-white font-bold">Bebidas Não-Alcoólicas</span>.
+                                    </p>
+<button class="mt-4 text-xs font-bold text-white bg-primary/20 hover:bg-primary/30 py-2 px-3 rounded flex items-center gap-1 transition-colors">
+                                        Ver Detalhes
+                                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<div class="absolute -bottom-4 -right-4 text-primary opacity-10">
+<span class="material-symbols-outlined text-9xl">lightbulb</span>
+</div>
+</div>
+<div class="flex-1 bg-card-bg rounded-xl border border-border-color p-6 shadow-sm flex flex-col justify-center items-center text-center">
+<div class="w-24 h-24 rounded-full border-8 border-slate-700 relative flex items-center justify-center mb-4">
+<div class="absolute inset-0 rounded-full border-8 border-accent-green border-l-transparent border-b-transparent rotate-45" style="border-left-color: transparent; border-bottom-color: transparent;"></div>
+<span class="text-2xl font-bold text-white">72%</span>
+</div>
+<h4 class="text-white font-medium">Meta Trimestral</h4>
+<p class="text-text-secondary text-sm mt-1">Faltam 18 dias para o fechamento</p>
+</div>
+</div>
+</div>
+<!-- Products Table -->
+<div class="bg-card-bg rounded-xl border border-border-color overflow-hidden shadow-sm">
+<div class="p-6 border-b border-border-color flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<h3 class="text-lg font-bold text-white">Produtos Críticos em Falta na Região</h3>
+<p class="text-sm text-text-secondary">Itens obrigatórios com estoque zero em +30% das lojas.</p>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary text-lg">search</span>
+<input class="bg-slate-800 border border-slate-600 text-white text-sm rounded-lg focus:ring-primary focus:border-primary block w-full pl-10 p-2.5 placeholder-slate-500" placeholder="Buscar produto ou SKU..." type="text"/>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-sm text-left">
+<thead class="text-xs text-text-secondary uppercase bg-slate-800/50 border-b border-border-color">
+<tr>
+<th class="px-6 py-4 font-medium" scope="col">Produto / SKU</th>
+<th class="px-6 py-4 font-medium" scope="col">Categoria</th>
+<th class="px-6 py-4 font-medium text-center" scope="col">Lojas Afetadas</th>
+<th class="px-6 py-4 font-medium text-center" scope="col">Dias s/ Estoque</th>
+<th class="px-6 py-4 font-medium text-right" scope="col">Impacto Est. (R$)</th>
+<th class="px-6 py-4 font-medium text-center" scope="col">Status</th>
+<th class="px-6 py-4 font-medium" scope="col"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-color">
+<tr class="hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4 font-medium text-white">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-white p-0.5 flex-shrink-0">
+<img alt="Bottle of premium olive oil" class="w-full h-full object-cover rounded-sm" data-alt="Bottle of premium olive oil" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNe1zEliYjjIM5IsKJxPUEVV08kyDTiYHYmcnZRvWtyLCECzbZ632Vmp2JoMd-1hgCzWwTv4vO8ApU9UHXOFAkbl2SlrMhoYRsugTgLRmu8l-rSah60ohtSK0gYDo-WGEzYk2UgMVO7L3dGlqH1HEcastDQhiFvQpljAoXSrDNtaACWqZ3xTw6dumQv80zfNs5TXOWlrn4hQenL1Gsifm5D8VWJXUpDhmY0n1YV3Ow2FXivCiUO4iTAaPnF3EwEnpj0_A7HpuocO0"/>
+</div>
+<div>
+<div class="font-bold">Azeite Extra Virgem 500ml</div>
+<div class="text-xs text-text-secondary font-normal">SKU: 8839201</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-text-secondary">Mercearia</td>
+<td class="px-6 py-4 text-center text-white font-medium">18 <span class="text-xs text-text-secondary font-normal">/ 42</span></td>
+<td class="px-6 py-4 text-center text-accent-red font-medium">12 dias</td>
+<td class="px-6 py-4 text-right text-white">R$ 14.500</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-red-500/10 text-red-400 border border-red-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                                                Crítico
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-text-secondary hover:text-white p-1 rounded hover:bg-slate-700">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4 font-medium text-white">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-white p-0.5 flex-shrink-0">
+<img alt="Ice cream tub packaging" class="w-full h-full object-cover rounded-sm" data-alt="Ice cream tub packaging" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHSFxJ2Pf99p8dueq_jbEpqZhU5J3Yjk8WN_TrV_J8WiFmCopjouWeSJRk15QNkgrV3HiIrZcXFtHrj6AfhThxzOJwaI_C1XLNgcyhPFNrlB7kZKVSAGEx2AyByulGoKIH11eLfXzjdeD2ahcp_hqoYtpOLpdEAwVaTJlO5RsF1FmNUADVR4A3TnM8bHrvWFWgd_gFdiER-g45zXGqLSmcF3bmZyxQ3-I7ZYuwCAm6gd8Goq9MEzpxTL1TrqHIAcz1TTIFYxIm4Q4"/>
+</div>
+<div>
+<div class="font-bold">Sorvete Creme 2L</div>
+<div class="text-xs text-text-secondary font-normal">SKU: 4421092</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-text-secondary">Congelados</td>
+<td class="px-6 py-4 text-center text-white font-medium">12 <span class="text-xs text-text-secondary font-normal">/ 42</span></td>
+<td class="px-6 py-4 text-center text-accent-orange font-medium">5 dias</td>
+<td class="px-6 py-4 text-right text-white">R$ 8.200</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-orange-500/10 text-orange-400 border border-orange-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+                                                Alerta
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-text-secondary hover:text-white p-1 rounded hover:bg-slate-700">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4 font-medium text-white">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-white p-0.5 flex-shrink-0">
+<img alt="Can of energy drink" class="w-full h-full object-cover rounded-sm" data-alt="Can of energy drink" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkCYWIsxuSp-f9psJga0Zidvh7las5xe893mX5u-vKh_THdIy7_d-eqmRBlQeDF_mZD__eW9xRPm-LeotJnoEWpnNYbnrtBZMaYBeuPhbUC-HEbqDEXc3RHBJ4EDcZ1Wqg-h8k2rydRjPlf9U_hZ3nRZb31_n8x0OeQgBwxKTD4mCBazUfZaLfYO_DSIPNcY5enlzP8fVAlQ20mwcD6nYo7hETYQ6oQWz-wndmue8IucCOKZjJVJRI-EVyUHiEoX4FEGfFJBo1bCM"/>
+</div>
+<div>
+<div class="font-bold">Energético Power 473ml</div>
+<div class="text-xs text-text-secondary font-normal">SKU: 9912001</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-text-secondary">Bebidas</td>
+<td class="px-6 py-4 text-center text-white font-medium">28 <span class="text-xs text-text-secondary font-normal">/ 42</span></td>
+<td class="px-6 py-4 text-center text-accent-red font-medium">15 dias</td>
+<td class="px-6 py-4 text-right text-white">R$ 22.100</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-red-500/10 text-red-400 border border-red-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                                                Crítico
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-text-secondary hover:text-white p-1 rounded hover:bg-slate-700">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4 font-medium text-white">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-white p-0.5 flex-shrink-0">
+<img alt="Pack of cookies" class="w-full h-full object-cover rounded-sm" data-alt="Pack of cookies" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyjBfiMdTu40lCZ4LZ0dvwziGN5ILD7RYXL1zeF_jr3GCm0PxYgVwOIc3fp-YpLhOSbk3cD9ZSwbU1QBsCI01Tc4_fgPKn-1KhtsYMNp8aQu-OMbUZfF233D5rcS06kc4mDV27FexG07D6V9b20e4gLOjTDPPkZQGDslEIKzTkqjml6AdqMkL8dzRQJEYYg2qF3YvZCfj30ZoVU0p7tGacXU7r7YR9WPcWK6DqwzzokwWHtkmGxaiIuhbK0746NMBtMcvzeSP5V5k"/>
+</div>
+<div>
+<div class="font-bold">Biscoito Recheado Choco</div>
+<div class="text-xs text-text-secondary font-normal">SKU: 3349122</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-text-secondary">Mercearia Doce</td>
+<td class="px-6 py-4 text-center text-white font-medium">8 <span class="text-xs text-text-secondary font-normal">/ 42</span></td>
+<td class="px-6 py-4 text-center text-accent-green font-medium">2 dias</td>
+<td class="px-6 py-4 text-right text-white">R$ 1.800</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                                                Atenção
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-text-secondary hover:text-white p-1 rounded hover:bg-slate-700">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 border-t border-border-color flex items-center justify-between text-sm text-text-secondary">
+<span>Mostrando 4 de 156 resultados</span>
+<div class="flex gap-2">
+<button class="px-3 py-1 rounded hover:bg-slate-800 disabled:opacity-50" disabled="">Anterior</button>
+<button class="px-3 py-1 rounded hover:bg-slate-800 text-white">Próximo</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<style>
+        /* Custom Scrollbar for better aesthetics in dark mode */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1e293b; 
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #475569; 
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #64748b; 
+        }
+    </style>
+</body></html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Timeline de Jornada e Produtividade</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1152d4",
+                        "primary-dark": "#0a3c9e",
+                        "primary-light": "#3b76e8",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#192233",
+                        "border-dark": "#232f48",
+                        "text-secondary": "#92a4c9",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px",
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen flex flex-col overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-border-dark bg-background-dark px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-4 text-white">
+<div class="size-8 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-3xl">analytics</span>
+</div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">AuditJourney</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<nav class="hidden md:flex items-center gap-9">
+<a class="text-text-secondary hover:text-white transition-colors text-sm font-medium leading-normal" href="#">Dashboard</a>
+<a class="text-text-secondary hover:text-white transition-colors text-sm font-medium leading-normal" href="#">Equipe</a>
+<a class="text-white text-sm font-medium leading-normal" href="#">Auditoria</a>
+<a class="text-text-secondary hover:text-white transition-colors text-sm font-medium leading-normal" href="#">Relatórios</a>
+<a class="text-text-secondary hover:text-white transition-colors text-sm font-medium leading-normal" href="#">Configurações</a>
+</nav>
+<div class="flex gap-2">
+<button class="flex items-center gap-2 cursor-pointer justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary hover:bg-primary-light transition-colors text-white text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="material-symbols-outlined text-[20px]">download</span>
+<span class="truncate">Exportar Cartão</span>
+</button>
+<button class="flex items-center justify-center cursor-pointer overflow-hidden rounded-lg size-10 bg-surface-dark hover:bg-border-dark transition-colors text-white border border-border-dark">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 border-2 border-border-dark" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC_CjpxCVuy3kG3YY0tpMcGYt7tk19OYwxlc1XkvUFqqip-5t33pSUNOXAnDfrpgAj0VkPE162lrPrEOvjYWY8Ta9VVNELeCgKhyu0NSIZGJS5b7Fg6IUN4jYlyeJiJhtRY-DYklKlOmFB5EsbmjV_JNEvbL3bJEXc7EndntO8Q-T7zFjdfhe02jgh4Jc-nr6SZgyZdKOaUeFpg48UkDx9H3yBPZq_h1eWx9tKiPXcW2AG1MCav4iYQm5H1fLrVdTzYWN9K6SqXL4s");'></div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col items-center py-8 px-4 sm:px-10">
+<div class="w-full max-w-7xl flex flex-col gap-8">
+<!-- Page Header & Filters -->
+<div class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 pb-4 border-b border-border-dark">
+<div class="flex flex-col gap-2">
+<h1 class="text-white text-3xl font-black leading-tight tracking-[-0.033em]">Auditoria de Jornada Diária</h1>
+<p class="text-text-secondary text-base font-normal">Visualize a linha do tempo detalhada das atividades de campo.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+<div class="flex flex-col gap-2 min-w-[240px]">
+<label class="text-text-secondary text-xs font-semibold uppercase tracking-wider">Promotor</label>
+<div class="relative">
+<select class="w-full h-12 bg-surface-dark border border-border-dark text-white text-sm rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent px-4 appearance-none cursor-pointer">
+<option>Carlos Eduardo Silva</option>
+<option>Ana Maria Souza</option>
+<option>Roberto Junior</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 text-text-secondary pointer-events-none">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col gap-2 min-w-[200px]">
+<label class="text-text-secondary text-xs font-semibold uppercase tracking-wider">Data</label>
+<div class="relative">
+<input class="w-full h-12 bg-surface-dark border border-border-dark text-white text-sm rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent px-4 cursor-pointer [&amp;::-webkit-calendar-picker-indicator]:invert" type="date" value="2023-10-24"/>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-transparent text-xs font-semibold uppercase tracking-wider select-none">Ação</label>
+<button class="h-12 px-6 bg-surface-dark hover:bg-border-dark border border-border-dark text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+                            Filtrar
+                        </button>
+</div>
+</div>
+</div>
+<!-- KPI Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-surface-dark rounded-xl p-6 border border-border-dark shadow-sm relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-primary">schedule</span>
+</div>
+<p class="text-text-secondary text-sm font-medium mb-1">Jornada Total</p>
+<div class="flex items-end gap-3">
+<span class="text-white text-3xl font-bold tracking-tight">08h 45m</span>
+<span class="text-emerald-500 text-sm font-medium mb-1 flex items-center">
+<span class="material-symbols-outlined text-sm">trending_up</span> +15%
+                        </span>
+</div>
+<div class="w-full bg-border-dark h-1 mt-4 rounded-full overflow-hidden">
+<div class="bg-emerald-500 h-full w-[85%] rounded-full"></div>
+</div>
+</div>
+<div class="bg-surface-dark rounded-xl p-6 border border-border-dark shadow-sm relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-blue-500">store</span>
+</div>
+<p class="text-text-secondary text-sm font-medium mb-1">Tempo em Loja</p>
+<div class="flex items-end gap-3">
+<span class="text-white text-3xl font-bold tracking-tight">06h 30m</span>
+<span class="text-text-secondary text-sm font-medium mb-1">Normal</span>
+</div>
+<div class="w-full bg-border-dark h-1 mt-4 rounded-full overflow-hidden">
+<div class="bg-blue-500 h-full w-[65%] rounded-full"></div>
+</div>
+</div>
+<div class="bg-surface-dark rounded-xl p-6 border border-border-dark shadow-sm relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-amber-500">directions_car</span>
+</div>
+<p class="text-text-secondary text-sm font-medium mb-1">Deslocamento</p>
+<div class="flex items-end gap-3">
+<span class="text-white text-3xl font-bold tracking-tight">02h 15m</span>
+<span class="text-amber-500 text-sm font-medium mb-1 flex items-center">
+<span class="material-symbols-outlined text-sm">warning</span> Alto
+                        </span>
+</div>
+<div class="w-full bg-border-dark h-1 mt-4 rounded-full overflow-hidden">
+<div class="bg-amber-500 h-full w-[35%] rounded-full"></div>
+</div>
+</div>
+<div class="bg-surface-dark rounded-xl p-6 border border-border-dark shadow-sm relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-purple-500">checklist</span>
+</div>
+<p class="text-text-secondary text-sm font-medium mb-1">Visitas Realizadas</p>
+<div class="flex items-end gap-3">
+<span class="text-white text-3xl font-bold tracking-tight">5 / 5</span>
+<span class="text-emerald-500 text-sm font-medium mb-1">100% Meta</span>
+</div>
+<div class="w-full bg-border-dark h-1 mt-4 rounded-full overflow-hidden">
+<div class="bg-purple-500 h-full w-full rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Timeline Section -->
+<div class="flex flex-col gap-4">
+<h3 class="text-white text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">timeline</span>
+                    Timeline de Atividade
+                </h3>
+<div class="bg-surface-dark rounded-xl border border-border-dark p-6 lg:p-10 relative">
+<!-- Vertical Line -->
+<div class="absolute left-8 lg:left-12 top-10 bottom-10 w-0.5 bg-border-dark"></div>
+<div class="space-y-8">
+<!-- Item 1: Start of Day -->
+<div class="relative pl-12 lg:pl-16 group">
+<div class="absolute left-[22px] lg:left-[38px] top-1 w-5 h-5 rounded-full border-4 border-surface-dark bg-emerald-500 z-10 shadow-[0_0_0_4px_rgba(16,22,34,1)]"></div>
+<div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 mb-2">
+<span class="text-emerald-400 font-mono text-lg font-bold">08:00</span>
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 uppercase">Início de Jornada</span>
+</div>
+</div>
+<div class="p-4 bg-background-dark/50 rounded-lg border border-border-dark">
+<div class="flex items-start gap-4">
+<div class="bg-surface-dark p-2 rounded-lg border border-border-dark">
+<span class="material-symbols-outlined text-text-secondary">home_pin</span>
+</div>
+<div>
+<p class="text-white font-medium">Check-in Inicial</p>
+<p class="text-text-secondary text-sm mt-1">Localização: Rua das Flores, 123 - Centro</p>
+<p class="text-xs text-text-secondary mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">my_location</span>
+                                            Precisão GPS: 5m
+                                        </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Travel Segment -->
+<div class="relative pl-12 lg:pl-16 py-2">
+<div class="absolute left-[29px] lg:left-[45px] top-0 bottom-0 w-0.5 border-l-2 border-dashed border-text-secondary/30"></div>
+<div class="flex items-center gap-3 text-text-secondary text-sm">
+<span class="material-symbols-outlined text-[18px]">directions_car</span>
+<span>Deslocamento estimado: <span class="text-white font-medium">35 min</span></span>
+</div>
+</div>
+<!-- Item 2: Visit 1 -->
+<div class="relative pl-12 lg:pl-16 group">
+<div class="absolute left-[22px] lg:left-[38px] top-1 w-5 h-5 rounded-full border-4 border-surface-dark bg-blue-500 z-10 shadow-[0_0_0_4px_rgba(16,22,34,1)]"></div>
+<div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 mb-2">
+<span class="text-white font-mono text-lg font-bold">08:35 - 10:15</span>
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded text-xs font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20 uppercase">Visita Realizada</span>
+<span class="text-text-secondary text-sm">•</span>
+<span class="text-text-secondary text-sm">Permanência: 1h 40m</span>
+</div>
+</div>
+<div class="p-4 bg-background-dark rounded-lg border border-border-dark hover:border-primary/50 transition-colors cursor-pointer group-hover:bg-surface-dark">
+<div class="flex flex-col md:flex-row justify-between gap-4">
+<div class="flex items-start gap-4">
+<div class="bg-blue-500/10 p-2 rounded-lg border border-blue-500/20">
+<span class="material-symbols-outlined text-blue-400">storefront</span>
+</div>
+<div>
+<p class="text-white font-bold text-lg">Supermercado Preço Bom - Matriz</p>
+<p class="text-text-secondary text-sm mt-1">Av. Paulista, 1000 - Bela Vista</p>
+<div class="flex gap-2 mt-3">
+<span class="inline-flex items-center gap-1 text-xs bg-surface-dark border border-border-dark px-2 py-1 rounded text-text-secondary">
+<span class="material-symbols-outlined text-[14px]">photo_camera</span> 3 Fotos
+                                                </span>
+<span class="inline-flex items-center gap-1 text-xs bg-surface-dark border border-border-dark px-2 py-1 rounded text-text-secondary">
+<span class="material-symbols-outlined text-[14px]">inventory</span> Ruptura Baixa
+                                                </span>
+</div>
+</div>
+</div>
+<div class="flex md:flex-col items-center md:items-end justify-between md:justify-start gap-2 min-w-[100px]">
+<div class="text-right">
+<p class="text-xs text-text-secondary uppercase">Produtividade</p>
+<p class="text-emerald-400 font-bold">Alta</p>
+</div>
+<button class="text-primary text-sm font-medium hover:underline">Ver Detalhes</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Travel Segment -->
+<div class="relative pl-12 lg:pl-16 py-2">
+<div class="absolute left-[29px] lg:left-[45px] top-0 bottom-0 w-0.5 border-l-2 border-dashed border-text-secondary/30"></div>
+<div class="flex items-center gap-3 text-text-secondary text-sm">
+<span class="material-symbols-outlined text-[18px]">directions_car</span>
+<span>Deslocamento estimado: <span class="text-white font-medium">15 min</span></span>
+</div>
+</div>
+<!-- Item 3: Visit 2 (Alert) -->
+<div class="relative pl-12 lg:pl-16 group">
+<div class="absolute left-[22px] lg:left-[38px] top-1 w-5 h-5 rounded-full border-4 border-surface-dark bg-amber-500 z-10 shadow-[0_0_0_4px_rgba(16,22,34,1)]"></div>
+<div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 mb-2">
+<span class="text-white font-mono text-lg font-bold">10:30 - 10:42</span>
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded text-xs font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20 uppercase flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+                                        Visita Curta
+                                    </span>
+<span class="text-text-secondary text-sm">•</span>
+<span class="text-text-secondary text-sm">Permanência: 12m</span>
+</div>
+</div>
+<div class="p-4 bg-background-dark rounded-lg border border-amber-500/30 hover:border-amber-500/50 transition-colors cursor-pointer group-hover:bg-surface-dark relative overflow-hidden">
+<!-- Warning Strip -->
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-amber-500"></div>
+<div class="flex flex-col md:flex-row justify-between gap-4">
+<div class="flex items-start gap-4">
+<div class="bg-amber-500/10 p-2 rounded-lg border border-amber-500/20">
+<span class="material-symbols-outlined text-amber-400">storefront</span>
+</div>
+<div>
+<p class="text-white font-bold text-lg">Mercadinho da Esquina</p>
+<p class="text-text-secondary text-sm mt-1">Rua Augusta, 400 - Consolação</p>
+<p class="text-amber-400 text-sm mt-2 font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">info</span>
+                                                Tempo de visita abaixo do esperado (Mínimo 15min)
+                                            </p>
+</div>
+</div>
+<div class="flex md:flex-col items-center md:items-end justify-between md:justify-start gap-2 min-w-[100px]">
+<div class="text-right">
+<p class="text-xs text-text-secondary uppercase">Status</p>
+<p class="text-amber-400 font-bold">Atenção</p>
+</div>
+<button class="text-primary text-sm font-medium hover:underline">Justificar</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Travel Segment -->
+<div class="relative pl-12 lg:pl-16 py-2">
+<div class="absolute left-[29px] lg:left-[45px] top-0 bottom-0 w-0.5 border-l-2 border-dashed border-text-secondary/30"></div>
+<div class="flex items-center gap-3 text-text-secondary text-sm">
+<span class="material-symbols-outlined text-[18px]">directions_car</span>
+<span>Deslocamento estimado: <span class="text-white font-medium">1h 05 min</span></span>
+<span class="bg-red-500/10 text-red-400 text-xs px-2 py-0.5 rounded border border-red-500/20">Trânsito Intenso</span>
+</div>
+</div>
+<!-- Item 4: Lunch Break -->
+<div class="relative pl-12 lg:pl-16 group">
+<div class="absolute left-[22px] lg:left-[38px] top-1 w-5 h-5 rounded-full border-4 border-surface-dark bg-text-secondary z-10 shadow-[0_0_0_4px_rgba(16,22,34,1)]"></div>
+<div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 mb-2">
+<span class="text-text-secondary font-mono text-lg font-bold">11:50 - 13:00</span>
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded text-xs font-bold bg-surface-dark text-text-secondary border border-border-dark uppercase">Intervalo</span>
+<span class="text-text-secondary text-sm">•</span>
+<span class="text-text-secondary text-sm">Duração: 1h 10m</span>
+</div>
+</div>
+<div class="flex items-center gap-2 px-4 py-2 bg-surface-dark/50 rounded border border-border-dark/50 border-dashed w-fit">
+<span class="material-symbols-outlined text-text-secondary text-[18px]">restaurant</span>
+<span class="text-text-secondary text-sm">Horário de Almoço Registrado</span>
+</div>
+</div>
+<!-- Travel Segment -->
+<div class="relative pl-12 lg:pl-16 py-2">
+<div class="absolute left-[29px] lg:left-[45px] top-0 bottom-0 w-0.5 border-l-2 border-dashed border-text-secondary/30"></div>
+<div class="flex items-center gap-3 text-text-secondary text-sm">
+<span class="material-symbols-outlined text-[18px]">directions_car</span>
+<span>Deslocamento estimado: <span class="text-white font-medium">20 min</span></span>
+</div>
+</div>
+<!-- Item 5: End of Day -->
+<div class="relative pl-12 lg:pl-16 group">
+<div class="absolute left-[22px] lg:left-[38px] top-1 w-5 h-5 rounded-full border-4 border-surface-dark bg-emerald-500 z-10 shadow-[0_0_0_4px_rgba(16,22,34,1)]"></div>
+<div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 mb-2">
+<span class="text-emerald-400 font-mono text-lg font-bold">16:45</span>
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 uppercase">Fim de Jornada</span>
+</div>
+</div>
+<div class="p-4 bg-background-dark/50 rounded-lg border border-border-dark">
+<div class="flex items-start gap-4">
+<div class="bg-surface-dark p-2 rounded-lg border border-border-dark">
+<span class="material-symbols-outlined text-text-secondary">logout</span>
+</div>
+<div>
+<p class="text-white font-medium">Check-out Final</p>
+<p class="text-text-secondary text-sm mt-1">Localização: Hipermercado Extra - Jd. Europa</p>
+<p class="text-xs text-text-secondary mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">my_location</span>
+                                            Precisão GPS: 8m
+                                        </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Gradient Fade for infinite scroll feel if needed, purely aesthetic here -->
+<div class="absolute bottom-0 left-0 w-full h-12 bg-gradient-to-t from-surface-dark to-transparent pointer-events-none rounded-b-xl"></div>
+</div>
+</div>
+<!-- Footer / Stats Summary -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-border-dark">
+<div class="flex flex-col gap-1">
+<span class="text-text-secondary text-sm">Total Km Percorrido</span>
+<span class="text-white text-xl font-bold">42.5 km</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-text-secondary text-sm">Custo Estimado de Combustível</span>
+<span class="text-white text-xl font-bold">R$ 38,40</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-text-secondary text-sm">Status do Dia</span>
+<span class="text-emerald-500 text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined">check_circle</span>
+                        Validado
+                    </span>
+</div>
+</div>
+</div>
+</main>
+</body></html>

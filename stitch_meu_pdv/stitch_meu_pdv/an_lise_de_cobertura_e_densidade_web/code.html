@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Análise de Cobertura e Densidade - MVP2</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1152d4",
+                        "primary-dark": "#0d3ca0",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* MVP2 Watermark */
+        body::after {
+            content: "MVP2";
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 100px;
+            color: rgba(0, 0, 0, 0.03);
+            font-weight: 900;
+            pointer-events: none;
+            z-index: 9999;
+            transform: rotate(-15deg);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-body antialiased min-h-screen flex flex-col overflow-hidden">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-8 py-3 shrink-0">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-slate-900 dark:text-white">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[20px]">analytics</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">BI Cobertura &amp; Densidade</h2>
+</div>
+<!-- Search Bar -->
+<div class="hidden md:flex flex-col min-w-64 max-w-sm h-10">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+<div class="text-slate-500 dark:text-slate-400 flex items-center justify-center pl-3">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="w-full bg-transparent border-none text-slate-900 dark:text-white focus:ring-0 placeholder:text-slate-400 text-sm px-3" placeholder="Buscar região, cidade ou cluster..."/>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary text-sm font-medium transition-colors" href="#">Dashboard</a>
+<a class="text-primary dark:text-primary text-sm font-bold border-b-2 border-primary pb-0.5" href="#">Mapas</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary text-sm font-medium transition-colors" href="#">Relatórios</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary text-sm font-medium transition-colors" href="#">Configurações</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="hidden sm:flex items-center justify-center h-9 px-4 rounded-lg bg-primary hover:bg-primary-dark text-white text-sm font-bold transition-colors shadow-sm">
+<span class="mr-2 material-symbols-outlined text-[18px]">download</span>
+                    Exportar Dados
+                </button>
+<div class="relative group cursor-pointer">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-9 ring-2 ring-slate-100 dark:ring-slate-700" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAjYVmMimXE-Th0rEn93SdI_TeH4qE_3WLYjPxPtfMjSioecFPKOg8yiv4NGEn9q-eynwmQ3hzu9t6L2fV-TiUXyfb06RagCvrdqnqfShE6sNj9RYR0D-vjVNJHSiE_3Ein87r23c0A8D4g6VuN5DOHWjKgamBK5pEGRHyufUD24zDjjNGDukbd94j3q58owmOSG82tl5XwZv6Fo1vBHuUhJhoopHDfZlbUb15D7IvjA6lp9tI6hASmhgKbWwTX4QltLzzWzmXL7R8");'></div>
+<div class="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 hidden group-hover:block z-50">
+<div class="p-2">
+<a class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-md" href="#">Perfil</a>
+<a class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-md" href="#">Sair</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex flex-1 overflow-hidden relative">
+<!-- Sidebar Filters (Collapsible) -->
+<aside class="w-80 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col z-20 shadow-xl overflow-y-auto hidden xl:flex">
+<div class="p-6 border-b border-slate-200 dark:border-slate-800">
+<h3 class="text-slate-900 dark:text-white text-xl font-bold mb-1">Filtros de Análise</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Refine a visualização dos clusters</p>
+</div>
+<div class="p-6 flex flex-col gap-6">
+<!-- Region Filter -->
+<div class="flex flex-col gap-2">
+<label class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Região</label>
+<select class="w-full h-10 rounded-lg border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-sm focus:ring-primary focus:border-primary">
+<option>Todas as Regiões</option>
+<option>Sudeste</option>
+<option>Sul</option>
+<option>Nordeste</option>
+<option>Centro-Oeste</option>
+<option>Norte</option>
+</select>
+</div>
+<!-- Metric Toggle -->
+<div class="flex flex-col gap-2">
+<label class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Métrica Principal</label>
+<div class="flex p-1 bg-slate-100 dark:bg-slate-800 rounded-lg">
+<button class="flex-1 py-1.5 px-3 rounded-md bg-white dark:bg-slate-700 text-primary dark:text-white text-xs font-bold shadow-sm">Cobertura</button>
+<button class="flex-1 py-1.5 px-3 rounded-md text-slate-500 dark:text-slate-400 text-xs font-medium hover:text-slate-700 dark:hover:text-slate-200">Produtividade</button>
+</div>
+</div>
+<!-- Range Slider Mockup -->
+<div class="flex flex-col gap-3">
+<div class="flex justify-between items-center">
+<label class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Densidade PDV</label>
+<span class="text-xs font-mono bg-primary/10 text-primary px-2 py-0.5 rounded">Min: 50</span>
+</div>
+<div class="h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-2/3 rounded-full"></div>
+</div>
+</div>
+<!-- Team Filter -->
+<div class="flex flex-col gap-2">
+<label class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Equipes</label>
+<div class="flex flex-col gap-2">
+<label class="flex items-center gap-2 cursor-pointer">
+<input checked="" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+<span class="text-sm text-slate-700 dark:text-slate-300">Promotores Internos</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer">
+<input checked="" class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+<span class="text-sm text-slate-700 dark:text-slate-300">Terceirizados (3PL)</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+<span class="text-sm text-slate-700 dark:text-slate-300">Supervisores</span>
+</label>
+</div>
+</div>
+<div class="mt-auto pt-6 border-t border-slate-200 dark:border-slate-800">
+<div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-100 dark:border-blue-800">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-xl">info</span>
+<div>
+<h4 class="text-sm font-bold text-primary dark:text-blue-300">Insight Rápido</h4>
+<p class="text-xs text-slate-600 dark:text-slate-400 mt-1">A região Sul apresenta 15% de ociosidade em clusters urbanos.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Map Area -->
+<div class="flex-1 relative bg-slate-200 dark:bg-slate-800 w-full h-full overflow-hidden">
+<!-- Map Background Image -->
+<div class="absolute inset-0 bg-cover bg-center z-0 grayscale-[20%] opacity-90" data-alt="Map view of a city with streets and blocks" data-location="São Paulo" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBxj7e7vzH_ICnB7w7YbV9NW6t5k0D5Vk-7171F9dVlsbEwqfxno-TcijWLqdKbsFqZ6ycjBN4vZLH3hOgipe_ARUPVxNFwXLgDO9TUBOCQ5Jt_cNg9jGXY6cbXwmpJI1kXMHaFI4nQJyZBISha5oecUJexEbVnU-eh29oYctF2Y3bgiSAY-JAVjkTnbywzqZI00Qecebvsm_cspw0yMk9W6NPpjTppSLPFZ2UlMD04W6H517x1_zGqXBa6HJbqeqcwbfmAWuDxbAA');"></div>
+<!-- Map Overlay Gradient -->
+<div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/90 dark:to-slate-900/90 pointer-events-none z-0"></div>
+<!-- Map Controls -->
+<div class="absolute top-6 right-6 z-10 flex flex-col gap-2">
+<button class="bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 p-2 rounded-lg shadow-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined block">add</span>
+</button>
+<button class="bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 p-2 rounded-lg shadow-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined block">remove</span>
+</button>
+<div class="h-px bg-slate-300 dark:bg-slate-600 my-1"></div>
+<button class="bg-white dark:bg-slate-800 text-primary p-2 rounded-lg shadow-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined block">my_location</span>
+</button>
+</div>
+<!-- Map Cluster Pins (Simulated) -->
+<!-- Cluster 1: High Productivity -->
+<div class="absolute top-1/3 left-1/4 group cursor-pointer z-10 transform -translate-x-1/2 -translate-y-1/2">
+<div class="relative">
+<div class="absolute -inset-4 bg-primary/20 rounded-full animate-ping"></div>
+<div class="size-12 bg-primary rounded-full border-4 border-white dark:border-slate-800 shadow-lg flex items-center justify-center text-white font-bold text-sm">
+                        85
+                    </div>
+</div>
+<!-- Tooltip -->
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-64 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 p-4 hidden group-hover:block animate-in fade-in slide-in-from-bottom-2">
+<div class="flex justify-between items-start mb-2">
+<h4 class="font-bold text-slate-900 dark:text-white text-sm">Cluster Zona Sul #04</h4>
+<span class="bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-[10px] font-bold px-1.5 py-0.5 rounded">Alta Performance</span>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-xs">
+<span class="text-slate-500 dark:text-slate-400">Janela Média:</span>
+<span class="font-semibold text-slate-900 dark:text-white">3h 45m</span>
+</div>
+<div class="flex justify-between text-xs">
+<span class="text-slate-500 dark:text-slate-400">Lojas Visitadas:</span>
+<span class="font-semibold text-slate-900 dark:text-white">92%</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full mt-1 overflow-hidden">
+<div class="bg-green-500 h-full rounded-full" style="width: 92%"></div>
+</div>
+</div>
+<div class="absolute bottom-[-6px] left-1/2 -translate-x-1/2 size-3 bg-white dark:bg-slate-900 border-b border-r border-slate-200 dark:border-slate-700 transform rotate-45"></div>
+</div>
+</div>
+<!-- Cluster 2: Warning -->
+<div class="absolute top-1/2 left-1/2 group cursor-pointer z-10 transform -translate-x-1/2 -translate-y-1/2">
+<div class="size-10 bg-amber-500 rounded-full border-4 border-white dark:border-slate-800 shadow-lg flex items-center justify-center text-white font-bold text-xs">
+                    42
+                </div>
+<!-- Tooltip -->
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-64 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 p-4 hidden group-hover:block animate-in fade-in slide-in-from-bottom-2">
+<div class="flex justify-between items-start mb-2">
+<h4 class="font-bold text-slate-900 dark:text-white text-sm">Cluster Centro #12</h4>
+<span class="bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 text-[10px] font-bold px-1.5 py-0.5 rounded">Atenção</span>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-xs">
+<span class="text-slate-500 dark:text-slate-400">Janela Média:</span>
+<span class="font-semibold text-slate-900 dark:text-white">5h 10m</span>
+</div>
+<div class="flex justify-between text-xs">
+<span class="text-slate-500 dark:text-slate-400">Lojas Visitadas:</span>
+<span class="font-semibold text-slate-900 dark:text-white">65%</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full mt-1 overflow-hidden">
+<div class="bg-amber-500 h-full rounded-full" style="width: 65%"></div>
+</div>
+</div>
+<div class="absolute bottom-[-6px] left-1/2 -translate-x-1/2 size-3 bg-white dark:bg-slate-900 border-b border-r border-slate-200 dark:border-slate-700 transform rotate-45"></div>
+</div>
+</div>
+<!-- Bottom Panel: Radar Chart & Metrics -->
+<div class="absolute bottom-0 left-0 w-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 p-6 z-20 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] transition-transform duration-300 translate-y-0">
+<div class="max-w-[1400px] mx-auto w-full">
+<div class="flex flex-col md:flex-row gap-8 items-stretch">
+<!-- Header for Bottom Panel -->
+<div class="flex flex-col justify-center min-w-[200px]">
+<h3 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">Produtividade<br/><span class="text-primary">Comparativa</span></h3>
+<p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Análise cruzada entre capitais e KPIs de campo.</p>
+<button class="mt-4 text-sm font-bold text-primary flex items-center gap-1 hover:underline">
+                                Ver relatório completo
+                                <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+<!-- Divider -->
+<div class="hidden md:block w-px bg-slate-200 dark:bg-slate-800 self-stretch mx-4"></div>
+<!-- Charts Area -->
+<div class="flex-1 flex flex-col sm:flex-row gap-6 items-center justify-around">
+<!-- Radar Chart Visualization (CSS Only Approximation) -->
+<div class="relative size-40 flex items-center justify-center">
+<!-- Background Pentagon/Web -->
+<svg class="absolute inset-0 w-full h-full text-slate-200 dark:text-slate-700" fill="none" stroke="currentColor" stroke-width="1" viewbox="0 0 100 100">
+<polygon points="50,10 90,38 75,85 25,85 10,38"></polygon>
+<polygon opacity="0.5" points="50,25 75,42 65,70 35,70 25,42"></polygon>
+<line x1="50" x2="50" y1="50" y2="10"></line>
+<line x1="50" x2="90" y1="50" y2="38"></line>
+<line x1="50" x2="75" y1="50" y2="85"></line>
+<line x1="50" x2="25" y1="50" y2="85"></line>
+<line x1="50" x2="10" y1="50" y2="38"></line>
+</svg>
+<!-- Data Shape (Blue) -->
+<svg class="absolute inset-0 w-full h-full text-primary drop-shadow-md" fill="currentColor" fill-opacity="0.2" stroke="currentColor" stroke-width="2" viewbox="0 0 100 100">
+<polygon points="50,15 85,40 65,80 35,75 20,45"></polygon>
+</svg>
+<!-- Data Shape (Gray/Comparison) -->
+<svg class="absolute inset-0 w-full h-full text-slate-400 dark:text-slate-500" fill="none" stroke="currentColor" stroke-dasharray="2,2" stroke-width="2" viewbox="0 0 100 100">
+<polygon points="50,30 70,50 60,75 40,75 30,50"></polygon>
+</svg>
+<!-- Labels -->
+<div class="absolute -top-6 text-[10px] font-bold text-slate-600 dark:text-slate-300">Eficiência</div>
+<div class="absolute -right-8 top-1/3 text-[10px] font-bold text-slate-600 dark:text-slate-300">Cobertura</div>
+<div class="absolute -bottom-5 right-0 text-[10px] font-bold text-slate-600 dark:text-slate-300">Visitas</div>
+<div class="absolute -bottom-5 left-0 text-[10px] font-bold text-slate-600 dark:text-slate-300">Tempo</div>
+<div class="absolute -left-8 top-1/3 text-[10px] font-bold text-slate-600 dark:text-slate-300">Custo</div>
+</div>
+<!-- Legend/Stats -->
+<div class="flex flex-col gap-4 min-w-[180px]">
+<div class="flex items-center gap-3">
+<div class="size-3 bg-primary rounded-full"></div>
+<div class="flex flex-col">
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Região Selecionada</span>
+<span class="text-sm font-bold text-slate-900 dark:text-white">São Paulo (SP)</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="size-3 bg-slate-400 rounded-full"></div>
+<div class="flex flex-col">
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Média Nacional</span>
+<span class="text-sm font-bold text-slate-900 dark:text-white">Brasil (BR)</span>
+</div>
+</div>
+<div class="mt-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+<div class="flex justify-between items-center">
+<span class="text-xs font-bold text-slate-600 dark:text-slate-300">Gap de Oportunidade</span>
+<span class="text-xs font-bold text-green-600 bg-green-100 dark:bg-green-900 px-2 py-0.5 rounded-full">+12.4%</span>
+</div>
+</div>
+</div>
+<!-- Mini Cards -->
+<div class="hidden xl:flex gap-4">
+<div class="bg-slate-50 dark:bg-slate-800 p-3 rounded-lg border border-slate-100 dark:border-slate-700 w-32">
+<div class="text-slate-500 dark:text-slate-400 text-xs mb-1">Visitas / Dia</div>
+<div class="text-xl font-black text-slate-900 dark:text-white">14.2</div>
+<div class="text-[10px] text-green-600 flex items-center mt-1">
+<span class="material-symbols-outlined text-[10px] mr-0.5">trending_up</span>
+                                        +2.1% vs prev
+                                    </div>
+</div>
+<div class="bg-slate-50 dark:bg-slate-800 p-3 rounded-lg border border-slate-100 dark:border-slate-700 w-32">
+<div class="text-slate-500 dark:text-slate-400 text-xs mb-1">Tempo em Loja</div>
+<div class="text-xl font-black text-slate-900 dark:text-white">22m</div>
+<div class="text-[10px] text-red-500 flex items-center mt-1">
+<span class="material-symbols-outlined text-[10px] mr-0.5">trending_down</span>
+                                        -5% vs prev
+                                    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

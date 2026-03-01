@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Benchmarking Regional - Gerência Ops</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#3b82f6", // Blue-500 for a crisp analytical look
+                        "background-light": "#f1f5f9", // Slate-100
+                        "background-dark": "#0f172a", // Slate-900
+                        sidebar: "#1e293b", // Slate-800 as requested
+                        card: "#1e293b", // Matching sidebar for consistency in dark mode
+                        "card-hover": "#334155", // Slate-700
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-hidden">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 flex-shrink-0 bg-sidebar border-r border-slate-700 flex flex-col justify-between h-full">
+<div class="flex flex-col gap-4 p-4">
+<!-- User Profile -->
+<div class="flex gap-3 items-center pb-4 border-b border-slate-700">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-10 w-10 shrink-0 border border-slate-600" data-alt="Profile picture of a male manager" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA1Uj5e-R2Yb99MzD8gKYxpUv3nGuwj86Q74c6xYXWEX5Y4WCSMZpJmK8oS2RASb4fmsfmTDEXDHoOJQS4RWo0_0_R1nPE_B0z6l9yuP53j9MuWziK8_Cw8fj-sA2Qb0mmyfBp0FiA0jHPvfZ7Ryqia5G5fdECD2P2tiva-b0d2pYWQQNjDq0TsKHZjE3h0DzM-H4ZZQRRF0lwMFFzg1GG2Tu4NGYGnAUw-0MSyQ-BNxB8GvzFBkOceQyR3SmlclUQ4sxJLbiF3k2M");'></div>
+<div class="flex flex-col overflow-hidden">
+<h1 class="text-white text-sm font-semibold truncate">Roberto Almeida</h1>
+<p class="text-slate-400 text-xs truncate">Gerente Nacional</p>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">pie_chart</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/20 text-white border-l-4 border-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-primary">map</span>
+<span class="text-sm font-medium">Regionais</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">storefront</span>
+<span class="text-sm font-medium">Lojas</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">inventory_2</span>
+<span class="text-sm font-medium">Produtos</span>
+</a>
+<div class="mt-4 pt-4 border-t border-slate-700">
+<p class="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Analítico</p>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">trending_up</span>
+<span class="text-sm font-medium">Tendências</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">campaign</span>
+<span class="text-sm font-medium">Alertas</span>
+<span class="ml-auto bg-red-500/20 text-red-400 text-xs px-1.5 py-0.5 rounded">3</span>
+</a>
+</div>
+</nav>
+</div>
+<!-- Bottom Actions -->
+<div class="p-4 border-t border-slate-700">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white transition-colors">settings</span>
+<span class="text-sm font-medium">Configurações</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-y-auto bg-background-dark scrollbar-hide">
+<!-- Header -->
+<header class="sticky top-0 z-20 bg-background-dark/80 backdrop-blur-md border-b border-slate-800 px-8 py-5 flex items-center justify-between">
+<div>
+<h2 class="text-2xl font-bold text-white tracking-tight">Benchmarking Regional</h2>
+<p class="text-slate-400 text-sm mt-1">Comparativo estratégico de performance entre regionais selecionadas</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-medium rounded-lg border border-slate-700 transition-all">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+<span>Out 2023</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-blue-600 text-white text-sm font-medium rounded-lg shadow-lg shadow-blue-900/20 transition-all">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span>Exportar Relatório</span>
+</button>
+</div>
+</header>
+<div class="flex-1 p-8 max-w-[1600px] mx-auto w-full flex flex-col gap-8">
+<!-- Filters Section -->
+<div class="flex flex-wrap gap-3 items-center pb-4 border-b border-slate-800">
+<span class="text-slate-400 text-sm font-medium mr-2">Filtrar por:</span>
+<button class="group flex items-center gap-2 px-3 py-1.5 bg-slate-800/50 hover:bg-slate-800 border border-slate-700 rounded-full text-sm text-slate-300 transition-all">
+<span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                        Sudeste
+                        <span class="material-symbols-outlined text-[16px] text-slate-500 group-hover:text-slate-300">close</span>
+</button>
+<button class="group flex items-center gap-2 px-3 py-1.5 bg-slate-800/50 hover:bg-slate-800 border border-slate-700 rounded-full text-sm text-slate-300 transition-all">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        Nordeste
+                        <span class="material-symbols-outlined text-[16px] text-slate-500 group-hover:text-slate-300">close</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 text-primary text-sm font-medium hover:bg-primary/10 rounded-full transition-colors ml-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                        Adicionar Regional
+                    </button>
+</div>
+<!-- Top Section: Radar Chart & KPI Summary -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Radar Chart Card -->
+<div class="lg:col-span-7 xl:col-span-8 bg-card rounded-2xl border border-slate-700/50 p-6 flex flex-col shadow-xl shadow-black/20">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="text-lg font-semibold text-white">Análise Multi-Eixo</h3>
+<p class="text-slate-400 text-sm">Performance relativa nos 5 pilares estratégicos</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 text-xs font-medium text-slate-300">
+<span class="w-3 h-3 rounded-full bg-blue-500"></span> Sudeste
+                                </div>
+<div class="flex items-center gap-2 text-xs font-medium text-slate-300">
+<span class="w-3 h-3 rounded-full bg-emerald-500"></span> Nordeste
+                                </div>
+</div>
+</div>
+<!-- Custom Radar Chart Visualization -->
+<div class="relative flex-1 min-h-[360px] flex items-center justify-center p-4">
+<!-- Background Circles for Radar -->
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-[300px] h-[300px] rounded-full border border-slate-700/30"></div>
+<div class="w-[225px] h-[225px] rounded-full border border-slate-700/30 absolute"></div>
+<div class="w-[150px] h-[150px] rounded-full border border-slate-700/30 absolute"></div>
+<div class="w-[75px] h-[75px] rounded-full border border-slate-700/30 absolute"></div>
+<!-- Axis Lines -->
+<div class="absolute w-full h-px bg-slate-700/30 rotate-0"></div>
+<div class="absolute w-full h-px bg-slate-700/30 rotate-[72deg]"></div>
+<div class="absolute w-full h-px bg-slate-700/30 rotate-[144deg]"></div>
+<div class="absolute w-full h-px bg-slate-700/30 rotate-[216deg]"></div>
+<div class="absolute w-full h-px bg-slate-700/30 rotate-[288deg]"></div>
+</div>
+<!-- Labels -->
+<div class="absolute top-4 font-semibold text-xs text-slate-400">Presença Mix</div>
+<div class="absolute right-8 top-1/4 font-semibold text-xs text-slate-400 text-right">Qualidade<br/>Foto</div>
+<div class="absolute right-12 bottom-1/4 font-semibold text-xs text-slate-400 text-right">Pontualidade</div>
+<div class="absolute left-12 bottom-1/4 font-semibold text-xs text-slate-400 text-left">Conformidade<br/>Preço</div>
+<div class="absolute left-8 top-1/4 font-semibold text-xs text-slate-400 text-left">Redução<br/>Ruptura</div>
+<!-- Polygon Shapes (Simulated with SVG) -->
+<svg class="absolute w-[300px] h-[300px] overflow-visible" viewbox="0 0 100 100">
+<!-- Shape 1: Sudeste (Blue) -->
+<polygon class="drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]" fill="rgba(59, 130, 246, 0.2)" points="50,10 85,35 75,80 25,80 15,35" stroke="#3b82f6" stroke-width="2"></polygon>
+<!-- Shape 2: Nordeste (Emerald) -->
+<polygon fill="rgba(16, 185, 129, 0.1)" points="50,25 75,45 65,70 35,65 25,30" stroke="#10b981" stroke-dasharray="4 2" stroke-width="2"></polygon>
+<!-- Data Points (Sudeste) -->
+<circle cx="50" cy="10" fill="#3b82f6" r="2"></circle>
+<circle cx="85" cy="35" fill="#3b82f6" r="2"></circle>
+<circle cx="75" cy="80" fill="#3b82f6" r="2"></circle>
+<circle cx="25" cy="80" fill="#3b82f6" r="2"></circle>
+<circle cx="15" cy="35" fill="#3b82f6" r="2"></circle>
+</svg>
+</div>
+</div>
+<!-- Summary Stats Card -->
+<div class="lg:col-span-5 xl:col-span-4 flex flex-col gap-4">
+<div class="bg-card rounded-2xl border border-slate-700/50 p-6 flex-1 shadow-lg">
+<h3 class="text-white font-semibold mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">trophy</span>
+                                Líder Geral
+                            </h3>
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold text-lg border border-blue-500/30">
+                                    SE
+                                </div>
+<div>
+<h4 class="text-2xl font-bold text-white">Sudeste</h4>
+<div class="flex items-center gap-2">
+<span class="text-emerald-400 text-sm font-medium">+4.2%</span>
+<span class="text-slate-500 text-sm">vs média nacional</span>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="bg-slate-800/50 p-3 rounded-xl border border-slate-700/50">
+<div class="flex justify-between items-center mb-1">
+<span class="text-slate-400 text-xs font-medium uppercase tracking-wider">Melhor KPI</span>
+<span class="text-white font-bold text-sm">98.5%</span>
+</div>
+<div class="text-blue-400 text-sm font-medium">Presença de Mix</div>
+</div>
+<div class="bg-slate-800/50 p-3 rounded-xl border border-slate-700/50">
+<div class="flex justify-between items-center mb-1">
+<span class="text-slate-400 text-xs font-medium uppercase tracking-wider">Ponto Fraco</span>
+<span class="text-white font-bold text-sm">82.1%</span>
+</div>
+<div class="text-red-400 text-sm font-medium">Redução de Ruptura</div>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-br from-primary/20 to-indigo-900/20 rounded-2xl border border-primary/20 p-6 shadow-lg">
+<div class="flex items-start gap-3">
+<div class="bg-primary/20 p-2 rounded-lg text-primary">
+<span class="material-symbols-outlined">lightbulb</span>
+</div>
+<div>
+<h4 class="text-white font-medium text-sm mb-1">Insight Automático</h4>
+<p class="text-slate-300 text-xs leading-relaxed">
+                                        A regional <strong>Sudeste</strong> supera o Nordeste em <strong>Qualidade de Foto</strong> (+15%), indicando melhor adesão ao padrão de execução em loja.
+                                    </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Section: Detailed Cards -->
+<div>
+<h3 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400">analytics</span>
+                        Análise Detalhada
+                    </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Region 1 Card: Sudeste -->
+<div class="bg-card rounded-2xl border border-slate-700/50 overflow-hidden shadow-lg group hover:border-slate-600 transition-colors">
+<div class="bg-slate-800/50 px-6 py-4 border-b border-slate-700 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<span class="w-3 h-3 rounded-full bg-blue-500 ring-4 ring-blue-500/20"></span>
+<h4 class="font-bold text-white text-lg">Sudeste</h4>
+</div>
+<span class="bg-blue-500/10 text-blue-400 text-xs px-2.5 py-1 rounded-full border border-blue-500/20 font-medium">Score: 92/100</span>
+</div>
+<div class="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- Positives -->
+<div>
+<div class="flex items-center gap-2 mb-3 text-emerald-400 font-medium text-sm uppercase tracking-wide">
+<span class="material-symbols-outlined text-[18px]">thumb_up</span>
+                                        Destaques Positivos
+                                    </div>
+<ul class="space-y-2">
+<li class="flex items-start gap-2 text-slate-300 text-sm p-2 rounded bg-slate-800/30">
+<span class="material-symbols-outlined text-emerald-500 text-[16px] mt-0.5">check_circle</span>
+<span><strong>Mix Premium</strong> atingiu 98% de presença nas lojas Tier 1.</span>
+</li>
+<li class="flex items-start gap-2 text-slate-300 text-sm p-2 rounded bg-slate-800/30">
+<span class="material-symbols-outlined text-emerald-500 text-[16px] mt-0.5">check_circle</span>
+<span>Melhor tempo de resposta em <strong>auditorias</strong> da rede.</span>
+</li>
+</ul>
+</div>
+<!-- Negatives/Attention -->
+<div>
+<div class="flex items-center gap-2 mb-3 text-amber-400 font-medium text-sm uppercase tracking-wide">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+                                        Pontos de Atenção
+                                    </div>
+<ul class="space-y-2">
+<li class="flex items-start gap-2 text-slate-300 text-sm p-2 rounded bg-slate-800/30">
+<span class="material-symbols-outlined text-amber-500 text-[16px] mt-0.5">error</span>
+<span>Ruptura acima da meta em categorias de <strong>Higiene</strong>.</span>
+</li>
+<li class="flex items-start gap-2 text-slate-300 text-sm p-2 rounded bg-slate-800/30">
+<span class="material-symbols-outlined text-amber-500 text-[16px] mt-0.5">error</span>
+<span>Divergência de preços detectada em 12% das lojas.</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="px-6 py-3 bg-slate-800/30 border-t border-slate-700 flex justify-end">
+<button class="text-blue-400 hover:text-blue-300 text-sm font-medium flex items-center gap-1 transition-colors">
+                                    Ver Detalhes da Regional
+                                    <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Region 2 Card: Nordeste -->
+<div class="bg-card rounded-2xl border border-slate-700/50 overflow-hidden shadow-lg group hover:border-slate-600 transition-colors">
+<div class="bg-slate-800/50 px-6 py-4 border-b border-slate-700 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<span class="w-3 h-3 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20"></span>
+<h4 class="font-bold text-white text-lg">Nordeste</h4>
+</div>
+<span class="bg-emerald-500/10 text-emerald-400 text-xs px-2.5 py-1 rounded-full border border-emerald-500/20 font-medium">Score: 85/100</span>
+</div>
+<div class="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- Positives -->
+<div>
+<div class="flex items-center gap-2 mb-3 text-emerald-400 font-medium text-sm uppercase tracking-wide">
+<span class="material-symbols-outlined text-[18px]">thumb_up</span>
+                                        Destaques Positivos
+                                    </div>
+<ul class="space-y-2">
+<li class="flex items-start gap-2 text-slate-300 text-sm p-2 rounded bg-slate-800/30">
+<span class="material-symbols-outlined text-emerald-500 text-[16px] mt-0.5">check_circle</span>
+<span>Crescimento de 15% na execução de <strong>Ponta de Gôndola</strong>.</span>
+</li>
+<li class="flex items-start gap-2 text-slate-300 text-sm p-2 rounded bg-slate-800/30">
+<span class="material-symbols-outlined text-emerald-500 text-[16px] mt-0.5">check_circle</span>
+<span>Equipe 100% aderente ao novo app de field sales.</span>
+</li>
+</ul>
+</div>
+<!-- Negatives/Attention -->
+<div>
+<div class="flex items-center gap-2 mb-3 text-amber-400 font-medium text-sm uppercase tracking-wide">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+                                        Pontos de Atenção
+                                    </div>
+<ul class="space-y-2">
+<li class="flex items-start gap-2 text-slate-300 text-sm p-2 rounded bg-slate-800/30">
+<span class="material-symbols-outlined text-amber-500 text-[16px] mt-0.5">error</span>
+<span>Baixa qualidade nas fotos de comprovação (30% rejeição).</span>
+</li>
+<li class="flex items-start gap-2 text-slate-300 text-sm p-2 rounded bg-slate-800/30">
+<span class="material-symbols-outlined text-amber-500 text-[16px] mt-0.5">error</span>
+<span><strong>Pontualidade</strong> das visitas abaixo da meta (85%).</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="px-6 py-3 bg-slate-800/30 border-t border-slate-700 flex justify-end">
+<button class="text-emerald-400 hover:text-emerald-300 text-sm font-medium flex items-center gap-1 transition-colors">
+                                    Ver Detalhes da Regional
+                                    <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

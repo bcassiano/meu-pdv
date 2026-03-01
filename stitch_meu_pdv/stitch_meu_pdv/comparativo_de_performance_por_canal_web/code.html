@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Comparativo de Performance por Canal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0d40a5",
+                        "primary-hover": "#0a3282",
+                        "slate-800": "#1e293b",
+                        "slate-900": "#0f172a",
+                        "slate-700": "#334155",
+                        "background-light": "#f8fafc",
+                        "background-dark": "#0f172a",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for better analytics feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 bg-slate-800 flex-shrink-0 flex flex-col h-screen border-r border-slate-700/50">
+<div class="p-4 flex items-center gap-3 border-b border-slate-700/50 h-16">
+<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-blue-400 flex items-center justify-center text-white font-bold" data-alt="Logo abstract gradient">
+                BI
+            </div>
+<div>
+<h1 class="text-white text-sm font-bold leading-tight">Gestão BI</h1>
+<p class="text-slate-400 text-xs font-normal">Analítico</p>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto py-4 px-2 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-300 hover:text-white hover:bg-slate-700 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-white bg-primary/20 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-blue-400">storefront</span>
+<span class="text-sm font-medium">Canais</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-300 hover:text-white hover:bg-slate-700 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">sell</span>
+<span class="text-sm font-medium">Produtos</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-300 hover:text-white hover:bg-slate-700 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">assignment</span>
+<span class="text-sm font-medium">Auditorias</span>
+</a>
+<div class="pt-4 mt-2 border-t border-slate-700/50">
+<p class="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Sistema</p>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-300 hover:text-white hover:bg-slate-700 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">settings</span>
+<span class="text-sm font-medium">Configurações</span>
+</a>
+</div>
+</nav>
+<div class="p-4 border-t border-slate-700/50">
+<div class="flex items-center gap-3 mb-4">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-8 w-8 ring-2 ring-slate-700" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCvx5ZJsW4XK5M3xJt6kCD-NURjdW0fDAQ5toHiwKgdZZaALIKH3FPQ0rmpdNA0cUSG6AIauMRlnl8NHZNNksOPRaPrknlUnpjGeG4oI0SXOp5JGCFNBXpscSP31yQ7ulTkx_O5i8MamddlcyJcRWhmbxIdkVf6F-FzL_TOG4Kejq4KxD2N9SeyHiGJm6RT-Z5xs8sUU0yIq1pfu0kKs2iqrb42Ke_hjqZTvp52m9R6p6G7Wm4P2uP9ibc_zHPIU8IdgnAKyFBTSU4");'></div>
+<div class="flex flex-col overflow-hidden">
+<span class="text-white text-sm font-medium truncate">Ricardo Silva</span>
+<span class="text-slate-400 text-xs truncate">Diretor Comercial</span>
+</div>
+</div>
+<button class="flex w-full items-center justify-center gap-2 rounded-lg h-9 px-4 bg-slate-700 hover:bg-slate-600 text-white text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-[18px]">logout</span>
+<span>Sair</span>
+</button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-screen overflow-hidden bg-[#0f172a]">
+<!-- Header -->
+<header class="h-16 flex items-center justify-between px-6 border-b border-slate-800 bg-[#0f172a]">
+<h2 class="text-xl font-bold text-white tracking-tight">Comparativo de Performance por Canal</h2>
+<div class="flex items-center gap-3">
+<div class="relative">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</span>
+<input class="pl-10 pr-4 py-1.5 bg-slate-800 border-none rounded-lg text-sm text-white placeholder-slate-400 focus:ring-1 focus:ring-primary w-64" placeholder="Buscar relatório..." type="text"/>
+</div>
+<button class="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</header>
+<!-- Filters Bar -->
+<div class="flex flex-wrap gap-3 p-4 bg-[#131c31] border-b border-slate-800 items-center">
+<span class="text-slate-400 text-sm font-medium mr-2">Filtros:</span>
+<button class="flex h-9 items-center justify-between gap-x-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 pl-3 pr-2 transition-colors min-w-[180px]">
+<div class="flex flex-col items-start">
+<span class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Período</span>
+<span class="text-white text-xs font-medium">Últimos 30 dias</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-[20px]">calendar_today</span>
+</button>
+<button class="flex h-9 items-center justify-between gap-x-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 pl-3 pr-2 transition-colors min-w-[180px]">
+<div class="flex flex-col items-start">
+<span class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Regional</span>
+<span class="text-white text-xs font-medium">Sudeste</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-[20px]">map</span>
+</button>
+<button class="flex h-9 items-center justify-between gap-x-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 pl-3 pr-2 transition-colors min-w-[180px]">
+<div class="flex flex-col items-start">
+<span class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Canal</span>
+<span class="text-white text-xs font-medium">Todos Selecionados</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-[20px]">filter_list</span>
+</button>
+<div class="ml-auto flex gap-2">
+<button class="flex h-9 items-center gap-2 rounded-lg bg-primary hover:bg-primary-hover px-4 text-white text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                    Exportar
+                </button>
+</div>
+</div>
+<!-- Dashboard Content -->
+<div class="flex-1 overflow-y-auto p-6">
+<!-- Charts Row -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+<!-- Chart 1: Ruptura vs Meta -->
+<div class="bg-slate-800 border border-slate-700 rounded-xl p-5 flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-white text-base font-semibold">Ruptura vs. Meta por Canal</h3>
+<button class="text-slate-400 hover:text-white">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+<div class="flex-1 min-h-[250px] relative px-4 pb-2">
+<!-- Simulated Bar Chart -->
+<div class="absolute inset-0 flex items-end justify-between px-8 gap-8">
+<!-- Y-Axis Lines -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none pb-8 pr-8">
+<div class="w-full border-t border-slate-700/50 border-dashed h-0"></div>
+<div class="w-full border-t border-slate-700/50 border-dashed h-0"></div>
+<div class="w-full border-t border-slate-700/50 border-dashed h-0"></div>
+<div class="w-full border-t border-slate-700/50 border-dashed h-0"></div>
+<div class="w-full border-t border-slate-600 h-0"></div>
+</div>
+<!-- Bars Group 1: Atacarejo -->
+<div class="flex flex-col items-center justify-end h-full gap-2 w-full group relative z-10">
+<div class="flex gap-1 items-end h-[85%] w-full justify-center">
+<div class="w-1/3 bg-blue-500 rounded-t h-[60%] hover:opacity-90 transition-opacity relative">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-xs px-2 py-1 rounded border border-slate-700 whitespace-nowrap z-20">Ruptura: 6.2%</div>
+</div>
+<div class="w-1/3 bg-slate-600 rounded-t h-[40%] hover:opacity-90 transition-opacity relative">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-xs px-2 py-1 rounded border border-slate-700 whitespace-nowrap z-20">Meta: 4.0%</div>
+</div>
+</div>
+<span class="text-slate-400 text-xs font-medium">Atacarejo</span>
+</div>
+<!-- Bars Group 2: Hiper -->
+<div class="flex flex-col items-center justify-end h-full gap-2 w-full group relative z-10">
+<div class="flex gap-1 items-end h-[85%] w-full justify-center">
+<div class="w-1/3 bg-blue-500 rounded-t h-[35%] hover:opacity-90 transition-opacity relative">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-xs px-2 py-1 rounded border border-slate-700 whitespace-nowrap z-20">Ruptura: 3.5%</div>
+</div>
+<div class="w-1/3 bg-slate-600 rounded-t h-[40%] hover:opacity-90 transition-opacity relative">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-xs px-2 py-1 rounded border border-slate-700 whitespace-nowrap z-20">Meta: 4.0%</div>
+</div>
+</div>
+<span class="text-slate-400 text-xs font-medium">Hipermercado</span>
+</div>
+<!-- Bars Group 3: Super -->
+<div class="flex flex-col items-center justify-end h-full gap-2 w-full group relative z-10">
+<div class="flex gap-1 items-end h-[85%] w-full justify-center">
+<div class="w-1/3 bg-blue-500 rounded-t h-[45%] hover:opacity-90 transition-opacity relative">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-xs px-2 py-1 rounded border border-slate-700 whitespace-nowrap z-20">Ruptura: 4.8%</div>
+</div>
+<div class="w-1/3 bg-slate-600 rounded-t h-[40%] hover:opacity-90 transition-opacity relative">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-xs px-2 py-1 rounded border border-slate-700 whitespace-nowrap z-20">Meta: 4.0%</div>
+</div>
+</div>
+<span class="text-slate-400 text-xs font-medium">Supermercado</span>
+</div>
+</div>
+</div>
+<div class="flex justify-center gap-6 mt-4">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-blue-500"></div>
+<span class="text-slate-400 text-xs">Ruptura Atual</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-slate-600"></div>
+<span class="text-slate-400 text-xs">Meta Máxima</span>
+</div>
+</div>
+</div>
+<!-- Chart 2: Qualidade de Execução (Radar/Line Hybrid) -->
+<div class="bg-slate-800 border border-slate-700 rounded-xl p-5 flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-white text-base font-semibold">Qualidade de Execução (KPIs)</h3>
+<button class="text-slate-400 hover:text-white">
+<span class="material-symbols-outlined text-[20px]">info</span>
+</button>
+</div>
+<div class="flex-1 flex flex-col justify-center min-h-[250px]">
+<!-- Custom CSS Radar-like visualization -->
+<div class="relative w-full h-[200px] mt-4">
+<!-- Background Grid -->
+<div class="absolute inset-0 flex items-center justify-between px-12 z-0">
+<div class="h-full w-px bg-slate-700 border-dashed"></div>
+<div class="h-full w-px bg-slate-700 border-dashed"></div>
+<div class="h-full w-px bg-slate-700 border-dashed"></div>
+</div>
+<!-- Connecting Lines SVG -->
+<svg class="absolute inset-0 w-full h-full z-10 overflow-visible px-12" preserveaspectratio="none">
+<!-- Series 1: Atacarejo -->
+<path d="M0,80 L200,40 L400,100" fill="none" stroke="#3b82f6" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+<circle cx="0" cy="80" fill="#1e293b" r="4" stroke="#3b82f6" stroke-width="2"></circle>
+<circle cx="50%" cy="40" fill="#1e293b" r="4" stroke="#3b82f6" stroke-width="2"></circle>
+<circle cx="100%" cy="100" fill="#1e293b" r="4" stroke="#3b82f6" stroke-width="2"></circle>
+<!-- Series 2: Hiper -->
+<path d="M0,60 L200,30 L400,70" fill="none" stroke="#10b981" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+<circle cx="0" cy="60" fill="#1e293b" r="4" stroke="#10b981" stroke-width="2"></circle>
+<circle cx="50%" cy="30" fill="#1e293b" r="4" stroke="#10b981" stroke-width="2"></circle>
+<circle cx="100%" cy="70" fill="#1e293b" r="4" stroke="#10b981" stroke-width="2"></circle>
+</svg>
+<!-- Labels -->
+<div class="absolute w-full flex justify-between px-12 top-full mt-2">
+<span class="text-slate-300 text-xs font-medium -translate-x-1/2">Mix Ideal</span>
+<span class="text-slate-300 text-xs font-medium -translate-x-1/2">Preço</span>
+<span class="text-slate-300 text-xs font-medium translate-x-1/2">Foto de Sucesso</span>
+</div>
+</div>
+<div class="flex justify-center gap-6 mt-12">
+<div class="flex items-center gap-2">
+<div class="w-3 h-1 rounded-full bg-blue-500"></div>
+<span class="text-slate-400 text-xs">Atacarejo</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-1 rounded-full bg-emerald-500"></div>
+<span class="text-slate-400 text-xs">Hipermercado</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Detailed Table -->
+<div class="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden mb-6">
+<div class="px-6 py-5 border-b border-slate-700 flex justify-between items-center">
+<h3 class="text-white text-base font-semibold">Detalhamento Comparativo</h3>
+<div class="flex gap-2">
+<button class="text-slate-400 hover:text-white p-1">
+<span class="material-symbols-outlined text-[20px]">print</span>
+</button>
+<button class="text-slate-400 hover:text-white p-1">
+<span class="material-symbols-outlined text-[20px]">fullscreen</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-900/50 text-slate-400 text-xs uppercase tracking-wider font-semibold">
+<th class="px-6 py-4 border-b border-slate-700">Canal</th>
+<th class="px-6 py-4 border-b border-slate-700 text-center">Nota Auditoria (0-5)</th>
+<th class="px-6 py-4 border-b border-slate-700 text-center">% Conformidade Mix</th>
+<th class="px-6 py-4 border-b border-slate-700 text-right">Preço Médio</th>
+<th class="px-6 py-4 border-b border-slate-700 text-center">Tendência</th>
+<th class="px-6 py-4 border-b border-slate-700 text-center">Ações</th>
+</tr>
+</thead>
+<tbody class="text-sm divide-y divide-slate-700">
+<tr class="hover:bg-slate-700/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-blue-900/50 flex items-center justify-center text-blue-300">
+<span class="material-symbols-outlined text-[18px]">shopping_cart</span>
+</div>
+<span class="text-white font-medium">Atacarejo</span>
+</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-yellow-500/10 text-yellow-400 font-medium border border-yellow-500/20">
+                                        4.2
+                                        <span class="material-symbols-outlined text-[14px]">star</span>
+</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3 justify-center">
+<div class="w-24 bg-slate-700 rounded-full h-2">
+<div class="bg-emerald-500 h-2 rounded-full" style="width: 85%"></div>
+</div>
+<span class="text-white font-medium">85%</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right text-slate-300">R$ 12,50</td>
+<td class="px-6 py-4 text-center">
+<span class="text-emerald-400 flex items-center justify-center gap-1 text-xs font-medium">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+                                        +2.4%
+                                    </span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-primary hover:text-blue-400 font-medium text-xs uppercase tracking-wide">Detalhes</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-700/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-purple-900/50 flex items-center justify-center text-purple-300">
+<span class="material-symbols-outlined text-[18px]">store</span>
+</div>
+<span class="text-white font-medium">Hipermercado</span>
+</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-red-500/10 text-red-400 font-medium border border-red-500/20">
+                                        3.8
+                                        <span class="material-symbols-outlined text-[14px]">star</span>
+</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3 justify-center">
+<div class="w-24 bg-slate-700 rounded-full h-2">
+<div class="bg-blue-500 h-2 rounded-full" style="width: 92%"></div>
+</div>
+<span class="text-white font-medium">92%</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right text-slate-300">R$ 14,20</td>
+<td class="px-6 py-4 text-center">
+<span class="text-red-400 flex items-center justify-center gap-1 text-xs font-medium">
+<span class="material-symbols-outlined text-[16px]">trending_down</span>
+                                        -1.2%
+                                    </span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-primary hover:text-blue-400 font-medium text-xs uppercase tracking-wide">Detalhes</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-700/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-emerald-900/50 flex items-center justify-center text-emerald-300">
+<span class="material-symbols-outlined text-[18px]">storefront</span>
+</div>
+<span class="text-white font-medium">Supermercado</span>
+</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 font-medium border border-emerald-500/20">
+                                        4.5
+                                        <span class="material-symbols-outlined text-[14px]">star</span>
+</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3 justify-center">
+<div class="w-24 bg-slate-700 rounded-full h-2">
+<div class="bg-yellow-500 h-2 rounded-full" style="width: 78%"></div>
+</div>
+<span class="text-white font-medium">78%</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right text-slate-300">R$ 13,80</td>
+<td class="px-6 py-4 text-center">
+<span class="text-emerald-400 flex items-center justify-center gap-1 text-xs font-medium">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+                                        +0.8%
+                                    </span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-primary hover:text-blue-400 font-medium text-xs uppercase tracking-wide">Detalhes</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Footer Notes -->
+<div class="flex items-center justify-between text-xs text-slate-500 mb-6 px-1">
+<p>Dados atualizados em: 15/10/2023 09:45</p>
+<div class="flex gap-4">
+<a class="hover:text-slate-300" href="#">Suporte</a>
+<a class="hover:text-slate-300" href="#">Termos de Uso</a>
+</div>
+</div>
+</div>
+</main>
+</body></html>

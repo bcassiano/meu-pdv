@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Logs de Erro de Sincronização</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0f172a", // Darker slate for main background
+                        "surface-dark": "#1e293b", // Slate for sidebar/cards as requested
+                        "surface-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen overflow-x-hidden">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 flex-shrink-0 flex flex-col bg-surface-dark border-r border-slate-700/50">
+<div class="p-6 flex items-center gap-3 border-b border-slate-700/50">
+<div class="h-10 w-10 rounded-lg bg-gradient-to-br from-primary to-blue-400 flex items-center justify-center text-white shadow-lg">
+<span class="material-symbols-outlined">dataset</span>
+</div>
+<div>
+<h1 class="text-white text-base font-bold leading-tight">Suporte Técnico</h1>
+<p class="text-slate-400 text-xs font-medium">Admin Panel v2.0</p>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto py-6 px-3 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-white border-l-4 border-primary transition-all" href="#">
+<span class="material-symbols-outlined text-primary">bug_report</span>
+<span class="text-sm font-medium">Logs de Erro</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">sync_problem</span>
+<span class="text-sm font-medium">Filas DLQ</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">group</span>
+<span class="text-sm font-medium">Usuários</span>
+</a>
+<div class="pt-4 mt-2 border-t border-slate-700/50">
+<p class="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Sistema</p>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">settings</span>
+<span class="text-sm font-medium">Configurações</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">database</span>
+<span class="text-sm font-medium">IndexedDB</span>
+</a>
+</div>
+</nav>
+<div class="p-4 border-t border-slate-700/50">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-red-400 hover:bg-slate-700/50 transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-sm font-medium">Sair</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden bg-background-light dark:bg-background-dark">
+<!-- Header -->
+<header class="h-16 flex items-center justify-between px-8 bg-white dark:bg-surface-dark border-b border-slate-200 dark:border-slate-700/50 shrink-0">
+<div class="flex items-center gap-4">
+<h2 class="text-lg font-semibold text-slate-800 dark:text-white">Monitoramento de Sincronização</h2>
+<span class="px-2.5 py-0.5 rounded-full bg-red-100 dark:bg-red-500/20 text-red-600 dark:text-red-400 text-xs font-medium border border-red-200 dark:border-red-500/30 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>
+                        Live
+                    </span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+<span class="text-sm text-slate-600 dark:text-slate-300">API Status: Online</span>
+</div>
+<button class="relative p-2 text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-surface-dark"></span>
+</button>
+<div class="h-8 w-8 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden border border-slate-300 dark:border-slate-600">
+<img alt="Admin Profile" class="h-full w-full object-cover" data-alt="User avatar placeholder" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzeN7ased8qEKZ1yh9Zfj7Iz9Sx2imYG24BULaeSYXrRzZVqztCxGoj5Vvz2lLfOlHqVj201VMYszafXxJetzhaM72rgKto2wfEKXyB9sTKawxWljw6zkS2l0MWQihfOFGwU2W-beXGDup5q7UBJ4j8hwNwTOkAz6RECCsz_9PjcT8fIxy52eB1pS-ylXeXn8cUvNL9cmIGext2OWgsMqCpI_1Idb4Q93Mzz0MQg73mBj1VBkLwqbWS2rfkZUzSSIy1Rf_OBECmjc"/>
+</div>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-8">
+<div class="max-w-[1600px] mx-auto space-y-6">
+<!-- Title & Actions -->
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+<div>
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white">Logs de Erro de Sincronização</h1>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Monitoramento de integridade do PWA e filas de erro (Dead Letter Queue)</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-medium rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete_sweep</span>
+                                Limpar Logs Antigos
+                            </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-blue-700 text-white text-sm font-medium rounded-lg shadow-lg shadow-blue-500/20 transition-all">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                                Baixar Relatório Técnico
+                            </button>
+</div>
+</div>
+<!-- KPI Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- KPI 1 -->
+<div class="bg-white dark:bg-surface-dark p-6 rounded-xl border border-slate-200 dark:border-slate-700/50 shadow-sm relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-red-500">sync_problem</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-sm font-medium text-slate-500 dark:text-slate-400">Erros de Sincronização (24h)</span>
+<div class="flex items-end gap-3">
+<span class="text-3xl font-bold text-slate-900 dark:text-white">142</span>
+<span class="text-sm font-medium text-red-500 mb-1 flex items-center">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+                                        +12%
+                                    </span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-700 h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-red-500 h-full rounded-full" style="width: 65%"></div>
+</div>
+</div>
+</div>
+<!-- KPI 2 -->
+<div class="bg-white dark:bg-surface-dark p-6 rounded-xl border border-slate-200 dark:border-slate-700/50 shadow-sm relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-blue-500">dns</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-sm font-medium text-slate-500 dark:text-slate-400">Tempo Médio Resposta</span>
+<div class="flex items-end gap-3">
+<span class="text-3xl font-bold text-slate-900 dark:text-white">245ms</span>
+<span class="text-sm font-medium text-emerald-500 mb-1 flex items-center">
+<span class="material-symbols-outlined text-sm">trending_flat</span>
+                                        Estável
+                                    </span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-700 h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-blue-500 h-full rounded-full" style="width: 45%"></div>
+</div>
+</div>
+</div>
+<!-- KPI 3 -->
+<div class="bg-white dark:bg-surface-dark p-6 rounded-xl border border-slate-200 dark:border-slate-700/50 shadow-sm relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-orange-500">storage</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-sm font-medium text-slate-500 dark:text-slate-400">Carga IndexedDB</span>
+<div class="flex items-end gap-3">
+<span class="text-3xl font-bold text-slate-900 dark:text-white">45MB</span>
+<span class="text-sm font-medium text-emerald-500 mb-1 flex items-center">
+<span class="material-symbols-outlined text-sm">trending_down</span>
+                                        -5%
+                                    </span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-700 h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-orange-500 h-full rounded-full" style="width: 28%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Filters & Table Section -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-700/50 shadow-sm overflow-hidden flex flex-col">
+<!-- Filters Toolbar -->
+<div class="p-4 border-b border-slate-200 dark:border-slate-700/50 flex flex-wrap gap-4 items-center justify-between bg-slate-50/50 dark:bg-slate-800/30">
+<div class="flex flex-wrap gap-3 items-center flex-1">
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-400 text-[20px]">filter_alt</span>
+</div>
+<select class="pl-10 pr-8 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 text-sm rounded-lg focus:ring-2 focus:ring-primary focus:border-primary block w-full appearance-none cursor-pointer hover:border-slate-300 dark:hover:border-slate-500 transition-colors">
+<option>Severidade: Todos</option>
+<option>Crítico</option>
+<option>Aviso</option>
+<option>Info</option>
+</select>
+<div class="absolute inset-y-0 right-0 pr-2 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-400 text-[20px]">arrow_drop_down</span>
+</div>
+</div>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-400 text-[20px]">fingerprint</span>
+</div>
+<input class="pl-10 pr-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 text-sm rounded-lg focus:ring-2 focus:ring-primary focus:border-primary block w-64 hover:border-slate-300 dark:hover:border-slate-500 transition-colors" placeholder="Filtrar por ID da Sessão" type="text"/>
+</div>
+<div class="h-6 w-px bg-slate-300 dark:bg-slate-700 mx-2 hidden sm:block"></div>
+<div class="flex gap-2">
+<span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider self-center mr-2">Quick Filter:</span>
+<button class="px-3 py-1.5 rounded-full text-xs font-medium bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-800 hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors">Timeouts</button>
+<button class="px-3 py-1.5 rounded-full text-xs font-medium bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 border border-orange-200 dark:border-orange-800 hover:bg-orange-200 dark:hover:bg-orange-900/50 transition-colors">500 Errors</button>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-sm text-slate-500">Mostrando 1-10 de 142</span>
+<div class="flex rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+<button class="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 transition-colors border-r border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<button class="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Data Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700">
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider w-[180px]">Timestamp</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Usuário (Promotor)</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider w-[140px]">Severidade</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Tipo de Erro</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Payload</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Resposta Servidor</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider w-[100px] text-right">Ações</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-700 text-sm">
+<!-- Row 1: Critical -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-3 font-mono text-slate-600 dark:text-slate-400 text-xs">2023-10-27 10:45:01</td>
+<td class="px-6 py-3">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-bold text-slate-600 dark:text-slate-300">JS</div>
+<div>
+<div class="font-medium text-slate-900 dark:text-slate-200">João Silva</div>
+<div class="text-xs text-slate-500">ID: 48291</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-3">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800">
+<span class="material-symbols-outlined text-[16px]">error</span>
+                                                Crítico
+                                            </span>
+</td>
+<td class="px-6 py-3">
+<span class="font-medium text-slate-700 dark:text-slate-300">Timeout (504)</span>
+<div class="text-xs text-slate-500">Sync Retry #3</div>
+</td>
+<td class="px-6 py-3">
+<button class="flex items-center gap-2 text-primary hover:text-blue-400 transition-colors font-mono text-xs bg-primary/10 px-2 py-1 rounded border border-primary/20 hover:bg-primary/20">
+<span class="material-symbols-outlined text-[14px]">data_object</span>
+                                                Ver JSON
+                                            </button>
+</td>
+<td class="px-6 py-3 text-slate-500 dark:text-slate-400 font-mono text-xs">Server Unreachable</td>
+<td class="px-6 py-3 text-right">
+<button class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-white rounded hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: Warning -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-3 font-mono text-slate-600 dark:text-slate-400 text-xs">2023-10-27 10:42:30</td>
+<td class="px-6 py-3">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-bold text-slate-600 dark:text-slate-300">MS</div>
+<div>
+<div class="font-medium text-slate-900 dark:text-slate-200">Maria Souza</div>
+<div class="text-xs text-slate-500">ID: 99210</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-3">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 border border-yellow-200 dark:border-yellow-800">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+                                                Aviso
+                                            </span>
+</td>
+<td class="px-6 py-3">
+<span class="font-medium text-slate-700 dark:text-slate-300">Conflito de Versão</span>
+<div class="text-xs text-slate-500">App v2.1.0 vs Server v2.1.1</div>
+</td>
+<td class="px-6 py-3">
+<button class="flex items-center gap-2 text-primary hover:text-blue-400 transition-colors font-mono text-xs bg-primary/10 px-2 py-1 rounded border border-primary/20 hover:bg-primary/20">
+<span class="material-symbols-outlined text-[14px]">data_object</span>
+                                                Ver JSON
+                                            </button>
+</td>
+<td class="px-6 py-3 text-slate-500 dark:text-slate-400 font-mono text-xs">Version Mismatch</td>
+<td class="px-6 py-3 text-right">
+<button class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-white rounded hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: Critical -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-3 font-mono text-slate-600 dark:text-slate-400 text-xs">2023-10-27 10:30:15</td>
+<td class="px-6 py-3">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-bold text-slate-600 dark:text-slate-300">CL</div>
+<div>
+<div class="font-medium text-slate-900 dark:text-slate-200">Carlos Lima</div>
+<div class="text-xs text-slate-500">ID: 11029</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-3">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800">
+<span class="material-symbols-outlined text-[16px]">error</span>
+                                                Crítico
+                                            </span>
+</td>
+<td class="px-6 py-3">
+<span class="font-medium text-slate-700 dark:text-slate-300">Erro 500</span>
+<div class="text-xs text-slate-500">Database Connection</div>
+</td>
+<td class="px-6 py-3">
+<button class="flex items-center gap-2 text-primary hover:text-blue-400 transition-colors font-mono text-xs bg-primary/10 px-2 py-1 rounded border border-primary/20 hover:bg-primary/20">
+<span class="material-symbols-outlined text-[14px]">data_object</span>
+                                                Ver JSON
+                                            </button>
+</td>
+<td class="px-6 py-3 text-slate-500 dark:text-slate-400 font-mono text-xs">Internal Server Error</td>
+<td class="px-6 py-3 text-right">
+<button class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-white rounded hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4: Warning -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-3 font-mono text-slate-600 dark:text-slate-400 text-xs">2023-10-27 10:15:00</td>
+<td class="px-6 py-3">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-bold text-slate-600 dark:text-slate-300">AC</div>
+<div>
+<div class="font-medium text-slate-900 dark:text-slate-200">Ana Costa</div>
+<div class="text-xs text-slate-500">ID: 55403</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-3">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 border border-yellow-200 dark:border-yellow-800">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+                                                Aviso
+                                            </span>
+</td>
+<td class="px-6 py-3">
+<span class="font-medium text-slate-700 dark:text-slate-300">Falha de Rede</span>
+<div class="text-xs text-slate-500">Offline detection</div>
+</td>
+<td class="px-6 py-3">
+<button class="flex items-center gap-2 text-primary hover:text-blue-400 transition-colors font-mono text-xs bg-primary/10 px-2 py-1 rounded border border-primary/20 hover:bg-primary/20">
+<span class="material-symbols-outlined text-[14px]">data_object</span>
+                                                Ver JSON
+                                            </button>
+</td>
+<td class="px-6 py-3 text-slate-500 dark:text-slate-400 font-mono text-xs">Network Error</td>
+<td class="px-6 py-3 text-right">
+<button class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-white rounded hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 5: Critical -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-3 font-mono text-slate-600 dark:text-slate-400 text-xs">2023-10-27 09:55:22</td>
+<td class="px-6 py-3">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-bold text-slate-600 dark:text-slate-300">PR</div>
+<div>
+<div class="font-medium text-slate-900 dark:text-slate-200">Pedro Rocha</div>
+<div class="text-xs text-slate-500">ID: 88123</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-3">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800">
+<span class="material-symbols-outlined text-[16px]">error</span>
+                                                Crítico
+                                            </span>
+</td>
+<td class="px-6 py-3">
+<span class="font-medium text-slate-700 dark:text-slate-300">Timeout (504)</span>
+<div class="text-xs text-slate-500">Gateway Timeout</div>
+</td>
+<td class="px-6 py-3">
+<button class="flex items-center gap-2 text-primary hover:text-blue-400 transition-colors font-mono text-xs bg-primary/10 px-2 py-1 rounded border border-primary/20 hover:bg-primary/20">
+<span class="material-symbols-outlined text-[14px]">data_object</span>
+                                                Ver JSON
+                                            </button>
+</td>
+<td class="px-6 py-3 text-slate-500 dark:text-slate-400 font-mono text-xs">Gateway Timeout</td>
+<td class="px-6 py-3 text-right">
+<button class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-white rounded hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Footer / Pagination -->
+<div class="px-6 py-4 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/30 flex justify-between items-center">
+<span class="text-sm text-slate-500 dark:text-slate-400">Página 1 de 15</span>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 border border-slate-300 dark:border-slate-600 rounded text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors disabled:opacity-50">Anterior</button>
+<button class="px-3 py-1.5 border border-slate-300 dark:border-slate-600 rounded text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">Próxima</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

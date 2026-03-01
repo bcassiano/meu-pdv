@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PriceIntel Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d59f2",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#1a2333",
+                        "border-dark": "#2a3649",
+                        "text-secondary": "#94a3b8"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display antialiased min-h-screen flex flex-col">
+<!-- Navbar -->
+<header class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-border-dark bg-white/80 dark:bg-surface-dark/90 backdrop-blur">
+<div class="px-6 lg:px-10 py-3 flex items-center justify-between">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary dark:text-white">
+<div class="size-8 rounded bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold tracking-tight">PriceIntel</h2>
+</div>
+<div class="hidden md:flex items-center relative w-64">
+<div class="absolute left-3 text-slate-400">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="w-full bg-slate-100 dark:bg-background-dark border-none rounded-lg py-2 pl-10 pr-4 text-sm text-slate-900 dark:text-slate-100 placeholder-slate-500 focus:ring-2 focus:ring-primary/50" placeholder="Buscar produtos, redes..." type="text"/>
+</div>
+</div>
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="#">Visão Geral</a>
+<a class="text-sm font-medium text-primary dark:text-primary border-b-2 border-primary pb-0.5" href="#">Comparativo</a>
+<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="#">Alertas</a>
+<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="#">Relatórios</a>
+</nav>
+<div class="flex items-center gap-3">
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-slate-100 dark:hover:bg-border-dark text-slate-600 dark:text-slate-300 transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2.5 bg-red-500 rounded-full border-2 border-white dark:border-surface-dark"></span>
+</button>
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-slate-100 dark:hover:bg-border-dark text-slate-600 dark:text-slate-300 transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="size-9 rounded-full bg-gradient-to-tr from-primary to-blue-400 p-0.5 ml-2 cursor-pointer">
+<img alt="Profile" class="rounded-full w-full h-full object-cover" data-alt="User profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBv5Tcw9kYXJbQ4gbDeT5BceGr_43FTYQP3CEN_XY6eCAgOx88ywjhL8h4Zoy5d_Kt7BCctK36n_SOYaykqmLM152pYzc8YUG69Xb4aDx2zDC4kQ6E2pT-xuImu-banTugIvDVbxvcPwwr4AMMZuGdK1u9iXt2tvq_r07dJ-0OeADTZmiLx4YuoTvefn1BgE54MSuMFvWzPDRRg_IZfYZomWC4gxdLnTVx035A9fry4LqYrK0EvRmZPqLHD7ZFkpPfx6aH_u_Z4dZE"/>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-1 overflow-x-hidden p-6 lg:p-10 max-w-[1400px] mx-auto w-full">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+<div>
+<h1 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight mb-2">Posicionamento de Preços</h1>
+<p class="text-slate-500 dark:text-text-secondary font-medium">Análise competitiva e monitoramento de mercado em tempo real</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-surface-dark border border-slate-200 dark:border-border-dark rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-border-dark transition-colors">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+                    Filtros
+                </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-blue-600 text-white rounded-lg text-sm font-bold shadow-lg shadow-primary/25 transition-colors">
+<span class="material-symbols-outlined text-[20px]">download</span>
+                    Exportar Relatório
+                </button>
+</div>
+</div>
+<!-- KPI Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<!-- Card 1 -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-6 border border-slate-200 dark:border-border-dark shadow-sm">
+<div class="flex items-start justify-between mb-4">
+<div class="p-2 bg-blue-50 dark:bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<span class="flex items-center gap-1 text-xs font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 dark:text-emerald-400 px-2 py-1 rounded">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+                        +1.2%
+                    </span>
+</div>
+<p class="text-slate-500 dark:text-text-secondary text-sm font-medium mb-1">Preço Médio Global</p>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white">R$ 45,90</h3>
+</div>
+<!-- Card 2 -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-6 border border-slate-200 dark:border-border-dark shadow-sm">
+<div class="flex items-start justify-between mb-4">
+<div class="p-2 bg-orange-50 dark:bg-orange-500/10 rounded-lg text-orange-500">
+<span class="material-symbols-outlined">leaderboard</span>
+</div>
+<span class="flex items-center gap-1 text-xs font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 dark:text-emerald-400 px-2 py-1 rounded">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+                        +0.5%
+                    </span>
+</div>
+<p class="text-slate-500 dark:text-text-secondary text-sm font-medium mb-1">Gap Médio vs Líder</p>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white">-5.2%</h3>
+</div>
+<!-- Card 3 -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-6 border border-slate-200 dark:border-border-dark shadow-sm">
+<div class="flex items-start justify-between mb-4">
+<div class="p-2 bg-purple-50 dark:bg-purple-500/10 rounded-lg text-purple-500">
+<span class="material-symbols-outlined">inventory_2</span>
+</div>
+<span class="flex items-center gap-1 text-xs font-bold text-slate-500 bg-slate-100 dark:bg-slate-800 dark:text-slate-400 px-2 py-1 rounded">
+                        0%
+                    </span>
+</div>
+<p class="text-slate-500 dark:text-text-secondary text-sm font-medium mb-1">Produtos Monitorados</p>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white">1.250</h3>
+</div>
+<!-- Card 4 -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-6 border border-slate-200 dark:border-border-dark shadow-sm">
+<div class="flex items-start justify-between mb-4">
+<div class="p-2 bg-red-50 dark:bg-red-500/10 rounded-lg text-red-500">
+<span class="material-symbols-outlined">notification_important</span>
+</div>
+<span class="flex items-center gap-1 text-xs font-bold text-red-600 bg-red-50 dark:bg-red-900/20 dark:text-red-400 px-2 py-1 rounded">
+                        +2 Novos
+                    </span>
+</div>
+<p class="text-slate-500 dark:text-text-secondary text-sm font-medium mb-1">Alertas Ativos</p>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white">34</h3>
+</div>
+</div>
+<!-- Main Content Area: Charts & Alerts -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+<!-- Chart Section -->
+<div class="lg:col-span-2 bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-border-dark shadow-sm p-6">
+<div class="flex items-center justify-between mb-6">
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Preço Médio por Rede</h3>
+<p class="text-sm text-slate-500 dark:text-text-secondary">Comparativo últimos 30 dias</p>
+</div>
+<select class="bg-slate-50 dark:bg-background-dark border-slate-200 dark:border-border-dark text-slate-700 dark:text-slate-300 text-sm rounded-lg focus:ring-primary focus:border-primary">
+<option>Categorias Principais</option>
+<option>Eletrodomésticos</option>
+<option>Eletrônicos</option>
+</select>
+</div>
+<div class="h-64 w-full flex items-end justify-between gap-4 px-2">
+<!-- Bar Group 1 -->
+<div class="flex flex-col items-center gap-2 w-full group cursor-pointer">
+<div class="w-full flex items-end justify-center gap-1 h-48 relative">
+<div class="w-3 md:w-5 bg-primary rounded-t-sm h-[70%] group-hover:opacity-80 transition-opacity relative group/bar">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover/bar:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10">R$ 42,00</div>
+</div>
+<div class="w-3 md:w-5 bg-slate-300 dark:bg-slate-700 rounded-t-sm h-[65%]"></div>
+</div>
+<span class="text-xs font-medium text-slate-600 dark:text-slate-400 text-center truncate w-full">Minha Loja</span>
+</div>
+<!-- Bar Group 2 -->
+<div class="flex flex-col items-center gap-2 w-full group cursor-pointer">
+<div class="w-full flex items-end justify-center gap-1 h-48 relative">
+<div class="w-3 md:w-5 bg-primary/40 dark:bg-primary/20 rounded-t-sm h-[85%] group-hover:opacity-80 transition-opacity"></div>
+<div class="w-3 md:w-5 bg-slate-300 dark:bg-slate-700 rounded-t-sm h-[78%]"></div>
+</div>
+<span class="text-xs font-medium text-slate-600 dark:text-slate-400 text-center truncate w-full">Concorrente A</span>
+</div>
+<!-- Bar Group 3 -->
+<div class="flex flex-col items-center gap-2 w-full group cursor-pointer">
+<div class="w-full flex items-end justify-center gap-1 h-48 relative">
+<div class="w-3 md:w-5 bg-primary/40 dark:bg-primary/20 rounded-t-sm h-[60%] group-hover:opacity-80 transition-opacity"></div>
+<div class="w-3 md:w-5 bg-slate-300 dark:bg-slate-700 rounded-t-sm h-[55%]"></div>
+</div>
+<span class="text-xs font-medium text-slate-600 dark:text-slate-400 text-center truncate w-full">Concorrente B</span>
+</div>
+<!-- Bar Group 4 -->
+<div class="flex flex-col items-center gap-2 w-full group cursor-pointer">
+<div class="w-full flex items-end justify-center gap-1 h-48 relative">
+<div class="w-3 md:w-5 bg-primary/40 dark:bg-primary/20 rounded-t-sm h-[95%] group-hover:opacity-80 transition-opacity"></div>
+<div class="w-3 md:w-5 bg-slate-300 dark:bg-slate-700 rounded-t-sm h-[88%]"></div>
+</div>
+<span class="text-xs font-medium text-slate-600 dark:text-slate-400 text-center truncate w-full">Líder Mercado</span>
+</div>
+<!-- Bar Group 5 -->
+<div class="flex flex-col items-center gap-2 w-full group cursor-pointer">
+<div class="w-full flex items-end justify-center gap-1 h-48 relative">
+<div class="w-3 md:w-5 bg-primary/40 dark:bg-primary/20 rounded-t-sm h-[50%] group-hover:opacity-80 transition-opacity"></div>
+<div class="w-3 md:w-5 bg-slate-300 dark:bg-slate-700 rounded-t-sm h-[45%]"></div>
+</div>
+<span class="text-xs font-medium text-slate-600 dark:text-slate-400 text-center truncate w-full">Mkt. Place X</span>
+</div>
+</div>
+</div>
+<!-- Alerts List -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-border-dark shadow-sm p-6 flex flex-col h-full">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-red-500">warning</span>
+                        Alertas Críticos
+                    </h3>
+<a class="text-xs font-bold text-primary hover:text-blue-400" href="#">Ver todos</a>
+</div>
+<div class="flex flex-col gap-3 flex-1 overflow-y-auto pr-1 custom-scrollbar">
+<!-- Alert Item 1 -->
+<div class="p-3 rounded-lg border border-red-100 dark:border-red-900/30 bg-red-50 dark:bg-red-900/10 flex gap-3 items-start">
+<div class="size-2 mt-1.5 rounded-full bg-red-500 flex-shrink-0"></div>
+<div>
+<p class="text-sm font-semibold text-slate-800 dark:text-slate-200">Smart TV 55" 4K UHD</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Preço <strong>15% acima</strong> da concorrência (Líder).</p>
+</div>
+</div>
+<!-- Alert Item 2 -->
+<div class="p-3 rounded-lg border border-orange-100 dark:border-orange-900/30 bg-orange-50 dark:bg-orange-900/10 flex gap-3 items-start">
+<div class="size-2 mt-1.5 rounded-full bg-orange-500 flex-shrink-0"></div>
+<div>
+<p class="text-sm font-semibold text-slate-800 dark:text-slate-200">Smartphone Galaxy S23</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Margem reduzida para <strong>2.5%</strong>.</p>
+</div>
+</div>
+<!-- Alert Item 3 -->
+<div class="p-3 rounded-lg border border-red-100 dark:border-red-900/30 bg-red-50 dark:bg-red-900/10 flex gap-3 items-start">
+<div class="size-2 mt-1.5 rounded-full bg-red-500 flex-shrink-0"></div>
+<div>
+<p class="text-sm font-semibold text-slate-800 dark:text-slate-200">Notebook Gamer Dell G15</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Perda de Buy Box no Marketplace A.</p>
+</div>
+</div>
+<!-- Alert Item 4 -->
+<div class="p-3 rounded-lg border border-slate-200 dark:border-border-dark bg-slate-50 dark:bg-background-dark flex gap-3 items-start">
+<div class="size-2 mt-1.5 rounded-full bg-slate-400 flex-shrink-0"></div>
+<div>
+<p class="text-sm font-semibold text-slate-800 dark:text-slate-200">Fone Bluetooth JBL</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Estoque crítico no concorrente direto.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Table Section -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-border-dark shadow-sm overflow-hidden">
+<div class="p-6 border-b border-slate-200 dark:border-border-dark flex flex-col md:flex-row md:items-center justify-between gap-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Gap de Preço por Produto</h3>
+<div class="flex gap-2">
+<input class="bg-slate-50 dark:bg-background-dark border-slate-200 dark:border-border-dark text-slate-900 dark:text-white text-sm rounded-lg px-3 py-2 focus:ring-primary focus:border-primary w-full md:w-64" placeholder="Filtrar produtos..." type="text"/>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead class="bg-slate-50 dark:bg-background-dark text-slate-500 dark:text-text-secondary uppercase font-semibold text-xs tracking-wider">
+<tr>
+<th class="px-6 py-4">Produto</th>
+<th class="px-6 py-4">Categoria</th>
+<th class="px-6 py-4 text-right">Nosso Preço</th>
+<th class="px-6 py-4 text-right">Menor Preço Concorrência</th>
+<th class="px-6 py-4 text-right">Gap (%)</th>
+<th class="px-6 py-4 text-center">Status</th>
+<th class="px-6 py-4 text-center">Ação</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-border-dark">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-background-dark/50 transition-colors">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">iPhone 14 Pro Max 256GB</td>
+<td class="px-6 py-4 text-slate-500 dark:text-slate-400">Smartphones</td>
+<td class="px-6 py-4 text-right text-slate-900 dark:text-white">R$ 8.299,00</td>
+<td class="px-6 py-4 text-right text-slate-500 dark:text-slate-400">R$ 7.999,00</td>
+<td class="px-6 py-4 text-right font-bold text-red-500">+3.75%</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300">
+                                    Perdendo
+                                </span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-primary hover:text-blue-400 font-semibold text-xs">Ajustar</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-background-dark/50 transition-colors">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">Console PlayStation 5</td>
+<td class="px-6 py-4 text-slate-500 dark:text-slate-400">Games</td>
+<td class="px-6 py-4 text-right text-slate-900 dark:text-white">R$ 3.899,00</td>
+<td class="px-6 py-4 text-right text-slate-500 dark:text-slate-400">R$ 3.999,00</td>
+<td class="px-6 py-4 text-right font-bold text-emerald-500">-2.50%</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300">
+                                    Ganhando
+                                </span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-slate-400 hover:text-slate-200 font-semibold text-xs">Detalhes</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-background-dark/50 transition-colors">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">Monitor Gamer LG 27"</td>
+<td class="px-6 py-4 text-slate-500 dark:text-slate-400">Informática</td>
+<td class="px-6 py-4 text-right text-slate-900 dark:text-white">R$ 1.450,00</td>
+<td class="px-6 py-4 text-right text-slate-500 dark:text-slate-400">R$ 1.445,00</td>
+<td class="px-6 py-4 text-right font-bold text-orange-500">+0.35%</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300">
+                                    Neutro
+                                </span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-slate-400 hover:text-slate-200 font-semibold text-xs">Detalhes</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-background-dark/50 transition-colors">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">Cafeteira Expresso Oster</td>
+<td class="px-6 py-4 text-slate-500 dark:text-slate-400">Eletroportáteis</td>
+<td class="px-6 py-4 text-right text-slate-900 dark:text-white">R$ 699,00</td>
+<td class="px-6 py-4 text-right text-slate-500 dark:text-slate-400">R$ 749,00</td>
+<td class="px-6 py-4 text-right font-bold text-emerald-500">-6.67%</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300">
+                                    Ganhando
+                                </span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-slate-400 hover:text-slate-200 font-semibold text-xs">Detalhes</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 border-t border-slate-200 dark:border-border-dark bg-slate-50 dark:bg-background-dark flex items-center justify-between">
+<p class="text-xs text-slate-500 dark:text-slate-400">Mostrando <span class="font-medium text-slate-900 dark:text-white">1</span> a <span class="font-medium text-slate-900 dark:text-white">4</span> de <span class="font-medium text-slate-900 dark:text-white">48</span> resultados</p>
+<div class="flex gap-2">
+<button class="px-3 py-1 text-xs font-medium rounded border border-slate-300 dark:border-slate-700 text-slate-500 dark:text-slate-400 opacity-50 cursor-not-allowed">Anterior</button>
+<button class="px-3 py-1 text-xs font-medium rounded border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-border-dark">Próximo</button>
+</div>
+</div>
+</div>
+</main>
+<style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #334155;
+            border-radius: 20px;
+        }
+    </style>
+</body></html>

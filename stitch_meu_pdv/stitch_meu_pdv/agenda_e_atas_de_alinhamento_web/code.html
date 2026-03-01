@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Agenda e Atas de Alinhamento</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        slate: {
+                            850: "#1E293B", // Sidebar requested color
+                        }
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        sans: ["Inter", "sans-serif"],
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display antialiased overflow-x-hidden">
+<div class="flex min-h-screen w-full">
+<!-- Sidebar -->
+<aside class="w-72 flex-col bg-slate-850 border-r border-slate-700 hidden lg:flex sticky top-0 h-screen overflow-y-auto">
+<div class="flex flex-col gap-6 p-6">
+<!-- User Profile -->
+<div class="flex items-center gap-3 pb-6 border-b border-slate-700">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-12 w-12 shrink-0 ring-2 ring-slate-600" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBP6SLhnyH-78-mkaEgbdZ6Sk6zPnUQ_J8auXTFdlPSKtoNZC8PxkBbCQ57dmij0H3KVeqYdPL88gWvGuUCZTGu_Hr7Rqoj1oTNSMwIJrUM_5t5pEPLcyEDop4JSjEzyTkWdynHV4sGVbzhRMtiATf4_GQ8AUR6MzQgHFKbNPdfr1kp5vAKbv8duRgqIaUA4EqudQItWYouCnrMcPx3uz2krfqe--JyHn0Aw9MDQak6zgV8xK0coh726rjaVlhlheD8SpX7s8JXb7c");'></div>
+<div class="flex flex-col min-w-0">
+<h1 class="text-white text-base font-semibold leading-tight truncate">Coordenação</h1>
+<p class="text-slate-400 text-xs font-normal leading-normal truncate">Gestão de Pautas</p>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-700 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white transition-colors">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/20 text-primary border border-primary/30 shadow-sm" href="#">
+<span class="material-symbols-outlined text-primary">calendar_month</span>
+<span class="text-sm font-semibold">Próximos Compromissos</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-700 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white transition-colors">description</span>
+<span class="text-sm font-medium">Histórico de Atas</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-700 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white transition-colors">group</span>
+<span class="text-sm font-medium">Equipe</span>
+</a>
+</nav>
+</div>
+<div class="mt-auto p-6 border-t border-slate-700">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-700 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white transition-colors">settings</span>
+<span class="text-sm font-medium">Configurações</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col min-w-0">
+<!-- Header (Mobile/Tablet visible) -->
+<header class="lg:hidden flex items-center justify-between p-4 bg-slate-850 border-b border-slate-700 sticky top-0 z-10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-white">menu</span>
+<h1 class="text-white font-semibold">Agenda</h1>
+</div>
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-8 w-8" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAgscCQcqhuwOBn6c7ATCbVfiokfJgdhvCHxUaER1sSDFMF2Hx2oqeBgZ2IEj62DTJeSu7blbBouRZy_Z1qQdLQj_ZIzdjjB2p_2hW19_K1lGiFIqNV3FAyf8Z28XAEouLft2CUGQf61PWprIMTamyR5nPm2I52Mhg66lL02P3tX8WjDMuNTxpTCKjmuNBFOJ7pQKoGPdb17IUIgp7ohPOlgZ076XRwwveCWGZwBCCExgzvN1lr3JZJ6lmxGU1kZf_UrNOHFFYW5Os");'></div>
+</header>
+<div class="flex-1 p-4 lg:p-8 xl:p-10 max-w-7xl mx-auto w-full">
+<!-- Page Title Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+<div>
+<h2 class="text-3xl md:text-4xl font-black text-white tracking-tight mb-2">Próximos Compromissos</h2>
+<p class="text-slate-400 text-base max-w-2xl">
+                            Visualize e gerencie suas reuniões de alinhamento, pautas e atas de forma centralizada.
+                        </p>
+</div>
+<button class="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-5 py-2.5 rounded-lg font-medium transition-colors shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                        Nova Reunião
+                    </button>
+</div>
+<!-- Filters -->
+<div class="flex flex-wrap gap-2 mb-8">
+<button class="px-4 py-2 rounded-lg bg-primary text-white text-sm font-medium shadow-sm hover:bg-primary/90 transition-colors">
+                        Todas
+                    </button>
+<button class="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors">
+                        Agendada
+                    </button>
+<button class="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors">
+                        Confirmada
+                    </button>
+<button class="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors">
+                        Pendente
+                    </button>
+</div>
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+<!-- Left Column: Upcoming Meetings -->
+<div class="xl:col-span-2 flex flex-col gap-6">
+<!-- Section: This Week -->
+<div>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">event_note</span>
+<h3 class="text-xl font-bold text-white">Esta Semana</h3>
+</div>
+<!-- Card 1 (Large Featured) -->
+<div class="group relative overflow-hidden rounded-xl bg-slate-800 border border-slate-700 shadow-sm hover:border-primary/50 transition-all duration-300 mb-4">
+<div class="absolute top-0 left-0 w-1.5 h-full bg-primary"></div>
+<div class="p-6">
+<div class="flex flex-col md:flex-row gap-6">
+<!-- Date Box -->
+<div class="flex flex-row md:flex-col items-center justify-center bg-slate-900/50 rounded-lg p-4 min-w-[100px] border border-slate-700/50">
+<span class="text-slate-400 text-sm font-medium uppercase tracking-wider">OUT</span>
+<span class="text-3xl font-black text-white mx-2 md:mx-0">24</span>
+<span class="text-slate-400 text-sm">Hoje</span>
+</div>
+<!-- Content -->
+<div class="flex-1">
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-3">
+<div>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-semibold mb-2 border border-emerald-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                                        Confirmada
+                                                    </span>
+<h4 class="text-xl font-bold text-white mb-1">Alinhamento Estratégico Q3</h4>
+<p class="text-slate-400 text-sm">Pauta: Revisão de Metas e OKRs</p>
+</div>
+<div class="text-right hidden md:block">
+<p class="text-white font-semibold">14:00 - 15:30</p>
+<p class="text-slate-500 text-sm">1h 30min</p>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 pt-4 border-t border-slate-700/50">
+<div class="flex items-center gap-3 text-slate-300 text-sm">
+<div class="p-2 rounded-lg bg-slate-700/50 text-indigo-400">
+<span class="material-symbols-outlined text-[20px]">videocam</span>
+</div>
+<div>
+<p class="text-xs text-slate-500">Canal</p>
+<p class="font-medium">Microsoft Teams</p>
+</div>
+</div>
+<div class="flex items-center gap-3 text-slate-300 text-sm">
+<div class="p-2 rounded-lg bg-slate-700/50 text-orange-400">
+<span class="material-symbols-outlined text-[20px]">folder_open</span>
+</div>
+<div>
+<p class="text-xs text-slate-500">Material</p>
+<a class="font-medium hover:text-primary underline decoration-slate-600 underline-offset-2" href="#">Ver anexos (3)</a>
+</div>
+</div>
+</div>
+<div class="mt-6 flex items-center justify-end gap-3">
+<button class="px-4 py-2 rounded-lg border border-slate-600 text-slate-300 text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors">
+                                                    Reagendar
+                                                </button>
+<button class="px-4 py-2 rounded-lg bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-500 shadow-lg shadow-emerald-500/20 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">check</span>
+                                                    Entrar na Sala
+                                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group relative overflow-hidden rounded-xl bg-slate-800 border border-slate-700 shadow-sm hover:border-slate-600 transition-all duration-300">
+<div class="absolute top-0 left-0 w-1.5 h-full bg-amber-500"></div>
+<div class="p-6">
+<div class="flex flex-col md:flex-row gap-6">
+<!-- Date Box -->
+<div class="flex flex-row md:flex-col items-center justify-center bg-slate-900/50 rounded-lg p-4 min-w-[100px] border border-slate-700/50">
+<span class="text-slate-400 text-sm font-medium uppercase tracking-wider">OUT</span>
+<span class="text-3xl font-black text-white mx-2 md:mx-0">26</span>
+<span class="text-slate-400 text-sm">Qua</span>
+</div>
+<!-- Content -->
+<div class="flex-1">
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-2">
+<div>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-semibold mb-2 border border-amber-500/20">
+                                                        Pendente
+                                                    </span>
+<h4 class="text-lg font-bold text-white mb-1">Feedback Mensal de Equipe</h4>
+<p class="text-slate-400 text-sm">Pauta: Resultados e Clima Organizacional</p>
+</div>
+<div class="text-right hidden md:block">
+<p class="text-white font-semibold">09:00 - 10:00</p>
+<p class="text-slate-500 text-sm">1h</p>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-4 mt-3 text-sm text-slate-400">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-slate-500">location_on</span>
+<span>Sala de Reunião 302</span>
+</div>
+</div>
+<div class="mt-4 flex items-center justify-between border-t border-slate-700/50 pt-4">
+<div class="flex -space-x-2">
+<img alt="Member" class="inline-block h-8 w-8 rounded-full ring-2 ring-slate-800" data-alt="Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCc7L0uKyiN7BGlpT8R-CiNNKAW2FSj89_s050v8YR_d5z0lDu77Oa6LbnbHKZ1A4dXGZD6eC2gB4glJj_4TPJnR8_d9gdJ6Qo0XABENf-KZFZ4pGijlygMQbpaR0i3lqCqQYEhEchEou0DP8BufPCtVKHOYCvr8U8nSVCrV0v6s3Q5sAs6CK-MBuwFrDSoSHy6BJNyVJ5-QNxO7M0DOk1Gj-67y2j8zziS_LWQyysFdvZDjbZka_1GWXbmjcvCKwM_0MwwQTnU4CQ"/>
+<img alt="Member" class="inline-block h-8 w-8 rounded-full ring-2 ring-slate-800" data-alt="Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzlrRgmIIm79VHMxaznqoZerXe9yA_Rz_i29dS2izeGW3jief_zaUUkrpq1Yyw_4657xdH0oroq04RDNgB7pDSwRHYvq3s4N9pMTtmR3UzaKJxlQjC2hWeboTTf1Mhm8w49tLmznocATprtZReT1UJk0lQEU9yALH0sA_EfcBTVbP5SUcQmKLP1eCDIYMh9K3NvwhKxJ1KuvXKiPzWW7Y7U5iKObNbU53WsDz4A7O3EFfw4fNG9CW4SVMyyYrIiNwRSGzHxelNtAI"/>
+<img alt="Member" class="inline-block h-8 w-8 rounded-full ring-2 ring-slate-800" data-alt="Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwW_kBHkD2pvHfK7H8Ux2B-2oyLI-RU5jcyLjR4OzFzgXvR30GgFIKB3s6qutz5RsDQEoX-s0T6OA4Xw8djRYO1uHJ9biMYlJCO44WyqFS11-fAOk7UgweEPq2VfZL6sFkZAHR8PypHG6uyQSGNONrFRgCeTIiPnZKSOl3FHIvohEREsWkPgYuWDlw0hKrFAE_1lw_YIZSgVyA1W61o4ejbfgVxVG-tw2k4nxSSC-w2jQWLUselmpNQp4w-w4cCAsB6xXHrnQclkQ"/>
+<div class="flex items-center justify-center h-8 w-8 rounded-full ring-2 ring-slate-800 bg-slate-700 text-xs text-white font-medium">+2</div>
+</div>
+<button class="px-4 py-2 rounded-lg bg-primary text-white text-sm font-medium hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all flex items-center gap-2">
+                                                    Confirmar Presença
+                                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Section: Next Week -->
+<div class="mt-4">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-slate-500">calendar_month</span>
+<h3 class="text-xl font-bold text-slate-300">Próxima Semana</h3>
+</div>
+<!-- Simple Card -->
+<div class="group flex items-center gap-4 p-4 rounded-xl bg-slate-800/50 border border-slate-700 hover:bg-slate-800 transition-colors">
+<div class="flex flex-col items-center justify-center h-14 w-14 rounded-lg bg-slate-700 text-slate-300 font-bold shrink-0">
+<span class="text-xs font-medium uppercase">NOV</span>
+<span class="text-lg">01</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="text-base font-semibold text-white truncate">Planejamento Orçamentário 2024</h4>
+<div class="flex items-center gap-2 text-sm text-slate-400 mt-1">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>10:30 - 12:00</span>
+<span class="text-slate-600">•</span>
+<span>Google Meet</span>
+</div>
+</div>
+<button class="shrink-0 p-2 rounded-full hover:bg-slate-700 text-slate-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Right Column: History & Stats -->
+<div class="flex flex-col gap-6">
+<!-- History Section -->
+<div class="bg-slate-800 rounded-xl border border-slate-700 p-6">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-lg font-bold text-white">Histórico de Atas</h3>
+<a class="text-sm text-primary hover:text-primary/80 font-medium" href="#">Ver tudo</a>
+</div>
+<div class="flex flex-col gap-4">
+<!-- History Item 1 -->
+<div class="flex items-start gap-3 pb-4 border-b border-slate-700/50 last:border-0 last:pb-0">
+<div class="mt-1 p-2 rounded bg-red-500/10 text-red-500 shrink-0">
+<span class="material-symbols-outlined text-[20px]">picture_as_pdf</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="text-sm font-semibold text-white truncate">Ata_Reunião_Semanal_W42.pdf</h4>
+<p class="text-xs text-slate-400 mt-1">17 Out • 2.4 MB</p>
+</div>
+<button class="p-2 text-slate-400 hover:text-white hover:bg-slate-700 rounded-lg transition-colors" title="Baixar PDF">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</div>
+<!-- History Item 2 -->
+<div class="flex items-start gap-3 pb-4 border-b border-slate-700/50 last:border-0 last:pb-0">
+<div class="mt-1 p-2 rounded bg-red-500/10 text-red-500 shrink-0">
+<span class="material-symbols-outlined text-[20px]">picture_as_pdf</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="text-sm font-semibold text-white truncate">Planejamento_Q4_Final.pdf</h4>
+<p class="text-xs text-slate-400 mt-1">10 Out • 5.1 MB</p>
+</div>
+<button class="p-2 text-slate-400 hover:text-white hover:bg-slate-700 rounded-lg transition-colors" title="Baixar PDF">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</div>
+<!-- History Item 3 -->
+<div class="flex items-start gap-3 pb-4 border-b border-slate-700/50 last:border-0 last:pb-0">
+<div class="mt-1 p-2 rounded bg-blue-500/10 text-blue-500 shrink-0">
+<span class="material-symbols-outlined text-[20px]">description</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="text-sm font-semibold text-white truncate">Briefing_Projeto_Alpha.docx</h4>
+<p class="text-xs text-slate-400 mt-1">05 Out • 1.2 MB</p>
+</div>
+<button class="p-2 text-slate-400 hover:text-white hover:bg-slate-700 rounded-lg transition-colors" title="Baixar Arquivo">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Quick Actions / Stats -->
+<div class="bg-gradient-to-br from-primary to-blue-700 rounded-xl p-6 text-white shadow-lg">
+<h3 class="font-bold text-lg mb-2">Produtividade</h3>
+<p class="text-blue-100 text-sm mb-6">Você participou de 12 reuniões este mês.</p>
+<div class="flex justify-between items-end mb-2">
+<span class="text-sm font-medium text-blue-100">Presença Confirmada</span>
+<span class="text-2xl font-bold">92%</span>
+</div>
+<div class="w-full bg-blue-900/30 rounded-full h-2 mb-6">
+<div class="bg-white h-2 rounded-full" style="width: 92%"></div>
+</div>
+<button class="w-full py-2.5 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg text-sm font-medium transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">insights</span>
+                                Ver Relatório Completo
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

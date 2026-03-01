@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gestão de Horários de PDVs</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1152d4",
+                        "primary-dark": "#0a3a9b",
+                        "slate-850": "#162032", 
+                        "slate-900": "#0f172a",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0f172a", 
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-hidden">
+<div class="flex h-screen w-full bg-background-light dark:bg-background-dark">
+<!-- Sidebar -->
+<div class="flex h-full w-72 flex-col bg-[#1E293B] border-r border-slate-700/50 flex-shrink-0">
+<div class="flex h-full flex-col justify-between p-4">
+<div class="flex flex-col gap-6">
+<!-- Profile / Header -->
+<div class="flex items-center gap-3 px-2 py-2">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 ring-2 ring-white/10" data-alt="Admin user profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCkZUAvtkU-SD0QR2hUjru6f82TrCAhQfQO6jJR2ueaiXhqI903HKdTVKaMKWUm2AHuq3hxhNnK8HRmoxipPDTSydo6oH0j423GLvgUfsB8N50bK3S1oRogXhBx2OHKHfEx5ctbpbf5RPCgu1NhKPbuRrjV7aV2tBLxZloyLbyiEps4MpPV3POnTH4H7VdwUHLhbCJt9IKCGEnIz8H-PCo6JAfLhUlucERq8ge0c7rXvQXJ1KD1CHc7YYd71Vm-8sVTELZYfaQK8VY");'></div>
+<div class="flex flex-col">
+<h1 class="text-white text-base font-semibold leading-tight">Admin Logística</h1>
+<p class="text-slate-400 text-xs font-medium leading-tight">Gestão de Rotas</p>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/5 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px]">pie_chart</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/5 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px]">storefront</span>
+<span class="text-sm font-medium">PDVs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary text-white shadow-lg shadow-primary/20" href="#">
+<span class="material-symbols-outlined text-[24px] fill-1">schedule</span>
+<span class="text-sm font-medium">Horários</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/5 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px]">map</span>
+<span class="text-sm font-medium">Rotas</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/5 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px]">settings</span>
+<span class="text-sm font-medium">Configurações</span>
+</a>
+</nav>
+</div>
+<button class="flex w-full items-center justify-center gap-2 rounded-lg h-10 px-4 bg-white/5 hover:bg-white/10 text-white text-sm font-medium transition-colors border border-white/5">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+<span>Sair</span>
+</button>
+</div>
+</div>
+<!-- Main Content -->
+<div class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Header Section -->
+<header class="flex flex-col border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-[#162032] p-6 gap-6 z-10">
+<div class="flex flex-wrap justify-between items-start gap-4">
+<div class="flex flex-col gap-1">
+<h2 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Gestão de Horários de PDVs</h2>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Configure os horários de funcionamento e janelas de visita sugeridas para otimização logística.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-lg text-sm font-semibold shadow-sm transition-colors">
+<span class="material-symbols-outlined text-[20px]">checklist</span>
+                            APLICAR HORÁRIO EM LOTE
+                        </button>
+</div>
+</div>
+<!-- Filters & Search -->
+<div class="flex flex-wrap items-center gap-4">
+<!-- Search -->
+<div class="relative flex-1 min-w-[300px]">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg leading-5 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm" placeholder="Buscar por nome do PDV, código ou endereço..." type="text"/>
+</div>
+<!-- Filters -->
+<div class="flex gap-3">
+<div class="relative">
+<select class="appearance-none bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 py-2 pl-3 pr-10 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+<option>Rede: Todas</option>
+<option>Carrefour</option>
+<option>Pão de Açúcar</option>
+<option>Extra</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
+<span class="material-symbols-outlined text-[20px]">expand_more</span>
+</div>
+</div>
+<div class="relative">
+<select class="appearance-none bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 py-2 pl-3 pr-10 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+<option>Cidade: Todas</option>
+<option>São Paulo</option>
+<option>Rio de Janeiro</option>
+<option>Belo Horizonte</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
+<span class="material-symbols-outlined text-[20px]">expand_more</span>
+</div>
+</div>
+<div class="relative">
+<select class="appearance-none bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 py-2 pl-3 pr-10 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+<option>Status: Ativo</option>
+<option>Inativo</option>
+<option>Em Reforma</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
+<span class="material-symbols-outlined text-[20px]">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Table Section -->
+<div class="flex-1 overflow-auto bg-slate-50 dark:bg-[#0f172a] p-6">
+<div class="min-w-full inline-block align-middle">
+<div class="border border-slate-200 dark:border-slate-800 rounded-lg overflow-hidden shadow-sm bg-white dark:bg-[#162032]">
+<table class="min-w-full divide-y divide-slate-200 dark:divide-slate-800">
+<thead class="bg-slate-50 dark:bg-slate-900/50">
+<tr>
+<th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider w-[25%]" scope="col">
+                                        Nome da Loja
+                                    </th>
+<th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider w-[15%]" scope="col">
+                                        Rede
+                                    </th>
+<th class="px-6 py-3 text-center text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider w-[10%]" scope="col">
+                                        Abertura
+                                    </th>
+<th class="px-6 py-3 text-center text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider w-[10%]" scope="col">
+                                        Fechamento
+                                    </th>
+<th class="px-6 py-3 text-center text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider w-[20%]" scope="col">
+                                        Dias de Recebimento
+                                    </th>
+<th class="px-6 py-3 text-center text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider w-[15%]" scope="col">
+                                        Janela Sugerida
+                                    </th>
+<th class="px-6 py-3 text-right text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider w-[5%]" scope="col">
+                                        Ações
+                                    </th>
+</tr>
+</thead>
+<tbody class="bg-white dark:bg-[#162032] divide-y divide-slate-200 dark:divide-slate-800">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-8 w-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-xs">CR</div>
+<div class="ml-4">
+<div class="text-sm font-medium text-slate-900 dark:text-white">Carrefour Pamplona</div>
+<div class="text-xs text-slate-500 dark:text-slate-400">São Paulo, SP</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-slate-700 dark:text-slate-300">Grupo Carrefour</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400">
+                                            07:00
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400">
+                                            22:00
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<div class="flex justify-center gap-1">
+<span class="w-5 h-5 flex items-center justify-center rounded bg-primary text-white text-[10px] font-bold" title="Segunda">S</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-primary text-white text-[10px] font-bold" title="Terça">T</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-primary text-white text-[10px] font-bold" title="Quarta">Q</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-primary text-white text-[10px] font-bold" title="Quinta">Q</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-primary text-white text-[10px] font-bold" title="Sexta">S</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-slate-200 dark:bg-slate-700 text-slate-400 dark:text-slate-500 text-[10px] font-bold" title="Sábado">S</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-slate-200 dark:bg-slate-700 text-slate-400 dark:text-slate-500 text-[10px] font-bold" title="Domingo">D</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<div class="text-sm text-slate-700 dark:text-slate-300 font-medium bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded inline-block">
+                                            08:00 - 11:00
+                                        </div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<button class="text-primary hover:text-primary-dark dark:text-blue-400 dark:hover:text-blue-300 transition-colors p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-8 w-8 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400 font-bold text-xs">PA</div>
+<div class="ml-4">
+<div class="text-sm font-medium text-slate-900 dark:text-white">Pão de Açúcar Ricardo Jafet</div>
+<div class="text-xs text-slate-500 dark:text-slate-400">São Paulo, SP</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-slate-700 dark:text-slate-300">GPA</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400">
+                                            06:00
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400">
+                                            23:00
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<div class="flex justify-center gap-1">
+<span class="w-5 h-5 flex items-center justify-center rounded bg-primary text-white text-[10px] font-bold">S</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-primary text-white text-[10px] font-bold">T</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-primary text-white text-[10px] font-bold">Q</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-primary text-white text-[10px] font-bold">Q</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-primary text-white text-[10px] font-bold">S</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-primary text-white text-[10px] font-bold">S</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-slate-200 dark:bg-slate-700 text-slate-400 dark:text-slate-500 text-[10px] font-bold">D</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<div class="text-sm text-slate-700 dark:text-slate-300 font-medium bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded inline-block">
+                                            06:00 - 10:00
+                                        </div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<button class="text-primary hover:text-primary-dark dark:text-blue-400 dark:hover:text-blue-300 transition-colors p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-8 w-8 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400 font-bold text-xs">EX</div>
+<div class="ml-4">
+<div class="text-sm font-medium text-slate-900 dark:text-white">Extra Brigadeiro</div>
+<div class="text-xs text-slate-500 dark:text-slate-400">São Paulo, SP</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-slate-700 dark:text-slate-300">GPA</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400">
+                                            08:00
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400">
+                                            22:00
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<div class="flex justify-center gap-1">
+<span class="w-5 h-5 flex items-center justify-center rounded bg-primary text-white text-[10px] font-bold">S</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-slate-200 dark:bg-slate-700 text-slate-400 dark:text-slate-500 text-[10px] font-bold">T</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-primary text-white text-[10px] font-bold">Q</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-slate-200 dark:bg-slate-700 text-slate-400 dark:text-slate-500 text-[10px] font-bold">Q</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-primary text-white text-[10px] font-bold">S</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-slate-200 dark:bg-slate-700 text-slate-400 dark:text-slate-500 text-[10px] font-bold">S</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-slate-200 dark:bg-slate-700 text-slate-400 dark:text-slate-500 text-[10px] font-bold">D</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<div class="text-sm text-slate-700 dark:text-slate-300 font-medium bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded inline-block">
+                                            09:00 - 12:00
+                                        </div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<button class="text-primary hover:text-primary-dark dark:text-blue-400 dark:hover:text-blue-300 transition-colors p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-8 w-8 rounded-full bg-teal-100 dark:bg-teal-900/30 flex items-center justify-center text-teal-600 dark:text-teal-400 font-bold text-xs">SV</div>
+<div class="ml-4">
+<div class="text-sm font-medium text-slate-900 dark:text-white">Superville Moema</div>
+<div class="text-xs text-slate-500 dark:text-slate-400">São Paulo, SP</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-slate-700 dark:text-slate-300">Independente</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400">
+                                            07:30
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400">
+                                            21:00
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<div class="flex justify-center gap-1">
+<span class="w-5 h-5 flex items-center justify-center rounded bg-primary text-white text-[10px] font-bold">S</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-primary text-white text-[10px] font-bold">T</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-primary text-white text-[10px] font-bold">Q</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-primary text-white text-[10px] font-bold">Q</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-primary text-white text-[10px] font-bold">S</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-slate-200 dark:bg-slate-700 text-slate-400 dark:text-slate-500 text-[10px] font-bold">S</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-slate-200 dark:bg-slate-700 text-slate-400 dark:text-slate-500 text-[10px] font-bold">D</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<div class="text-sm text-slate-700 dark:text-slate-300 font-medium bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded inline-block">
+                                            13:00 - 16:00
+                                        </div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<button class="text-primary hover:text-primary-dark dark:text-blue-400 dark:hover:text-blue-300 transition-colors p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-8 w-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-xs">CR</div>
+<div class="ml-4">
+<div class="text-sm font-medium text-slate-900 dark:text-white">Carrefour Vila Lobos</div>
+<div class="text-xs text-slate-500 dark:text-slate-400">São Paulo, SP</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-slate-700 dark:text-slate-300">Grupo Carrefour</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400">
+                                            24h
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400">
+                                            24h
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<div class="flex justify-center gap-1">
+<span class="w-5 h-5 flex items-center justify-center rounded bg-primary text-white text-[10px] font-bold">S</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-primary text-white text-[10px] font-bold">T</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-primary text-white text-[10px] font-bold">Q</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-primary text-white text-[10px] font-bold">Q</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-primary text-white text-[10px] font-bold">S</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-primary text-white text-[10px] font-bold">S</span>
+<span class="w-5 h-5 flex items-center justify-center rounded bg-primary text-white text-[10px] font-bold">D</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<div class="text-sm text-slate-700 dark:text-slate-300 font-medium bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded inline-block">
+                                            22:00 - 05:00
+                                        </div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<button class="text-primary hover:text-primary-dark dark:text-blue-400 dark:hover:text-blue-300 transition-colors p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Pagination -->
+<div class="flex items-center justify-between mt-4">
+<div class="flex-1 flex justify-between sm:hidden">
+<a class="relative inline-flex items-center px-4 py-2 border border-slate-300 dark:border-slate-700 text-sm font-medium rounded-md text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700" href="#">
+                            Anterior
+                        </a>
+<a class="ml-3 relative inline-flex items-center px-4 py-2 border border-slate-300 dark:border-slate-700 text-sm font-medium rounded-md text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700" href="#">
+                            Próximo
+                        </a>
+</div>
+<div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+<div>
+<p class="text-sm text-slate-700 dark:text-slate-400">
+                                Mostrando <span class="font-medium text-slate-900 dark:text-white">1</span> até <span class="font-medium text-slate-900 dark:text-white">5</span> de <span class="font-medium text-slate-900 dark:text-white">42</span> resultados
+                            </p>
+</div>
+<div>
+<nav aria-label="Pagination" class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+<a class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm font-medium text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700" href="#">
+<span class="sr-only">Previous</span>
+<span class="material-symbols-outlined text-[16px]">chevron_left</span>
+</a>
+<a aria-current="page" class="z-10 bg-primary/10 border-primary text-primary relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">
+                                    1
+                                </a>
+<a class="bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700 relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">
+                                    2
+                                </a>
+<a class="bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700 relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">
+                                    3
+                                </a>
+<span class="relative inline-flex items-center px-4 py-2 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm font-medium text-slate-700 dark:text-slate-400">
+                                    ...
+                                </span>
+<a class="bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700 relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">
+                                    8
+                                </a>
+<a class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm font-medium text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700" href="#">
+<span class="sr-only">Next</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</a>
+</nav>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

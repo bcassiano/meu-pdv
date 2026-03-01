@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Configuração de Pesos por Categoria</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1152d4",
+                        "primary-dark": "#0e42aa",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#1e293b",
+                        "surface-darker": "#111722",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        "2xl": "1rem",
+                        full: "9999px",
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for table if needed */
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen flex overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 flex-shrink-0 bg-surface-darker border-r border-slate-800 flex flex-col h-screen">
+<div class="p-6 flex items-center gap-3">
+<div class="h-10 w-10 rounded-full bg-gradient-to-br from-primary to-blue-400 flex items-center justify-center text-white font-bold text-xl">
+                A
+            </div>
+<div class="flex flex-col">
+<h1 class="text-white text-base font-semibold leading-tight">Admin Console</h1>
+<p class="text-slate-400 text-xs font-medium">Gestão de Auditoria</p>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto py-4 px-3 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white transition-colors">pie_chart</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white transition-colors">content_copy</span>
+<span class="text-sm font-medium">Auditorias</span>
+</a>
+<!-- Active State -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary border border-primary/20" href="#">
+<span class="material-symbols-outlined text-primary fill-1">settings</span>
+<span class="text-sm font-semibold">Configurações</span>
+</a>
+<div class="pl-11 pr-3 py-1 flex flex-col gap-1">
+<a class="text-sm text-slate-400 hover:text-white py-1 block" href="#">Geral</a>
+<a class="text-sm text-white font-medium py-1 block" href="#">Pesos por Categoria</a>
+<a class="text-sm text-slate-400 hover:text-white py-1 block" href="#">Regionais</a>
+</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white transition-colors">description</span>
+<span class="text-sm font-medium">Relatórios</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white transition-colors">group</span>
+<span class="text-sm font-medium">Usuários</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-800">
+<button class="w-full flex items-center justify-center gap-2 rounded-lg py-2.5 px-4 bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-lg">logout</span>
+<span>Sair</span>
+</button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-screen overflow-hidden relative">
+<!-- Top Header / Breadcrumbs -->
+<header class="bg-surface-darker border-b border-slate-800 px-8 py-4 flex flex-col gap-4">
+<div class="flex items-center gap-2 text-sm text-slate-400">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span>/</span>
+<a class="hover:text-primary transition-colors" href="#">Configurações</a>
+<span>/</span>
+<span class="text-white font-medium">Pesos por Categoria</span>
+</div>
+<div class="flex flex-wrap items-end justify-between gap-4">
+<div>
+<h2 class="text-2xl font-bold text-white tracking-tight">Configuração de Pesos por Categoria</h2>
+<p class="text-slate-400 mt-1 max-w-2xl text-sm">
+                        Defina os pesos de importância de cada KPI para diferentes categorias de produtos. A soma dos pesos por categoria deve sempre totalizar 100%.
+                    </p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium rounded-lg border border-slate-700 transition-colors">
+<span class="material-symbols-outlined text-lg">history</span>
+<span>Histórico</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary-dark text-white text-sm font-medium rounded-lg shadow-lg shadow-primary/20 transition-colors">
+<span class="material-symbols-outlined text-lg">save</span>
+<span>Salvar Alterações</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Content Area -->
+<div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
+<!-- Quick Actions -->
+<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+<!-- Action Card 1 -->
+<button class="group flex flex-col items-start gap-3 p-4 rounded-xl bg-surface-darker border border-slate-800 hover:border-primary/50 transition-all text-left">
+<div class="p-2 rounded-lg bg-slate-800 group-hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-primary">content_copy</span>
+</div>
+<div>
+<h3 class="text-white text-sm font-semibold">Replicar Configuração</h3>
+<p class="text-slate-400 text-xs mt-1">Copiar pesos para outra regional</p>
+</div>
+</button>
+<!-- Action Card 2 -->
+<button class="group flex flex-col items-start gap-3 p-4 rounded-xl bg-surface-darker border border-slate-800 hover:border-primary/50 transition-all text-left">
+<div class="p-2 rounded-lg bg-slate-800 group-hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-primary">restart_alt</span>
+</div>
+<div>
+<h3 class="text-white text-sm font-semibold">Restaurar Padrões</h3>
+<p class="text-slate-400 text-xs mt-1">Voltar aos pesos originais do sistema</p>
+</div>
+</button>
+<!-- Action Card 3 -->
+<button class="group flex flex-col items-start gap-3 p-4 rounded-xl bg-surface-darker border border-slate-800 hover:border-primary/50 transition-all text-left">
+<div class="p-2 rounded-lg bg-slate-800 group-hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-primary">download</span>
+</div>
+<div>
+<h3 class="text-white text-sm font-semibold">Exportar Matriz</h3>
+<p class="text-slate-400 text-xs mt-1">Baixar configuração atual em .CSV</p>
+</div>
+</button>
+</div>
+<!-- Matrix Table Section -->
+<div class="bg-surface-darker rounded-xl border border-slate-800 shadow-xl overflow-hidden flex flex-col">
+<div class="p-4 border-b border-slate-800 bg-slate-900/50 flex justify-between items-center">
+<h3 class="text-white font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400">grid_on</span>
+                        Matriz de Pesos (KPI vs Categoria)
+                    </h3>
+<div class="flex items-center gap-2">
+<span class="text-xs text-slate-400 uppercase tracking-wider font-semibold mr-2">Visualização:</span>
+<div class="flex bg-slate-800 rounded-lg p-0.5">
+<button class="px-3 py-1 rounded-md bg-slate-700 text-white text-xs font-medium shadow-sm">Porcentagem (%)</button>
+<button class="px-3 py-1 rounded-md text-slate-400 hover:text-white text-xs font-medium">Pontos</button>
+</div>
+</div>
+</div>
+<div class="overflow-x-auto custom-scrollbar">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-900/80 border-b border-slate-800">
+<th class="sticky left-0 z-10 bg-slate-900 border-r border-slate-800 p-4 min-w-[240px] text-xs font-bold text-slate-400 uppercase tracking-wider">
+                                    KPI / Categoria
+                                </th>
+<th class="p-4 min-w-[160px] text-xs font-bold text-slate-300 uppercase tracking-wider text-center bg-slate-800/20">Bebidas</th>
+<th class="p-4 min-w-[160px] text-xs font-bold text-slate-300 uppercase tracking-wider text-center">Higiene &amp; Beleza</th>
+<th class="p-4 min-w-[160px] text-xs font-bold text-slate-300 uppercase tracking-wider text-center bg-slate-800/20">Mercearia</th>
+<th class="p-4 min-w-[160px] text-xs font-bold text-slate-300 uppercase tracking-wider text-center">Perecíveis</th>
+<th class="p-4 min-w-[160px] text-xs font-bold text-slate-300 uppercase tracking-wider text-center bg-slate-800/20">Bazar</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-800 text-sm">
+<!-- Row 1: Preço -->
+<tr class="group hover:bg-slate-800/30 transition-colors">
+<td class="sticky left-0 z-10 bg-surface-darker group-hover:bg-[#161e2c] border-r border-slate-800 p-4 font-medium text-white flex items-center gap-2">
+<div class="p-1.5 rounded bg-blue-500/10 text-blue-500">
+<span class="material-symbols-outlined text-[18px]">attach_money</span>
+</div>
+<div>
+                                        Preço
+                                        <div class="text-xs text-slate-500 font-normal mt-0.5">Competitividade de gôndola</div>
+</div>
+</td>
+<td class="p-3 text-center bg-slate-800/10">
+<div class="relative group/input">
+<input class="w-full bg-slate-900 border border-slate-700 text-white text-center rounded focus:ring-1 focus:ring-primary focus:border-primary text-sm font-semibold py-1.5 transition-colors cursor-pointer hover:border-slate-500" type="text" value="40%"/>
+<div class="hidden group-hover/input:flex absolute -top-8 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded shadow-lg whitespace-nowrap z-20">Alta Prioridade</div>
+</div>
+</td>
+<td class="p-3 text-center">
+<input class="w-full bg-slate-900 border border-slate-700 text-white text-center rounded focus:ring-1 focus:ring-primary focus:border-primary text-sm font-medium py-1.5 transition-colors cursor-pointer hover:border-slate-500 text-slate-300" type="text" value="20%"/>
+</td>
+<td class="p-3 text-center bg-slate-800/10">
+<input class="w-full bg-slate-900 border border-slate-700 text-white text-center rounded focus:ring-1 focus:ring-primary focus:border-primary text-sm font-semibold py-1.5 transition-colors cursor-pointer hover:border-slate-500" type="text" value="35%"/>
+</td>
+<td class="p-3 text-center">
+<input class="w-full bg-slate-900 border border-slate-700 text-white text-center rounded focus:ring-1 focus:ring-primary focus:border-primary text-sm font-medium py-1.5 transition-colors cursor-pointer hover:border-slate-500 text-slate-300" type="text" value="25%"/>
+</td>
+<td class="p-3 text-center bg-slate-800/10">
+<input class="w-full bg-slate-900 border border-slate-700 text-white text-center rounded focus:ring-1 focus:ring-primary focus:border-primary text-sm font-medium py-1.5 transition-colors cursor-pointer hover:border-slate-500 text-slate-400" type="text" value="10%"/>
+</td>
+</tr>
+<!-- Row 2: Disponibilidade -->
+<tr class="group hover:bg-slate-800/30 transition-colors">
+<td class="sticky left-0 z-10 bg-surface-darker group-hover:bg-[#161e2c] border-r border-slate-800 p-4 font-medium text-white flex items-center gap-2">
+<div class="p-1.5 rounded bg-green-500/10 text-green-500">
+<span class="material-symbols-outlined text-[18px]">inventory_2</span>
+</div>
+<div>
+                                        Disponibilidade (OSA)
+                                        <div class="text-xs text-slate-500 font-normal mt-0.5">On Shelf Availability</div>
+</div>
+</td>
+<td class="p-3 text-center bg-slate-800/10">
+<input class="w-full bg-slate-900 border border-slate-700 text-white text-center rounded focus:ring-1 focus:ring-primary focus:border-primary text-sm font-medium py-1.5 transition-colors cursor-pointer hover:border-slate-500 text-slate-300" type="text" value="20%"/>
+</td>
+<td class="p-3 text-center">
+<div class="relative group/input">
+<input class="w-full bg-slate-900 border border-slate-700 text-white text-center rounded focus:ring-1 focus:ring-primary focus:border-primary text-sm font-semibold py-1.5 transition-colors cursor-pointer hover:border-slate-500" type="text" value="40%"/>
+</div>
+</td>
+<td class="p-3 text-center bg-slate-800/10">
+<input class="w-full bg-slate-900 border border-slate-700 text-white text-center rounded focus:ring-1 focus:ring-primary focus:border-primary text-sm font-semibold py-1.5 transition-colors cursor-pointer hover:border-slate-500" type="text" value="35%"/>
+</td>
+<td class="p-3 text-center">
+<div class="relative group/input">
+<input class="w-full bg-slate-900 border border-slate-700 text-white text-center rounded focus:ring-1 focus:ring-primary focus:border-primary text-sm font-semibold py-1.5 transition-colors cursor-pointer hover:border-slate-500" type="text" value="40%"/>
+</div>
+</td>
+<td class="p-3 text-center bg-slate-800/10">
+<input class="w-full bg-slate-900 border border-slate-700 text-white text-center rounded focus:ring-1 focus:ring-primary focus:border-primary text-sm font-medium py-1.5 transition-colors cursor-pointer hover:border-slate-500 text-slate-300" type="text" value="20%"/>
+</td>
+</tr>
+<!-- Row 3: Visibilidade -->
+<tr class="group hover:bg-slate-800/30 transition-colors">
+<td class="sticky left-0 z-10 bg-surface-darker group-hover:bg-[#161e2c] border-r border-slate-800 p-4 font-medium text-white flex items-center gap-2">
+<div class="p-1.5 rounded bg-purple-500/10 text-purple-500">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</div>
+<div>
+                                        Visibilidade (Share)
+                                        <div class="text-xs text-slate-500 font-normal mt-0.5">Share of Shelf</div>
+</div>
+</td>
+<td class="p-3 text-center bg-slate-800/10">
+<input class="w-full bg-slate-900 border border-slate-700 text-white text-center rounded focus:ring-1 focus:ring-primary focus:border-primary text-sm font-semibold py-1.5 transition-colors cursor-pointer hover:border-slate-500" type="text" value="30%"/>
+</td>
+<td class="p-3 text-center">
+<input class="w-full bg-slate-900 border border-slate-700 text-white text-center rounded focus:ring-1 focus:ring-primary focus:border-primary text-sm font-medium py-1.5 transition-colors cursor-pointer hover:border-slate-500 text-slate-300" type="text" value="20%"/>
+</td>
+<td class="p-3 text-center bg-slate-800/10">
+<input class="w-full bg-slate-900 border border-slate-700 text-white text-center rounded focus:ring-1 focus:ring-primary focus:border-primary text-sm font-medium py-1.5 transition-colors cursor-pointer hover:border-slate-500 text-slate-300" type="text" value="20%"/>
+</td>
+<td class="p-3 text-center">
+<input class="w-full bg-slate-900 border border-slate-700 text-white text-center rounded focus:ring-1 focus:ring-primary focus:border-primary text-sm font-medium py-1.5 transition-colors cursor-pointer hover:border-slate-500 text-slate-400" type="text" value="15%"/>
+</td>
+<td class="p-3 text-center bg-slate-800/10">
+<div class="relative group/input">
+<input class="w-full bg-slate-900 border border-slate-700 text-white text-center rounded focus:ring-1 focus:ring-primary focus:border-primary text-sm font-semibold py-1.5 transition-colors cursor-pointer hover:border-slate-500" type="text" value="40%"/>
+</div>
+</td>
+</tr>
+<!-- Row 4: Promoção -->
+<tr class="group hover:bg-slate-800/30 transition-colors">
+<td class="sticky left-0 z-10 bg-surface-darker group-hover:bg-[#161e2c] border-r border-slate-800 p-4 font-medium text-white flex items-center gap-2">
+<div class="p-1.5 rounded bg-orange-500/10 text-orange-500">
+<span class="material-symbols-outlined text-[18px]">campaign</span>
+</div>
+<div>
+                                        Promoção &amp; Ativação
+                                        <div class="text-xs text-slate-500 font-normal mt-0.5">Execução de MPDV</div>
+</div>
+</td>
+<td class="p-3 text-center bg-slate-800/10">
+<input class="w-full bg-slate-900 border border-slate-700 text-white text-center rounded focus:ring-1 focus:ring-primary focus:border-primary text-sm font-medium py-1.5 transition-colors cursor-pointer hover:border-slate-500 text-slate-400" type="text" value="10%"/>
+</td>
+<td class="p-3 text-center">
+<input class="w-full bg-slate-900 border border-slate-700 text-white text-center rounded focus:ring-1 focus:ring-primary focus:border-primary text-sm font-medium py-1.5 transition-colors cursor-pointer hover:border-slate-500 text-slate-300" type="text" value="20%"/>
+</td>
+<td class="p-3 text-center bg-slate-800/10">
+<input class="w-full bg-slate-900 border border-slate-700 text-white text-center rounded focus:ring-1 focus:ring-primary focus:border-primary text-sm font-medium py-1.5 transition-colors cursor-pointer hover:border-slate-500 text-slate-400" type="text" value="10%"/>
+</td>
+<td class="p-3 text-center">
+<input class="w-full bg-slate-900 border border-slate-700 text-white text-center rounded focus:ring-1 focus:ring-primary focus:border-primary text-sm font-medium py-1.5 transition-colors cursor-pointer hover:border-slate-500 text-slate-300" type="text" value="20%"/>
+</td>
+<td class="p-3 text-center bg-slate-800/10">
+<input class="w-full bg-slate-900 border border-slate-700 text-white text-center rounded focus:ring-1 focus:ring-primary focus:border-primary text-sm font-semibold py-1.5 transition-colors cursor-pointer hover:border-slate-500" type="text" value="30%"/>
+</td>
+</tr>
+<!-- Total Row -->
+<tr class="bg-slate-900/50 font-bold border-t-2 border-slate-700">
+<td class="sticky left-0 z-10 bg-slate-900/90 border-r border-slate-800 p-4 text-white">
+                                    TOTAL
+                                </td>
+<td class="p-3 text-center text-green-400 bg-slate-800/10">100%</td>
+<td class="p-3 text-center text-green-400">100%</td>
+<td class="p-3 text-center text-green-400 bg-slate-800/10">100%</td>
+<td class="p-3 text-center text-green-400">100%</td>
+<td class="p-3 text-center text-green-400 bg-slate-800/10">100%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Footer Notes -->
+<div class="mt-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-slate-500 text-xs">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-base">info</span>
+<p>Valores editáveis. A atualização reflete na próxima sincronização dos dispositivos móveis.</p>
+</div>
+<div class="flex gap-4">
+<span>Última atualização: 10/10/2023 14:30</span>
+<span>Por: Admin Master</span>
+</div>
+</div>
+</div>
+</main>
+</body></html>

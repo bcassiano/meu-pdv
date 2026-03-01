@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Calendário de Auditorias Web</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0a47c2",
+                        "background-light": "#F8FAFC",
+                        "background-dark": "#0f1520",
+                        "slate-custom": "#1E293B",
+                        "surface-dark": "#1a2235",
+                        "status-planned": "#3b82f6",
+                        "status-progress": "#f59e0b",
+                        "status-completed": "#10b981",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "sans": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9; 
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1a2235;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 3px;
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #334155; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased overflow-hidden">
+<div class="flex h-screen w-full overflow-hidden">
+<aside class="w-64 flex flex-col bg-slate-custom h-full shrink-0 border-r border-slate-700/50 z-20">
+<div class="flex flex-col h-full justify-between p-4">
+<div class="flex flex-col gap-6">
+<div class="flex gap-3 items-center pb-4 border-b border-slate-700/50">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 ring-2 ring-primary/30" data-alt="User profile picture placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDcfVExUZsE_zMlZ-nj0j_W-yU01Kbba3JnMItdlY-ABQQl6dpimlmV5uD7yx878s3KvyG8asDgNR0OtMT-Cst2yZ_eD2jtazpH3CBAe6p6Ipf1ABjigjGG0ueGcGR3KTDladK27wI9CFeVfKegVBsibMwFoZJfOUYDNle38AO0Q9b3FG6lltWkf7e3sMKPZi-XmJ3UBi5C_TooVxCbSE4CH7ddiXdc73aiWTzNzr3HQwwo2WnTQ4qrQA46g3kSZBDEt7hzMBsZjDM");'></div>
+<div class="flex flex-col">
+<h1 class="text-white text-sm font-semibold leading-tight">Admin</h1>
+<p class="text-slate-400 text-xs font-normal">Coordenação</p>
+</div>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary">donut_small</span>
+<p class="text-sm font-medium">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/20 text-white border-l-4 border-primary" href="#">
+<span class="material-symbols-outlined text-primary">calendar_month</span>
+<p class="text-sm font-medium">Calendário</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary">groups</span>
+<p class="text-sm font-medium">Equipes</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary">storefront</span>
+<p class="text-sm font-medium">PDVs</p>
+</a>
+<div class="pt-4 mt-2 border-t border-slate-700/50">
+<p class="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Legenda</p>
+<div class="flex items-center gap-3 px-3 py-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+<span class="text-sm text-slate-300">Planejado</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+<span class="text-sm text-slate-300">Em Andamento</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+<span class="text-sm text-slate-300">Concluído</span>
+</div>
+</div>
+</nav>
+</div>
+<div class="pt-4 border-t border-slate-700/50">
+<button class="flex items-center gap-3 px-3 py-2 w-full text-slate-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium">Configurações</span>
+</button>
+<button class="flex items-center gap-3 px-3 py-2 w-full text-slate-400 hover:text-red-400 transition-colors mt-1">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-sm font-medium">Sair</span>
+</button>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col h-full overflow-hidden bg-background-light dark:bg-background-dark relative">
+<header class="bg-white dark:bg-surface-dark border-b border-slate-200 dark:border-slate-800 p-4 shrink-0 z-10">
+<div class="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-4">
+<div class="flex flex-col gap-1">
+<h2 class="text-slate-900 dark:text-white text-xl font-bold tracking-tight">Calendário de Auditorias</h2>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Planejamento mensal de visitas e escalas</p>
+</div>
+<div class="flex flex-wrap items-center gap-3 w-full xl:w-auto">
+<div class="relative group grow xl:grow-0">
+<label class="block text-[10px] font-bold uppercase text-slate-500 mb-1 ml-1">Regional</label>
+<select class="w-full xl:w-48 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-700 dark:text-slate-200 focus:ring-primary focus:border-primary py-2 px-3">
+<option>Todas as Regionais</option>
+<option>São Paulo Capital</option>
+<option>Rio de Janeiro</option>
+<option>Sul</option>
+</select>
+</div>
+<div class="relative group grow xl:grow-0">
+<label class="block text-[10px] font-bold uppercase text-slate-500 mb-1 ml-1">Equipe</label>
+<select class="w-full xl:w-48 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-700 dark:text-slate-200 focus:ring-primary focus:border-primary py-2 px-3">
+<option>Todas as Equipes</option>
+<option>Equipe Alpha</option>
+<option>Equipe Beta</option>
+</select>
+</div>
+<div class="relative group grow xl:grow-0">
+<label class="block text-[10px] font-bold uppercase text-slate-500 mb-1 ml-1">Tipo de Auditoria</label>
+<select class="w-full xl:w-48 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-700 dark:text-slate-200 focus:ring-primary focus:border-primary py-2 px-3">
+<option>Todos os Tipos</option>
+<option>Preço</option>
+<option>Ruptura</option>
+<option>Share</option>
+</select>
+</div>
+<div class="h-10 border-l border-slate-200 dark:border-slate-700 mx-2 hidden xl:block mt-5"></div>
+<div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg p-1 mt-5">
+<button class="p-2 rounded hover:bg-white dark:hover:bg-slate-700 shadow-sm transition-all text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<span class="px-4 font-semibold text-slate-700 dark:text-slate-200 text-sm">Outubro 2023</span>
+<button class="p-2 rounded hover:bg-white dark:hover:bg-slate-700 shadow-sm transition-all text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+<button class="mt-5 flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-primary hover:bg-blue-700 text-white transition-colors shadow-lg shadow-primary/20 ml-auto xl:ml-0">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span class="font-medium text-sm hidden sm:inline">Nova Escala</span>
+</button>
+</div>
+</div>
+</header>
+<div class="flex-1 flex overflow-hidden">
+<div class="flex-1 overflow-y-auto custom-scrollbar p-6 bg-white dark:bg-background-dark/50">
+<div class="grid grid-cols-7 gap-px bg-slate-200 dark:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden mb-6 min-w-[800px]">
+<div class="bg-slate-50 dark:bg-surface-dark p-2 text-center text-xs font-semibold uppercase text-slate-500 dark:text-slate-400">Dom</div>
+<div class="bg-slate-50 dark:bg-surface-dark p-2 text-center text-xs font-semibold uppercase text-slate-500 dark:text-slate-400">Seg</div>
+<div class="bg-slate-50 dark:bg-surface-dark p-2 text-center text-xs font-semibold uppercase text-slate-500 dark:text-slate-400">Ter</div>
+<div class="bg-slate-50 dark:bg-surface-dark p-2 text-center text-xs font-semibold uppercase text-slate-500 dark:text-slate-400">Qua</div>
+<div class="bg-slate-50 dark:bg-surface-dark p-2 text-center text-xs font-semibold uppercase text-slate-500 dark:text-slate-400">Qui</div>
+<div class="bg-slate-50 dark:bg-surface-dark p-2 text-center text-xs font-semibold uppercase text-slate-500 dark:text-slate-400">Sex</div>
+<div class="bg-slate-50 dark:bg-surface-dark p-2 text-center text-xs font-semibold uppercase text-slate-500 dark:text-slate-400">Sáb</div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 flex flex-col text-slate-400 opacity-50">
+<span class="text-sm font-medium mb-2">29</span>
+</div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 flex flex-col text-slate-400 opacity-50">
+<span class="text-sm font-medium mb-2">30</span>
+</div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 flex flex-col hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">1</span>
+<div class="flex flex-col gap-1">
+<div class="text-[10px] px-2 py-1 rounded border-l-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 font-medium truncate">
+                                12 Visitas (Conc.)
+                            </div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 flex flex-col hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">2</span>
+<div class="flex flex-col gap-1">
+<div class="text-[10px] px-2 py-1 rounded border-l-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 font-medium truncate">
+                                15 Visitas (Conc.)
+                            </div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 flex flex-col hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">3</span>
+<div class="flex flex-col gap-1">
+<div class="text-[10px] px-2 py-1 rounded border-l-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 font-medium truncate">
+                                14 Visitas (Conc.)
+                            </div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 flex flex-col hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">4</span>
+<div class="flex flex-col gap-1">
+<div class="text-[10px] px-2 py-1 rounded border-l-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 font-medium truncate">
+                                18 Visitas (Conc.)
+                            </div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 flex flex-col hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">5</span>
+</div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 flex flex-col hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">6</span>
+</div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 flex flex-col hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">7</span>
+<div class="flex flex-col gap-1">
+<div class="text-[10px] px-2 py-1 rounded border-l-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 font-medium truncate">
+                                20 Visitas (Conc.)
+                            </div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 flex flex-col hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">8</span>
+<div class="flex flex-col gap-1">
+<div class="text-[10px] px-2 py-1 rounded border-l-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 font-medium truncate">
+                                16 Visitas (Conc.)
+                            </div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 flex flex-col hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group ring-2 ring-inset ring-primary/50 relative z-10">
+<span class="size-6 flex items-center justify-center rounded-full bg-primary text-white text-xs font-bold mb-2">9</span>
+<div class="flex flex-col gap-1">
+<div class="text-[10px] px-2 py-1 rounded border-l-2 border-amber-500 bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300 font-medium truncate shadow-sm">
+                                8 Visitas (Andamento)
+                            </div>
+<div class="text-[10px] px-2 py-1 rounded border-l-2 border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-medium truncate">
+                                5 Planejadas
+                            </div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 flex flex-col hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">10</span>
+<div class="flex flex-col gap-1">
+<div class="text-[10px] px-2 py-1 rounded border-l-2 border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-medium truncate">
+                                15 Planejadas
+                            </div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 flex flex-col hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">11</span>
+<div class="flex flex-col gap-1">
+<div class="text-[10px] px-2 py-1 rounded border-l-2 border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-medium truncate">
+                                12 Planejadas
+                            </div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 flex flex-col hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group bg-stripes-slate">
+<span class="text-sm font-medium text-slate-400 dark:text-slate-500 mb-2">12</span>
+<span class="text-[10px] text-slate-400 font-medium uppercase tracking-wider text-center mt-2">Feriado</span>
+</div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 flex flex-col hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">13</span>
+</div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 flex flex-col hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">14</span>
+<div class="flex flex-col gap-1">
+<div class="text-[10px] px-2 py-1 rounded border-l-2 border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-medium truncate">
+                                20 Planejadas
+                            </div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 flex flex-col hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">15</span>
+<div class="flex flex-col gap-1">
+<div class="text-[10px] px-2 py-1 rounded border-l-2 border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-medium truncate">
+                                18 Planejadas
+                            </div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 flex flex-col hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">16</span>
+<div class="flex flex-col gap-1">
+<div class="text-[10px] px-2 py-1 rounded border-l-2 border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-medium truncate">
+                                15 Planejadas
+                            </div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 flex flex-col hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">17</span>
+<div class="flex flex-col gap-1">
+<div class="text-[10px] px-2 py-1 rounded border-l-2 border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-medium truncate">
+                                14 Planejadas
+                            </div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 flex flex-col hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">18</span>
+<div class="flex flex-col gap-1">
+<div class="text-[10px] px-2 py-1 rounded border-l-2 border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-medium truncate">
+                                12 Planejadas
+                            </div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 flex flex-col hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">19</span>
+</div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer text-slate-700 dark:text-slate-300"><span class="text-sm font-medium">20</span></div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer text-slate-700 dark:text-slate-300"><span class="text-sm font-medium">21</span></div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer text-slate-700 dark:text-slate-300"><span class="text-sm font-medium">22</span></div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer text-slate-700 dark:text-slate-300"><span class="text-sm font-medium">23</span></div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer text-slate-700 dark:text-slate-300"><span class="text-sm font-medium">24</span></div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer text-slate-700 dark:text-slate-300"><span class="text-sm font-medium">25</span></div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer text-slate-700 dark:text-slate-300"><span class="text-sm font-medium">26</span></div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer text-slate-700 dark:text-slate-300"><span class="text-sm font-medium">27</span></div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer text-slate-700 dark:text-slate-300"><span class="text-sm font-medium">28</span></div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer text-slate-700 dark:text-slate-300"><span class="text-sm font-medium">29</span></div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer text-slate-700 dark:text-slate-300"><span class="text-sm font-medium">30</span></div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer text-slate-700 dark:text-slate-300"><span class="text-sm font-medium">31</span></div>
+<div class="bg-white dark:bg-[#151c2a] min-h-[140px] p-2 opacity-50"><span class="text-sm font-medium">1</span></div>
+</div>
+</div>
+<div class="w-96 bg-white dark:bg-surface-dark border-l border-slate-200 dark:border-slate-800 shadow-2xl flex flex-col shrink-0 z-20">
+<div class="p-6 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center bg-slate-50 dark:bg-slate-900/50">
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Segunda-feira, 9</h3>
+<p class="text-sm text-slate-500">Outubro 2023</p>
+</div>
+<button class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto custom-scrollbar p-4 space-y-4">
+<div class="bg-white dark:bg-slate-800 rounded-lg p-4 border-l-4 border-amber-500 shadow-sm ring-1 ring-slate-900/5 dark:ring-slate-700/50">
+<div class="flex justify-between items-start mb-2">
+<span class="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 px-2 py-0.5 rounded-full">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                                Em Andamento
+                            </span>
+<span class="text-xs font-mono text-slate-500">09:30</span>
+</div>
+<h4 class="text-sm font-bold text-slate-900 dark:text-white mb-1">Supermercado Preço Bom</h4>
+<p class="text-xs text-slate-500 mb-3 line-clamp-1">Av. Paulista, 1500 - Bela Vista, SP</p>
+<div class="flex items-center gap-2 mb-3">
+<div class="bg-indigo-100 dark:bg-indigo-900/50 rounded-full p-1">
+<span class="material-symbols-outlined text-indigo-600 dark:text-indigo-400 text-[16px]">person</span>
+</div>
+<div class="flex flex-col">
+<span class="text-xs font-medium text-slate-700 dark:text-slate-300">Carlos Silva</span>
+<span class="text-[10px] text-slate-400">Promotor Líder</span>
+</div>
+</div>
+<div class="flex gap-2 mt-2 pt-2 border-t border-slate-100 dark:border-slate-700/50">
+<button class="text-xs text-primary font-medium hover:underline">Ver Detalhes</button>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800 rounded-lg p-4 border-l-4 border-blue-500 shadow-sm ring-1 ring-slate-900/5 dark:ring-slate-700/50">
+<div class="flex justify-between items-start mb-2">
+<span class="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-2 py-0.5 rounded-full">
+                                Planejado
+                            </span>
+<span class="text-xs font-mono text-slate-500">14:00</span>
+</div>
+<h4 class="text-sm font-bold text-slate-900 dark:text-white mb-1">Hipermercado Extra</h4>
+<p class="text-xs text-slate-500 mb-3 line-clamp-1">Rua Vergueiro, 200 - Liberdade, SP</p>
+<div class="flex items-center gap-2 mb-3">
+<div class="bg-purple-100 dark:bg-purple-900/50 rounded-full p-1">
+<span class="material-symbols-outlined text-purple-600 dark:text-purple-400 text-[16px]">person</span>
+</div>
+<div class="flex flex-col">
+<span class="text-xs font-medium text-slate-700 dark:text-slate-300">Mariana Costa</span>
+<span class="text-[10px] text-slate-400">Promotora</span>
+</div>
+</div>
+<div class="flex gap-2 mt-2 pt-2 border-t border-slate-100 dark:border-slate-700/50">
+<button class="text-xs text-primary font-medium hover:underline">Ver Detalhes</button>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800 rounded-lg p-4 border-l-4 border-blue-500 shadow-sm ring-1 ring-slate-900/5 dark:ring-slate-700/50">
+<div class="flex justify-between items-start mb-2">
+<span class="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-2 py-0.5 rounded-full">
+                                Planejado
+                            </span>
+<span class="text-xs font-mono text-slate-500">16:30</span>
+</div>
+<h4 class="text-sm font-bold text-slate-900 dark:text-white mb-1">Carrefour Market</h4>
+<p class="text-xs text-slate-500 mb-3 line-clamp-1">Alameda Santos, 800 - Jardins, SP</p>
+<div class="flex items-center gap-2 mb-3">
+<div class="bg-orange-100 dark:bg-orange-900/50 rounded-full p-1">
+<span class="material-symbols-outlined text-orange-600 dark:text-orange-400 text-[16px]">person</span>
+</div>
+<div class="flex flex-col">
+<span class="text-xs font-medium text-slate-700 dark:text-slate-300">Roberto Alves</span>
+<span class="text-[10px] text-slate-400">Promotor</span>
+</div>
+</div>
+<div class="flex gap-2 mt-2 pt-2 border-t border-slate-100 dark:border-slate-700/50">
+<button class="text-xs text-primary font-medium hover:underline">Ver Detalhes</button>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
+<button class="w-full py-2 px-4 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg shadow-sm text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+                        Adicionar Visita Extra
+                    </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

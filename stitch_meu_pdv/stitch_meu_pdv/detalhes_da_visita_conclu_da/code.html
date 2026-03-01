@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Detalhes da Visita Concluída</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#eca413",
+                        "background-light": "#f8f7f6",
+                        "background-dark": "#221c10",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<!-- Persistent Amber Top Bar for Unsynchronized Items -->
+<div class="bg-amber-100 dark:bg-amber-900/40 border-b border-amber-200 dark:border-amber-800 px-6 py-2 flex items-center justify-center gap-3 text-sm font-medium text-amber-900 dark:text-amber-100">
+<span class="material-symbols-outlined text-amber-600 dark:text-amber-400">cloud_off</span>
+<span>Atenção: Alguns dados desta visita ainda não foram sincronizados.</span>
+</div>
+<!-- Main Layout -->
+<div class="flex-1 flex flex-col max-w-[1200px] mx-auto w-full px-4 md:px-6 lg:px-8 py-6">
+<!-- Header Section -->
+<header class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 pb-4 border-b border-slate-200 dark:border-slate-800">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-sm mb-1">
+<a class="hover:text-primary transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[16px]">arrow_back</span>
+                        Histórico
+                    </a>
+<span>/</span>
+<span>Detalhes</span>
+</div>
+<h1 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-slate-100">Supermercado Preço Bom - Loja 05</h1>
+<div class="flex items-center gap-2 text-slate-600 dark:text-slate-400 text-sm mt-1">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<p>Av. Paulista, 1000 - Bela Vista, São Paulo - SP</p>
+</div>
+</div>
+<div class="flex items-center gap-3 self-start md:self-center">
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors text-sm font-bold">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+<span>Editar</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-slate-900 hover:bg-amber-500 transition-colors text-sm font-bold shadow-sm">
+<span class="material-symbols-outlined text-[20px]">sync</span>
+<span>Sincronizar</span>
+</button>
+</div>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Left Column: Status & Photos -->
+<div class="flex flex-col gap-6 lg:col-span-1">
+<!-- Sync Status Card -->
+<div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm p-5 border border-slate-100 dark:border-slate-800 flex flex-col gap-4">
+<div class="flex items-start justify-between">
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-slate-100">Status da Visita</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">ID: #84920-BA</p>
+</div>
+<div class="h-8 w-8 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 dark:text-amber-400">
+<span class="material-symbols-outlined text-[20px]">schedule</span>
+</div>
+</div>
+<div class="bg-amber-50 dark:bg-amber-900/10 rounded-lg p-3 border border-amber-100 dark:border-amber-900/20">
+<div class="flex gap-2">
+<span class="material-symbols-outlined text-amber-600 dark:text-amber-400 text-[20px] mt-0.5">cloud_off</span>
+<div>
+<p class="text-amber-800 dark:text-amber-200 font-bold text-sm">Pendente de Envio</p>
+<p class="text-amber-700 dark:text-amber-300/80 text-xs mt-0.5 leading-relaxed">Dados salvos localmente (Cache). Conecte-se ao Wi-Fi para enviar.</p>
+</div>
+</div>
+</div>
+<div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center text-sm">
+<span class="text-slate-500 dark:text-slate-400">Iniciado:</span>
+<span class="font-medium">14:30</span>
+</div>
+<div class="flex justify-between items-center text-sm -mt-2">
+<span class="text-slate-500 dark:text-slate-400">Finalizado:</span>
+<span class="font-medium">15:15</span>
+</div>
+</div>
+<!-- Photos Review Card -->
+<div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm overflow-hidden border border-slate-100 dark:border-slate-800 flex flex-col">
+<div class="h-32 bg-slate-200 dark:bg-slate-800 relative bg-cover bg-center" data-alt="Shelf stocked with grocery items in a supermarket" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAM1nHQ2ohTchEqFuuPFZ7VrDoQ55WOQQe5T4qQkusdavbC-J9OaLB3rflT9iYzjlHDvbw3aYrKdV8bGRQilkcteqEmrdK-iQFcEPqxDEWmgUutHJ5Uc1c_rs6poJ-woJ1KEHecHbTbGr1h01fgOKt9GSLFt2X5iYf1wjOjIGf_dTOHSWu0icYkHPfmSdQ4hTnKbv7DkBf5MC5P8zR_VJgRDO3J4W8AWa8CqJB6VifYlByBjw4QwQlwdEPZaVkiax_XJRQ3mR_v4fI');">
+<div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+<span class="text-white font-bold text-lg drop-shadow-md">+ 12 Fotos</span>
+</div>
+</div>
+<div class="p-5">
+<h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 mb-2">Evidências Fotográficas</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Fotos comprimidas salvas no dispositivo.</p>
+<button class="w-full py-2.5 rounded-lg border-2 border-primary text-primary hover:bg-primary hover:text-slate-900 dark:hover:text-slate-900 transition-colors text-sm font-bold flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">photo_library</span>
+                            REVISAR FOTOS
+                        </button>
+</div>
+</div>
+<!-- Store Map Thumbnail (Optional visual context) -->
+<div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm overflow-hidden border border-slate-100 dark:border-slate-800 h-48 relative">
+<img alt="Map view of Sao Paulo" class="w-full h-full object-cover opacity-80" data-alt="Map view showing store location pin" data-location="São Paulo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFIX80m6skBtvnxLBgewKZG9iz67f1H2tJp6Guf0AN_77mXlgnPl2ICgy8IiKq7w5Ms1UdcHCBNLJkdF1oJe3IouWfUJ0sPgWLCNf9Lf6V4sO-OF2ixx9rz1bz3tFStDl5OxdYH0aEv8qq4FKiLeS-dT9EJIJRjwbE9w1xVJbNPdIbRFqJSFD0ZHcfb-8nTOqIqrbMeYebiffPExhvGl6M07KuR23pUi9HzcryevVZNINtts4OcvtdB57D0nRdC1xXXDYE7gC8CLI"/>
+<div class="absolute bottom-3 left-3 bg-white/90 dark:bg-black/80 px-3 py-1 rounded text-xs font-medium backdrop-blur-sm">
+                        Distância: 0km
+                    </div>
+</div>
+</div>
+<!-- Right Column: Audit List -->
+<div class="lg:col-span-2 flex flex-col gap-6">
+<div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col flex-1">
+<div class="px-6 py-5 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<h2 class="text-xl font-bold text-slate-900 dark:text-slate-100">Auditoria de Produtos</h2>
+<div class="flex gap-2">
+<span class="px-3 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs font-bold border border-green-200 dark:border-green-800">42 Coletados</span>
+<span class="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs font-bold border border-slate-200 dark:border-slate-700">3 Pendentes</span>
+</div>
+</div>
+<!-- Filter Tabs -->
+<div class="px-6 py-3 bg-slate-50 dark:bg-slate-900/50 border-b border-slate-100 dark:border-slate-800 flex gap-4 overflow-x-auto">
+<button class="text-sm font-bold text-primary border-b-2 border-primary pb-1 whitespace-nowrap">Todos os Itens</button>
+<button class="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 pb-1 whitespace-nowrap transition-colors">Sem Estoque</button>
+<button class="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 pb-1 whitespace-nowrap transition-colors">Promoções</button>
+</div>
+<!-- List Content -->
+<div class="flex-1 overflow-y-auto max-h-[600px] p-2">
+<!-- Item 1 -->
+<div class="group p-4 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors border border-transparent hover:border-slate-200 dark:hover:border-slate-700 mb-2">
+<div class="flex items-start gap-4">
+<div class="h-12 w-12 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-slate-400">local_cafe</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-bold text-slate-900 dark:text-slate-100 truncate pr-2">Café Premium Torrado 500g</h4>
+<span class="text-xs font-bold text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-2 py-0.5 rounded border border-green-100 dark:border-green-800">Em Estoque</span>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400 mb-3">SKU: 893021 • Gôndola 04</p>
+<div class="flex flex-wrap gap-4 text-sm">
+<div class="flex flex-col">
+<span class="text-[10px] uppercase tracking-wider text-slate-400 font-semibold">Preço Regular</span>
+<span class="font-medium">R$ 18,90</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] uppercase tracking-wider text-slate-400 font-semibold">Preço Promo</span>
+<span class="font-medium text-primary">R$ 16,50</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] uppercase tracking-wider text-slate-400 font-semibold">Frentes</span>
+<span class="font-medium">4 un</span>
+</div>
+</div>
+</div>
+<button class="opacity-0 group-hover:opacity-100 p-2 text-slate-400 hover:text-primary transition-all">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="group p-4 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors border border-transparent hover:border-slate-200 dark:hover:border-slate-700 mb-2">
+<div class="flex items-start gap-4">
+<div class="h-12 w-12 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-slate-400">cookie</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-bold text-slate-900 dark:text-slate-100 truncate pr-2">Biscoito Recheado Chocolate 140g</h4>
+<span class="text-xs font-bold text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 px-2 py-0.5 rounded border border-red-100 dark:border-red-800">Ruptura</span>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400 mb-3">SKU: 893055 • Gôndola 04</p>
+<div class="flex flex-wrap gap-4 text-sm">
+<div class="flex flex-col">
+<span class="text-[10px] uppercase tracking-wider text-slate-400 font-semibold">Último Preço</span>
+<span class="font-medium text-slate-400 line-through">R$ 3,40</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] uppercase tracking-wider text-slate-400 font-semibold">Motivo</span>
+<span class="font-medium text-red-500">Estoque Virtual Zero</span>
+</div>
+</div>
+</div>
+<button class="opacity-0 group-hover:opacity-100 p-2 text-slate-400 hover:text-primary transition-all">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="group p-4 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors border border-transparent hover:border-slate-200 dark:hover:border-slate-700 mb-2">
+<div class="flex items-start gap-4">
+<div class="h-12 w-12 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-slate-400">water_drop</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-bold text-slate-900 dark:text-slate-100 truncate pr-2">Detergente Líquido Maçã 500ml</h4>
+<span class="text-xs font-bold text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-2 py-0.5 rounded border border-green-100 dark:border-green-800">Em Estoque</span>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400 mb-3">SKU: 772109 • Limpeza</p>
+<div class="flex flex-wrap gap-4 text-sm">
+<div class="flex flex-col">
+<span class="text-[10px] uppercase tracking-wider text-slate-400 font-semibold">Preço Regular</span>
+<span class="font-medium">R$ 2,19</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] uppercase tracking-wider text-slate-400 font-semibold">Frentes</span>
+<span class="font-medium">12 un</span>
+</div>
+</div>
+</div>
+<button class="opacity-0 group-hover:opacity-100 p-2 text-slate-400 hover:text-primary transition-all">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="group p-4 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors border border-transparent hover:border-slate-200 dark:hover:border-slate-700 mb-2">
+<div class="flex items-start gap-4">
+<div class="h-12 w-12 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-slate-400">laundry</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-bold text-slate-900 dark:text-slate-100 truncate pr-2">Sabão em Pó Caixa 1kg</h4>
+<span class="text-xs font-bold text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-2 py-0.5 rounded border border-green-100 dark:border-green-800">Em Estoque</span>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400 mb-3">SKU: 554321 • Limpeza</p>
+<div class="flex flex-wrap gap-4 text-sm">
+<div class="flex flex-col">
+<span class="text-[10px] uppercase tracking-wider text-slate-400 font-semibold">Preço Regular</span>
+<span class="font-medium">R$ 12,90</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] uppercase tracking-wider text-slate-400 font-semibold">Frentes</span>
+<span class="font-medium">6 un</span>
+</div>
+</div>
+</div>
+<button class="opacity-0 group-hover:opacity-100 p-2 text-slate-400 hover:text-primary transition-all">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

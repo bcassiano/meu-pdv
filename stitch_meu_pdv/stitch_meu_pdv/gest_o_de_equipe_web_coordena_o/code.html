@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gestão de Equipe Web</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0d7ff2",
+                        "background-light": "#f8fafc", /* Matches user request for light bg */
+                        "background-dark": "#101922",
+                        "slate-sidebar": "#1e293b", /* Added specific sidebar color requested */
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px",
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-hidden">
+<div class="flex h-screen w-full flex-row overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 flex-shrink-0 flex flex-col bg-slate-sidebar text-white border-r border-slate-700/50">
+<div class="h-16 flex items-center px-6 border-b border-slate-700/50">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-xl">grid_view</span>
+</div>
+<span class="text-lg font-bold tracking-tight">Gestão Web</span>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto py-4 px-3 flex flex-col gap-1">
+<div class="px-3 mb-2">
+<p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Painel do Coordenador</p>
+</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-white/10 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary text-white shadow-sm ring-1 ring-white/20" href="#">
+<span class="material-symbols-outlined fill-1">group</span>
+<span class="text-sm font-medium">Minha Equipe</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-white/10 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined">storefront</span>
+<span class="text-sm font-medium">PDVs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-white/10 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<span class="text-sm font-medium">Relatórios</span>
+</a>
+<div class="px-3 mt-6 mb-2">
+<p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Sistema</p>
+</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-white/10 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium">Configurações</span>
+</a>
+</div>
+<div class="p-4 border-t border-slate-700/50">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-full bg-slate-600 bg-cover bg-center ring-2 ring-slate-500" data-alt="Coordinator profile picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAl-b9wZPCJ9WlBAjnoO7mkiyYXV3IZZwWtn6j7is7NiIXLxQvrBCX3nfPo01eFId95yqezbd4Ctu8wQYxWQ4R5Pr3zq6cSzP7q0PTawJBedMX3LCawRsEPdWH-ErJc8DtkJPeKB8dbIRjDB6iKjqX4hn9Qw6LtPELiFvb2hpdsZUUUg3aWV5KLfon5Sy5wN0YOqDrELqXbhRBdQeXkRXOqpM58CnR9isLZDgqNxchG1WK-HdERLbWXw7Q27flFI1htJ9YuY0rmiuk');"></div>
+<div class="flex flex-col overflow-hidden">
+<p class="text-sm font-medium text-white truncate">João Silva</p>
+<p class="text-xs text-slate-400 truncate">Coordenador Regional</p>
+</div>
+<button class="ml-auto text-slate-400 hover:text-white">
+<span class="material-symbols-outlined">logout</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-screen overflow-hidden bg-background-light dark:bg-background-dark">
+<!-- Header -->
+<header class="h-16 flex items-center justify-between px-6 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 flex-shrink-0">
+<h1 class="text-xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                    Minha Equipe
+                    <span class="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-xs font-semibold">Gestão de Promotores</span>
+</h1>
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center h-9 w-9 rounded-full text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 h-2 w-2 rounded-full bg-red-500 border border-white"></span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-blue-600 text-white text-sm font-medium rounded-lg transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[20px]">person_add</span>
+                        Adicionar Promotor
+                    </button>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-6">
+<div class="max-w-[1400px] mx-auto flex flex-col gap-6">
+<!-- KPI Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-white dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between h-32 relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-primary">groups</span>
+</div>
+<div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Total da Equipe</p>
+<h3 class="text-3xl font-bold text-slate-800 dark:text-white mt-1">42</h3>
+</div>
+<div class="flex items-center text-xs font-medium text-slate-500">
+<span class="text-emerald-600 flex items-center mr-1 bg-emerald-50 px-1 rounded">
+<span class="material-symbols-outlined text-[14px] mr-0.5">trending_up</span>
+                                    +2
+                                </span>
+                                este mês
+                            </div>
+</div>
+<div class="bg-white dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between h-32 relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-emerald-600">check_circle</span>
+</div>
+<div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Promotores Ativos</p>
+<h3 class="text-3xl font-bold text-slate-800 dark:text-white mt-1">38</h3>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-1.5 mt-2 dark:bg-slate-700">
+<div class="bg-emerald-500 h-1.5 rounded-full" style="width: 90%"></div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between h-32 relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-amber-500">wifi_off</span>
+</div>
+<div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Promotores Offline</p>
+<h3 class="text-3xl font-bold text-slate-800 dark:text-white mt-1">4</h3>
+</div>
+<div class="flex items-center gap-2 mt-auto">
+<span class="text-xs text-amber-600 bg-amber-50 dark:bg-amber-900/30 dark:text-amber-400 px-2 py-0.5 rounded font-medium">Atenção requerida</span>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between h-32 relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-blue-500">store</span>
+</div>
+<div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">PDVs Cobertos Hoje</p>
+<h3 class="text-3xl font-bold text-slate-800 dark:text-white mt-1">156</h3>
+</div>
+<div class="flex items-center text-xs font-medium text-slate-500">
+                                85% da meta diária
+                            </div>
+</div>
+</div>
+<!-- Filters Section -->
+<div class="flex flex-col lg:flex-row gap-4 items-end bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex-1 w-full lg:w-auto">
+<label class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1 block">Buscar</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="Buscar por Nome ou CPF" type="text"/>
+</div>
+</div>
+<div class="w-full lg:w-64">
+<label class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1 block">Região</label>
+<select class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all">
+<option value="">Todas as Regiões</option>
+<option value="norte">Zona Norte</option>
+<option value="sul">Zona Sul</option>
+<option value="leste">Zona Leste</option>
+<option value="oeste">Zona Oeste</option>
+<option value="centro">Centro</option>
+</select>
+</div>
+<div class="w-full lg:w-48">
+<label class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1 block">Status</label>
+<select class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all">
+<option value="">Todos</option>
+<option value="online">Online</option>
+<option value="offline">Offline</option>
+</select>
+</div>
+<button class="w-full lg:w-auto px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 text-sm font-medium rounded-lg transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                            Mais Filtros
+                        </button>
+</div>
+<!-- Data Table -->
+<div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-700/50 border-b border-slate-200 dark:border-slate-700">
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider w-64">Nome do Promotor</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider w-40">CPF</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider w-40">Região</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider w-32 text-center">Sync Status</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider w-48">Última Atividade</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">Ações</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors group">
+<td class="px-6 py-3">
+<div class="flex items-center gap-3">
+<div class="h-9 w-9 rounded-full bg-slate-200 bg-cover bg-center flex-shrink-0" data-alt="Portrait of Carlos Silva" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAGiu2z_rjfwXp33u98cppWYU-Lmcih8FhDtiJk7I1WR7XmrcRtUbpN6sr2z0ecKXQGGQIVanOJcnHfGR1C5_EyeEfsvgx5WmfY41m6oEU2ux8Vf7bnRZiBsPOYPGoj6F1noMF_PTY1ogS595Puqofspk0XbzrNeEbS8s93Jh0H4U3jrVRR7PigXusZokjYkFxAcqYAcZamVbpg_gHhVO7zRLv5nBgOlFQeGZe3-09q5yZYp8JbzLpsaxokLd1AvojF9WXBap8YDbE');"></div>
+<div>
+<p class="text-sm font-medium text-slate-900 dark:text-slate-100">Carlos Silva</p>
+<p class="text-xs text-slate-500">ID: #8492</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-3">
+<span class="text-sm font-mono text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-700 px-2 py-0.5 rounded">123.***.***-89</span>
+</td>
+<td class="px-6 py-3">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
+                                                Zona Norte
+                                            </span>
+</td>
+<td class="px-6 py-3 text-center">
+<div class="inline-flex items-center gap-1.5 px-2 py-1 rounded text-xs font-medium text-emerald-700 bg-emerald-50 dark:text-emerald-400 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-800">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+</span>
+                                                Online
+                                            </div>
+</td>
+<td class="px-6 py-3">
+<div class="flex flex-col">
+<span class="text-sm text-slate-700 dark:text-slate-300">Há 5 min</span>
+<span class="text-xs text-slate-500">Check-in: PDV Extra #20</span>
+</div>
+</td>
+<td class="px-6 py-3 text-right">
+<div class="flex items-center justify-end gap-2 opacity-80 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-slate-500 hover:text-primary hover:bg-primary/10 rounded transition-colors" title="Ver Rota">
+<span class="material-symbols-outlined text-[20px]">map</span>
+</button>
+<button class="p-1.5 text-slate-500 hover:text-primary hover:bg-primary/10 rounded transition-colors" title="Reatribuir PDVs">
+<span class="material-symbols-outlined text-[20px]">swap_horiz</span>
+</button>
+<button class="p-1.5 text-slate-500 hover:text-primary hover:bg-primary/10 rounded transition-colors" title="Mais Opções">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors group">
+<td class="px-6 py-3">
+<div class="flex items-center gap-3">
+<div class="h-9 w-9 rounded-full bg-slate-200 bg-cover bg-center flex-shrink-0" data-alt="Portrait of Ana Oliveira" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCAIpo3eT5ZVJZ13Gn98zeh5cKRmjVo_HN5Egs61iG6y7dZaM6t-ded_oqDiv7ZIknzeeB5gkERccNpqPxBJpcjfhNaU7oYHrgLI7fQcDFSqwfwuf5IBFyQdg-SdMACUL0iPoXa8v50sozlsSHIEtjnFdmhRWEVbUqTlyr6hoVJg1GQIqZ5_CBoFC4bXvZZ0Cb1VWFk_1FhXXtkSD0mqQIC233gLndL5ja3hmMv13eC-1tp9IN7fOkCZAB7MWMzCkR1KR5f_UYy6UE');"></div>
+<div>
+<p class="text-sm font-medium text-slate-900 dark:text-slate-100">Ana Oliveira</p>
+<p class="text-xs text-slate-500">ID: #3321</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-3">
+<span class="text-sm font-mono text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-700 px-2 py-0.5 rounded">456.***.***-12</span>
+</td>
+<td class="px-6 py-3">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-50 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300">
+                                                Centro
+                                            </span>
+</td>
+<td class="px-6 py-3 text-center">
+<div class="inline-flex items-center gap-1.5 px-2 py-1 rounded text-xs font-medium text-amber-700 bg-amber-50 dark:text-amber-400 dark:bg-amber-900/20 border border-amber-100 dark:border-amber-800">
+<span class="material-symbols-outlined text-[14px]">sync_problem</span>
+                                                Offline
+                                            </div>
+</td>
+<td class="px-6 py-3">
+<div class="flex flex-col">
+<span class="text-sm text-slate-700 dark:text-slate-300">Há 2 horas</span>
+<span class="text-xs text-slate-500">Sincronização pendente</span>
+</div>
+</td>
+<td class="px-6 py-3 text-right">
+<div class="flex items-center justify-end gap-2 opacity-80 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-slate-500 hover:text-primary hover:bg-primary/10 rounded transition-colors" title="Ver Rota">
+<span class="material-symbols-outlined text-[20px]">map</span>
+</button>
+<button class="p-1.5 text-slate-500 hover:text-primary hover:bg-primary/10 rounded transition-colors" title="Reatribuir PDVs">
+<span class="material-symbols-outlined text-[20px]">swap_horiz</span>
+</button>
+<button class="p-1.5 text-slate-500 hover:text-primary hover:bg-primary/10 rounded transition-colors" title="Mais Opções">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors group">
+<td class="px-6 py-3">
+<div class="flex items-center gap-3">
+<div class="h-9 w-9 rounded-full bg-slate-200 bg-cover bg-center flex-shrink-0" data-alt="Portrait of Roberto Santos" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuABCdd2DDQgEYG0JVsvV-VKVkgkmuU5lUNZ3njRcSEG_uFIwBKN0ZXvbJfA2mCUcGsTUHpID7DKQHiEXsgpPYo0CcRPSvK3EkpqxjJVonWqq_QbJTVtKNsYDdnbfWBhSFdaGrQa_xqD90uApe-AGC4Yb69h28WAOQX0A4J4fMWESSqdEwKbe8WBaBS6ZEGCvEZ4lJjNF-QYOY3Ryh1WxhZOOPuuSZFZrEnzeC4vR6wMRz6itCS1sgZiVmtQVmAzVcO0_ZVUuYT218I');"></div>
+<div>
+<p class="text-sm font-medium text-slate-900 dark:text-slate-100">Roberto Santos</p>
+<p class="text-xs text-slate-500">ID: #9921</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-3">
+<span class="text-sm font-mono text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-700 px-2 py-0.5 rounded">789.***.***-34</span>
+</td>
+<td class="px-6 py-3">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
+                                                Zona Sul
+                                            </span>
+</td>
+<td class="px-6 py-3 text-center">
+<div class="inline-flex items-center gap-1.5 px-2 py-1 rounded text-xs font-medium text-emerald-700 bg-emerald-50 dark:text-emerald-400 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-800">
+<span class="relative flex h-2 w-2">
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+</span>
+                                                Online
+                                            </div>
+</td>
+<td class="px-6 py-3">
+<div class="flex flex-col">
+<span class="text-sm text-slate-700 dark:text-slate-300">Há 15 min</span>
+<span class="text-xs text-slate-500">Ruptura registrada</span>
+</div>
+</td>
+<td class="px-6 py-3 text-right">
+<div class="flex items-center justify-end gap-2 opacity-80 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-slate-500 hover:text-primary hover:bg-primary/10 rounded transition-colors" title="Ver Rota">
+<span class="material-symbols-outlined text-[20px]">map</span>
+</button>
+<button class="p-1.5 text-slate-500 hover:text-primary hover:bg-primary/10 rounded transition-colors" title="Reatribuir PDVs">
+<span class="material-symbols-outlined text-[20px]">swap_horiz</span>
+</button>
+<button class="p-1.5 text-slate-500 hover:text-primary hover:bg-primary/10 rounded transition-colors" title="Mais Opções">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors group">
+<td class="px-6 py-3">
+<div class="flex items-center gap-3">
+<div class="h-9 w-9 rounded-full bg-slate-200 bg-cover bg-center flex-shrink-0" data-alt="Portrait of Fernanda Lima" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCqxKSkQbGs80boVzDVUoYYcIoMsujYWVKe_AThjFlo1c-9AVI2DYSevTr9pcpqXUsPm2cLGZv0XZrKe8Git58nUtyFLu6F1-5PsgMGORFM3Kko7ZBkN6dCKxQDapyqfGWNN53wMSnS4gsg1-A6Z9cLFdb_qMFNCFegzIhpw6212iizXuk3x50zWZBJz7-bbD4n3Ja8wzKKuks_PZDW5MDCZ9kzmBhoE4k9u1VIJccld5spl8gtjTF4189bXU8iudHuHonQaf7Yv_o');"></div>
+<div>
+<p class="text-sm font-medium text-slate-900 dark:text-slate-100">Fernanda Lima</p>
+<p class="text-xs text-slate-500">ID: #4402</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-3">
+<span class="text-sm font-mono text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-700 px-2 py-0.5 rounded">321.***.***-56</span>
+</td>
+<td class="px-6 py-3">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-50 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300">
+                                                Zona Leste
+                                            </span>
+</td>
+<td class="px-6 py-3 text-center">
+<div class="inline-flex items-center gap-1.5 px-2 py-1 rounded text-xs font-medium text-emerald-700 bg-emerald-50 dark:text-emerald-400 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-800">
+<span class="relative flex h-2 w-2">
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+</span>
+                                                Online
+                                            </div>
+</td>
+<td class="px-6 py-3">
+<div class="flex flex-col">
+<span class="text-sm text-slate-700 dark:text-slate-300">Agora</span>
+<span class="text-xs text-slate-500">Fotos enviadas</span>
+</div>
+</td>
+<td class="px-6 py-3 text-right">
+<div class="flex items-center justify-end gap-2 opacity-80 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-slate-500 hover:text-primary hover:bg-primary/10 rounded transition-colors" title="Ver Rota">
+<span class="material-symbols-outlined text-[20px]">map</span>
+</button>
+<button class="p-1.5 text-slate-500 hover:text-primary hover:bg-primary/10 rounded transition-colors" title="Reatribuir PDVs">
+<span class="material-symbols-outlined text-[20px]">swap_horiz</span>
+</button>
+<button class="p-1.5 text-slate-500 hover:text-primary hover:bg-primary/10 rounded transition-colors" title="Mais Opções">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors group">
+<td class="px-6 py-3">
+<div class="flex items-center gap-3">
+<div class="h-9 w-9 rounded-full bg-slate-200 bg-cover bg-center flex-shrink-0" data-alt="Portrait of Lucas Pereira" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCi-yezg23xmLTrgNjSMPGJPkleLNwbTQKOp78iMoUToe4XDXmzdcgUQSt2nqtxzuH6xjOIw68O0iGdmwfeu2Hmc53bcIHQDfy2LpKre2Ryi_Y_lnacw0qnKxUKCKCkAjwLkr4DmgOTOj1-7lBn4riQyswniRSzMtogf_7WgP60XSg7kUurT2BTO5tP_ukq8PZvZBskrX37VtU38frVaB0AgcohNESrbKixlK_jOFh0RFuvWt0vrz-n9A_-HqzSEoWKxvIoEq2nPPg');"></div>
+<div>
+<p class="text-sm font-medium text-slate-900 dark:text-slate-100">Lucas Pereira</p>
+<p class="text-xs text-slate-500">ID: #5591</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-3">
+<span class="text-sm font-mono text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-700 px-2 py-0.5 rounded">654.***.***-90</span>
+</td>
+<td class="px-6 py-3">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-300">
+                                                Zona Oeste
+                                            </span>
+</td>
+<td class="px-6 py-3 text-center">
+<div class="inline-flex items-center gap-1.5 px-2 py-1 rounded text-xs font-medium text-amber-700 bg-amber-50 dark:text-amber-400 dark:bg-amber-900/20 border border-amber-100 dark:border-amber-800">
+<span class="material-symbols-outlined text-[14px]">sync_problem</span>
+                                                Offline
+                                            </div>
+</td>
+<td class="px-6 py-3">
+<div class="flex flex-col">
+<span class="text-sm text-slate-700 dark:text-slate-300">Ontem</span>
+<span class="text-xs text-slate-500">Sem sinal</span>
+</div>
+</td>
+<td class="px-6 py-3 text-right">
+<div class="flex items-center justify-end gap-2 opacity-80 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-slate-500 hover:text-primary hover:bg-primary/10 rounded transition-colors" title="Ver Rota">
+<span class="material-symbols-outlined text-[20px]">map</span>
+</button>
+<button class="p-1.5 text-slate-500 hover:text-primary hover:bg-primary/10 rounded transition-colors" title="Reatribuir PDVs">
+<span class="material-symbols-outlined text-[20px]">swap_horiz</span>
+</button>
+<button class="p-1.5 text-slate-500 hover:text-primary hover:bg-primary/10 rounded transition-colors" title="Mais Opções">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="bg-white dark:bg-slate-800 px-4 py-3 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between sm:px-6">
+<div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+<div>
+<p class="text-sm text-slate-700 dark:text-slate-400">
+                                        Mostrando <span class="font-medium">1</span> a <span class="font-medium">5</span> de <span class="font-medium">42</span> resultados
+                                    </p>
+</div>
+<div>
+<nav aria-label="Pagination" class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+<a class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-sm font-medium text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700" href="#">
+<span class="sr-only">Anterior</span>
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</a>
+<a aria-current="page" class="z-10 bg-primary/10 border-primary text-primary relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">1</a>
+<a class="bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700 relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">2</a>
+<a class="bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700 relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">3</a>
+<span class="relative inline-flex items-center px-4 py-2 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-sm font-medium text-slate-700">...</span>
+<a class="bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700 relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">8</a>
+<a class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-sm font-medium text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700" href="#">
+<span class="sr-only">Próximo</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</a>
+</nav>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Análise de Tendência e Conformidade de Rede</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#1a2332",
+                        "surface-border": "#2a3649",
+                        "text-secondary": "#92a4c9"
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        sans: ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for webkit browsers */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101622; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a3649; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b4d66; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased min-h-screen flex flex-col overflow-x-hidden">
+<!-- Main Layout -->
+<div class="flex flex-col min-h-screen w-full">
+<!-- Header -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-surface-border bg-surface-dark px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-white">
+<div class="size-8 flex items-center justify-center bg-primary rounded-lg text-white">
+<span class="material-symbols-outlined text-[24px]">analytics</span>
+</div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">Retail Audit Pro</h2>
+</div>
+<label class="flex flex-col min-w-40 !h-10 max-w-64 hidden md:flex">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full border border-surface-border bg-background-dark focus-within:border-primary transition-colors">
+<div class="text-text-secondary flex items-center justify-center pl-4 pr-2">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-white focus:outline-0 bg-transparent placeholder:text-text-secondary px-2 text-sm font-normal leading-normal border-none focus:ring-0" placeholder="Buscar loja, KPI ou região..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-text-secondary hover:text-white transition-colors text-sm font-medium leading-normal" href="#">Dashboard</a>
+<a class="text-white text-sm font-medium leading-normal border-b-2 border-primary pb-0.5" href="#">Conformidade</a>
+<a class="text-text-secondary hover:text-white transition-colors text-sm font-medium leading-normal" href="#">Tendências</a>
+<a class="text-text-secondary hover:text-white transition-colors text-sm font-medium leading-normal" href="#">Lojas</a>
+<a class="text-text-secondary hover:text-white transition-colors text-sm font-medium leading-normal" href="#">Relatórios</a>
+</nav>
+<div class="flex gap-3">
+<button class="flex items-center justify-center rounded-lg size-10 bg-surface-border hover:bg-opacity-80 text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="flex items-center justify-center rounded-lg size-10 bg-surface-border hover:bg-opacity-80 text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</button>
+<div class="size-10 rounded-full bg-cover bg-center border-2 border-surface-border cursor-pointer" data-alt="User profile picture of a man" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBXEuwbHN8dEpUtZJbg1SrPBM_vEX4oLGZZpjmifd8L1iwVTT-a5YsulxSvVDj3RszQleAigD8jF4MBS7CZefWeKWAdeCfr0FJPAR95HbTkwCxH3xZt3XK-LibpMr9xPGwucGfLm7uBSUmE2-SG39EF8qg2Gm5JLmZBgYL4CawvtM0rU5WKYqh3Q7I5cyR9inV4pnYjUfGEYsXdyb-8nP1nTLf5B6jksqxDWyDvKMkObpavKHO_hVQxO3nQNd7qrB0JQ9zZduOkk_E');"></div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 px-4 md:px-10 py-8 max-w-[1400px] mx-auto w-full">
+<!-- Breadcrumbs & Actions -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2 text-sm text-text-secondary">
+<span>Performance de Rede</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-white">Análise de Tendência</span>
+</div>
+<h1 class="text-white text-3xl font-bold tracking-tight">Evolução de Conformidade</h1>
+<p class="text-text-secondary text-sm">Visualização de performance de planogramas nos últimos 12 meses.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 h-10 px-4 rounded-lg border border-surface-border bg-background-dark text-white hover:bg-surface-border transition-colors text-sm font-medium">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+<span>Últimos 12 Meses</span>
+</button>
+<button class="flex items-center gap-2 h-10 px-4 rounded-lg bg-primary text-white hover:bg-primary/90 transition-colors text-sm font-medium shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span>Exportar Relatório</span>
+</button>
+</div>
+</div>
+<!-- KPI Cards Row -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+<!-- Card 1 -->
+<div class="bg-surface-dark border border-surface-border rounded-xl p-6 relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-[80px] text-primary">analytics</span>
+</div>
+<div class="flex flex-col gap-1 relative z-10">
+<span class="text-text-secondary text-sm font-medium">Média da Rede (Atual)</span>
+<div class="flex items-baseline gap-3">
+<span class="text-4xl font-bold text-white">88%</span>
+<span class="flex items-center text-emerald-500 text-sm font-medium bg-emerald-500/10 px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[14px] mr-0.5">trending_up</span>
+                                +1.2%
+                            </span>
+</div>
+<span class="text-text-secondary text-xs mt-2">vs. mês anterior</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-dark border border-surface-border rounded-xl p-6 relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-[80px] text-indigo-400">storefront</span>
+</div>
+<div class="flex flex-col gap-1 relative z-10">
+<span class="text-text-secondary text-sm font-medium">Benchmark Loja Modelo</span>
+<div class="flex items-baseline gap-3">
+<span class="text-4xl font-bold text-white">96%</span>
+<span class="flex items-center text-emerald-500 text-sm font-medium bg-emerald-500/10 px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[14px] mr-0.5">trending_up</span>
+                                +0.5%
+                            </span>
+</div>
+<span class="text-text-secondary text-xs mt-2">Meta anual: 95%</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-dark border border-surface-border rounded-xl p-6 relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-[80px] text-rose-400">warning</span>
+</div>
+<div class="flex flex-col gap-1 relative z-10">
+<span class="text-text-secondary text-sm font-medium">Gap de Conformidade</span>
+<div class="flex items-baseline gap-3">
+<span class="text-4xl font-bold text-white">-8%</span>
+<span class="flex items-center text-rose-500 text-sm font-medium bg-rose-500/10 px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[14px] mr-0.5">trending_down</span>
+                                -0.7%
+                            </span>
+</div>
+<span class="text-text-secondary text-xs mt-2">Rede vs. Modelo</span>
+</div>
+</div>
+</div>
+<!-- Main Chart Section -->
+<div class="bg-surface-dark border border-surface-border rounded-xl p-6 mb-8">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-lg font-semibold text-white">Evolução de Execução de Planograma</h3>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-primary"></span>
+<span class="text-xs text-text-secondary">Média da Rede</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full border-2 border-indigo-400 border-dashed"></span>
+<span class="text-xs text-text-secondary">Loja Modelo</span>
+</div>
+</div>
+</div>
+<div class="relative w-full h-[320px] pt-4">
+<!-- Chart Grid Lines -->
+<div class="absolute inset-0 flex flex-col justify-between text-text-secondary text-xs pointer-events-none pb-8 pr-4">
+<div class="flex w-full border-b border-surface-border/50 items-center"><span class="w-8 -ml-10 text-right pr-2">100%</span></div>
+<div class="flex w-full border-b border-surface-border/50 items-center"><span class="w-8 -ml-10 text-right pr-2">80%</span></div>
+<div class="flex w-full border-b border-surface-border/50 items-center"><span class="w-8 -ml-10 text-right pr-2">60%</span></div>
+<div class="flex w-full border-b border-surface-border/50 items-center"><span class="w-8 -ml-10 text-right pr-2">40%</span></div>
+<div class="flex w-full border-b border-surface-border/50 items-center"><span class="w-8 -ml-10 text-right pr-2">20%</span></div>
+<div class="flex w-full border-b border-surface-border/50 items-center"><span class="w-8 -ml-10 text-right pr-2">0%</span></div>
+</div>
+<!-- SVG Chart -->
+<svg class="w-full h-full pb-8 pr-4 overflow-visible" preserveaspectratio="none" viewbox="0 0 1000 300">
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#1152d4" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#1152d4" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<!-- Benchmark Line (Dashed) -->
+<path d="M0,30 Q83,25 166,28 T333,25 T500,20 T666,22 T833,18 T1000,15" fill="none" opacity="0.7" stroke="#818cf8" stroke-dasharray="5,5" stroke-width="2"></path>
+<!-- Main Data Line -->
+<path d="M0,120 Q83,110 166,130 T333,90 T500,70 T666,85 T833,60 T1000,45" fill="url(#chartGradient)" stroke="none"></path>
+<path d="M0,120 Q83,110 166,130 T333,90 T500,70 T666,85 T833,60 T1000,45" fill="none" stroke="#1152d4" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+<!-- Data Points -->
+<circle cx="166" cy="130" fill="#101622" r="4" stroke="#1152d4" stroke-width="2"></circle>
+<circle cx="333" cy="90" fill="#101622" r="4" stroke="#1152d4" stroke-width="2"></circle>
+<circle cx="500" cy="70" fill="#101622" r="4" stroke="#1152d4" stroke-width="2"></circle>
+<circle cx="666" cy="85" fill="#101622" r="4" stroke="#1152d4" stroke-width="2"></circle>
+<circle cx="833" cy="60" fill="#101622" r="4" stroke="#1152d4" stroke-width="2"></circle>
+<circle cx="1000" cy="45" fill="#fff" r="6" stroke="#1152d4" stroke-width="3"></circle>
+<!-- Tooltip-like Element (Simulated) -->
+<g transform="translate(800, 20)">
+<rect fill="#1a2332" height="40" rx="4" stroke="#2a3649" width="110" x="0" y="0"></rect>
+<text fill="#92a4c9" font-family="Inter" font-size="10" text-anchor="middle" x="55" y="16">Outubro</text>
+<text fill="#fff" font-family="Inter" font-size="12" font-weight="bold" text-anchor="middle" x="55" y="30">88.4% Score</text>
+</g>
+</svg>
+<!-- X Axis Labels -->
+<div class="absolute bottom-0 left-0 right-0 flex justify-between text-xs text-text-secondary pr-4 font-medium uppercase tracking-wider">
+<span>Nov</span>
+<span>Dez</span>
+<span>Jan</span>
+<span>Fev</span>
+<span>Mar</span>
+<span>Abr</span>
+<span>Mai</span>
+<span>Jun</span>
+<span>Jul</span>
+<span>Ago</span>
+<span>Set</span>
+<span>Out</span>
+</div>
+</div>
+</div>
+<!-- Decline Alerts Section -->
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h3 class="text-lg font-semibold text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-rose-500">notification_important</span>
+                        Alertas de Declínio (&gt;10%)
+                    </h3>
+<a class="text-sm text-primary hover:text-primary/80 font-medium" href="#">Ver todos os alertas</a>
+</div>
+<div class="bg-surface-dark border border-surface-border rounded-xl overflow-hidden">
+<div class="grid grid-cols-5 bg-surface-border/30 p-4 text-xs font-semibold text-text-secondary uppercase tracking-wider">
+<div class="col-span-2">Loja / Região</div>
+<div>Score Atual</div>
+<div>Queda</div>
+<div class="text-right">Ação</div>
+</div>
+<!-- Alert Item 1 -->
+<div class="grid grid-cols-5 p-4 border-b border-surface-border items-center hover:bg-surface-border/20 transition-colors">
+<div class="col-span-2 flex items-center gap-3">
+<div class="size-10 rounded bg-background-dark border border-surface-border flex items-center justify-center text-text-secondary font-bold text-xs">SP</div>
+<div>
+<p class="text-white font-medium text-sm">Loja Jardins #204</p>
+<p class="text-text-secondary text-xs">São Paulo, SP</p>
+</div>
+</div>
+<div class="text-white font-bold">64%</div>
+<div class="text-rose-500 font-medium flex items-center gap-1 text-sm">
+<span class="material-symbols-outlined text-[16px]">trending_down</span>
+                            -12.5%
+                        </div>
+<div class="text-right">
+<button class="text-xs font-medium bg-rose-500/10 text-rose-500 px-3 py-1.5 rounded hover:bg-rose-500/20 transition-colors border border-rose-500/20">
+                                Auditar
+                            </button>
+</div>
+</div>
+<!-- Alert Item 2 -->
+<div class="grid grid-cols-5 p-4 border-b border-surface-border items-center hover:bg-surface-border/20 transition-colors">
+<div class="col-span-2 flex items-center gap-3">
+<div class="size-10 rounded bg-background-dark border border-surface-border flex items-center justify-center text-text-secondary font-bold text-xs">RJ</div>
+<div>
+<p class="text-white font-medium text-sm">Barra da Tijuca #108</p>
+<p class="text-text-secondary text-xs">Rio de Janeiro, RJ</p>
+</div>
+</div>
+<div class="text-white font-bold">71%</div>
+<div class="text-rose-500 font-medium flex items-center gap-1 text-sm">
+<span class="material-symbols-outlined text-[16px]">trending_down</span>
+                            -10.2%
+                        </div>
+<div class="text-right">
+<button class="text-xs font-medium bg-rose-500/10 text-rose-500 px-3 py-1.5 rounded hover:bg-rose-500/20 transition-colors border border-rose-500/20">
+                                Auditar
+                            </button>
+</div>
+</div>
+<!-- Alert Item 3 -->
+<div class="grid grid-cols-5 p-4 items-center hover:bg-surface-border/20 transition-colors">
+<div class="col-span-2 flex items-center gap-3">
+<div class="size-10 rounded bg-background-dark border border-surface-border flex items-center justify-center text-text-secondary font-bold text-xs">MG</div>
+<div>
+<p class="text-white font-medium text-sm">Savassi Express #045</p>
+<p class="text-text-secondary text-xs">Belo Horizonte, MG</p>
+</div>
+</div>
+<div class="text-white font-bold">58%</div>
+<div class="text-rose-500 font-medium flex items-center gap-1 text-sm">
+<span class="material-symbols-outlined text-[16px]">trending_down</span>
+                            -15.8%
+                        </div>
+<div class="text-right">
+<button class="text-xs font-medium bg-rose-500/10 text-rose-500 px-3 py-1.5 rounded hover:bg-rose-500/20 transition-colors border border-rose-500/20">
+                                Auditar
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Configurações de Aparência</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111722;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen flex flex-col antialiased">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+<div class="max-w-[1120px] mx-auto px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="flex items-center justify-center size-8 rounded-lg bg-primary/10 text-primary">
+<span class="material-symbols-outlined">settings_suggest</span>
+</div>
+<h1 class="text-lg font-bold tracking-tight">Preferências</h1>
+</div>
+<nav class="hidden md:flex items-center gap-1 bg-slate-200/50 dark:bg-slate-800/50 p-1 rounded-full">
+<a class="px-4 py-1.5 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors" href="#">Geral</a>
+<a class="px-4 py-1.5 text-sm font-medium bg-white dark:bg-slate-700 shadow-sm text-slate-900 dark:text-slate-100 rounded-full transition-colors" href="#">Aparência</a>
+<a class="px-4 py-1.5 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors" href="#">Privacidade</a>
+<a class="px-4 py-1.5 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors" href="#">Notificações</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="size-8 flex items-center justify-center rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<div class="size-9 rounded-full bg-cover bg-center border-2 border-white dark:border-slate-700 shadow-sm" data-alt="User profile avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDoWjZo8GnwVnJLjFAZB6vbHwZzXiPpaR2Ys_-KMMEyLPfV99yIf19Bpk0YFncqj1UxVPWoHktCBBV9fSdh7MueojSsLu3fAsnWzTsGQze0Zbdaiayn-k4RJUyuliMt-1IMHuYMEpDa_pvkl305WqLKZsO3clsucUYXVICZ0mWGnY34u5xrGN34hqj7UyzZ6hiccnsYtDTGJk_lrunaZeuQOwTdGVEYyEv3ZhP8aYhkAESnDO_rG56LrHYJgPMD-zrVABKNa-LSi0U");'></div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow w-full max-w-[960px] mx-auto px-6 py-10">
+<!-- Header Section -->
+<div class="mb-10">
+<h2 class="text-3xl font-bold mb-2">Aparência e Acessibilidade</h2>
+<p class="text-slate-500 dark:text-slate-400 text-lg">Personalize sua experiência visual para tornar o uso do sistema mais confortável.</p>
+</div>
+<!-- Theme Selection -->
+<section class="mb-12">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary text-2xl">palette</span>
+<h3 class="text-xl font-bold">Tema do Sistema</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Light Theme Card -->
+<label class="group relative cursor-pointer">
+<input class="peer sr-only" name="theme" type="radio"/>
+<div class="flex flex-col gap-3 p-3 rounded-2xl border-2 border-transparent bg-white dark:bg-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all peer-checked:border-primary peer-checked:bg-primary/5 dark:peer-checked:bg-primary/10">
+<div class="aspect-video w-full rounded-xl overflow-hidden shadow-sm relative border border-slate-200 dark:border-slate-700 group-hover:shadow-md transition-shadow">
+<div class="absolute inset-0 bg-[#f8fafc] flex flex-col p-4">
+<div class="w-1/2 h-2 bg-slate-200 rounded mb-2"></div>
+<div class="w-1/3 h-2 bg-slate-200 rounded mb-4"></div>
+<div class="flex gap-2">
+<div class="w-1/2 h-16 bg-white rounded shadow-sm border border-slate-100"></div>
+<div class="w-1/2 h-16 bg-white rounded shadow-sm border border-slate-100"></div>
+</div>
+</div>
+</div>
+<div class="px-1 flex items-center justify-between">
+<div>
+<p class="font-semibold text-slate-900 dark:text-slate-100">Claro</p>
+<p class="text-sm text-slate-500 dark:text-slate-400">Padrão para ambientes iluminados</p>
+</div>
+<div class="size-5 rounded-full border-2 border-slate-300 dark:border-slate-600 peer-checked:border-primary peer-checked:bg-primary flex items-center justify-center">
+<div class="size-2 rounded-full bg-white opacity-0 peer-checked:opacity-100"></div>
+</div>
+</div>
+</div>
+</label>
+<!-- Dark Theme Card -->
+<label class="group relative cursor-pointer">
+<input checked="" class="peer sr-only" name="theme" type="radio"/>
+<div class="flex flex-col gap-3 p-3 rounded-2xl border-2 border-primary bg-primary/5 dark:bg-primary/10 transition-all">
+<div class="aspect-video w-full rounded-xl overflow-hidden shadow-sm relative border border-slate-200 dark:border-slate-700 group-hover:shadow-md transition-shadow">
+<div class="absolute inset-0 bg-[#0f172a] flex flex-col p-4">
+<div class="w-1/2 h-2 bg-slate-700 rounded mb-2"></div>
+<div class="w-1/3 h-2 bg-slate-700 rounded mb-4"></div>
+<div class="flex gap-2">
+<div class="w-1/2 h-16 bg-slate-800 rounded border border-slate-700"></div>
+<div class="w-1/2 h-16 bg-slate-800 rounded border border-slate-700"></div>
+</div>
+</div>
+<!-- Checkmark overlay for active state visual cue -->
+<div class="absolute top-2 right-2 size-6 bg-primary text-white rounded-full flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined text-sm font-bold">check</span>
+</div>
+</div>
+<div class="px-1 flex items-center justify-between">
+<div>
+<p class="font-semibold text-slate-900 dark:text-slate-100">Escuro</p>
+<p class="text-sm text-slate-500 dark:text-slate-400">Ideal para baixa luminosidade</p>
+</div>
+<div class="size-5 rounded-full border-2 border-primary bg-primary flex items-center justify-center">
+<div class="size-2 rounded-full bg-white"></div>
+</div>
+</div>
+</div>
+</label>
+<!-- High Contrast Theme Card -->
+<label class="group relative cursor-pointer">
+<input class="peer sr-only" name="theme" type="radio"/>
+<div class="flex flex-col gap-3 p-3 rounded-2xl border-2 border-transparent bg-white dark:bg-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all peer-checked:border-primary peer-checked:bg-primary/5 dark:peer-checked:bg-primary/10">
+<div class="aspect-video w-full rounded-xl overflow-hidden shadow-sm relative border border-slate-200 dark:border-slate-700 group-hover:shadow-md transition-shadow">
+<div class="absolute inset-0 bg-black flex flex-col p-4">
+<div class="w-1/2 h-2 bg-yellow-400 rounded-none mb-2"></div>
+<div class="w-1/3 h-2 bg-yellow-400 rounded-none mb-4"></div>
+<div class="flex gap-2">
+<div class="w-1/2 h-16 bg-black border-2 border-white"></div>
+<div class="w-1/2 h-16 bg-black border-2 border-white"></div>
+</div>
+</div>
+</div>
+<div class="px-1 flex items-center justify-between">
+<div>
+<p class="font-semibold text-slate-900 dark:text-slate-100">Alto Contraste</p>
+<p class="text-sm text-slate-500 dark:text-slate-400">Otimizado para telas AMOLED</p>
+</div>
+<div class="size-5 rounded-full border-2 border-slate-300 dark:border-slate-600 peer-checked:border-primary peer-checked:bg-primary flex items-center justify-center">
+<div class="size-2 rounded-full bg-white opacity-0 peer-checked:opacity-100"></div>
+</div>
+</div>
+</div>
+</label>
+</div>
+</section>
+<div class="w-full h-px bg-slate-200 dark:bg-slate-800 mb-12"></div>
+<!-- Accessibility Options -->
+<section class="mb-12">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary text-2xl">accessibility_new</span>
+<h3 class="text-xl font-bold">Acessibilidade</h3>
+</div>
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden divide-y divide-slate-200 dark:divide-slate-800">
+<!-- Font Size -->
+<div class="p-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<h4 class="font-medium text-slate-900 dark:text-slate-100">Tamanho da Fonte</h4>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400">Ajuste o tamanho do texto para melhor legibilidade em todo o sistema.</p>
+</div>
+<div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-800/50 p-2 rounded-lg w-full md:w-auto min-w-[300px]">
+<span class="material-symbols-outlined text-slate-400 text-sm">text_fields</span>
+<input class="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-primary" max="100" min="0" type="range" value="50"/>
+<span class="material-symbols-outlined text-slate-900 dark:text-white text-xl">text_fields</span>
+</div>
+</div>
+<!-- Color Blindness Mode -->
+<div class="p-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div class="flex-1">
+<h4 class="font-medium text-slate-900 dark:text-slate-100 mb-1">Modo para Daltonismo</h4>
+<p class="text-sm text-slate-500 dark:text-slate-400">Ajusta as cores da interface para diferentes tipos de visão.</p>
+</div>
+<div class="w-full md:w-auto min-w-[300px]">
+<select class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg py-2.5 px-4 text-sm focus:ring-2 focus:ring-primary focus:border-primary outline-none text-slate-900 dark:text-slate-100">
+<option value="none">Nenhum (Padrão)</option>
+<option value="protanopia">Protanopia (Vermelho/Verde)</option>
+<option value="deuteranopia">Deuteranopia (Verde/Vermelho)</option>
+<option value="tritanopia">Tritanopia (Azul/Amarelo)</option>
+</select>
+</div>
+</div>
+<!-- Reduced Motion -->
+<div class="p-6 flex items-center justify-between gap-6">
+<div class="flex-1">
+<h4 class="font-medium text-slate-900 dark:text-slate-100 mb-1">Reduzir Movimento</h4>
+<p class="text-sm text-slate-500 dark:text-slate-400">Minimiza animações e transições da interface.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 dark:peer-focus:ring-primary/30 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</section>
+<div class="w-full h-px bg-slate-200 dark:bg-slate-800 mb-12"></div>
+<!-- Sync & Updates -->
+<section class="mb-12">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary text-2xl">sync</span>
+<h3 class="text-xl font-bold">Sincronização</h3>
+</div>
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
+<div class="flex flex-col gap-6">
+<div class="flex items-start justify-between">
+<div>
+<h4 class="font-medium text-slate-900 dark:text-slate-100 mb-1">Atualização Automática</h4>
+<p class="text-sm text-slate-500 dark:text-slate-400">Defina a frequência com que o sistema verifica atualizações de interface.</p>
+</div>
+<div class="px-3 py-1 rounded bg-green-500/10 text-green-500 text-xs font-semibold border border-green-500/20">Ativo</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<label class="cursor-pointer">
+<input class="peer sr-only" name="sync-freq" type="radio"/>
+<div class="flex items-center justify-center py-3 px-4 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary transition-all">
+<span class="text-sm font-medium">15 min</span>
+</div>
+</label>
+<label class="cursor-pointer">
+<input checked="" class="peer sr-only" name="sync-freq" type="radio"/>
+<div class="flex items-center justify-center py-3 px-4 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary transition-all">
+<span class="text-sm font-medium">30 min</span>
+</div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="sync-freq" type="radio"/>
+<div class="flex items-center justify-center py-3 px-4 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary transition-all">
+<span class="text-sm font-medium">1 hora</span>
+</div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="sync-freq" type="radio"/>
+<div class="flex items-center justify-center py-3 px-4 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary transition-all">
+<span class="text-sm font-medium">Manual</span>
+</div>
+</label>
+</div>
+</div>
+</div>
+</section>
+<!-- Action Buttons -->
+<div class="flex items-center justify-end gap-4 mt-8">
+<button class="px-6 py-2.5 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                Restaurar Padrões
+            </button>
+<button class="px-6 py-2.5 rounded-lg text-sm font-medium bg-primary text-white hover:bg-blue-600 shadow-lg shadow-blue-500/20 transition-all active:scale-95">
+                Salvar Alterações
+            </button>
+</div>
+</main>
+<!-- Footer -->
+<footer class="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark py-6">
+<div class="max-w-[1120px] mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-lg">verified_user</span>
+<span>Versão do Sistema: <span class="font-mono text-slate-700 dark:text-slate-300">v2.4.0-stable</span></span>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<div class="size-2 rounded-full bg-green-500 animate-pulse"></div>
+<span class="text-sm font-medium text-slate-600 dark:text-slate-300">PWA Ativo</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-sm text-slate-400">Última sinc.: Hoje, 14:30</span>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

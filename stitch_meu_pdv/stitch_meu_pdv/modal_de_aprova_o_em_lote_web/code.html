@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Painel Administrativo - Aprovação em Lote</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2563EB", // Updated to Vibrant Blue
+                        "primary-hover": "#1d4ed8",
+                        "success": "#16A34A",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#0B1120", // Deep Navy/Slate
+                        "surface-dark": "#161E2E", // Dark Blue Card
+                        "border-dark": "#1f2937",
+                        "text-secondary-dark": "#94a3b8",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>.custom-checkbox:checked {
+            background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='rgb(255,255,255)' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white overflow-hidden h-screen w-screen flex flex-col">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-border-dark bg-white dark:bg-background-dark px-10 py-3 z-10 relative">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-slate-900 dark:text-white">
+<div class="size-8 rounded bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">grid_view</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">Painel Administrativo</h2>
+</div>
+<label class="flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-slate-500 dark:text-slate-400 flex border-none bg-slate-100 dark:bg-surface-dark items-center justify-center pl-4 rounded-l-lg border-r-0">
+<span class="material-symbols-outlined text-[24px]">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-0 border-none bg-slate-100 dark:bg-surface-dark focus:border-none h-full placeholder:text-slate-500 dark:placeholder:text-slate-400 px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal" placeholder="Buscar auditorias..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<div class="flex gap-2">
+<button class="flex items-center justify-center overflow-hidden rounded-lg h-10 bg-slate-100 dark:bg-surface-dark text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors w-10">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="flex items-center justify-center overflow-hidden rounded-lg h-10 bg-slate-100 dark:bg-surface-dark text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors w-10">
+<span class="material-symbols-outlined text-[20px]">chat_bubble</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-primary/50" data-alt="User profile picture placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuALXDYeBRef1hYu1W_9GgH4A5rNy40n1hH_o5VhXkZgbHx1oOLcWHHtCsF9aAWPzLxjMrwqIhwE2Gd1nXhr9nFRB5GoOu3lZKqKKoWs-ltdVF6bIypRGlNNt-K1tP0mrhA9lMpiHiqOxzucW5fX4MUQn1k54Ue2FIWlTrxHCINquq-UpDQGTFtVZsTPX3PzHRXIFcR7sHkUcH1kq3g2QptV3oAkaaKuWisTzw9BdRmTC5HV-6jUQOxTHv5uMGTnqwie8QllSdiU63M");'></div>
+</div>
+</header>
+<main class="flex-1 relative overflow-hidden bg-background-light dark:bg-background-dark">
+<div class="p-8 opacity-20 filter blur-sm pointer-events-none select-none h-full overflow-hidden">
+<div class="flex justify-between items-center mb-6">
+<h1 class="text-2xl font-bold">Auditorias Pendentes</h1>
+<button class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium">Nova Auditoria</button>
+</div>
+<div class="w-full bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-border-dark overflow-hidden">
+<div class="grid grid-cols-5 p-4 border-b border-slate-200 dark:border-border-dark text-sm font-semibold text-slate-500 dark:text-slate-400">
+<div>ID</div>
+<div>Loja</div>
+<div>Auditor</div>
+<div>Status</div>
+<div>Data</div>
+</div>
+<div class="grid grid-cols-5 p-4 border-b border-slate-200 dark:border-border-dark items-center text-sm">
+<div>#AUD-2023-001</div>
+<div>Supermercado Central</div>
+<div>João Silva</div>
+<div><span class="px-2 py-1 rounded-full bg-yellow-500/20 text-yellow-500 text-xs">Pendente</span></div>
+<div>12 Out 2023</div>
+</div>
+<div class="grid grid-cols-5 p-4 border-b border-slate-200 dark:border-border-dark items-center text-sm">
+<div>#AUD-2023-002</div>
+<div>Mercado Expresso</div>
+<div>Maria Souza</div>
+<div><span class="px-2 py-1 rounded-full bg-yellow-500/20 text-yellow-500 text-xs">Pendente</span></div>
+<div>12 Out 2023</div>
+</div>
+<div class="grid grid-cols-5 p-4 border-b border-slate-200 dark:border-border-dark items-center text-sm">
+<div>#AUD-2023-003</div>
+<div>Hiper Loja Norte</div>
+<div>Carlos Pereira</div>
+<div><span class="px-2 py-1 rounded-full bg-yellow-500/20 text-yellow-500 text-xs">Pendente</span></div>
+<div>11 Out 2023</div>
+</div>
+<div class="grid grid-cols-5 p-4 border-b border-slate-200 dark:border-border-dark items-center text-sm">
+<div>#AUD-2023-004</div>
+<div>Atacadão Sul</div>
+<div>Ana Clara</div>
+<div><span class="px-2 py-1 rounded-full bg-yellow-500/20 text-yellow-500 text-xs">Pendente</span></div>
+<div>11 Out 2023</div>
+</div>
+<div class="grid grid-cols-5 p-4 border-b border-slate-200 dark:border-border-dark items-center text-sm">
+<div>#AUD-2023-005</div>
+<div>Supermercado Dia</div>
+<div>Roberto Costa</div>
+<div><span class="px-2 py-1 rounded-full bg-yellow-500/20 text-yellow-500 text-xs">Pendente</span></div>
+<div>10 Out 2023</div>
+</div>
+</div>
+</div>
+<div class="absolute inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+<div class="w-full max-w-lg transform overflow-hidden rounded-xl bg-white dark:bg-background-dark shadow-2xl ring-1 ring-white/10 transition-all animate-in fade-in zoom-in duration-200">
+<div class="relative flex flex-col items-center justify-center border-b border-slate-100 dark:border-border-dark px-6 py-6 text-center">
+<div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/20 text-primary">
+<span class="material-symbols-outlined text-[28px]">playlist_add_check</span>
+</div>
+<h3 class="text-xl font-bold leading-6 text-slate-900 dark:text-white" id="modal-title">Aprovar Auditorias em Lote</h3>
+<p class="mt-2 text-sm text-slate-500 dark:text-text-secondary-dark">
+                        Você está prestes a aprovar <span class="font-semibold text-slate-900 dark:text-white">12 auditorias selecionadas</span>.
+                    </p>
+</div>
+<div class="px-6 py-4 dark:bg-background-dark">
+<div class="mb-4 rounded-lg bg-slate-50 dark:bg-surface-dark p-4 border border-slate-100 dark:border-border-dark">
+<h4 class="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Critérios de Validação</h4>
+<div class="space-y-3">
+<label class="flex cursor-pointer items-start gap-3 group">
+<div class="relative flex items-center">
+<input checked="" class="custom-checkbox peer h-5 w-5 appearance-none rounded border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-primary checked:border-primary checked:bg-primary focus:ring-2 focus:ring-primary/20 focus:ring-offset-0 disabled:opacity-70 transition-all" disabled="" type="checkbox"/>
+</div>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200 group-hover:text-primary transition-colors">Fotos enviadas</span>
+<span class="ml-auto material-symbols-outlined text-success text-[18px]">check_circle</span>
+</label>
+<label class="flex cursor-pointer items-start gap-3 group">
+<div class="relative flex items-center">
+<input checked="" class="custom-checkbox peer h-5 w-5 appearance-none rounded border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-primary checked:border-primary checked:bg-primary focus:ring-2 focus:ring-primary/20 focus:ring-offset-0 disabled:opacity-70 transition-all" disabled="" type="checkbox"/>
+</div>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200 group-hover:text-primary transition-colors">GPS dentro do raio</span>
+<span class="ml-auto material-symbols-outlined text-success text-[18px]">check_circle</span>
+</label>
+<label class="flex cursor-pointer items-start gap-3 group">
+<div class="relative flex items-center">
+<input checked="" class="custom-checkbox peer h-5 w-5 appearance-none rounded border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-primary checked:border-primary checked:bg-primary focus:ring-2 focus:ring-primary/20 focus:ring-offset-0 disabled:opacity-70 transition-all" disabled="" type="checkbox"/>
+</div>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200 group-hover:text-primary transition-colors">Preços coletados</span>
+<span class="ml-auto material-symbols-outlined text-success text-[18px]">check_circle</span>
+</label>
+</div>
+</div>
+<div class="flex items-start gap-3 rounded-lg bg-orange-50 dark:bg-amber-500/10 p-3 text-orange-800 dark:text-amber-200 border border-orange-100 dark:border-amber-500/20">
+<span class="material-symbols-outlined text-[20px] shrink-0 mt-0.5 text-amber-500">warning</span>
+<p class="text-xs leading-5">
+<strong>Atenção:</strong> Esta ação aprovará permanentemente os registros selecionados e não poderá ser desfeita.
+                        </p>
+</div>
+</div>
+<div class="flex flex-col-reverse gap-3 bg-slate-50 dark:bg-surface-dark px-6 py-4 sm:flex-row sm:justify-end sm:gap-3 border-t border-slate-100 dark:border-border-dark">
+<button class="inline-flex w-full items-center justify-center rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-transparent px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto transition-colors" type="button">
+                        CANCELAR
+                    </button>
+<button class="inline-flex w-full items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-bold text-white shadow-sm hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto transition-colors gap-2" type="button">
+<span class="material-symbols-outlined text-[18px]">check</span>
+<span>CONFIRMAR APROVAÇÃO</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

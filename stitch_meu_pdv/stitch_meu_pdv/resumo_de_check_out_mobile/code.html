@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Resumo de Check-out Mobile</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#da7b07",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#231a0f",
+                        "surface-dark": "#352818",
+                        "surface-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4a3821;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #da7b07;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen flex flex-col overflow-x-hidden antialiased">
+<div class="layout-container flex h-full grow flex-col mx-auto w-full max-w-[480px] shadow-2xl relative">
+<!-- Offline/Sync Status Bar (Amber as requested) -->
+<div class="bg-amber-600 text-white text-xs font-bold py-1 px-4 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]">sync_problem</span>
+<span>3 itens na fila de sincronização</span>
+</div>
+<!-- Header -->
+<header class="flex items-center justify-between border-b border-surface-dark/20 dark:border-white/10 px-4 py-4 bg-surface-light dark:bg-[#1a120b] sticky top-0 z-10">
+<div class="flex items-center gap-3">
+<button class="text-slate-900 dark:text-white hover:text-primary transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight">Encerrar Visita</h2>
+<p class="text-slate-500 dark:text-[#ccb18e] text-xs font-medium">Supermercado Central - Loja 04</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="h-8 w-8 rounded-full bg-slate-200 dark:bg-surface-dark flex items-center justify-center text-primary font-bold text-xs border border-primary/20">JS</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col gap-6 p-4 pb-24 overflow-y-auto bg-background-light dark:bg-background-dark">
+<!-- User Profile Summary (Compact) -->
+<div class="flex items-center gap-3 p-3 rounded-xl bg-surface-light dark:bg-surface-dark shadow-sm border border-slate-200 dark:border-white/5">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-12 w-12 border-2 border-primary" data-alt="Portrait of Joao Silva promoter" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC-V6yEt-MOZdp4rpze6rZLzMyXR5xad4XYHUTgpIxLMLuN4q5MeQiCV6_e_grmJ998VrEX6y7xepY4WQXsJprtattluAA0IHeeX1gQ0iHkNp8duuAd5TqPDW2pODRgdrzOcn5NSPe8xbdbI-3gk0zXhGZCl33R_DOeBxnmL1H1_YqG5WlqsqLHIct_hEWBUtu38JLdRyDn0thRiDH8YSZT64Q2lJIRU0jCh4E-4M0FFLg4B7LRx66yMx_k9FTB5cV7gAFCHdC8KT0");'></div>
+<div class="flex flex-col">
+<h1 class="text-slate-900 dark:text-white text-sm font-bold">João Silva</h1>
+<p class="text-slate-500 dark:text-[#ccb18e] text-xs">Promotor de Vendas • Rota 12</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="inline-block w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+<span class="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-400">Online</span>
+</div>
+</div>
+</div>
+<!-- Pendências Section (Warning) -->
+<section>
+<div class="flex items-center justify-between mb-3">
+<h3 class="text-slate-900 dark:text-white font-bold text-base flex items-center gap-2">
+<span class="material-symbols-outlined text-amber-500">warning</span>
+                        Pendências Críticas
+                    </h3>
+<span class="bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-400 text-[10px] font-bold px-2 py-0.5 rounded-full">Obrigatório</span>
+</div>
+<div class="bg-amber-50 dark:bg-[#322010] border-l-4 border-amber-500 rounded-r-lg p-4 shadow-sm mb-3">
+<div class="flex justify-between items-start gap-3">
+<div class="flex flex-col gap-1">
+<p class="text-slate-900 dark:text-white text-sm font-bold">Auditoria de Produtos</p>
+<p class="text-slate-600 dark:text-[#ccb18e] text-xs">Faltam 3 produtos obrigatórios na gôndola.</p>
+</div>
+<button class="bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold px-3 py-1.5 rounded transition-colors uppercase tracking-wide">
+                            Revisar
+                        </button>
+</div>
+</div>
+<div class="bg-amber-50 dark:bg-[#322010] border-l-4 border-amber-500 rounded-r-lg p-4 shadow-sm">
+<div class="flex justify-between items-start gap-3">
+<div class="flex flex-col gap-1">
+<p class="text-slate-900 dark:text-white text-sm font-bold">Pesquisa de Preço</p>
+<p class="text-slate-600 dark:text-[#ccb18e] text-xs">SKU 4092 sem preço registrado.</p>
+</div>
+<button class="bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold px-3 py-1.5 rounded transition-colors uppercase tracking-wide">
+                            Corrigir
+                        </button>
+</div>
+</div>
+</section>
+<!-- Completed Tasks Section -->
+<section>
+<h3 class="text-slate-900 dark:text-white font-bold text-base mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-green-500">task_alt</span>
+                    Tarefas Concluídas
+                </h3>
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl overflow-hidden shadow-sm border border-slate-200 dark:border-white/5 divide-y divide-slate-100 dark:divide-white/5">
+<!-- Item 1 -->
+<label class="flex items-center gap-4 p-4 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer group">
+<div class="relative flex items-center justify-center">
+<input checked="" class="peer appearance-none w-6 h-6 border-2 border-slate-300 dark:border-slate-600 rounded bg-transparent checked:bg-green-600 checked:border-green-600 transition-all" disabled="" type="checkbox"/>
+<span class="material-symbols-outlined absolute text-white text-[16px] pointer-events-none opacity-0 peer-checked:opacity-100">check</span>
+</div>
+<div class="flex-1">
+<p class="text-slate-900 dark:text-white text-sm font-medium group-hover:text-primary transition-colors">Check-in na Loja</p>
+<p class="text-slate-500 dark:text-slate-400 text-[10px]">Realizado às 08:30</p>
+</div>
+<span class="material-symbols-outlined text-green-500 text-[20px]">verified</span>
+</label>
+<!-- Item 2 -->
+<label class="flex items-center gap-4 p-4 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer group">
+<div class="relative flex items-center justify-center">
+<input checked="" class="peer appearance-none w-6 h-6 border-2 border-slate-300 dark:border-slate-600 rounded bg-transparent checked:bg-green-600 checked:border-green-600 transition-all" disabled="" type="checkbox"/>
+<span class="material-symbols-outlined absolute text-white text-[16px] pointer-events-none opacity-0 peer-checked:opacity-100">check</span>
+</div>
+<div class="flex-1">
+<p class="text-slate-900 dark:text-white text-sm font-medium group-hover:text-primary transition-colors">Fotos de Gôndola</p>
+<p class="text-slate-500 dark:text-slate-400 text-[10px]">4 fotos enviadas</p>
+</div>
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full border border-white dark:border-surface-dark bg-cover bg-center" data-alt="Shelf photo thumbnail 1" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAOYM4OqrDechNr8OF-sbAWVoO8eUSc_C-n29Jsz7l90T7qMkGO_MIn_mpbipKOpkEsg2oeFYpLZ1k8-rFGkzxarO1Ym1aHhKV6DGfDTdfQlkHTCL9IY_iolAujNvwb8Ft3plCotD3DkcLdPeq4fUMDBSwEMnjymKi_DenuzNG3GpPmaIWV78U3Xm6mmiZFPWPpwPSxUhui7JOa4BCyMk1gsB4UfB51e0i-fcz78t6t7DNoQUe3GQ7oYneWdeho8lc0NCMrD7eYjw0")'></div>
+<div class="w-6 h-6 rounded-full border border-white dark:border-surface-dark bg-cover bg-center" data-alt="Shelf photo thumbnail 2" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA4rhRKWrRz34FBBtEjhWa-9hM92xPXZAQz_MARLeyVV5dH8fA3f3yAzdJAsLoCUs_2lKWFqBXL3VJbyQ-oNB3ivp6NkBHQ3pz-N1wYaOXbaISwH4B44siWZZP8Du1-QJLsu36PNW0VYLOaPZdqp8WvjCjB4o5ra_Z2xkFqIVgaE4tjXuR9snTwpC_L0TMpbHMbrMbiKyPKzzmqDb5HE64fDEKnIrc2b7TgTnhtWZZgDZ9Uy1da_yc-Fv9e4FLQEJNHd15Fan7iEZQ")'></div>
+</div>
+</label>
+<!-- Item 3 -->
+<label class="flex items-center gap-4 p-4 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer group">
+<div class="relative flex items-center justify-center">
+<input checked="" class="peer appearance-none w-6 h-6 border-2 border-slate-300 dark:border-slate-600 rounded bg-transparent checked:bg-green-600 checked:border-green-600 transition-all" disabled="" type="checkbox"/>
+<span class="material-symbols-outlined absolute text-white text-[16px] pointer-events-none opacity-0 peer-checked:opacity-100">check</span>
+</div>
+<div class="flex-1">
+<p class="text-slate-900 dark:text-white text-sm font-medium group-hover:text-primary transition-colors">Validação de Estoque</p>
+<p class="text-slate-500 dark:text-slate-400 text-[10px]">Virtual x Físico OK</p>
+</div>
+<span class="material-symbols-outlined text-green-500 text-[20px]">verified</span>
+</label>
+</div>
+</section>
+<!-- Map Preview (Geo Validation) -->
+<section class="rounded-xl overflow-hidden shadow-sm relative h-32 w-full group">
+<div class="absolute inset-0 bg-cover bg-center opacity-60 group-hover:opacity-80 transition-opacity" data-alt="Abstract map of city streets" data-location="Sao Paulo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBFWCs3r-Vk6UGi3R4Dfkiv3J0H33MzNgXPPvb_73dbMkh5Zo7XODAxywcmQjYsF2JqPnXK_H8eG3soWrdrTwXfUlWzHJZ_j-Ah2hc6DJdeQ_JLT4wyoGahTRfFUwTU9lFrZjpiMWlg2s4h8YMA-gAvkazPEkkrCgHIb7EyXP6c9g1FRh1fblqahw8yHmhdUb5AsT-O23ntXaapEgHibWyYvI-v0WlaxibBRy5G1BDcGNpoZ4FXUjv_T0YCIbamUsKDSw5IrHZrKOo")'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+<div class="absolute bottom-3 left-3 flex items-center gap-2">
+<span class="bg-green-500/20 text-green-400 p-1 rounded-full border border-green-500/50 backdrop-blur-sm">
+<span class="material-symbols-outlined text-[16px] block">my_location</span>
+</span>
+<div>
+<p class="text-white text-xs font-bold">Localização capturada com sucesso</p>
+<p class="text-slate-300 text-[10px]">Precisão: 12 metros</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer / Action Area -->
+<footer class="fixed bottom-0 w-full max-w-[480px] bg-surface-light dark:bg-[#1a120b] border-t border-slate-200 dark:border-white/10 p-4 z-20">
+<!-- Warning Message for disabled state -->
+<div class="mb-3 flex items-start gap-2 text-red-600 dark:text-red-400 px-1">
+<span class="material-symbols-outlined text-[18px] mt-0.5">error</span>
+<p class="text-xs font-medium">Complete a coleta obrigatória para finalizar.</p>
+</div>
+<!-- Action Button (Disabled State visual) -->
+<button class="w-full h-12 flex items-center justify-center gap-3 rounded-lg bg-neutral-800 dark:bg-black text-white/50 cursor-not-allowed font-bold text-sm tracking-wide uppercase shadow-lg relative overflow-hidden" disabled="">
+<div class="absolute inset-0 bg-white/5"></div>
+<span>Finalizar Check-out</span>
+<span class="material-symbols-outlined">lock</span>
+</button>
+<!-- Developer Note: If enabled, remove 'disabled' attr, remove text-white/50, change bg to black/hover:bg-neutral-900, remove lock icon -->
+</footer>
+</div>
+</body></html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Histórico de Visitas</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background-color: #334155;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col font-display antialiased">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-[#15202b] px-6 py-4 shadow-sm">
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-slate-900 dark:text-slate-100">arrow_back</span>
+</button>
+<h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100">Histórico de Visitas</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex relative">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</span>
+<input class="w-64 rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 py-2 pl-10 pr-4 text-sm focus:border-primary focus:ring-primary dark:text-white placeholder:text-slate-400" placeholder="Buscar loja..." type="text"/>
+</div>
+<button class="flex items-center justify-center p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-slate-900 dark:text-slate-100">filter_list</span>
+</button>
+</div>
+</header>
+<div class="flex flex-1 flex-col lg:flex-row max-w-7xl mx-auto w-full p-4 gap-6">
+<!-- Sidebar / User Profile (Desktop Only) -->
+<aside class="hidden lg:flex w-80 flex-col gap-6 shrink-0">
+<!-- User Card -->
+<div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#15202b] p-6 shadow-sm">
+<div class="flex items-center gap-4 mb-6">
+<div class="h-14 w-14 rounded-full bg-slate-200 dark:bg-slate-700 bg-center bg-cover" data-alt="Profile picture of João Silva" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAbkV_DSKMlbHUXkobpPje-u95KjlfqFfSZtUW9WaIHNwcj128i3aHAkDqk20rPMjtJiYdAC7zALoD3AnQQTiFwdiC1EnuyoBjH3S9RkYHL1xvcR1hj81ZU4xtMrCJoOeMxGZlK5UONi2dwN135dYPnp8R-wjhu9qyvggYCzUCnhMio-0avikuKraM3iZJehc6GAnHR-xa4GXtXIb4cEpEHYr3hYWCh7P034ouAzOA-VT0_pNTS-vd0imHjQl0fcBzA4vUUfaYTiZw");'></div>
+<div>
+<h2 class="text-lg font-bold text-slate-900 dark:text-white">João Silva</h2>
+<p class="text-sm text-slate-500 dark:text-slate-400">Promotor Jr.</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 rounded-lg bg-primary/10 px-4 py-3 text-primary dark:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined fill-current">history</span>
+<span class="font-medium">Visitas</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 px-4 py-3 text-slate-700 dark:text-slate-300 transition-colors" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="font-medium">Roteiro</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 px-4 py-3 text-slate-700 dark:text-slate-300 transition-colors" href="#">
+<span class="material-symbols-outlined">cloud_sync</span>
+<span class="font-medium">Sincronizar</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 px-4 py-3 text-slate-700 dark:text-slate-300 transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-medium">Perfil</span>
+</a>
+</nav>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex flex-1 flex-col gap-6">
+<!-- Summary Stats -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="flex flex-col justify-center rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#15202b] p-6 shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm font-medium text-slate-500 dark:text-slate-400">Lojas Visitadas</span>
+<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">storefront</span>
+</div>
+<p class="text-3xl font-bold text-slate-900 dark:text-white">4</p>
+<div class="mt-2 text-xs text-slate-500 dark:text-slate-400">Meta diária: 5 visitas</div>
+</div>
+<div class="flex flex-col justify-center rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#15202b] p-6 shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm font-medium text-slate-500 dark:text-slate-400">Coleta Concluída</span>
+<span class="material-symbols-outlined text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/30 p-2 rounded-lg">check_circle</span>
+</div>
+<p class="text-3xl font-bold text-slate-900 dark:text-white">100%</p>
+<div class="mt-2 w-full bg-slate-100 dark:bg-slate-700 rounded-full h-1.5 overflow-hidden">
+<div class="bg-green-500 h-1.5 rounded-full" style="width: 100%"></div>
+</div>
+</div>
+</div>
+<!-- Date Filters -->
+<div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+<button class="whitespace-nowrap rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-transform active:scale-95">
+                    Hoje
+                </button>
+<button class="whitespace-nowrap rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#15202b] px-5 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                    Ontem
+                </button>
+<button class="whitespace-nowrap rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#15202b] px-5 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                    Últimos 7 dias
+                </button>
+</div>
+<!-- Visit List -->
+<div class="flex flex-col gap-4">
+<!-- Visit Item 1: Pending Sync -->
+<details class="group rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#15202b] shadow-sm open">
+<summary class="flex cursor-pointer items-center justify-between p-5 list-none select-none">
+<div class="flex items-center gap-4">
+<div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-500">
+<span class="material-symbols-outlined">sync_problem</span>
+</div>
+<div class="flex flex-col">
+<h3 class="text-base font-bold text-slate-900 dark:text-white">Supermercado Central</h3>
+<div class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>Checkout: 16:30</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="hidden sm:inline-flex items-center rounded-full bg-amber-100 dark:bg-amber-900/30 px-2.5 py-0.5 text-xs font-medium text-amber-800 dark:text-amber-300">
+                                Pendente
+                            </span>
+<span class="material-symbols-outlined text-slate-400 transition-transform duration-300 group-open:rotate-180">expand_more</span>
+</div>
+</summary>
+<div class="border-t border-slate-100 dark:border-slate-800 px-5 py-4">
+<div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
+<div class="flex flex-col gap-1">
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Total de Fotos</span>
+<span class="text-lg font-bold text-slate-900 dark:text-white">12</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Total de Preços</span>
+<span class="text-lg font-bold text-slate-900 dark:text-white">45</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Rupturas</span>
+<span class="text-lg font-bold text-slate-900 dark:text-white">3</span>
+</div>
+<div class="flex flex-col gap-1 sm:items-end">
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Ação</span>
+<button class="mt-1 text-sm font-semibold text-primary hover:text-blue-600 dark:hover:text-blue-400">
+                                    Ver Detalhes
+                                </button>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-2 rounded-lg bg-amber-50 dark:bg-amber-900/20 p-3 text-sm text-amber-800 dark:text-amber-200">
+<span class="material-symbols-outlined text-[18px]">wifi_off</span>
+<p>Aguardando conexão para sincronizar dados.</p>
+</div>
+</div>
+</details>
+<!-- Visit Item 2: Synced -->
+<details class="group rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#15202b] shadow-sm">
+<summary class="flex cursor-pointer items-center justify-between p-5 list-none select-none">
+<div class="flex items-center gap-4">
+<div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-500">
+<span class="material-symbols-outlined">check</span>
+</div>
+<div class="flex flex-col">
+<h3 class="text-base font-bold text-slate-900 dark:text-white">Mercadinho da Esquina</h3>
+<div class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>Checkout: 14:15</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="hidden sm:inline-flex items-center rounded-full bg-green-100 dark:bg-green-900/30 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:text-green-300">
+                                Sincronizado
+                            </span>
+<span class="material-symbols-outlined text-slate-400 transition-transform duration-300 group-open:rotate-180">expand_more</span>
+</div>
+</summary>
+<div class="border-t border-slate-100 dark:border-slate-800 px-5 py-4">
+<div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
+<div class="flex flex-col gap-1">
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Total de Fotos</span>
+<span class="text-lg font-bold text-slate-900 dark:text-white">8</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Total de Preços</span>
+<span class="text-lg font-bold text-slate-900 dark:text-white">22</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Rupturas</span>
+<span class="text-lg font-bold text-slate-900 dark:text-white">0</span>
+</div>
+<div class="flex flex-col gap-1 sm:items-end">
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Ação</span>
+<button class="mt-1 text-sm font-semibold text-primary hover:text-blue-600 dark:hover:text-blue-400">
+                                    Ver Detalhes
+                                </button>
+</div>
+</div>
+</div>
+</details>
+<!-- Visit Item 3: Synced -->
+<details class="group rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#15202b] shadow-sm">
+<summary class="flex cursor-pointer items-center justify-between p-5 list-none select-none">
+<div class="flex items-center gap-4">
+<div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-500">
+<span class="material-symbols-outlined">check</span>
+</div>
+<div class="flex flex-col">
+<h3 class="text-base font-bold text-slate-900 dark:text-white">Atacadão do Povo</h3>
+<div class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>Checkout: 11:00</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="hidden sm:inline-flex items-center rounded-full bg-green-100 dark:bg-green-900/30 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:text-green-300">
+                                Sincronizado
+                            </span>
+<span class="material-symbols-outlined text-slate-400 transition-transform duration-300 group-open:rotate-180">expand_more</span>
+</div>
+</summary>
+<div class="border-t border-slate-100 dark:border-slate-800 px-5 py-4">
+<div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
+<div class="flex flex-col gap-1">
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Total de Fotos</span>
+<span class="text-lg font-bold text-slate-900 dark:text-white">34</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Total de Preços</span>
+<span class="text-lg font-bold text-slate-900 dark:text-white">128</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Rupturas</span>
+<span class="text-lg font-bold text-slate-900 dark:text-white">12</span>
+</div>
+<div class="flex flex-col gap-1 sm:items-end">
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Ação</span>
+<button class="mt-1 text-sm font-semibold text-primary hover:text-blue-600 dark:hover:text-blue-400">
+                                    Ver Detalhes
+                                </button>
+</div>
+</div>
+</div>
+</details>
+<!-- Visit Item 4: Synced -->
+<details class="group rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#15202b] shadow-sm">
+<summary class="flex cursor-pointer items-center justify-between p-5 list-none select-none">
+<div class="flex items-center gap-4">
+<div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-500">
+<span class="material-symbols-outlined">check</span>
+</div>
+<div class="flex flex-col">
+<h3 class="text-base font-bold text-slate-900 dark:text-white">Loja Conveniência Sul</h3>
+<div class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>Checkout: 09:45</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="hidden sm:inline-flex items-center rounded-full bg-green-100 dark:bg-green-900/30 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:text-green-300">
+                                Sincronizado
+                            </span>
+<span class="material-symbols-outlined text-slate-400 transition-transform duration-300 group-open:rotate-180">expand_more</span>
+</div>
+</summary>
+<div class="border-t border-slate-100 dark:border-slate-800 px-5 py-4">
+<div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
+<div class="flex flex-col gap-1">
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Total de Fotos</span>
+<span class="text-lg font-bold text-slate-900 dark:text-white">4</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Total de Preços</span>
+<span class="text-lg font-bold text-slate-900 dark:text-white">15</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Rupturas</span>
+<span class="text-lg font-bold text-slate-900 dark:text-white">0</span>
+</div>
+<div class="flex flex-col gap-1 sm:items-end">
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Ação</span>
+<button class="mt-1 text-sm font-semibold text-primary hover:text-blue-600 dark:hover:text-blue-400">
+                                    Ver Detalhes
+                                </button>
+</div>
+</div>
+</div>
+</details>
+</div>
+<!-- Empty State / End of List Indicator -->
+<div class="py-8 flex flex-col items-center justify-center text-center">
+<div class="h-px w-full max-w-xs bg-gradient-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent"></div>
+<p class="mt-4 text-sm text-slate-400">Fim do histórico de hoje</p>
+</div>
+</main>
+</div>
+</body></html>

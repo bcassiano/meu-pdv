@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Preço Certo BI - Sazonalidade</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        slate: {
+                            850: "#1e293b", // Custom slate for sidebar
+                            900: "#0f172a",
+                        }
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        "2xl": "1rem",
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white transition-colors duration-200">
+<div class="flex min-h-screen w-full overflow-hidden">
+<!-- Sidebar -->
+<div class="w-64 flex-shrink-0 bg-slate-850 dark:bg-slate-850 flex flex-col justify-between border-r border-slate-700/50">
+<div class="flex flex-col gap-6 p-4">
+<div class="flex items-center gap-3 px-2">
+<div class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/20 text-primary">
+<span class="material-symbols-outlined text-2xl">bar_chart</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-white text-base font-bold leading-tight">Preço Certo BI</h1>
+<p class="text-slate-400 text-xs font-normal">Enterprise Admin</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white" data-icon="dashboard">dashboard</span>
+<span class="text-sm font-medium">Dashboard Geral</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white" data-icon="map">map</span>
+<span class="text-sm font-medium">Preços Regionais</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/20 text-white border border-primary/20 shadow-sm transition-colors" href="#">
+<span class="material-symbols-outlined text-primary" data-icon="campaign">campaign</span>
+<span class="text-sm font-medium">Campanhas &amp; Sazonalidade</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white" data-icon="storefront">storefront</span>
+<span class="text-sm font-medium">Concorrentes</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white" data-icon="settings">settings</span>
+<span class="text-sm font-medium">Configurações</span>
+</a>
+</nav>
+</div>
+<div class="p-4 border-t border-slate-700/50">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white" data-icon="logout">logout</span>
+<span class="text-sm font-medium">Sair</span>
+</a>
+</div>
+</div>
+<!-- Main Content -->
+<div class="flex-1 flex flex-col h-screen overflow-y-auto">
+<!-- Header -->
+<header class="flex items-center justify-between px-8 py-6 border-b border-slate-200 dark:border-slate-800 bg-background-light dark:bg-background-dark sticky top-0 z-10 backdrop-blur-md bg-opacity-90 dark:bg-opacity-90">
+<div class="flex flex-col gap-1">
+<h2 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Análise de Sazonalidade</h2>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Monitoramento de impacto de campanhas e dispersão de preços.</p>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center h-10 w-10 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 hover:text-primary hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-xl">notifications</span>
+</button>
+<div class="h-8 w-[1px] bg-slate-200 dark:bg-slate-700 mx-1"></div>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/20">
+<span class="material-symbols-outlined text-lg">download</span>
+                        Exportar Relatório
+                    </button>
+</div>
+</header>
+<main class="flex-1 p-8 max-w-[1600px] mx-auto w-full flex flex-col gap-8">
+<!-- KPIs -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="flex flex-col gap-3 p-6 rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex items-center justify-between">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Impacto Médio</p>
+<span class="material-symbols-outlined text-green-500 bg-green-500/10 p-1.5 rounded-lg text-lg">trending_up</span>
+</div>
+<div>
+<p class="text-3xl font-bold text-slate-900 dark:text-white">+12.5%</p>
+<p class="text-green-500 text-sm font-medium mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">arrow_upward</span> +2.1% vs anterior
+                            </p>
+</div>
+</div>
+<div class="flex flex-col gap-3 p-6 rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex items-center justify-between">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Variação Sazonal</p>
+<span class="material-symbols-outlined text-primary bg-primary/10 p-1.5 rounded-lg text-lg">date_range</span>
+</div>
+<div>
+<p class="text-3xl font-bold text-slate-900 dark:text-white">8.3%</p>
+<p class="text-green-500 text-sm font-medium mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">arrow_upward</span> Estável
+                            </p>
+</div>
+</div>
+<div class="flex flex-col gap-3 p-6 rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex items-center justify-between">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Campanhas Ativas</p>
+<span class="material-symbols-outlined text-orange-500 bg-orange-500/10 p-1.5 rounded-lg text-lg">local_offer</span>
+</div>
+<div>
+<p class="text-3xl font-bold text-slate-900 dark:text-white">3</p>
+<p class="text-slate-400 text-sm font-medium mt-1">Black Friday Prep</p>
+</div>
+</div>
+<div class="flex flex-col gap-3 p-6 rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex items-center justify-between">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Desvio Padrão</p>
+<span class="material-symbols-outlined text-red-500 bg-red-500/10 p-1.5 rounded-lg text-lg">analytics</span>
+</div>
+<div>
+<p class="text-3xl font-bold text-slate-900 dark:text-white">R$ 4,50</p>
+<p class="text-red-500 text-sm font-medium mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">warning</span> Alerta de Dispersão
+                            </p>
+</div>
+</div>
+</div>
+<!-- Main Chart Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Stacked Area Chart -->
+<div class="lg:col-span-2 p-6 rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col gap-6">
+<div class="flex items-center justify-between flex-wrap gap-4">
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Evolução de Preços por Rede</h3>
+<p class="text-slate-500 text-sm">Comparativo sazonal com anotações de campanhas</p>
+</div>
+<div class="flex gap-2">
+<select class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-300 text-sm rounded-lg focus:ring-primary focus:border-primary block p-2">
+<option>Últimos 12 meses</option>
+<option>Últimos 6 meses</option>
+<option>YTD</option>
+</select>
+</div>
+</div>
+<div class="relative w-full h-[320px] flex items-end justify-between gap-1 pt-6 px-2">
+<!-- Chart Visualization Placeholder using CSS/HTML shapes -->
+<!-- Background grid lines -->
+<div class="absolute inset-0 top-10 flex flex-col justify-between pointer-events-none opacity-10">
+<div class="w-full h-px bg-slate-400"></div>
+<div class="w-full h-px bg-slate-400"></div>
+<div class="w-full h-px bg-slate-400"></div>
+<div class="w-full h-px bg-slate-400"></div>
+<div class="w-full h-px bg-slate-400"></div>
+</div>
+<!-- SVG Chart -->
+<svg class="w-full h-full overflow-visible" viewbox="0 0 800 300">
+<defs>
+<lineargradient id="grad1" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#1152d4;stop-opacity:0.4"></stop>
+<stop offset="100%" style="stop-color:#1152d4;stop-opacity:0"></stop>
+</lineargradient>
+<lineargradient id="grad2" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:0.4"></stop>
+<stop offset="100%" style="stop-color:#0ea5e9;stop-opacity:0"></stop>
+</lineargradient>
+<lineargradient id="grad3" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#6366f1;stop-opacity:0.4"></stop>
+<stop offset="100%" style="stop-color:#6366f1;stop-opacity:0"></stop>
+</lineargradient>
+</defs>
+<!-- Area 3 -->
+<path d="M0,250 C50,240 100,220 150,230 C200,240 250,200 300,180 C350,160 400,170 450,150 C500,130 550,140 600,120 C650,100 700,90 750,80 L750,300 L0,300 Z" fill="url(#grad3)" stroke="none"></path>
+<path d="M0,250 C50,240 100,220 150,230 C200,240 250,200 300,180 C350,160 400,170 450,150 C500,130 550,140 600,120 C650,100 700,90 750,80" fill="none" stroke="#6366f1" stroke-width="2"></path>
+<!-- Area 2 -->
+<path d="M0,220 C60,210 120,200 180,210 C240,220 300,190 360,160 C420,130 480,140 540,110 C600,80 660,70 750,60 L750,300 L0,300 Z" fill="url(#grad2)" stroke="none" style="mix-blend-mode: overlay;"></path>
+<path d="M0,220 C60,210 120,200 180,210 C240,220 300,190 360,160 C420,130 480,140 540,110 C600,80 660,70 750,60" fill="none" stroke="#0ea5e9" stroke-width="2"></path>
+<!-- Area 1 -->
+<path d="M0,280 C80,260 160,240 240,250 C320,260 400,220 480,190 C560,160 640,170 750,140 L750,300 L0,300 Z" fill="url(#grad1)" stroke="none" style="mix-blend-mode: overlay;"></path>
+<path d="M0,280 C80,260 160,240 240,250 C320,260 400,220 480,190 C560,160 640,170 750,140" fill="none" stroke="#1152d4" stroke-width="2"></path>
+<!-- Annotations -->
+<g transform="translate(180, 0)">
+<line stroke="#94a3b8" stroke-dasharray="4" stroke-width="1" x1="0" x2="0" y1="20" y2="300"></line>
+<rect fill="#1e293b" height="24" opacity="0.8" rx="4" width="80" x="-40" y="0"></rect>
+<text fill="white" font-family="Inter" font-size="10" font-weight="bold" text-anchor="middle" x="0" y="16">Dia das Mães</text>
+</g>
+<g transform="translate(480, 0)">
+<line stroke="#94a3b8" stroke-dasharray="4" stroke-width="1" x1="0" x2="0" y1="20" y2="300"></line>
+<rect fill="#1e293b" height="24" opacity="0.8" rx="4" width="80" x="-40" y="0"></rect>
+<text fill="white" font-family="Inter" font-size="10" font-weight="bold" text-anchor="middle" x="0" y="16">Black Friday</text>
+</g>
+<!-- Tooltip Point Example -->
+<circle cx="480" cy="190" fill="white" r="4" stroke="#1152d4" stroke-width="2"></circle>
+</svg>
+</div>
+<div class="flex justify-between px-2 text-xs text-slate-500 font-medium uppercase tracking-wide">
+<span>Jan</span><span>Fev</span><span>Mar</span><span>Abr</span><span>Mai</span><span>Jun</span><span>Jul</span><span>Ago</span><span>Set</span><span>Out</span><span>Nov</span><span>Dez</span>
+</div>
+</div>
+<!-- Side Stats / Alerts -->
+<div class="lg:col-span-1 flex flex-col gap-6">
+<div class="p-6 rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 shadow-sm flex-1 flex flex-col">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Competitividade Atual</h3>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between mb-2">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">Rede Principal</span>
+<span class="text-sm font-bold text-primary">R$ 42,50</span>
+</div>
+<div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2.5">
+<div class="bg-primary h-2.5 rounded-full" style="width: 75%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-2">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">Concorrente A</span>
+<span class="text-sm font-bold text-slate-500">R$ 39,90</span>
+</div>
+<div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2.5">
+<div class="bg-slate-400 h-2.5 rounded-full" style="width: 65%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-2">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">Concorrente B</span>
+<span class="text-sm font-bold text-red-500">R$ 45,00</span>
+</div>
+<div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2.5">
+<div class="bg-red-500 h-2.5 rounded-full" style="width: 85%"></div>
+</div>
+</div>
+</div>
+<div class="mt-auto pt-6 border-t border-slate-200 dark:border-slate-700">
+<div class="p-4 bg-primary/10 rounded-xl border border-primary/20">
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-primary">tips_and_updates</span>
+<div>
+<p class="text-sm font-semibold text-primary mb-1">Oportunidade</p>
+<p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                                                Aumentar preços na Região Sul pode gerar +5% de margem sem perda de volume devido à baixa competitividade local.
+                                            </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Lower Section: Map and Details -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 pb-8">
+<!-- Map Card -->
+<div class="p-6 rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col h-[400px]">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Dispersão Regional de Preços</h3>
+<button class="text-sm text-primary font-medium hover:underline">Ver mapa completo</button>
+</div>
+<div class="flex-1 relative rounded-xl overflow-hidden bg-slate-900 group">
+<!-- Map Placeholder -->
+<div class="absolute inset-0 bg-cover bg-center opacity-60" data-alt="Dark map of a region with city lights" data-location="Brazil" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDJli8ROyBRVkK_bqtybrd0k03Ahiljdp1ejJpAB-ui10hnnzujwLWJNXp_u8XXN3P3TX6CedVhzruOgGNsBJwGCCM31e-glZoTXaIQsa1PSFlww54lyuO6YJBEevDq_DzLfXvaKr_O73M3FNFPlpDmcOLMH7-IZN8bxt_H6Ewp_pejsMypHMJ1Ffux9ks48bXYah6KW6jDS3gIbFe-NjNo9XyopXQPL7IScl41fUH6JDDDfTUotgSG0u_E5t9Y-KoXUmoBmqNgfoY');">
+</div>
+<!-- Map Overlay Gradients -->
+<div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 to-transparent"></div>
+<!-- Scatter Points (simulated) -->
+<div class="absolute top-1/4 left-1/3">
+<div class="relative group/point cursor-pointer">
+<div class="w-4 h-4 rounded-full bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.6)] animate-pulse"></div>
+<div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs py-1 px-2 rounded opacity-0 group-hover/point:opacity-100 transition-opacity whitespace-nowrap z-10">
+                                         São Paulo: +15% acima da média
+                                     </div>
+</div>
+</div>
+<div class="absolute top-1/2 left-1/2">
+<div class="relative group/point cursor-pointer">
+<div class="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.6)]"></div>
+</div>
+</div>
+<div class="absolute bottom-1/3 right-1/4">
+<div class="relative group/point cursor-pointer">
+<div class="w-6 h-6 rounded-full border-2 border-primary bg-primary/30 shadow-[0_0_15px_rgba(17,82,212,0.6)]"></div>
+<div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs py-1 px-2 rounded opacity-0 group-hover/point:opacity-100 transition-opacity whitespace-nowrap z-10">
+                                         Rio de Janeiro: Zona de Oportunidade
+                                     </div>
+</div>
+</div>
+<div class="absolute bottom-4 left-4 right-4 flex justify-between items-end">
+<div class="bg-slate-900/80 backdrop-blur-sm p-3 rounded-lg border border-slate-700">
+<p class="text-xs text-slate-400 mb-2 uppercase font-bold tracking-wider">Legenda</p>
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2 text-xs text-slate-300">
+<div class="w-2 h-2 rounded-full bg-green-500"></div> Na Média
+                                         </div>
+<div class="flex items-center gap-2 text-xs text-slate-300">
+<div class="w-2 h-2 rounded-full bg-red-500"></div> Crítico (&gt;10%)
+                                         </div>
+<div class="flex items-center gap-2 text-xs text-slate-300">
+<div class="w-2 h-2 rounded-full border border-primary bg-primary/30"></div> Campanhas
+                                         </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Detailed List -->
+<div class="p-6 rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col h-[400px]">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Maiores Desvios de Preço</h3>
+<div class="flex-1 overflow-y-auto pr-2 custom-scrollbar">
+<table class="w-full text-left border-collapse">
+<thead class="sticky top-0 bg-white dark:bg-slate-800/95 backdrop-blur z-10">
+<tr class="text-xs text-slate-500 border-b border-slate-200 dark:border-slate-700">
+<th class="py-3 font-medium">Região/Loja</th>
+<th class="py-3 font-medium">Preço Atual</th>
+<th class="py-3 font-medium">Média Hist.</th>
+<th class="py-3 font-medium text-right">Desvio</th>
+<th class="py-3 font-medium text-right">Ação</th>
+</tr>
+</thead>
+<tbody class="text-sm">
+<tr class="border-b border-slate-200/50 dark:border-slate-700/50 hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors group">
+<td class="py-3 font-medium text-slate-900 dark:text-slate-200">
+<div class="flex items-center gap-2">
+<div class="w-1 h-8 bg-red-500 rounded-full"></div>
+<div>
+<div>SP - Capital - Loja 04</div>
+<div class="text-xs text-slate-500">Sudeste</div>
+</div>
+</div>
+</td>
+<td class="py-3 text-slate-600 dark:text-slate-400">R$ 52,90</td>
+<td class="py-3 text-slate-600 dark:text-slate-400">R$ 45,00</td>
+<td class="py-3 text-right font-bold text-red-500">+17.5%</td>
+<td class="py-3 text-right">
+<button class="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded hover:bg-primary hover:text-white transition-colors">Revisar</button>
+</td>
+</tr>
+<tr class="border-b border-slate-200/50 dark:border-slate-700/50 hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors">
+<td class="py-3 font-medium text-slate-900 dark:text-slate-200">
+<div class="flex items-center gap-2">
+<div class="w-1 h-8 bg-orange-400 rounded-full"></div>
+<div>
+<div>RJ - Centro - Loja 12</div>
+<div class="text-xs text-slate-500">Sudeste</div>
+</div>
+</div>
+</td>
+<td class="py-3 text-slate-600 dark:text-slate-400">R$ 49,90</td>
+<td class="py-3 text-slate-600 dark:text-slate-400">R$ 46,50</td>
+<td class="py-3 text-right font-bold text-orange-400">+7.3%</td>
+<td class="py-3 text-right">
+<button class="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded hover:bg-primary hover:text-white transition-colors">Revisar</button>
+</td>
+</tr>
+<tr class="border-b border-slate-200/50 dark:border-slate-700/50 hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors">
+<td class="py-3 font-medium text-slate-900 dark:text-slate-200">
+<div class="flex items-center gap-2">
+<div class="w-1 h-8 bg-primary rounded-full"></div>
+<div>
+<div>MG - Belo Hte - Loja 02</div>
+<div class="text-xs text-slate-500">Sudeste</div>
+</div>
+</div>
+</td>
+<td class="py-3 text-slate-600 dark:text-slate-400">R$ 44,00</td>
+<td class="py-3 text-slate-600 dark:text-slate-400">R$ 44,50</td>
+<td class="py-3 text-right font-bold text-green-500">-1.1%</td>
+<td class="py-3 text-right">
+<button class="text-xs font-medium text-slate-500 bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">Detalhes</button>
+</td>
+</tr>
+<tr class="border-b border-slate-200/50 dark:border-slate-700/50 hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors">
+<td class="py-3 font-medium text-slate-900 dark:text-slate-200">
+<div class="flex items-center gap-2">
+<div class="w-1 h-8 bg-red-500 rounded-full"></div>
+<div>
+<div>RS - P. Alegre - Loja 08</div>
+<div class="text-xs text-slate-500">Sul</div>
+</div>
+</div>
+</td>
+<td class="py-3 text-slate-600 dark:text-slate-400">R$ 55,00</td>
+<td class="py-3 text-slate-600 dark:text-slate-400">R$ 48,00</td>
+<td class="py-3 text-right font-bold text-red-500">+14.5%</td>
+<td class="py-3 text-right">
+<button class="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded hover:bg-primary hover:text-white transition-colors">Revisar</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

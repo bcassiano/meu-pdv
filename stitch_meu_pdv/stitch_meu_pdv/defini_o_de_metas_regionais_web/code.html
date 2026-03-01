@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Definição de Metas Regionais</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1152d4",
+                        "primary-dark": "#0d3fa6",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1e293b", 
+                        "text-primary-light": "#0f172a",
+                        "text-primary-dark": "#f1f5f9",
+                        "text-secondary-light": "#475569",
+                        "text-secondary-dark": "#94a3b8",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        "2xl": "1rem",
+                        full: "9999px",
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-primary-light dark:text-text-primary-dark h-screen overflow-hidden flex">
+<!-- Sidebar -->
+<aside class="w-64 bg-surface-dark flex-shrink-0 flex flex-col h-full border-r border-slate-700/50">
+<!-- User Profile Header -->
+<div class="p-6 border-b border-slate-700/50 flex gap-3 items-center">
+<div class="h-10 w-10 rounded-full bg-slate-600 bg-cover bg-center shrink-0" data-alt="User profile picture placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAaZNAohEDO0EZev6okecUppheYILOPZISImrllF6KBmVOTJZEBAOmZNZaFsdDvpC5cliY6YATq-DLVEHW0JePWWSVtAjO0dLjsis8iMDD25Bm5ZKSqGji0rBGgMQsiuZAmQTep671Qv2T1vKKLQGg34f_BrNI5j8qCwmPwYoBUszIhTpeqB2cjFiOryuiP9q8xwE_sbegmgb_FgvyRHbZCQfi6hOD08O67RoUVMf4nNJwDkRtOT775eaDUNCS0MFb-_FSmsswSnzg");'></div>
+<div class="flex flex-col overflow-hidden">
+<h1 class="text-white text-sm font-semibold truncate">Trade Admin</h1>
+<p class="text-slate-400 text-xs truncate">Gestão de Operações</p>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex-1 overflow-y-auto py-4 px-3 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">pie_chart</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/20 text-blue-100 border border-primary/20" href="#">
+<span class="material-symbols-outlined text-blue-300">target</span>
+<span class="text-sm font-medium">Metas Regionais</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">group</span>
+<span class="text-sm font-medium">Equipe de Campo</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">description</span>
+<span class="text-sm font-medium">Relatórios</span>
+</a>
+</nav>
+<!-- Settings Footer -->
+<div class="p-4 border-t border-slate-700/50">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">settings</span>
+<span class="text-sm font-medium">Configurações</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Top Bar / Header -->
+<header class="bg-surface-light dark:bg-surface-dark border-b border-slate-200 dark:border-slate-800 px-8 py-5 flex items-center justify-between shadow-sm z-10">
+<div>
+<div class="flex items-center gap-2 text-sm text-text-secondary-light dark:text-text-secondary-dark mb-1">
+<span>Planejamento</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span>Metas</span>
+</div>
+<h2 class="text-2xl font-bold text-text-primary-light dark:text-text-primary-dark">Definição de Metas Regionais</h2>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-primary hover:bg-primary/5 rounded-lg transition-colors border border-primary/20">
+<span class="material-symbols-outlined text-[20px]">content_copy</span>
+                    Replicar para Outras Regionais
+                </button>
+<button class="flex items-center gap-2 px-6 py-2 bg-primary hover:bg-primary-dark text-white text-sm font-semibold rounded-lg shadow-md transition-all">
+<span class="material-symbols-outlined text-[20px]">publish</span>
+                    Publicar Metas
+                </button>
+</div>
+</header>
+<!-- Content Scroll Area -->
+<div class="flex-1 overflow-y-auto p-8 bg-background-light dark:bg-background-dark">
+<div class="max-w-6xl mx-auto space-y-8">
+<!-- Filters Section -->
+<section class="bg-surface-light dark:bg-surface-dark p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-text-secondary-light dark:text-text-secondary-dark flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">calendar_month</span>
+                                Mês de Referência
+                            </label>
+<div class="relative">
+<select class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-text-primary-light dark:text-text-primary-dark rounded-lg py-3 px-4 focus:ring-2 focus:ring-primary focus:border-primary appearance-none cursor-pointer">
+<option>Outubro 2023</option>
+<option>Novembro 2023</option>
+<option selected="">Dezembro 2023</option>
+<option>Janeiro 2024</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-text-secondary-light dark:text-text-secondary-dark flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">location_on</span>
+                                Regional
+                            </label>
+<div class="relative">
+<select class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-text-primary-light dark:text-text-primary-dark rounded-lg py-3 px-4 focus:ring-2 focus:ring-primary focus:border-primary appearance-none cursor-pointer">
+<option selected="">Sudeste (SP/RJ/MG/ES)</option>
+<option>Sul (RS/SC/PR)</option>
+<option>Nordeste</option>
+<option>Centro-Oeste</option>
+<option>Norte</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+</section>
+<!-- KPI Form Section -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- KPI Input Card -->
+<div class="bg-surface-light dark:bg-surface-dark p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm lg:col-span-2">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-lg font-bold text-text-primary-light dark:text-text-primary-dark">Configuração de KPIs</h3>
+<span class="text-xs font-medium px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded">Status: Em Rascunho</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Field 1 -->
+<div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-lg border border-slate-100 dark:border-slate-700/50">
+<label class="block text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark mb-2">Volume de Visitas</label>
+<div class="relative group">
+<input class="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg py-2.5 pl-3 pr-10 text-text-primary-light dark:text-text-primary-dark focus:ring-primary focus:border-primary font-semibold" type="number" value="1250"/>
+<div class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">storefront</span>
+</div>
+</div>
+<p class="text-xs text-slate-500 mt-2">Meta total da regional</p>
+</div>
+<!-- Field 2 -->
+<div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-lg border border-slate-100 dark:border-slate-700/50">
+<label class="block text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark mb-2">Ruptura Aceitável</label>
+<div class="relative group">
+<input class="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg py-2.5 pl-3 pr-10 text-text-primary-light dark:text-text-primary-dark focus:ring-primary focus:border-primary font-semibold" step="0.1" type="number" value="4.5"/>
+<div class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 font-bold group-hover:text-primary transition-colors">
+                                        %
+                                    </div>
+</div>
+<p class="text-xs text-slate-500 mt-2">Máximo tolerado</p>
+</div>
+<!-- Field 3 -->
+<div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-lg border border-slate-100 dark:border-slate-700/50">
+<label class="block text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark mb-2">Mix Obrigatório</label>
+<div class="relative group">
+<input class="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg py-2.5 pl-3 pr-10 text-text-primary-light dark:text-text-primary-dark focus:ring-primary focus:border-primary font-semibold" type="number" value="95"/>
+<div class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 font-bold group-hover:text-primary transition-colors">
+                                        %
+                                    </div>
+</div>
+<p class="text-xs text-slate-500 mt-2">Conformidade mínima</p>
+</div>
+<!-- Field 4 -->
+<div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-lg border border-slate-100 dark:border-slate-700/50">
+<label class="block text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark mb-2">Ticket Médio Est.</label>
+<div class="relative group">
+<div class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-semibold group-hover:text-primary transition-colors">
+                                        R$
+                                    </div>
+<input class="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg py-2.5 pl-10 pr-3 text-text-primary-light dark:text-text-primary-dark focus:ring-primary focus:border-primary font-semibold" type="number" value="450.00"/>
+</div>
+<p class="text-xs text-slate-500 mt-2">Por ponto de venda</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Historic Table Section -->
+<section class="bg-surface-light dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900/20">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-text-secondary-light dark:text-text-secondary-dark">history</span>
+<h3 class="text-base font-bold text-text-primary-light dark:text-text-primary-dark">Histórico: Metas vs Realizado (Sudeste)</h3>
+</div>
+<button class="text-xs font-medium text-primary hover:text-primary-dark flex items-center gap-1">
+                            Ver histórico completo
+                            <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-sm text-left">
+<thead class="bg-slate-50 dark:bg-slate-900 text-xs uppercase text-text-secondary-light dark:text-text-secondary-dark font-semibold">
+<tr>
+<th class="px-6 py-3 border-b border-slate-200 dark:border-slate-800">Período</th>
+<th class="px-6 py-3 border-b border-slate-200 dark:border-slate-800 text-center">Visitas (Meta/Real)</th>
+<th class="px-6 py-3 border-b border-slate-200 dark:border-slate-800 text-center">Ruptura (Meta/Real)</th>
+<th class="px-6 py-3 border-b border-slate-200 dark:border-slate-800 text-center">Mix (Meta/Real)</th>
+<th class="px-6 py-3 border-b border-slate-200 dark:border-slate-800 text-center">Ticket Médio</th>
+<th class="px-6 py-3 border-b border-slate-200 dark:border-slate-800 text-right">Resultado</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium text-text-primary-light dark:text-text-primary-dark">Novembro 2023</td>
+<td class="px-6 py-4 text-center">
+<div class="flex flex-col items-center">
+<span class="text-xs text-slate-500">1200 / <strong class="text-green-600 dark:text-green-400">1240</strong></span>
+<div class="w-16 h-1.5 bg-slate-200 rounded-full mt-1 overflow-hidden">
+<div class="bg-green-500 h-full w-[100%] rounded-full"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-center">
+<div class="flex flex-col items-center">
+<span class="text-xs text-slate-500">5.0% / <strong class="text-red-500">5.8%</strong></span>
+<div class="w-16 h-1.5 bg-slate-200 rounded-full mt-1 overflow-hidden">
+<div class="bg-red-500 h-full w-[80%] rounded-full"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-center">
+<div class="flex flex-col items-center">
+<span class="text-xs text-slate-500">90% / <strong class="text-green-600 dark:text-green-400">92%</strong></span>
+<div class="w-16 h-1.5 bg-slate-200 rounded-full mt-1 overflow-hidden">
+<div class="bg-green-500 h-full w-[100%] rounded-full"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-center text-text-secondary-light dark:text-text-secondary-dark">R$ 432,50</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400">
+                                            Parcial
+                                        </span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium text-text-primary-light dark:text-text-primary-dark">Outubro 2023</td>
+<td class="px-6 py-4 text-center">
+<div class="flex flex-col items-center">
+<span class="text-xs text-slate-500">1150 / <strong class="text-green-600 dark:text-green-400">1180</strong></span>
+<div class="w-16 h-1.5 bg-slate-200 rounded-full mt-1 overflow-hidden">
+<div class="bg-green-500 h-full w-[100%] rounded-full"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-center">
+<div class="flex flex-col items-center">
+<span class="text-xs text-slate-500">5.0% / <strong class="text-green-600 dark:text-green-400">4.2%</strong></span>
+<div class="w-16 h-1.5 bg-slate-200 rounded-full mt-1 overflow-hidden">
+<div class="bg-green-500 h-full w-[100%] rounded-full"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-center">
+<div class="flex flex-col items-center">
+<span class="text-xs text-slate-500">90% / <strong class="text-green-600 dark:text-green-400">91%</strong></span>
+<div class="w-16 h-1.5 bg-slate-200 rounded-full mt-1 overflow-hidden">
+<div class="bg-green-500 h-full w-[100%] rounded-full"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-center text-text-secondary-light dark:text-text-secondary-dark">R$ 410,00</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                                            Atingido
+                                        </span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium text-text-primary-light dark:text-text-primary-dark">Setembro 2023</td>
+<td class="px-6 py-4 text-center">
+<div class="flex flex-col items-center">
+<span class="text-xs text-slate-500">1100 / <strong class="text-red-500">1050</strong></span>
+<div class="w-16 h-1.5 bg-slate-200 rounded-full mt-1 overflow-hidden">
+<div class="bg-red-500 h-full w-[95%] rounded-full"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-center">
+<div class="flex flex-col items-center">
+<span class="text-xs text-slate-500">5.5% / <strong class="text-green-600 dark:text-green-400">5.0%</strong></span>
+<div class="w-16 h-1.5 bg-slate-200 rounded-full mt-1 overflow-hidden">
+<div class="bg-green-500 h-full w-[100%] rounded-full"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-center">
+<div class="flex flex-col items-center">
+<span class="text-xs text-slate-500">88% / <strong class="text-green-600 dark:text-green-400">89%</strong></span>
+<div class="w-16 h-1.5 bg-slate-200 rounded-full mt-1 overflow-hidden">
+<div class="bg-green-500 h-full w-[100%] rounded-full"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-center text-text-secondary-light dark:text-text-secondary-dark">R$ 395,00</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400">
+                                            Parcial
+                                        </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Bottom spacing -->
+<div class="h-8"></div>
+</div>
+</div>
+</main>
+</body></html>

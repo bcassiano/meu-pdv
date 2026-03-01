@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Configuração de Rotas Inteligentes MVP2</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        slate: {
+                            800: "#1e293b", // Matching user request for slate tone
+                            900: "#0f172a",
+                        }
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px",
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 overflow-hidden">
+<div class="relative flex h-screen w-full flex-row overflow-hidden">
+<!-- Sidebar -->
+<div class="flex h-full w-64 flex-col justify-between border-r border-slate-800 bg-[#111722] p-4">
+<div class="flex flex-col gap-4">
+<div class="flex gap-3 items-center pb-4 border-b border-slate-800">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Logistics company logo abstract" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAD4QWvp4ap960F9zOEo5Ii4GqTbRltuq8jYbXoqZTl4lLwtapwZglKwRlznAybKsrOZxMkR6Auz2nxUtMT7GMl8NyiFxaCXSXASPYZX_LRCklyBczcZNNvFRroDX9AvdfxoXbsn_dRVjjFww7P3sfgMJzxRMsrDv03zQ_1LmUixZxyTKYfmMh6tzmEad84XrNGFZUW_wldDCSUsNwmYDCvGj5DZq2pXteVl9vXvEAoxbWr9PLdbC2nN1_hcrC_AAlUJZsYHjd6jtY");'></div>
+<div class="flex flex-col">
+<h1 class="text-white text-base font-medium leading-normal">Logística Admin</h1>
+<p class="text-[#92a4c9] text-xs font-normal leading-normal">MVP2 Environment</p>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-3 px-3 py-2 text-[#92a4c9] hover:text-white hover:bg-slate-800/50 rounded-lg cursor-pointer transition-colors">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-sm font-medium leading-normal">Dashboard</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary">
+<span class="material-symbols-outlined fill-1">map</span>
+<p class="text-sm font-medium leading-normal">Rotas Inteligentes</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-[#92a4c9] hover:text-white hover:bg-slate-800/50 rounded-lg cursor-pointer transition-colors">
+<span class="material-symbols-outlined">group</span>
+<p class="text-sm font-medium leading-normal">Promotores</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-[#92a4c9] hover:text-white hover:bg-slate-800/50 rounded-lg cursor-pointer transition-colors">
+<span class="material-symbols-outlined">storefront</span>
+<p class="text-sm font-medium leading-normal">Lojas</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-[#92a4c9] hover:text-white hover:bg-slate-800/50 rounded-lg cursor-pointer transition-colors">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-sm font-medium leading-normal">Configurações</p>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-[#92a4c9] hover:text-white cursor-pointer">
+<span class="material-symbols-outlined">logout</span>
+<p class="text-sm font-medium leading-normal">Sair</p>
+</div>
+</div>
+<!-- Main Content Area -->
+<div class="flex flex-1 flex-col h-full overflow-hidden relative">
+<!-- Header -->
+<header class="flex h-16 shrink-0 items-center justify-between border-b border-slate-800 bg-[#111722] px-6">
+<div class="flex items-center gap-4">
+<h2 class="text-lg font-bold text-white tracking-tight">Configuração de Rotas Inteligentes</h2>
+<span class="rounded-full bg-primary/20 px-2 py-0.5 text-xs font-bold text-primary border border-primary/30">MVP2</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 text-[#92a4c9] hover:text-white transition-colors">
+<span class="material-symbols-outlined text-xl">help</span>
+<span class="text-sm">Ajuda</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-white">
+                        AD
+                    </div>
+</div>
+</header>
+<!-- Main Layout: Map & Config Panel -->
+<div class="flex flex-1 overflow-hidden relative">
+<!-- Map Area -->
+<div class="flex-1 relative bg-slate-900 z-0">
+<!-- Map Background Image Placeholder -->
+<div class="absolute inset-0 bg-cover bg-center opacity-40 grayscale" data-alt="Map of city streets dark mode" data-location="Sao Paulo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCN2t1GSM64KACfnsRsZF7XlMqtVdMBdoiuI1dxk2ZeQy14mvd7MPTpUfkB_Tnk0qzzVrndLOrQdkfya2_wmCULZBEvQQ1boB92vGLmkTDREtHPRqt4SPWUhtBOB4ZHe4gdlo7K7TVOJzYleJC3zpGoQauU41Z3ObjagKXjDg_AidcYblSpFLovWy5DpgKfhU4DyRRtIYEvWAKWWjCTFROHosA6Nf-xfMOYVJqdRcmzfxndeUyzL1rQuwZpB730E3GiFjmxHVupCDQ");'></div>
+<!-- Overlay Grid/UI for Map context -->
+<div class="absolute inset-0 bg-[linear-gradient(rgba(17,23,34,0.3)_1px,transparent_1px),linear-gradient(90deg,rgba(17,23,34,0.3)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+<!-- Map Controls -->
+<div class="absolute top-4 left-4 flex flex-col gap-2 z-10">
+<div class="flex flex-col bg-[#192233] rounded-lg shadow-lg overflow-hidden border border-slate-700">
+<button class="p-2 hover:bg-slate-700 text-white flex items-center justify-center border-b border-slate-700">
+<span class="material-symbols-outlined">add</span>
+</button>
+<button class="p-2 hover:bg-slate-700 text-white flex items-center justify-center">
+<span class="material-symbols-outlined">remove</span>
+</button>
+</div>
+</div>
+<!-- Search Bar on Map -->
+<div class="absolute top-4 right-4 z-10 w-80">
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="block w-full p-3 pl-10 text-sm text-white bg-[#192233]/90 border border-slate-700 rounded-lg focus:ring-primary focus:border-primary placeholder-slate-400 shadow-lg backdrop-blur-sm" placeholder="Buscar região, loja ou promotor..." type="text"/>
+</div>
+</div>
+<!-- Route Info Card (Floating) -->
+<div class="absolute bottom-6 left-6 z-10 w-72 bg-[#192233]/95 backdrop-blur-md border border-slate-700 rounded-xl p-4 shadow-xl">
+<div class="flex items-center justify-between mb-3">
+<h3 class="text-white font-medium text-sm">Previsão da Rota</h3>
+<span class="text-emerald-400 text-xs font-bold bg-emerald-400/10 px-2 py-0.5 rounded">Otimizada</span>
+</div>
+<div class="space-y-3">
+<div class="flex items-center gap-3">
+<div class="p-1.5 rounded bg-blue-500/20 text-blue-400">
+<span class="material-symbols-outlined text-lg">distance</span>
+</div>
+<div>
+<p class="text-xs text-slate-400">Distância Total</p>
+<p class="text-sm font-semibold text-white">42.5 km</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="p-1.5 rounded bg-orange-500/20 text-orange-400">
+<span class="material-symbols-outlined text-lg">schedule</span>
+</div>
+<div>
+<p class="text-xs text-slate-400">Tempo Estimado</p>
+<p class="text-sm font-semibold text-white">3h 45m</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="p-1.5 rounded bg-purple-500/20 text-purple-400">
+<span class="material-symbols-outlined text-lg">store</span>
+</div>
+<div>
+<p class="text-xs text-slate-400">PDVs Visitados</p>
+<p class="text-sm font-semibold text-white">8 Lojas</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Configuration Panel -->
+<aside class="w-[400px] bg-[#111722] border-l border-slate-800 flex flex-col z-20 shadow-2xl overflow-y-auto">
+<div class="p-5 border-b border-slate-800 bg-[#151b28]">
+<h3 class="text-white font-semibold text-lg mb-1">Parâmetros de Rota</h3>
+<p class="text-slate-400 text-xs">Configure as variáveis para o algoritmo de IA.</p>
+</div>
+<div class="flex-1 p-5 space-y-8">
+<!-- 1. Parâmetros de Otimização -->
+<section>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary text-sm">tune</span>
+<h4 class="text-sm font-bold text-white uppercase tracking-wider">Otimização</h4>
+</div>
+<div class="space-y-3">
+<label class="flex items-center p-3 rounded-lg border border-slate-700 bg-slate-800/50 cursor-pointer hover:border-primary transition-all has-[:checked]:border-primary has-[:checked]:bg-primary/10">
+<input checked="" class="w-4 h-4 text-primary bg-slate-700 border-slate-500 focus:ring-primary focus:ring-2" name="opt-type" type="radio"/>
+<div class="ml-3 flex flex-col">
+<span class="text-sm font-medium text-white">Menor Distância</span>
+<span class="text-xs text-slate-400">Prioriza km rodados (economia de combustível)</span>
+</div>
+</label>
+<label class="flex items-center p-3 rounded-lg border border-slate-700 bg-slate-800/50 cursor-pointer hover:border-primary transition-all has-[:checked]:border-primary has-[:checked]:bg-primary/10">
+<input class="w-4 h-4 text-primary bg-slate-700 border-slate-500 focus:ring-primary focus:ring-2" name="opt-type" type="radio"/>
+<div class="ml-3 flex flex-col">
+<span class="text-sm font-medium text-white">Menor Tempo</span>
+<span class="text-xs text-slate-400">Evita trânsito e rotas lentas</span>
+</div>
+</label>
+<label class="flex items-center p-3 rounded-lg border border-slate-700 bg-slate-800/50 cursor-pointer hover:border-primary transition-all has-[:checked]:border-primary has-[:checked]:bg-primary/10">
+<input class="w-4 h-4 text-primary bg-slate-700 border-slate-500 focus:ring-primary focus:ring-2" name="opt-type" type="radio"/>
+<div class="ml-3 flex flex-col">
+<span class="text-sm font-medium text-white">Prioridade de PDV Crítico</span>
+<span class="text-xs text-slate-400">Foca em lojas com ruptura de estoque</span>
+</div>
+</label>
+</div>
+</section>
+<hr class="border-slate-800"/>
+<!-- 2. Restrições de Jornada -->
+<section>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary text-sm">timer</span>
+<h4 class="text-sm font-bold text-white uppercase tracking-wider">Restrições de Jornada</h4>
+</div>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between mb-1">
+<label class="text-sm text-slate-300">Horário Máximo de Término</label>
+<span class="text-sm font-mono text-primary">18:00</span>
+</div>
+<input class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-primary" max="22" min="16" step="0.5" type="range"/>
+<div class="flex justify-between text-[10px] text-slate-500 mt-1">
+<span>16:00</span>
+<span>22:00</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="block text-xs text-slate-400 mb-1">Tempo Médio Auditoria</label>
+<div class="relative">
+<input class="w-full bg-[#192233] border border-slate-700 rounded text-white text-sm px-2 py-1.5 focus:border-primary focus:ring-0" type="number" value="45"/>
+<span class="absolute right-2 top-1.5 text-xs text-slate-500">min</span>
+</div>
+</div>
+<div>
+<label class="block text-xs text-slate-400 mb-1">Intervalo Almoço</label>
+<div class="relative">
+<input class="w-full bg-[#192233] border border-slate-700 rounded text-white text-sm px-2 py-1.5 focus:border-primary focus:ring-0" type="number" value="60"/>
+<span class="absolute right-2 top-1.5 text-xs text-slate-500">min</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<hr class="border-slate-800"/>
+<!-- 3. Seleção de Promotores e Período -->
+<section>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary text-sm">groups</span>
+<h4 class="text-sm font-bold text-white uppercase tracking-wider">Equipe &amp; Período</h4>
+</div>
+<div class="space-y-3">
+<div>
+<label class="block text-xs text-slate-400 mb-1">Período de Planejamento</label>
+<div class="flex items-center gap-2 bg-[#192233] border border-slate-700 rounded p-2">
+<span class="material-symbols-outlined text-slate-400 text-sm">calendar_today</span>
+<span class="text-sm text-white">01 Nov - 07 Nov</span>
+</div>
+</div>
+<div>
+<label class="block text-xs text-slate-400 mb-1">Promotores Selecionados</label>
+<div class="flex flex-wrap gap-2">
+<div class="flex items-center gap-1 bg-slate-800 rounded-full px-2 py-1 border border-slate-700">
+<div class="w-4 h-4 rounded-full bg-indigo-500"></div>
+<span class="text-xs text-white">Grupo A</span>
+<span class="material-symbols-outlined text-[10px] text-slate-400 cursor-pointer">close</span>
+</div>
+<div class="flex items-center gap-1 bg-slate-800 rounded-full px-2 py-1 border border-slate-700">
+<div class="w-4 h-4 rounded-full bg-teal-500"></div>
+<span class="text-xs text-white">Grupo B</span>
+<span class="material-symbols-outlined text-[10px] text-slate-400 cursor-pointer">close</span>
+</div>
+<button class="text-xs text-primary border border-dashed border-primary/50 rounded-full px-2 py-1 hover:bg-primary/10 transition">
+                                            + Adicionar
+                                        </button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer Action -->
+<div class="p-5 border-t border-slate-800 bg-[#151b28]">
+<button class="w-full flex items-center justify-center gap-2 bg-primary hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg shadow-lg shadow-blue-900/20 transition-all transform active:scale-[0.98]">
+<span class="material-symbols-outlined">auto_awesome</span>
+                            GERAR ROTA OTIMIZADA
+                        </button>
+<p class="text-center text-[10px] text-slate-500 mt-2">
+                            A otimização pode levar alguns instantes.
+                        </p>
+</div>
+</aside>
+</div>
+</div>
+</div>
+</body></html>

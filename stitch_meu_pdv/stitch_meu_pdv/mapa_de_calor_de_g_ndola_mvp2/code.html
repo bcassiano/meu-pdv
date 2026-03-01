@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mapa de Calor de Gôndola MVP2</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d59f2",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#1a2332",
+                        "border-dark": "#2a3649",
+                        "heatmap-high": "#ef4444", // Red for high rupture
+                        "heatmap-med": "#eab308",  // Yellow for medium
+                        "heatmap-low": "#22c55e",   // Green for low/good
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom Heatmap Overlay Styles */
+        .heatmap-overlay {
+            background: radial-gradient(circle, rgba(239, 68, 68, 0.6) 0%, rgba(239, 68, 68, 0.2) 50%, transparent 70%);
+            mix-blend-mode: hard-light;
+        }
+        .heatmap-overlay-med {
+            background: radial-gradient(circle, rgba(234, 179, 8, 0.6) 0%, rgba(234, 179, 8, 0.2) 50%, transparent 70%);
+            mix-blend-mode: hard-light;
+        }
+        
+        /* Shelf Styles */
+        .shelf-gradient {
+            background: linear-gradient(180deg, #334155 0%, #1e293b 100%);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Product Placeholder */
+        .product-box {
+            background: linear-gradient(135deg, #475569 0%, #334155 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        /* Scrollbar customization */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101622; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a3649; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #374151; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display overflow-x-hidden">
+<div class="flex h-screen w-full flex-col bg-background-light dark:bg-background-dark overflow-hidden">
+<!-- Header -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-border-dark bg-white dark:bg-surface-dark px-6 py-3 shrink-0 z-20">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3">
+<div class="size-8 text-primary">
+<span class="material-symbols-outlined !text-3xl">analytics</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Trade Marketing Analytics <span class="text-xs font-normal text-slate-400 border border-slate-700 rounded px-1.5 py-0.5 ml-2">MVP2</span></h2>
+</div>
+<label class="hidden md:flex flex-col min-w-40 !h-10 max-w-64 relative group">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400 group-focus-within:text-primary transition-colors">
+<span class="material-symbols-outlined !text-[20px]">search</span>
+</div>
+<input class="block w-full h-full pl-10 pr-3 py-2 border border-slate-200 dark:border-border-dark rounded-lg leading-5 bg-slate-50 dark:bg-background-dark text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm transition-all" placeholder="Buscar loja, produto..." type="search"/>
+</label>
+</div>
+<div class="flex items-center gap-4">
+<button class="relative p-2 text-slate-400 hover:text-slate-200 transition-colors rounded-full hover:bg-slate-800">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 size-2 bg-red-500 rounded-full border-2 border-surface-dark"></span>
+</button>
+<div class="h-8 w-[1px] bg-border-dark mx-1"></div>
+<div class="flex items-center gap-3">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-medium text-white">Admin User</p>
+<p class="text-xs text-slate-400">Trade Manager</p>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-border-dark" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBWIEiey0Xc7iRbe-YnkjKmmKCtQPV6ckpsX_Bi-bWNMwYq2Vmkup1IYDkW0clxFeasSUrcoFS8HIY4pXnL2sj6APQzWIoVd5qmHXh_c23HEL6WAqONnMSIj3pJgBqvbADIOOJwBEGiXBbz3W0AAd48PLdocVSVGks_qCV835KFwfbOyK0Dj1SPZuAyl-kb24OVh4gkDedE6cjc8pOgPSqSEiiDpDNFK7In4_TEpbeFps2500MbovE4H7lbID_3HaADGqyoIMIbI3M");'></div>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- Sidebar Navigation -->
+<nav class="hidden lg:flex w-64 flex-col justify-between border-r border-slate-200 dark:border-border-dark bg-white dark:bg-surface-dark p-4 shrink-0 overflow-y-auto">
+<div class="flex flex-col gap-6">
+<div class="flex flex-col gap-2">
+<p class="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider">Principal</p>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">table_chart</span>
+<span class="text-sm font-medium">Planogramas</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary group" href="#">
+<span class="material-symbols-outlined !fill-1">thermometer</span>
+<span class="text-sm font-medium">Mapas de Calor</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">description</span>
+<span class="text-sm font-medium">Relatórios</span>
+</a>
+</div>
+<div class="flex flex-col gap-2">
+<p class="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider">Configurações</p>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">settings</span>
+<span class="text-sm font-medium">Geral</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">group</span>
+<span class="text-sm font-medium">Usuários</span>
+</a>
+</div>
+</div>
+<button class="mt-auto flex items-center justify-center gap-2 w-full py-2.5 rounded-lg border border-border-dark text-slate-400 hover:text-white hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-sm font-medium">Sair</span>
+</button>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col relative overflow-hidden">
+<!-- Breadcrumbs & Filters -->
+<div class="px-6 py-4 flex flex-col gap-4 border-b border-border-dark bg-background-dark z-10">
+<div class="flex items-center justify-between">
+<div>
+<div class="flex items-center gap-2 text-sm text-slate-400 mb-1">
+<a class="hover:text-white" href="#">Análises</a>
+<span>/</span>
+<span class="text-white">Mapa de Calor</span>
+</div>
+<h1 class="text-2xl font-bold text-white tracking-tight">Análise de Ruptura por Posição</h1>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-800 text-slate-500 border border-slate-700 cursor-not-allowed opacity-70" disabled="" title="Feature coming in MVP3">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span class="text-sm font-medium">Exportar Análise</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/20 transition-all">
+<span class="material-symbols-outlined text-[18px]">refresh</span>
+<span class="text-sm font-medium">Atualizar Dados</span>
+</button>
+</div>
+</div>
+<!-- Filters Bar -->
+<div class="flex flex-wrap gap-3">
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+<span class="material-symbols-outlined text-[18px]">store</span>
+</div>
+<select class="pl-9 pr-8 py-2 bg-surface-dark border border-border-dark rounded-lg text-sm text-white focus:ring-primary focus:border-primary appearance-none cursor-pointer hover:border-slate-500 transition-colors min-w-[200px]">
+<option>Loja: Supermercado Central</option>
+<option>Loja: Filial Norte</option>
+<option>Loja: Filial Sul</option>
+</select>
+<div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none text-slate-400">
+<span class="material-symbols-outlined text-[18px]">expand_more</span>
+</div>
+</div>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+<span class="material-symbols-outlined text-[18px]">category</span>
+</div>
+<select class="pl-9 pr-8 py-2 bg-surface-dark border border-border-dark rounded-lg text-sm text-white focus:ring-primary focus:border-primary appearance-none cursor-pointer hover:border-slate-500 transition-colors min-w-[180px]">
+<option>Categoria: Bebidas</option>
+<option>Categoria: Limpeza</option>
+<option>Categoria: Mercearia</option>
+</select>
+<div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none text-slate-400">
+<span class="material-symbols-outlined text-[18px]">expand_more</span>
+</div>
+</div>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+</div>
+<select class="pl-9 pr-8 py-2 bg-surface-dark border border-border-dark rounded-lg text-sm text-white focus:ring-primary focus:border-primary appearance-none cursor-pointer hover:border-slate-500 transition-colors">
+<option>Período: Últimos 30 dias</option>
+<option>Período: Últimos 7 dias</option>
+<option>Período: Ontem</option>
+</select>
+<div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none text-slate-400">
+<span class="material-symbols-outlined text-[18px]">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-1 overflow-hidden">
+<!-- Main Visualization Area (Gondola) -->
+<div class="flex-1 overflow-auto bg-[#0f131a] relative p-8 flex flex-col items-center">
+<!-- Watermark -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10rem] font-black text-slate-800/20 select-none rotate-[-15deg] pointer-events-none z-0">
+                        MVP2
+                    </div>
+<!-- Legend -->
+<div class="absolute top-4 right-4 bg-surface-dark/90 backdrop-blur border border-border-dark rounded-lg p-3 z-10 shadow-lg">
+<p class="text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wider">Índice de Ruptura</p>
+<div class="flex items-center gap-4 text-xs font-medium text-slate-300">
+<div class="flex items-center gap-1.5">
+<div class="size-3 rounded-full bg-heatmap-high shadow-[0_0_8px_rgba(239,68,68,0.6)]"></div>
+<span>Crítico (&gt;15%)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<div class="size-3 rounded-full bg-heatmap-med shadow-[0_0_8px_rgba(234,179,8,0.6)]"></div>
+<span>Alerta (5-15%)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<div class="size-3 rounded-full bg-heatmap-low shadow-[0_0_8px_rgba(34,197,94,0.4)]"></div>
+<span>Normal (&lt;5%)</span>
+</div>
+</div>
+</div>
+<!-- The Gondola Structure -->
+<div class="relative w-full max-w-5xl mx-auto flex flex-col gap-1 z-1">
+<!-- Header of Gondola -->
+<div class="w-full h-12 bg-gradient-to-b from-slate-700 to-slate-800 rounded-t-lg border-x border-t border-slate-600 flex items-center justify-center shadow-lg relative">
+<span class="text-slate-300 text-sm font-bold tracking-widest uppercase opacity-50">Módulo 04 - Refrigerantes 2L</span>
+</div>
+<!-- Shelf 1 (Top) -->
+<div class="relative w-full h-40 bg-[#1e2330] border-x border-slate-700 p-2 flex items-end justify-around gap-2 pb-3">
+<!-- Product Group -->
+<div class="relative w-16 h-32 product-box rounded-sm group cursor-pointer hover:border-slate-400 transition-colors">
+<div class="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full heatmap-overlay filter blur-xl"></div>
+<div class="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-100 transition-opacity">
+<span class="text-[10px] text-white font-bold text-center leading-tight">Cola<br/>Original<br/>2L</span>
+</div>
+</div>
+<div class="relative w-16 h-32 product-box rounded-sm group cursor-pointer hover:border-slate-400 transition-colors">
+<div class="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full heatmap-overlay filter blur-xl opacity-80"></div>
+</div>
+<div class="relative w-16 h-32 product-box rounded-sm group cursor-pointer hover:border-slate-400 transition-colors"></div>
+<div class="relative w-16 h-32 product-box rounded-sm group cursor-pointer hover:border-slate-400 transition-colors">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full heatmap-overlay-med filter blur-lg opacity-60"></div>
+</div>
+<div class="relative w-16 h-32 product-box rounded-sm group cursor-pointer hover:border-slate-400 transition-colors"></div>
+<div class="relative w-16 h-32 product-box rounded-sm group cursor-pointer hover:border-slate-400 transition-colors"></div>
+<!-- Shelf Itself -->
+<div class="absolute bottom-0 left-0 right-0 h-3 shelf-gradient z-20"></div>
+</div>
+<!-- Shelf 2 -->
+<div class="relative w-full h-40 bg-[#1e2330] border-x border-slate-700 p-2 flex items-end justify-around gap-2 pb-3">
+<div class="relative w-16 h-32 product-box rounded-sm group cursor-pointer hover:border-slate-400 transition-colors"></div>
+<div class="relative w-16 h-32 product-box rounded-sm group cursor-pointer hover:border-slate-400 transition-colors">
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 w-32 h-32 rounded-full heatmap-overlay filter blur-2xl opacity-90"></div>
+</div>
+<div class="relative w-16 h-32 product-box rounded-sm group cursor-pointer hover:border-slate-400 transition-colors"></div>
+<div class="relative w-16 h-32 product-box rounded-sm group cursor-pointer hover:border-slate-400 transition-colors"></div>
+<div class="relative w-16 h-32 product-box rounded-sm group cursor-pointer hover:border-slate-400 transition-colors">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full heatmap-overlay-med filter blur-lg opacity-70"></div>
+</div>
+<div class="relative w-16 h-32 product-box rounded-sm group cursor-pointer hover:border-slate-400 transition-colors"></div>
+<div class="absolute bottom-0 left-0 right-0 h-3 shelf-gradient z-20"></div>
+</div>
+<!-- Shelf 3 -->
+<div class="relative w-full h-40 bg-[#1e2330] border-x border-slate-700 p-2 flex items-end justify-around gap-2 pb-3">
+<div class="relative w-16 h-32 product-box rounded-sm group cursor-pointer hover:border-slate-400 transition-colors">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full heatmap-overlay-med filter blur-xl opacity-50"></div>
+</div>
+<div class="relative w-16 h-32 product-box rounded-sm group cursor-pointer hover:border-slate-400 transition-colors"></div>
+<div class="relative w-16 h-32 product-box rounded-sm group cursor-pointer hover:border-slate-400 transition-colors"></div>
+<div class="relative w-16 h-32 product-box rounded-sm group cursor-pointer hover:border-slate-400 transition-colors">
+<div class="absolute -top-12 left-1/2 -translate-x-1/2 w-28 h-28 rounded-full heatmap-overlay filter blur-2xl opacity-100"></div>
+</div>
+<div class="relative w-16 h-32 product-box rounded-sm group cursor-pointer hover:border-slate-400 transition-colors"></div>
+<div class="relative w-16 h-32 product-box rounded-sm group cursor-pointer hover:border-slate-400 transition-colors"></div>
+<div class="absolute bottom-0 left-0 right-0 h-3 shelf-gradient z-20"></div>
+</div>
+<!-- Shelf 4 (Bottom) -->
+<div class="relative w-full h-44 bg-[#1e2330] border-x border-b border-slate-700 rounded-b-lg p-2 flex items-end justify-around gap-2 pb-3 mb-10">
+<div class="relative w-20 h-36 product-box rounded-sm group cursor-pointer hover:border-slate-400 transition-colors"></div>
+<div class="relative w-20 h-36 product-box rounded-sm group cursor-pointer hover:border-slate-400 transition-colors"></div>
+<div class="relative w-20 h-36 product-box rounded-sm group cursor-pointer hover:border-slate-400 transition-colors"></div>
+<div class="relative w-20 h-36 product-box rounded-sm group cursor-pointer hover:border-slate-400 transition-colors"></div>
+<div class="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-b from-slate-600 to-slate-800 rounded-b-md z-20"></div>
+</div>
+<!-- Base -->
+<div class="w-[104%] -ml-[2%] h-4 bg-[#0f131a] border-t border-slate-800"></div>
+</div>
+</div>
+<!-- Right Sidebar: Stats -->
+<aside class="w-80 border-l border-border-dark bg-surface-dark flex flex-col shrink-0">
+<div class="p-4 border-b border-border-dark">
+<h3 class="text-white font-bold text-lg">Ranking de Ruptura</h3>
+<p class="text-slate-400 text-sm">Produtos com maior frequência de falta nesta gôndola.</p>
+</div>
+<div class="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
+<!-- Item 1 -->
+<div class="flex flex-col gap-2 p-3 rounded-lg bg-background-dark border border-border-dark hover:border-slate-600 transition-colors cursor-pointer group">
+<div class="flex justify-between items-start">
+<div class="flex gap-3">
+<div class="size-10 rounded bg-slate-700 flex items-center justify-center shrink-0 text-slate-500">
+<span class="material-symbols-outlined text-[20px]">image_not_supported</span>
+</div>
+<div>
+<p class="text-white text-sm font-medium leading-tight group-hover:text-primary transition-colors">Refrig. Cola Zero 2L</p>
+<p class="text-slate-500 text-xs mt-0.5">SKU: 8839201</p>
+</div>
+</div>
+<span class="text-xs font-bold text-white bg-red-500/20 text-red-400 px-1.5 py-0.5 rounded">#1</span>
+</div>
+<div class="mt-1">
+<div class="flex justify-between text-xs mb-1">
+<span class="text-slate-400">Freq. Ruptura</span>
+<span class="text-red-400 font-bold">22.4%</span>
+</div>
+<div class="w-full bg-slate-700 rounded-full h-1.5 overflow-hidden">
+<div class="bg-red-500 h-1.5 rounded-full" style="width: 85%"></div>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex flex-col gap-2 p-3 rounded-lg bg-background-dark border border-border-dark hover:border-slate-600 transition-colors cursor-pointer group">
+<div class="flex justify-between items-start">
+<div class="flex gap-3">
+<div class="size-10 rounded bg-slate-700 flex items-center justify-center shrink-0 text-slate-500">
+<span class="material-symbols-outlined text-[20px]">image_not_supported</span>
+</div>
+<div>
+<p class="text-white text-sm font-medium leading-tight group-hover:text-primary transition-colors">Suco Laranja 1L</p>
+<p class="text-slate-500 text-xs mt-0.5">SKU: 1209384</p>
+</div>
+</div>
+<span class="text-xs font-bold text-white bg-red-500/20 text-red-400 px-1.5 py-0.5 rounded">#2</span>
+</div>
+<div class="mt-1">
+<div class="flex justify-between text-xs mb-1">
+<span class="text-slate-400">Freq. Ruptura</span>
+<span class="text-red-400 font-bold">18.1%</span>
+</div>
+<div class="w-full bg-slate-700 rounded-full h-1.5 overflow-hidden">
+<div class="bg-red-500 h-1.5 rounded-full" style="width: 65%"></div>
+</div>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="flex flex-col gap-2 p-3 rounded-lg bg-background-dark border border-border-dark hover:border-slate-600 transition-colors cursor-pointer group">
+<div class="flex justify-between items-start">
+<div class="flex gap-3">
+<div class="size-10 rounded bg-slate-700 flex items-center justify-center shrink-0 text-slate-500">
+<span class="material-symbols-outlined text-[20px]">image_not_supported</span>
+</div>
+<div>
+<p class="text-white text-sm font-medium leading-tight group-hover:text-primary transition-colors">Água Tônica Lata</p>
+<p class="text-slate-500 text-xs mt-0.5">SKU: 5543210</p>
+</div>
+</div>
+<span class="text-xs font-bold text-white bg-yellow-500/20 text-yellow-400 px-1.5 py-0.5 rounded">#3</span>
+</div>
+<div class="mt-1">
+<div class="flex justify-between text-xs mb-1">
+<span class="text-slate-400">Freq. Ruptura</span>
+<span class="text-yellow-400 font-bold">12.5%</span>
+</div>
+<div class="w-full bg-slate-700 rounded-full h-1.5 overflow-hidden">
+<div class="bg-yellow-500 h-1.5 rounded-full" style="width: 45%"></div>
+</div>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="flex flex-col gap-2 p-3 rounded-lg bg-background-dark border border-border-dark hover:border-slate-600 transition-colors cursor-pointer group">
+<div class="flex justify-between items-start">
+<div class="flex gap-3">
+<div class="size-10 rounded bg-slate-700 flex items-center justify-center shrink-0 text-slate-500">
+<span class="material-symbols-outlined text-[20px]">image_not_supported</span>
+</div>
+<div>
+<p class="text-white text-sm font-medium leading-tight group-hover:text-primary transition-colors">Refrig. Limão 2L</p>
+<p class="text-slate-500 text-xs mt-0.5">SKU: 3349911</p>
+</div>
+</div>
+<span class="text-xs font-bold text-white bg-yellow-500/20 text-yellow-400 px-1.5 py-0.5 rounded">#4</span>
+</div>
+<div class="mt-1">
+<div class="flex justify-between text-xs mb-1">
+<span class="text-slate-400">Freq. Ruptura</span>
+<span class="text-yellow-400 font-bold">9.2%</span>
+</div>
+<div class="w-full bg-slate-700 rounded-full h-1.5 overflow-hidden">
+<div class="bg-yellow-500 h-1.5 rounded-full" style="width: 35%"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-border-dark bg-background-dark/50">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary text-[20px]">info</span>
+<p class="text-xs font-semibold text-slate-300">Insight Rápido</p>
+</div>
+<p class="text-xs text-slate-400 leading-relaxed">
+                            A prateleira superior (Nível dos Olhos) apresenta 40% mais ruptura que a média da categoria aos fins de semana.
+                        </p>
+<button class="mt-3 w-full py-2 text-xs font-medium text-primary hover:text-white hover:bg-primary rounded border border-primary/30 hover:border-primary transition-all">
+                            Ver Detalhes do Insight
+                        </button>
+</div>
+</aside>
+</div>
+</main>
+</div>
+</div>
+</body></html>

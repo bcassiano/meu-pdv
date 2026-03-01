@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Importação de PDVs em Lote</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f8f9fc",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light text-slate-900 font-display antialiased overflow-x-hidden">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Header/Nav -->
+<div class="w-full bg-white border-b border-slate-200 sticky top-0 z-50">
+<div class="px-40 flex justify-center">
+<div class="layout-content-container flex flex-col max-w-[1200px] flex-1">
+<header class="flex items-center justify-between whitespace-nowrap px-4 py-3">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-slate-900">
+<div class="size-8 rounded bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-xl">admin_panel_settings</span>
+</div>
+<h2 class="text-slate-900 text-lg font-bold leading-tight tracking-[-0.015em]">Admin Console</h2>
+</div>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-slate-600 hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Dashboard</a>
+<a class="text-slate-600 hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">PDVs</a>
+<a class="text-primary text-sm font-bold leading-normal transition-colors" href="#">Importação</a>
+<a class="text-slate-600 hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Equipe</a>
+<a class="text-slate-600 hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Relatórios</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<label class="hidden sm:flex flex-col min-w-40 h-9 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full bg-slate-100 focus-within:ring-2 focus-within:ring-primary/20 transition-all">
+<div class="text-slate-500 flex items-center justify-center pl-3">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg bg-transparent text-slate-900 focus:outline-0 border-none placeholder:text-slate-500 px-3 text-sm font-normal leading-normal" placeholder="Buscar..." value=""/>
+</div>
+</label>
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-9 ring-2 ring-white shadow-sm cursor-pointer" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDIRVPmQAyemPAecqihFinYMxjpDYWb6Nq57l38by2kCyyj7j5SomFCJotu1i2s81h6Gt9YC0LenGzHtApj6e2nhpVWr9NsJz4zUnF8meHQAJl9L1mh5010K_eLHW3xWZsAdB86wTM3Gld7wS62AfnSgB5VxDNhtHemQVlCmdK81xM0H3cF-j06YnEIKzpX1f6dePWGVYbBY_ogQ63sCm0xhqHSqe7vtvaFDxjVZNxUCGgni3J6G0vNS58LEzJpjReroAAsiQor40Q");'></div>
+<div class="absolute bottom-0 right-0 size-2.5 bg-green-500 rounded-full border-2 border-white"></div>
+</div>
+</div>
+</header>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<div class="px-4 md:px-40 flex flex-1 justify-center py-8">
+<div class="layout-content-container flex flex-col max-w-[1200px] flex-1 gap-8">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-200 pb-6">
+<div class="flex flex-col gap-1">
+<h1 class="text-slate-900 text-3xl font-black leading-tight tracking-tight">Importação em Lote</h1>
+<p class="text-slate-500 text-base font-normal">Cadastre múltiplos Pontos de Venda (PDVs) simultaneamente via planilha.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 cursor-pointer justify-center rounded-lg h-10 px-4 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-sm font-bold shadow-sm transition-all">
+<span class="material-symbols-outlined text-[20px]">download</span>
+<span class="truncate">Baixar Modelo</span>
+</button>
+<button class="flex items-center gap-2 cursor-pointer justify-center rounded-lg h-10 px-6 bg-primary hover:bg-blue-700 text-white text-sm font-bold shadow-md shadow-blue-500/20 transition-all">
+<span class="truncate">Importar Dados</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Left Column: Upload & Mapping -->
+<div class="lg:col-span-2 flex flex-col gap-8">
+<!-- Upload Area -->
+<section class="flex flex-col gap-4">
+<h3 class="text-slate-900 text-lg font-bold flex items-center gap-2">
+<span class="flex items-center justify-center size-6 rounded-full bg-primary text-white text-xs font-bold">1</span>
+                                    Upload de Arquivo
+                                </h3>
+<div class="group relative flex flex-col items-center justify-center gap-4 rounded-xl border-2 border-dashed border-slate-300 hover:border-primary/50 bg-slate-50 hover:bg-blue-50/30 px-6 py-12 transition-all cursor-pointer">
+<div class="size-16 rounded-full bg-blue-100 flex items-center justify-center text-primary mb-2 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[32px]">cloud_upload</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-center">
+<p class="text-slate-900 text-lg font-semibold">Arraste e solte sua planilha aqui</p>
+<p class="text-slate-500 text-sm">ou <span class="text-primary font-bold hover:underline">clique para selecionar</span> do seu computador</p>
+</div>
+<p class="text-slate-400 text-xs mt-2">Suporta .CSV e .XLSX até 10MB</p>
+</div>
+</section>
+<!-- Column Mapping -->
+<section class="flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h3 class="text-slate-900 text-lg font-bold flex items-center gap-2">
+<span class="flex items-center justify-center size-6 rounded-full bg-primary text-white text-xs font-bold">2</span>
+                                        Mapeamento de Colunas
+                                    
+</h3>
+<span class="text-xs font-medium px-2 py-1 bg-green-100 text-green-700 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                                        Auto-detectado
+                                    </span>
+</div>
+<div class="rounded-xl border border-slate-200 bg-white overflow-hidden shadow-sm">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 border-b border-slate-200">
+<th class="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider w-1/3">Coluna do Arquivo</th>
+<th class="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider w-1/3">Campo do Sistema</th>
+<th class="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider w-1/3 text-right">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4 text-sm font-medium text-slate-900 flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-[18px]">title</span>
+                                                    Nome Fantasia
+                                                </td>
+<td class="px-6 py-4">
+<div class="relative">
+<select class="block w-full rounded-md border-slate-300 py-2 pl-3 pr-10 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm shadow-sm">
+<option selected="">Nome do PDV</option>
+<option>Razão Social</option>
+<option>CNPJ</option>
+</select>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Mapeado</span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4 text-sm font-medium text-slate-900 flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-[18px]">badge</span>
+                                                    CNPJ
+                                                </td>
+<td class="px-6 py-4">
+<div class="relative">
+<select class="block w-full rounded-md border-slate-300 py-2 pl-3 pr-10 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm shadow-sm">
+<option selected="">CNPJ</option>
+<option>Inscrição Estadual</option>
+</select>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Mapeado</span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4 text-sm font-medium text-slate-900 flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-[18px]">location_on</span>
+                                                    Endereço
+                                                </td>
+<td class="px-6 py-4">
+<div class="relative">
+<select class="block w-full rounded-md border-slate-300 py-2 pl-3 pr-10 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm shadow-sm">
+<option selected="">Endereço Completo</option>
+<option>Logradouro</option>
+<option>CEP</option>
+</select>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Mapeado</span>
+</td>
+</tr>
+<tr class="bg-red-50/50 hover:bg-red-50 transition-colors">
+<td class="px-6 py-4 text-sm font-medium text-slate-900 flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-[18px]">call</span>
+                                                    Telefone Contato
+                                                </td>
+<td class="px-6 py-4">
+<div class="relative">
+<select class="block w-full rounded-md border-red-300 text-red-900 py-2 pl-3 pr-10 text-sm focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500 sm:text-sm shadow-sm bg-white">
+<option disabled="" selected="">Selecione um campo...</option>
+<option>Telefone Principal</option>
+<option>Celular</option>
+</select>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center rounded-full bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/20">Pendente</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+<!-- Right Column: Error Preview -->
+<div class="lg:col-span-1 flex flex-col gap-6">
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 flex flex-col h-full overflow-hidden">
+<div class="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+<h3 class="text-slate-900 font-bold text-base flex items-center gap-2">
+<span class="material-symbols-outlined text-amber-500">warning</span>
+                                        Pré-visualização de Erros
+                                    </h3>
+<span class="bg-red-100 text-red-700 text-xs font-bold px-2 py-1 rounded-full">3 erros</span>
+</div>
+<div class="p-4 flex flex-col gap-3 flex-1 overflow-y-auto max-h-[500px]">
+<!-- Error Item -->
+<div class="p-3 rounded-lg border border-red-200 bg-red-50 flex gap-3 items-start">
+<div class="mt-0.5 min-w-4 text-red-600">
+<span class="material-symbols-outlined text-[18px]">error</span>
+</div>
+<div class="flex flex-col gap-1 w-full">
+<div class="flex justify-between w-full">
+<p class="text-xs font-bold text-red-800">Linha 4</p>
+<span class="text-[10px] text-red-600 font-medium bg-red-100 px-1.5 py-0.5 rounded">CNPJ Inválido</span>
+</div>
+<p class="text-xs text-red-700 leading-snug">O valor '123.456.789-00' não corresponde a um formato de CNPJ válido.</p>
+</div>
+</div>
+<!-- Error Item -->
+<div class="p-3 rounded-lg border border-amber-200 bg-amber-50 flex gap-3 items-start">
+<div class="mt-0.5 min-w-4 text-amber-600">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+</div>
+<div class="flex flex-col gap-1 w-full">
+<div class="flex justify-between w-full">
+<p class="text-xs font-bold text-amber-800">Linha 12</p>
+<span class="text-[10px] text-amber-600 font-medium bg-amber-100 px-1.5 py-0.5 rounded">Campo Vazio</span>
+</div>
+<p class="text-xs text-amber-700 leading-snug">O campo obrigatório 'Endereço' está em branco.</p>
+</div>
+</div>
+<!-- Error Item -->
+<div class="p-3 rounded-lg border border-red-200 bg-red-50 flex gap-3 items-start">
+<div class="mt-0.5 min-w-4 text-red-600">
+<span class="material-symbols-outlined text-[18px]">error</span>
+</div>
+<div class="flex flex-col gap-1 w-full">
+<div class="flex justify-between w-full">
+<p class="text-xs font-bold text-red-800">Linha 28</p>
+<span class="text-[10px] text-red-600 font-medium bg-red-100 px-1.5 py-0.5 rounded">Duplicidade</span>
+</div>
+<p class="text-xs text-red-700 leading-snug">CNPJ já cadastrado no sistema para outro PDV.</p>
+</div>
+</div>
+</div>
+<div class="p-4 bg-slate-50 border-t border-slate-100 text-center">
+<p class="text-xs text-slate-500">Corrija os erros na planilha e faça o upload novamente.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="flex items-center justify-end pt-6 border-t border-slate-200 gap-4">
+<button class="text-slate-600 text-sm font-semibold px-4 py-2 hover:bg-slate-100 rounded-lg transition-colors">Cancelar</button>
+<button class="flex items-center gap-2 cursor-pointer justify-center rounded-lg h-10 px-6 bg-primary hover:bg-blue-700 text-white text-sm font-bold shadow-md shadow-blue-500/20 transition-all opacity-50 cursor-not-allowed" disabled="">
+<span class="truncate">Finalizar Importação</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

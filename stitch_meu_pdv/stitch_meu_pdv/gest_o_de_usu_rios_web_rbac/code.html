@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gestão de Usuários Web (RBAC)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#3b82f6", // Vibrante blue requested
+                        secondary: "#64748b",
+                        "background-light": "#f8fafc",
+                        "background-dark": "#0f172a", // Darker slate
+                        "sidebar-bg": "#1e293b", // Requested Slate Sidebar
+                        "card-bg": "#1e293b",
+                        "border-color": "#334155",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display antialiased overflow-hidden">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 flex-shrink-0 flex flex-col justify-between bg-sidebar-bg border-r border-border-color transition-all duration-300">
+<div class="flex flex-col h-full">
+<!-- Header -->
+<div class="h-16 flex items-center gap-3 px-6 border-b border-border-color">
+<div class="h-8 w-8 rounded bg-gradient-to-tr from-primary to-blue-400 flex items-center justify-center text-white font-bold text-lg">
+                        R
+                    </div>
+<div>
+<h1 class="text-slate-100 text-sm font-bold leading-none">RBAC Admin</h1>
+<p class="text-slate-400 text-xs mt-0.5">Gestão de Acesso</p>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex-1 flex flex-col gap-1 p-3 overflow-y-auto">
+<p class="px-3 pt-4 pb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Principal</p>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-700/50 group transition-colors" href="#">
+<span class="material-symbols-outlined text-xl group-hover:text-primary transition-colors">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary group transition-colors border border-primary/20" href="#">
+<span class="material-symbols-outlined text-xl">group</span>
+<span class="text-sm font-medium">Usuários</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-700/50 group transition-colors" href="#">
+<span class="material-symbols-outlined text-xl group-hover:text-primary transition-colors">groups</span>
+<span class="text-sm font-medium">Equipes</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-700/50 group transition-colors" href="#">
+<span class="material-symbols-outlined text-xl group-hover:text-primary transition-colors">shield_person</span>
+<span class="text-sm font-medium">Permissões</span>
+</a>
+<p class="px-3 pt-6 pb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Sistema</p>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-700/50 group transition-colors" href="#">
+<span class="material-symbols-outlined text-xl group-hover:text-primary transition-colors">description</span>
+<span class="text-sm font-medium">Relatórios</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-700/50 group transition-colors" href="#">
+<span class="material-symbols-outlined text-xl group-hover:text-primary transition-colors">settings</span>
+<span class="text-sm font-medium">Configurações</span>
+</a>
+</nav>
+<!-- User Profile -->
+<div class="p-4 border-t border-border-color">
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-700/50 cursor-pointer transition-colors">
+<div class="h-9 w-9 rounded-full bg-cover bg-center ring-2 ring-slate-700" data-alt="Admin user avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD8KHTYGHSR00FJR9mR1PzOyoCbYrpuzfLIbVTy9TqD4HAxI7iDcHjqrrNFSBGABeJDFp-IvYIAW61FFS77nV5xqdCavf99pfbINnOczEXHBqRDM3T8A6uPPU9aBnE7UTHLE37L88fPCsxjnxf1NubTQ-Wzc5mDG-3PV_Lat3EH4SjbQV75AIvr3v0rSzbKR8Bv7lX-a9dCQLeA0lrNhl-igBCLXgMECzuylJy_vMu1HwYZQvVFjAn3m-egNx5ozIZIwHZaRTl-se0');"></div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium text-slate-200 truncate">Admin Silva</p>
+<p class="text-xs text-slate-400 truncate">admin@rbac.com</p>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col min-w-0 overflow-hidden bg-background-light dark:bg-background-dark">
+<!-- Top Bar -->
+<header class="h-16 flex items-center justify-between px-8 bg-sidebar-bg/50 backdrop-blur-md border-b border-border-color z-10">
+<div class="flex items-center gap-4 text-slate-400">
+<span class="material-symbols-outlined cursor-pointer hover:text-slate-100">menu</span>
+<div class="h-4 w-px bg-slate-700"></div>
+<span class="text-sm font-medium">Usuários / Lista Geral</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-400 hover:text-slate-100 rounded-full hover:bg-slate-700/50 transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-red-500 border border-sidebar-bg"></span>
+</button>
+<button class="p-2 text-slate-400 hover:text-slate-100 rounded-full hover:bg-slate-700/50 transition-colors">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-8">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
+<div>
+<h2 class="text-3xl font-bold text-slate-100 tracking-tight">Gestão de Usuários</h2>
+<p class="text-slate-400 mt-1">Gerencie acessos, perfis e vincule membros a equipes.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-medium rounded-lg border border-slate-700 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">file_download</span>
+                            Exportar CSV
+                        </button>
+<button class="px-5 py-2.5 bg-primary hover:bg-blue-600 text-white text-sm font-bold rounded-lg shadow-lg shadow-blue-500/20 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                            ADICIONAR NOVO USUÁRIO
+                        </button>
+</div>
+</div>
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+<div class="bg-sidebar-bg p-5 rounded-xl border border-border-color">
+<div class="flex justify-between items-start mb-2">
+<div class="p-2 bg-blue-500/10 rounded-lg">
+<span class="material-symbols-outlined text-blue-400">group</span>
+</div>
+<span class="bg-green-500/10 text-green-400 text-xs font-bold px-2 py-1 rounded">+5%</span>
+</div>
+<h3 class="text-slate-400 text-sm font-medium">Total de Usuários</h3>
+<p class="text-2xl font-bold text-slate-100 mt-1">1,245</p>
+</div>
+<div class="bg-sidebar-bg p-5 rounded-xl border border-border-color">
+<div class="flex justify-between items-start mb-2">
+<div class="p-2 bg-emerald-500/10 rounded-lg">
+<span class="material-symbols-outlined text-emerald-400">check_circle</span>
+</div>
+<span class="bg-emerald-500/10 text-emerald-400 text-xs font-bold px-2 py-1 rounded">+2%</span>
+</div>
+<h3 class="text-slate-400 text-sm font-medium">Usuários Ativos</h3>
+<p class="text-2xl font-bold text-slate-100 mt-1">1,100</p>
+</div>
+<div class="bg-sidebar-bg p-5 rounded-xl border border-border-color">
+<div class="flex justify-between items-start mb-2">
+<div class="p-2 bg-purple-500/10 rounded-lg">
+<span class="material-symbols-outlined text-purple-400">admin_panel_settings</span>
+</div>
+<span class="bg-slate-700/50 text-slate-400 text-xs font-bold px-2 py-1 rounded">0%</span>
+</div>
+<h3 class="text-slate-400 text-sm font-medium">Administradores</h3>
+<p class="text-2xl font-bold text-slate-100 mt-1">45</p>
+</div>
+<div class="bg-sidebar-bg p-5 rounded-xl border border-border-color">
+<div class="flex justify-between items-start mb-2">
+<div class="p-2 bg-orange-500/10 rounded-lg">
+<span class="material-symbols-outlined text-orange-400">block</span>
+</div>
+<span class="bg-orange-500/10 text-orange-400 text-xs font-bold px-2 py-1 rounded">-1%</span>
+</div>
+<h3 class="text-slate-400 text-sm font-medium">Inativos</h3>
+<p class="text-2xl font-bold text-slate-100 mt-1">145</p>
+</div>
+</div>
+<!-- Filters & Search -->
+<div class="flex flex-col lg:flex-row gap-4 mb-6">
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3 top-3 text-slate-500">search</span>
+<input class="w-full bg-sidebar-bg border border-border-color text-slate-200 text-sm rounded-lg pl-10 pr-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-slate-600" placeholder="Buscar por nome, e-mail ou ID..." type="text"/>
+</div>
+<div class="flex gap-4">
+<div class="relative min-w-[180px]">
+<select class="w-full appearance-none bg-sidebar-bg border border-border-color text-slate-200 text-sm rounded-lg pl-4 pr-10 py-2.5 focus:ring-2 focus:ring-primary focus:border-transparent outline-none cursor-pointer">
+<option>Todos os Perfis</option>
+<option>Administrador</option>
+<option>Gerente</option>
+<option>Coordenador</option>
+<option>Promotor</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 text-slate-500 pointer-events-none text-lg">expand_more</span>
+</div>
+<div class="relative min-w-[180px]">
+<select class="w-full appearance-none bg-sidebar-bg border border-border-color text-slate-200 text-sm rounded-lg pl-4 pr-10 py-2.5 focus:ring-2 focus:ring-primary focus:border-transparent outline-none cursor-pointer">
+<option>Status: Todos</option>
+<option>Ativo</option>
+<option>Inativo</option>
+<option>Pendente</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 text-slate-500 pointer-events-none text-lg">expand_more</span>
+</div>
+<button class="px-3 py-2 bg-sidebar-bg hover:bg-slate-800 text-slate-400 rounded-lg border border-border-color transition-colors" title="Limpar Filtros">
+<span class="material-symbols-outlined text-[20px]">filter_alt_off</span>
+</button>
+</div>
+</div>
+<!-- Users Table -->
+<div class="bg-sidebar-bg border border-border-color rounded-xl overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-800/50 border-b border-border-color">
+<th class="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider w-12">
+<input class="rounded border-slate-600 bg-slate-700 text-primary focus:ring-0 focus:ring-offset-0 h-4 w-4" type="checkbox"/>
+</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Usuário</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Perfil</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Equipe</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Status</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider text-right">Ações</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-color">
+<!-- User Row 1 -->
+<tr class="group hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4">
+<input class="rounded border-slate-600 bg-slate-700 text-primary focus:ring-0 focus:ring-offset-0 h-4 w-4" type="checkbox"/>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-full bg-slate-700 flex items-center justify-center text-slate-300 font-medium text-sm">
+                                                JS
+                                            </div>
+<div>
+<p class="text-sm font-medium text-slate-200">João Silva</p>
+<p class="text-xs text-slate-500">joao.silva@empresa.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                                            Gerente
+                                        </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 text-slate-300 text-sm">
+<span class="material-symbols-outlined text-[18px] text-slate-500">store</span>
+                                            Vendas Norte
+                                        </div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="h-2 w-2 rounded-full bg-emerald-500"></div>
+<span class="text-sm text-emerald-400 font-medium">Ativo</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-slate-400 hover:text-primary hover:bg-primary/10 rounded transition-colors" title="Editar">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-orange-400 hover:bg-orange-500/10 rounded transition-colors" title="Resetar Senha">
+<span class="material-symbols-outlined text-[20px]">lock_reset</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded transition-colors" title="Excluir">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- User Row 2 -->
+<tr class="group hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4">
+<input class="rounded border-slate-600 bg-slate-700 text-primary focus:ring-0 focus:ring-offset-0 h-4 w-4" type="checkbox"/>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<img alt="Avatar Maria" class="h-10 w-10 rounded-full object-cover" data-alt="User avatar female" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhRW7t-_7mS-Uzw5zWBGIPmJi0Xsxr8hdaIZclWzRFY7Qhk1byvnp_EO2KDQyaQ8oydQKmVipiPzyxWxVM2AL3PmhPF_lcyGBH_ltxMTFpOxqlEQuxnt_NVwHJriDFPOHnpUxF2ZP-b7FTUR09_kzbUDZCUluL4h3KynVdAGGwz-Qf2qu77C3GvhvZ59rs2HYsFJpSTe9tUzCm-xXrykcTMFpm9YEczSvUBABR1CtPPSbaD0Gl6N76B2tDsy3v4LX_Nj_jdL1qUcg"/>
+<div>
+<p class="text-sm font-medium text-slate-200">Maria Oliveira</p>
+<p class="text-xs text-slate-500">maria.oliveira@empresa.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                                            Coordenador
+                                        </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 text-slate-300 text-sm">
+<span class="material-symbols-outlined text-[18px] text-slate-500">hub</span>
+                                            Operações Sul
+                                        </div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="h-2 w-2 rounded-full bg-emerald-500"></div>
+<span class="text-sm text-emerald-400 font-medium">Ativo</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-slate-400 hover:text-primary hover:bg-primary/10 rounded transition-colors" title="Editar">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-orange-400 hover:bg-orange-500/10 rounded transition-colors" title="Resetar Senha">
+<span class="material-symbols-outlined text-[20px]">lock_reset</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded transition-colors" title="Excluir">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- User Row 3 -->
+<tr class="group hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4">
+<input class="rounded border-slate-600 bg-slate-700 text-primary focus:ring-0 focus:ring-offset-0 h-4 w-4" type="checkbox"/>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-full bg-slate-700 flex items-center justify-center text-slate-300 font-medium text-sm">
+                                                CS
+                                            </div>
+<div>
+<p class="text-sm font-medium text-slate-200">Carlos Santos</p>
+<p class="text-xs text-slate-500">carlos.santos@empresa.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-700 text-slate-300 border border-slate-600">
+                                            Promotor
+                                        </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 text-slate-300 text-sm">
+<span class="material-symbols-outlined text-[18px] text-slate-500">storefront</span>
+                                            PDV Centro
+                                        </div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="h-2 w-2 rounded-full bg-red-500"></div>
+<span class="text-sm text-red-400 font-medium">Inativo</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-slate-400 hover:text-primary hover:bg-primary/10 rounded transition-colors" title="Editar">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-orange-400 hover:bg-orange-500/10 rounded transition-colors" title="Resetar Senha">
+<span class="material-symbols-outlined text-[20px]">lock_reset</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded transition-colors" title="Excluir">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- User Row 4 -->
+<tr class="group hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4">
+<input class="rounded border-slate-600 bg-slate-700 text-primary focus:ring-0 focus:ring-offset-0 h-4 w-4" type="checkbox"/>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<img alt="Avatar Roberto" class="h-10 w-10 rounded-full object-cover" data-alt="User avatar male" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlWLamTGp9T-dN9b709ZHU2k_ud4_roOiENI7LeCmCKeg51s7YrDsnR15Z5lgtrggUvzH8A3ni8Fp6msYVWtvgAbo1zrISsuTv_l-A5AJNvK3Kx2ABdQTdh1eNj-5HEAcXT-0hyS8J7Tf54bGe3G_AH0Sb0l4SVKK_i6RydPOOSEOpXP2E6J5o67s9K8L4_t0u4zKj7RBofQ8lWYOFFSq0bVE4-xE1pYu_B49Xfx3ktaX91ME85DfPEk-ZRHp3O85rjYbMkFTRwQc"/>
+<div>
+<p class="text-sm font-medium text-slate-200">Roberto Alves</p>
+<p class="text-xs text-slate-500">roberto.alves@empresa.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-700 text-slate-300 border border-slate-600">
+                                            Promotor
+                                        </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 text-slate-300 text-sm">
+<span class="material-symbols-outlined text-[18px] text-slate-500">storefront</span>
+                                            PDV Shopping
+                                        </div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="h-2 w-2 rounded-full bg-emerald-500"></div>
+<span class="text-sm text-emerald-400 font-medium">Ativo</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-slate-400 hover:text-primary hover:bg-primary/10 rounded transition-colors" title="Editar">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-orange-400 hover:bg-orange-500/10 rounded transition-colors" title="Resetar Senha">
+<span class="material-symbols-outlined text-[20px]">lock_reset</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded transition-colors" title="Excluir">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- User Row 5 -->
+<tr class="group hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4">
+<input class="rounded border-slate-600 bg-slate-700 text-primary focus:ring-0 focus:ring-offset-0 h-4 w-4" type="checkbox"/>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-full bg-slate-700 flex items-center justify-center text-slate-300 font-medium text-sm">
+                                                AL
+                                            </div>
+<div>
+<p class="text-sm font-medium text-slate-200">Ana Lima</p>
+<p class="text-xs text-slate-500">ana.lima@empresa.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                                            Coordenador
+                                        </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 text-slate-300 text-sm">
+<span class="material-symbols-outlined text-[18px] text-slate-500">hub</span>
+                                            Operações SP
+                                        </div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="h-2 w-2 rounded-full bg-yellow-500"></div>
+<span class="text-sm text-yellow-400 font-medium">Pendente</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-slate-400 hover:text-primary hover:bg-primary/10 rounded transition-colors" title="Editar">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-orange-400 hover:bg-orange-500/10 rounded transition-colors" title="Resetar Senha">
+<span class="material-symbols-outlined text-[20px]">lock_reset</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded transition-colors" title="Excluir">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 border-t border-border-color flex items-center justify-between">
+<p class="text-sm text-slate-400">
+                            Mostrando <span class="font-medium text-slate-200">1</span> a <span class="font-medium text-slate-200">5</span> de <span class="font-medium text-slate-200">1245</span> resultados
+                        </p>
+<div class="flex gap-2">
+<button class="px-3 py-1 text-sm rounded border border-border-color text-slate-400 hover:bg-slate-700 disabled:opacity-50">Anterior</button>
+<button class="px-3 py-1 text-sm rounded border border-primary bg-primary text-white">1</button>
+<button class="px-3 py-1 text-sm rounded border border-border-color text-slate-400 hover:bg-slate-700">2</button>
+<button class="px-3 py-1 text-sm rounded border border-border-color text-slate-400 hover:bg-slate-700">3</button>
+<span class="text-slate-500 self-end px-1">...</span>
+<button class="px-3 py-1 text-sm rounded border border-border-color text-slate-400 hover:bg-slate-700">Proximo</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

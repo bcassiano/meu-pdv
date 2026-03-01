@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Simulador de Eficiência de Rotas MVP2</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#1c2433",
+                        "border-dark": "#2a3649",
+                        "text-secondary": "#94a3b8",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for better aesthetic in dark mode */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101622; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a3649; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b4d66; 
+        }
+        
+        .watermark {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            font-size: 5rem;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.03);
+            pointer-events: none;
+            z-index: 0;
+            transform: rotate(-15deg);
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased min-h-screen flex flex-col overflow-x-hidden">
+<!-- Watermark -->
+<div class="watermark">MVP2 - PLANEJADO</div>
+<div class="flex h-full grow flex-col relative z-10">
+<!-- Main Container centering -->
+<div class="w-full flex justify-center">
+<div class="flex flex-col w-full max-w-[1440px]">
+<!-- Header -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-border-dark px-6 py-4 bg-white dark:bg-surface-dark sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-slate-900 dark:text-white">
+<div class="p-2 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">Simulador de Eficiência</h2>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-text-secondary hover:text-primary text-sm font-medium transition-colors" href="#">Dashboard</a>
+<a class="text-white bg-primary/20 px-3 py-1 rounded-full text-sm font-medium" href="#">Simulações</a>
+<a class="text-text-secondary hover:text-primary text-sm font-medium transition-colors" href="#">Relatórios</a>
+<a class="text-text-secondary hover:text-primary text-sm font-medium transition-colors" href="#">Configurações</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-text-secondary text-[20px]">search</span>
+<input class="pl-10 pr-4 py-2 bg-slate-100 dark:bg-[#111722] border border-transparent focus:border-primary rounded-lg text-sm text-slate-900 dark:text-white placeholder-text-secondary w-64 focus:ring-0 transition-all" placeholder="Buscar simulação..." type="text"/>
+</div>
+<button class="relative p-2 text-text-secondary hover:text-white transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full"></span>
+</button>
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-9 w-9 border-2 border-primary/30" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAgBF49K9nVEWGeC7dYbfKEoeTsdgC3vEPhEfxF14qagmamDysRVEBIGkJabw9qqtqj25H6JKTk8qVbQi6r4yfCRQdwmojfXqXDcJ1H0nZvIPVLGPYaOzVvPD6UEbgaY3MMok1nLq8iTxJeDnhXgUOKviChFYzxkUylBjgjDEqm_eXb6WiukrJZUsMRTZpbZdsyFgjd_7Bx6Ve8JkZ2TFle9lqvbVVZMw7v3_RlhUa0goYAVkjYzn_K2ZZQsaXLejRafD_m136baKY");'></div>
+</div>
+</header>
+<!-- Breadcrumbs & Title -->
+<div class="px-6 py-6 md:px-10">
+<div class="flex items-center gap-2 mb-4 text-sm">
+<a class="text-text-secondary hover:text-white" href="#">Simulações</a>
+<span class="text-text-secondary">/</span>
+<span class="text-primary font-medium">Cobertura de Rotas</span>
+</div>
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+<div class="flex flex-col gap-1">
+<h1 class="text-3xl md:text-4xl font-black tracking-tight text-slate-900 dark:text-white">Simulação de Cobertura de Rotas</h1>
+<p class="text-text-secondary text-base">Análise comparativa de eficiência e economia projetada - <span class="text-primary font-bold">MVP2</span></p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-surface-dark border border-border-dark rounded-lg text-white hover:bg-border-dark transition-colors text-sm font-medium">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                                Exportar PDF
+                            </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-blue-700 text-white rounded-lg shadow-lg shadow-primary/20 transition-colors text-sm font-medium">
+<span class="material-symbols-outlined text-[18px]">play_arrow</span>
+                                Nova Simulação
+                            </button>
+</div>
+</div>
+</div>
+<!-- KPI Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-6 md:px-10 mb-8">
+<!-- Card 1 -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-6 border border-slate-200 dark:border-border-dark shadow-sm hover:border-primary/50 transition-colors group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-green-500/10 rounded-lg text-green-500">
+<span class="material-symbols-outlined">attach_money</span>
+</div>
+<span class="flex items-center text-xs font-bold text-green-500 bg-green-500/10 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[14px] mr-1">trending_up</span>
+                                +12%
+                            </span>
+</div>
+<p class="text-text-secondary text-sm font-medium mb-1">Economia Estimada (Mensal)</p>
+<p class="text-slate-900 dark:text-white text-3xl font-bold tracking-tight">R$ 15.400</p>
+</div>
+<!-- Card 2 -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-6 border border-slate-200 dark:border-border-dark shadow-sm hover:border-primary/50 transition-colors group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined">route</span>
+</div>
+<span class="flex items-center text-xs font-bold text-green-500 bg-green-500/10 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[14px] mr-1">arrow_downward</span>
+                                -22%
+                            </span>
+</div>
+<p class="text-text-secondary text-sm font-medium mb-1">Redução de KM</p>
+<p class="text-slate-900 dark:text-white text-3xl font-bold tracking-tight">12.5k <span class="text-lg text-text-secondary font-normal">km</span></p>
+</div>
+<!-- Card 3 -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-6 border border-slate-200 dark:border-border-dark shadow-sm hover:border-primary/50 transition-colors group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-orange-500/10 rounded-lg text-orange-500">
+<span class="material-symbols-outlined">schedule</span>
+</div>
+<span class="flex items-center text-xs font-bold text-green-500 bg-green-500/10 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[14px] mr-1">arrow_downward</span>
+                                -15%
+                            </span>
+</div>
+<p class="text-text-secondary text-sm font-medium mb-1">Horas Poupadas</p>
+<p class="text-slate-900 dark:text-white text-3xl font-bold tracking-tight">180h</p>
+</div>
+<!-- Card 4 -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-6 border border-slate-200 dark:border-border-dark shadow-sm hover:border-primary/50 transition-colors group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-purple-500/10 rounded-lg text-purple-500">
+<span class="material-symbols-outlined">storefront</span>
+</div>
+<span class="flex items-center text-xs font-bold text-green-500 bg-green-500/10 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[14px] mr-1">trending_up</span>
+                                +8%
+                            </span>
+</div>
+<p class="text-text-secondary text-sm font-medium mb-1">Aumento de Visitas</p>
+<p class="text-slate-900 dark:text-white text-3xl font-bold tracking-tight">+15%</p>
+</div>
+</div>
+<!-- Charts Section -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 px-6 md:px-10 mb-8">
+<!-- Chart 1: KM Comparison -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-border-dark p-6 flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Rota Atual vs. Rota Inteligente (KM)</h3>
+<p class="text-sm text-text-secondary">Comparativo semanal de quilometragem rodada</p>
+</div>
+<div class="flex items-center gap-2 text-sm bg-primary/10 text-primary px-3 py-1 rounded-lg">
+<span class="material-symbols-outlined text-[16px]">info</span>
+<span>-15% Total</span>
+</div>
+</div>
+<div class="flex-1 min-h-[240px] flex items-end justify-between gap-4 px-2">
+<!-- Bar Group Monday -->
+<div class="flex flex-col items-center gap-2 flex-1 group">
+<div class="w-full flex justify-center gap-1 h-48 items-end">
+<div class="w-3 bg-slate-600 rounded-t-sm h-[70%] group-hover:opacity-80 transition-opacity relative" title="Atual: 140km"></div>
+<div class="w-3 bg-primary rounded-t-sm h-[55%] group-hover:opacity-80 transition-opacity relative" title="Inteligente: 110km"></div>
+</div>
+<span class="text-xs font-bold text-text-secondary uppercase tracking-wider">Seg</span>
+</div>
+<!-- Bar Group Tuesday -->
+<div class="flex flex-col items-center gap-2 flex-1 group">
+<div class="w-full flex justify-center gap-1 h-48 items-end">
+<div class="w-3 bg-slate-600 rounded-t-sm h-[85%] group-hover:opacity-80 transition-opacity"></div>
+<div class="w-3 bg-primary rounded-t-sm h-[65%] group-hover:opacity-80 transition-opacity"></div>
+</div>
+<span class="text-xs font-bold text-text-secondary uppercase tracking-wider">Ter</span>
+</div>
+<!-- Bar Group Wednesday -->
+<div class="flex flex-col items-center gap-2 flex-1 group">
+<div class="w-full flex justify-center gap-1 h-48 items-end">
+<div class="w-3 bg-slate-600 rounded-t-sm h-[60%] group-hover:opacity-80 transition-opacity"></div>
+<div class="w-3 bg-primary rounded-t-sm h-[50%] group-hover:opacity-80 transition-opacity"></div>
+</div>
+<span class="text-xs font-bold text-text-secondary uppercase tracking-wider">Qua</span>
+</div>
+<!-- Bar Group Thursday -->
+<div class="flex flex-col items-center gap-2 flex-1 group">
+<div class="w-full flex justify-center gap-1 h-48 items-end">
+<div class="w-3 bg-slate-600 rounded-t-sm h-[90%] group-hover:opacity-80 transition-opacity"></div>
+<div class="w-3 bg-primary rounded-t-sm h-[70%] group-hover:opacity-80 transition-opacity"></div>
+</div>
+<span class="text-xs font-bold text-text-secondary uppercase tracking-wider">Qui</span>
+</div>
+<!-- Bar Group Friday -->
+<div class="flex flex-col items-center gap-2 flex-1 group">
+<div class="w-full flex justify-center gap-1 h-48 items-end">
+<div class="w-3 bg-slate-600 rounded-t-sm h-[75%] group-hover:opacity-80 transition-opacity"></div>
+<div class="w-3 bg-primary rounded-t-sm h-[55%] group-hover:opacity-80 transition-opacity"></div>
+</div>
+<span class="text-xs font-bold text-text-secondary uppercase tracking-wider">Sex</span>
+</div>
+</div>
+<div class="flex justify-center items-center gap-6 mt-6">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-slate-600"></div>
+<span class="text-xs text-text-secondary font-medium">Rota Atual</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<span class="text-xs text-text-secondary font-medium">Rota Inteligente (IA)</span>
+</div>
+</div>
+</div>
+<!-- Chart 2: Hours Saved -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-border-dark p-6 flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Horas de Campo por Semana</h3>
+<p class="text-sm text-text-secondary">Otimização de tempo de deslocamento</p>
+</div>
+<div class="flex items-center gap-2 text-sm bg-orange-500/10 text-orange-500 px-3 py-1 rounded-lg">
+<span class="material-symbols-outlined text-[16px]">timelapse</span>
+<span>-10% Horas</span>
+</div>
+</div>
+<div class="flex-1 min-h-[240px] flex flex-col justify-end relative">
+<!-- SVG Curve Chart -->
+<div class="absolute inset-0 top-4 bottom-8 w-full h-[200px]">
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 478 150">
+<!-- Grid lines -->
+<line opacity="0.5" stroke="#2a3649" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="478" y1="0" y2="0"></line>
+<line opacity="0.5" stroke="#2a3649" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="478" y1="75" y2="75"></line>
+<line opacity="0.5" stroke="#2a3649" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="478" y1="150" y2="150"></line>
+<!-- Area Gradient -->
+<defs>
+<lineargradient id="curveGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#1152d4" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#1152d4" stop-opacity="0.0"></stop>
+</lineargradient>
+</defs>
+<!-- Filled Path -->
+<path d="M0 110 C50 110, 80 40, 120 40 C160 40, 190 90, 240 90 C290 90, 320 30, 360 30 C400 30, 430 80, 478 60 V150 H0 Z" fill="url(#curveGradient)"></path>
+<!-- Stroke Path -->
+<path d="M0 110 C50 110, 80 40, 120 40 C160 40, 190 90, 240 90 C290 90, 320 30, 360 30 C400 30, 430 80, 478 60" fill="none" stroke="#1152d4" stroke-linecap="round" stroke-width="3"></path>
+<!-- Dashed Line (Previous Avg) -->
+<path d="M0 130 C50 130, 80 60, 120 60 C160 60, 190 110, 240 110 C290 110, 320 50, 360 50 C400 50, 430 100, 478 80" fill="none" stroke="#94a3b8" stroke-dasharray="5,5" stroke-width="2"></path>
+</svg>
+</div>
+<!-- X Axis Labels -->
+<div class="flex justify-between w-full mt-2 pt-4 border-t border-border-dark relative z-10">
+<span class="text-xs font-bold text-text-secondary uppercase tracking-wider w-8 text-center">Seg</span>
+<span class="text-xs font-bold text-text-secondary uppercase tracking-wider w-8 text-center">Ter</span>
+<span class="text-xs font-bold text-text-secondary uppercase tracking-wider w-8 text-center">Qua</span>
+<span class="text-xs font-bold text-text-secondary uppercase tracking-wider w-8 text-center">Qui</span>
+<span class="text-xs font-bold text-text-secondary uppercase tracking-wider w-8 text-center">Sex</span>
+</div>
+</div>
+<div class="flex justify-center items-center gap-6 mt-6">
+<div class="flex items-center gap-2">
+<div class="w-8 h-[2px] border-t border-dashed border-text-secondary"></div>
+<span class="text-xs text-text-secondary font-medium">Média Histórica</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-8 h-[3px] bg-primary rounded-full"></div>
+<span class="text-xs text-text-secondary font-medium">Projeção Otimizada</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Table Section -->
+<div class="px-6 md:px-10 pb-10">
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-border-dark overflow-hidden">
+<div class="p-6 border-b border-slate-200 dark:border-border-dark flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Eficiência por Promotor</h3>
+<p class="text-sm text-text-secondary">Projeção de ganhos para a próxima fase</p>
+</div>
+<div class="flex gap-2 w-full sm:w-auto">
+<div class="relative w-full sm:w-64">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-text-secondary text-[18px]">search</span>
+<input class="w-full pl-9 pr-4 py-2 bg-slate-100 dark:bg-[#111722] border-none rounded-lg text-sm text-white focus:ring-1 focus:ring-primary" placeholder="Filtrar promotor..." type="text"/>
+</div>
+<button class="p-2 bg-slate-100 dark:bg-[#111722] rounded-lg text-text-secondary hover:text-white transition-colors">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm text-text-secondary">
+<thead class="bg-slate-50 dark:bg-[#151b28] text-xs uppercase font-semibold text-text-secondary">
+<tr>
+<th class="px-6 py-4 font-medium tracking-wider">Promotor</th>
+<th class="px-6 py-4 font-medium tracking-wider">Região</th>
+<th class="px-6 py-4 font-medium tracking-wider text-right">KM Atual</th>
+<th class="px-6 py-4 font-medium tracking-wider text-right">KM Otimizado</th>
+<th class="px-6 py-4 font-medium tracking-wider text-right">Economia (%)</th>
+<th class="px-6 py-4 font-medium tracking-wider text-center">Status</th>
+<th class="px-6 py-4 font-medium tracking-wider"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-border-dark">
+<!-- Row 1 -->
+<tr class="group hover:bg-slate-50 dark:hover:bg-[#232f48] transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-cover bg-center" data-alt="Portrait of Carlos Mendes" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD0JxSpcL7DfanFcadABdi505CHiFo-jUQQ9-blnTq-rERz1JGw6Fn_nx3O5XXZJNkyX5577WElzyjUS8YoIvAXGjgr_WYuef_WxnUJnkHTu0yP1_KSDpeKJKzh2CgzrsAJHQBTB9jp8bnRqZZ6EePEH5ntYx_jmc_bws-TtcsglHB6LKtREADsTR5cz36WbOAD-BaA6MaE6mdbY5G2FdidN0Fr3YvFt3OlSEiTWBuZdxXBjnIGsU-W4pbu3VDnwIKFWPDqhPmpQC0");'></div>
+<div class="font-medium text-slate-900 dark:text-white">Carlos Mendes</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">São Paulo - ZS</td>
+<td class="px-6 py-4 whitespace-nowrap text-right">850 km</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-slate-900 dark:text-white font-medium">680 km</td>
+<td class="px-6 py-4 whitespace-nowrap text-right">
+<span class="text-green-500 font-bold bg-green-500/10 px-2 py-1 rounded">+20%</span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="inline-flex items-center gap-1.5 py-1 px-2 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-500">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                                Otimizado
+                                            </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right">
+<button class="text-text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="group hover:bg-slate-50 dark:hover:bg-[#232f48] transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-cover bg-center" data-alt="Portrait of Ana Souza" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCtZzvyWH_OzpwJJF0JW08LV295W1B8nBHgSiHdd-iPYqdYSE0AWdhUc5yCwtXoQZ1TIx6iTq5mc46G9DO6tDM8fguhEf6DFDEaFvOg22UMU1CB83yLJ55OTZmTRK5Sqa35H7OUudk1_qRmeehPic6Q4ZTFz0gWLScf5ykF13uhr8IsvorRM5nVa1Bk-aU2rjWY2xTN6OLD5lox8ocIsK4u0ZLIP_LcGLz3snPktWnYxxRi84-PWbni8BSuaBQLS_7XZQWIf1tGgcY");'></div>
+<div class="font-medium text-slate-900 dark:text-white">Ana Souza</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">Campinas - Centro</td>
+<td class="px-6 py-4 whitespace-nowrap text-right">1.200 km</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-slate-900 dark:text-white font-medium">1.050 km</td>
+<td class="px-6 py-4 whitespace-nowrap text-right">
+<span class="text-green-500 font-bold bg-green-500/10 px-2 py-1 rounded">+12.5%</span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="inline-flex items-center gap-1.5 py-1 px-2 rounded-full text-xs font-medium bg-blue-500/10 text-blue-500">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                                                Em Análise
+                                            </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right">
+<button class="text-text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-slate-50 dark:hover:bg-[#232f48] transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-cover bg-center" data-alt="Portrait of Roberto Lima" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuATI-cWT4sUuHWXkvI4HfrkvGQK9OCpEtwsrie3_ZOV4O6uALcqD6QDjq6i7YF7-K9pbzkhjN4kyX9w9c0-iWnv7lImBG8ixHBAV2u8KkmbTG52fxrnNJmoz0SSRWlG4EN3idV3762_eHvtDUKOO7cWasbpZrrKrjCfDIiSOVlDzIwQD-3KhyA4MzmD6wROBXh4ULdEqGo_ZDDOZM8BAxP8zaaeAM1__ems_eMEgHNLprBDJwcf7JyWITcknXDDSd5CxfFfY6no6fc");'></div>
+<div class="font-medium text-slate-900 dark:text-white">Roberto Lima</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">Rio de Janeiro - Norte</td>
+<td class="px-6 py-4 whitespace-nowrap text-right">920 km</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-slate-900 dark:text-white font-medium">780 km</td>
+<td class="px-6 py-4 whitespace-nowrap text-right">
+<span class="text-green-500 font-bold bg-green-500/10 px-2 py-1 rounded">+15%</span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="inline-flex items-center gap-1.5 py-1 px-2 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-500">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                                Otimizado
+                                            </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right">
+<button class="text-text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="group hover:bg-slate-50 dark:hover:bg-[#232f48] transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-cover bg-center" data-alt="Portrait of Fernando Costa" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCK3ZW5rs7Rp3jumIiD9E1kS_dsiQFghE28wWBRmNN-jIxPeAmfMPn2Pjrus01fXeDpk2zHdfB_iFRy9LJpbD72PmcvZbJzQZMQprCk6ZYQwTZ_RBrNPO4nFNV6FUO-tBjY1TCUA8DbkYWoBQ1qn_s0aI4gp2Jhef2axJmg9UgEarlqIOxGlym17CebX5j2fCT8nZ0hwu8NlYW4O0rGJ7wpArVpG1MeeZCyO0wmIIE7oX0FCaS-y6KcanNOn6MpEbwsGJgaZGijbBk");'></div>
+<div class="font-medium text-slate-900 dark:text-white">Fernando Costa</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">Belo Horizonte - Sul</td>
+<td class="px-6 py-4 whitespace-nowrap text-right">750 km</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-slate-900 dark:text-white font-medium">740 km</td>
+<td class="px-6 py-4 whitespace-nowrap text-right">
+<span class="text-yellow-500 font-bold bg-yellow-500/10 px-2 py-1 rounded">+1.3%</span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="inline-flex items-center gap-1.5 py-1 px-2 rounded-full text-xs font-medium bg-yellow-500/10 text-yellow-500">
+<span class="w-1.5 h-1.5 rounded-full bg-yellow-500"></span>
+                                                Revisar
+                                            </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right">
+<button class="text-text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 border-t border-slate-200 dark:border-border-dark flex justify-between items-center bg-slate-50 dark:bg-[#151b28]">
+<span class="text-sm text-text-secondary">Mostrando 4 de 24 promotores</span>
+<div class="flex gap-2">
+<button class="px-3 py-1 rounded border border-slate-300 dark:border-border-dark text-text-secondary hover:bg-slate-100 dark:hover:bg-surface-dark transition-colors disabled:opacity-50 text-sm">Anterior</button>
+<button class="px-3 py-1 rounded border border-slate-300 dark:border-border-dark text-text-secondary hover:bg-slate-100 dark:hover:bg-surface-dark transition-colors text-sm">Próximo</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Log de Fotos Rejeitadas - Portal de Auditoria</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "slate-dark": "#1E293B",
+                        "slate-darker": "#0f172a",
+                        "slate-light": "#334155",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0f172a", 
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem", 
+                        "lg": "0.5rem", 
+                        "xl": "0.75rem", 
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display antialiased overflow-hidden">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Sidebar -->
+<aside class="flex w-72 flex-col bg-slate-dark border-r border-slate-700/50 flex-shrink-0">
+<div class="flex flex-col h-full p-4">
+<!-- User Profile -->
+<div class="flex gap-3 mb-8 items-center p-2 rounded-lg hover:bg-slate-700/30 transition-colors cursor-pointer">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-12 w-12 border-2 border-primary" data-alt="Coordinator profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBa49eKLHPjkZP0vWJXoSSXz-P89s8t6b7JwdgqVMdWQGMdmilFTU04DwA1a5Yp_2ItcqfXGZ01lTLGb0tHxrulNMTGSK9j1hxoE33g3gjK9wSyqAUxeI06j7YsoWQ7-XT6MnK7ILxg1KVaBinrBtGfvBaB90UhLYpmPssHUi7CGp2Vg539pg_jpgQiGkpfpbPu9LAXMfRapj4E-P1VTLWqp5wbkZljOHf2EQwO9wriDLdDc-PSnlC9uMfDIa6Ox1EmCCrlUS5uR_o");'></div>
+<div class="flex flex-col">
+<h1 class="text-white text-base font-bold leading-tight">Portal de Auditoria</h1>
+<p class="text-slate-400 text-xs font-medium">Coordenador Regional</p>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex flex-col gap-2 flex-1">
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-all group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary">bar_chart</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-all group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary">assignment</span>
+<span class="text-sm font-medium">Auditoria</span>
+</a>
+<!-- Active State -->
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg bg-primary/20 text-white border-l-4 border-primary transition-all" href="#">
+<span class="material-symbols-outlined text-primary">broken_image</span>
+<span class="text-sm font-bold">Fotos Rejeitadas</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-all group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary">groups</span>
+<span class="text-sm font-medium">Equipe</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-all group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary">settings</span>
+<span class="text-sm font-medium">Configurações</span>
+</a>
+</nav>
+<!-- Logout -->
+<div class="mt-auto border-t border-slate-700/50 pt-4">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-sm font-medium">Sair do Sistema</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Header Section -->
+<header class="flex-shrink-0 px-8 py-6 bg-slate-darker/50 border-b border-slate-700/30 backdrop-blur-sm z-10">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div>
+<h2 class="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">history_edu</span>
+                            Log de Fotos Rejeitadas
+                        </h2>
+<p class="text-slate-400 text-sm mt-1">Rastreabilidade de reprovações e controle de qualidade de campo</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white text-sm font-medium rounded-lg transition-colors border border-slate-600">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                            Exportar CSV
+                        </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-blue-600 text-white text-sm font-medium rounded-lg transition-colors shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-[18px]">add_task</span>
+                            Nova Auditoria
+                        </button>
+</div>
+</div>
+<!-- Filters -->
+<div class="mt-6 flex flex-wrap gap-4 items-end">
+<div class="flex flex-col gap-1.5 w-full md:w-64">
+<label class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Filtrar por Motivo</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-slate-500 text-[20px]">filter_list</span>
+<select class="w-full bg-slate-800 border border-slate-600 text-white text-sm rounded-lg focus:ring-primary focus:border-primary block pl-10 p-2.5 appearance-none cursor-pointer hover:bg-slate-700/80 transition-colors">
+<option>Todos os motivos</option>
+<option>Fora de Foco</option>
+<option>Sem Iluminação</option>
+<option>Foto Embaçada</option>
+<option>Ângulo Incorreto</option>
+<option>Obstrução</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-slate-500 text-[20px] pointer-events-none">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col gap-1.5 w-full md:w-64">
+<label class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Filtrar por Promotor</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-slate-500 text-[20px]">search</span>
+<input class="w-full bg-slate-800 border border-slate-600 text-white text-sm rounded-lg focus:ring-primary focus:border-primary block pl-10 p-2.5 placeholder-slate-500" placeholder="Buscar promotor..." type="text"/>
+</div>
+</div>
+<div class="flex flex-col gap-1.5 w-full md:w-48">
+<label class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Período</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-slate-500 text-[20px]">calendar_today</span>
+<select class="w-full bg-slate-800 border border-slate-600 text-white text-sm rounded-lg focus:ring-primary focus:border-primary block pl-10 p-2.5 appearance-none cursor-pointer hover:bg-slate-700/80 transition-colors">
+<option>Últimos 7 dias</option>
+<option>Este Mês</option>
+<option>Mês Passado</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-slate-500 text-[20px] pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Scrollable Table Area -->
+<div class="flex-1 overflow-y-auto px-8 py-6">
+<div class="bg-slate-800/50 rounded-xl border border-slate-700 overflow-hidden shadow-xl">
+<table class="w-full text-left border-collapse">
+<thead class="bg-slate-800 sticky top-0 z-10">
+<tr>
+<th class="p-4 text-xs font-bold text-slate-400 uppercase tracking-wider border-b border-slate-700 w-32">Data</th>
+<th class="p-4 text-xs font-bold text-slate-400 uppercase tracking-wider border-b border-slate-700">Promotor</th>
+<th class="p-4 text-xs font-bold text-slate-400 uppercase tracking-wider border-b border-slate-700">PDV (Ponto de Venda)</th>
+<th class="p-4 text-xs font-bold text-slate-400 uppercase tracking-wider border-b border-slate-700 text-center w-24">Evidência</th>
+<th class="p-4 text-xs font-bold text-slate-400 uppercase tracking-wider border-b border-slate-700 w-48">Motivo Rejeição</th>
+<th class="p-4 text-xs font-bold text-slate-400 uppercase tracking-wider border-b border-slate-700 w-40">Auditor</th>
+<th class="p-4 text-xs font-bold text-slate-400 uppercase tracking-wider border-b border-slate-700 w-10"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-700/50">
+<!-- Row 1 -->
+<tr class="group hover:bg-slate-700/30 transition-colors">
+<td class="p-4 text-sm text-slate-300 font-medium whitespace-nowrap">24/10/2023 <span class="text-xs text-slate-500 ml-1">14:30</span></td>
+<td class="p-4 text-sm text-white font-semibold">João Silva</td>
+<td class="p-4 text-sm text-slate-300">Supermercado Central - Loja 01</td>
+<td class="p-4 flex justify-center">
+<div class="relative h-12 w-12 rounded-lg overflow-hidden border border-slate-600 group-hover:border-primary transition-colors cursor-pointer shadow-sm">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Thumbnail of rejected blurry photo" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD_7FV8QFxY8Vr1pJN4fQ1b7YbcmyBDd7Gh0W3W4jKP8H_vU2vJuB7Fo9hXhnBxKEb4A11NOu80Cj4_El5BK1rjzNk9WAeoXRWstuhFBnPW1Mvrk0G1I_fZpXoKQu_-S9wHGPEYd__D7LhSRf6we2oDvPRj-Wc1CusM0nCHB6U3sVUwErdXO4hcpOQDBuI9zk5wDeT4aLrtFBCy7mGOfpImGN989ZQ9vd_jUPh2rDpgM9-oIgpI7EpdzES0VEOqyU8p9T5gXTdC2yA');"></div>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-all"></div>
+<span class="material-symbols-outlined absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 group-hover:opacity-100 drop-shadow-md text-xl">zoom_in</span>
+</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-orange-500/10 text-orange-400 border border-orange-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>
+                                        Fora de Foco
+                                    </span>
+</td>
+<td class="p-4 text-sm text-slate-400">Ana Souza</td>
+<td class="p-4 text-right">
+<button class="text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="group hover:bg-slate-700/30 transition-colors">
+<td class="p-4 text-sm text-slate-300 font-medium whitespace-nowrap">24/10/2023 <span class="text-xs text-slate-500 ml-1">11:15</span></td>
+<td class="p-4 text-sm text-white font-semibold">Maria Oliveira</td>
+<td class="p-4 text-sm text-slate-300">Mercado Extra - Filial Sul</td>
+<td class="p-4 flex justify-center">
+<div class="relative h-12 w-12 rounded-lg overflow-hidden border border-slate-600 group-hover:border-primary transition-colors cursor-pointer shadow-sm">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Thumbnail of rejected dark photo" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAmYqmooyG4xx3U75EAAVP2COow586WHYFGtD-EsKBEP9gGk60aQLbjsZAFwo6rYsReFdagkuQXyA-coa1K9W1l9TvrrGAsPyv3HAp6dvOmIa0aijYuZTZFzEwpWsxxRZT6TOvQJyO5CKWhE0CJXWDGs09_7u0KCws-pOVzu_tEFTtFt5863FGbi74_bIfWY8iaUs6GMv_b4iTtfXZ2BEGydj-8Pvi6kzAFjbChoTQtZ5MfZMk3F5RwIP4f_BcfcW5igqoSOyduMXw');"></div>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-all"></div>
+<span class="material-symbols-outlined absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 group-hover:opacity-100 drop-shadow-md text-xl">zoom_in</span>
+</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-red-500/10 text-red-400 border border-red-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>
+                                        Sem Iluminação
+                                    </span>
+</td>
+<td class="p-4 text-sm text-slate-400">Carlos Lima</td>
+<td class="p-4 text-right">
+<button class="text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-slate-700/30 transition-colors">
+<td class="p-4 text-sm text-slate-300 font-medium whitespace-nowrap">23/10/2023 <span class="text-xs text-slate-500 ml-1">16:45</span></td>
+<td class="p-4 text-sm text-white font-semibold">João Silva</td>
+<td class="p-4 text-sm text-slate-300">Carrefour Bairro</td>
+<td class="p-4 flex justify-center">
+<div class="relative h-12 w-12 rounded-lg overflow-hidden border border-slate-600 group-hover:border-primary transition-colors cursor-pointer shadow-sm">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Thumbnail of blurry photo" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD8eRXOO5FFPBZ5vh2p4MPDlHQObYs6TCaNZsDWvgE0IPp3qG1AXBHDtwN-WOYLjajLmED1XMoqtU99z-5xqT_vXKmOogx1pFAyzeuU5nmvgk4pM5iGs0oacQtgKsiUJiAf6micOkHHDJUKJfsEg-3pV0hvZpqpPNJIvHEXv2CLNqS6_zWB9xEvAKUyp-ek1YZOmYWg8VqVfzbuGbzK__jBmsaY1pdbHg6aam25cwdKDDg4DfGxp-Squic5QyrvByEewAwyDF7CBBU');"></div>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-all"></div>
+<span class="material-symbols-outlined absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 group-hover:opacity-100 drop-shadow-md text-xl">zoom_in</span>
+</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-500/10 text-yellow-400 border border-yellow-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-yellow-400"></span>
+                                        Foto Embaçada
+                                    </span>
+</td>
+<td class="p-4 text-sm text-slate-400">Ana Souza</td>
+<td class="p-4 text-right">
+<button class="text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="group hover:bg-slate-700/30 transition-colors">
+<td class="p-4 text-sm text-slate-300 font-medium whitespace-nowrap">23/10/2023 <span class="text-xs text-slate-500 ml-1">09:20</span></td>
+<td class="p-4 text-sm text-white font-semibold">Pedro Santos</td>
+<td class="p-4 text-sm text-slate-300">Assaí Atacadista</td>
+<td class="p-4 flex justify-center">
+<div class="relative h-12 w-12 rounded-lg overflow-hidden border border-slate-600 group-hover:border-primary transition-colors cursor-pointer shadow-sm">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Thumbnail of incorrect angle photo" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD-Z4n19RN1-89ToNY_mMto7RbOg5pgg_iAe2id-CykCyf_csINMwa4220gDEsWCoCwvipTIsAdeuNs-93AdV97j-A5xP-Nb_sHFAsHLgPxhw4jO6-tV_UtgnAnnS_ftTJLZzFvXTlg2SqdtQsdIZ6cRUlwh-0b9IkA1y9Pmfu5nH4ncZXfSONmHHIIXpKlYe4quApB2ou8D0g-yaGD1ZkORrI4ZwD-Rn75HFbhn8p_me8tWbCu64g0AaGOmIv-SHSbtWlYe1Z029U');"></div>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-all"></div>
+<span class="material-symbols-outlined absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 group-hover:opacity-100 drop-shadow-md text-xl">zoom_in</span>
+</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                                        Ângulo Incorreto
+                                    </span>
+</td>
+<td class="p-4 text-sm text-slate-400">Ana Souza</td>
+<td class="p-4 text-right">
+<button class="text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="group hover:bg-slate-700/30 transition-colors">
+<td class="p-4 text-sm text-slate-300 font-medium whitespace-nowrap">22/10/2023 <span class="text-xs text-slate-500 ml-1">15:10</span></td>
+<td class="p-4 text-sm text-white font-semibold">Fernanda Costa</td>
+<td class="p-4 text-sm text-slate-300">Supermercado Dia</td>
+<td class="p-4 flex justify-center">
+<div class="relative h-12 w-12 rounded-lg overflow-hidden border border-slate-600 group-hover:border-primary transition-colors cursor-pointer shadow-sm">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Thumbnail of obstruction photo" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC0mrdDlGmfbFP9ubjnvy9gQ-28IiZ-nvUZKWPmJE8H-B1PDSs2hEx3s2p6_xfTss9rUUEw3zUiXlNHaf6WFgt1NmIRcxFOdB4-GlkwhZ9hC0V0r4WEZx2uwuRUhRwvcgr09bHvTDRsWwxb81R_zqPfNp2FO9gwOScrL6noPVboqHhsuLofswekr4FcjUg1diaj1SA-dq2iaGF-osl0DVjQfn0u8rPPndCaYrB_8BXJV8KdDIUCdR2bSUkEUq1ajpqU0PTtY864YSU');"></div>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-all"></div>
+<span class="material-symbols-outlined absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 group-hover:opacity-100 drop-shadow-md text-xl">zoom_in</span>
+</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
+                                        Obstrução
+                                    </span>
+</td>
+<td class="p-4 text-sm text-slate-400">Carlos Lima</td>
+<td class="p-4 text-right">
+<button class="text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="flex items-center justify-between px-4 py-4 mt-2">
+<p class="text-sm text-slate-400">Mostrando <span class="font-medium text-white">1-5</span> de <span class="font-medium text-white">128</span> resultados</p>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-lg bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+<span class="material-symbols-outlined text-sm">arrow_back_ios</span>
+</button>
+<button class="px-3 py-1 rounded-lg bg-primary text-white text-sm font-bold">1</button>
+<button class="px-3 py-1 rounded-lg hover:bg-slate-800 text-slate-400 text-sm font-medium transition-colors">2</button>
+<button class="px-3 py-1 rounded-lg hover:bg-slate-800 text-slate-400 text-sm font-medium transition-colors">3</button>
+<span class="text-slate-500">...</span>
+<button class="px-3 py-1 rounded-lg hover:bg-slate-800 text-slate-400 text-sm font-medium transition-colors">12</button>
+<button class="p-2 rounded-lg bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-sm">arrow_forward_ios</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Footer Analysis Section -->
+<footer class="bg-slate-800/80 border-t border-slate-700 p-6 flex-shrink-0">
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-6 h-full items-center">
+<!-- Chart Section -->
+<div class="lg:col-span-1 flex flex-col justify-center">
+<h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg">pie_chart</span>
+                            Distribuição de Motivos
+                        </h3>
+<div class="flex items-center gap-4">
+<!-- Pure CSS Donut Chart Representation -->
+<div class="relative w-24 h-24 rounded-full flex items-center justify-center shrink-0 bg-[conic-gradient(var(--tw-gradient-stops))] from-orange-500 via-red-500 to-primary p-1">
+<div class="absolute inset-0 rounded-full" style="background: conic-gradient(#fb923c 0% 35%, #f87171 35% 60%, #1152d4 60% 85%, #a855f7 85% 100%);"></div>
+<div class="relative w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center z-10">
+<span class="text-xs font-bold text-slate-300">Total<br/>128</span>
+</div>
+</div>
+<div class="flex flex-col gap-1 text-xs text-slate-400">
+<div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-orange-400"></span> 35% Fora de Foco</div>
+<div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-red-400"></span> 25% Iluminação</div>
+<div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-primary"></span> 25% Embaçada</div>
+<div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-purple-500"></span> 15% Outros</div>
+</div>
+</div>
+</div>
+<!-- Metrics -->
+<div class="lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="bg-slate-700/30 p-4 rounded-xl border border-slate-700/50 flex flex-col justify-between">
+<p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Maior Ofensor (Promotor)</p>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-600 flex items-center justify-center text-xs font-bold text-white">JS</div>
+<div>
+<p class="text-sm font-bold text-white">João Silva</p>
+<p class="text-xs text-red-400 font-medium">18 rejeições esta semana</p>
+</div>
+</div>
+</div>
+<div class="bg-slate-700/30 p-4 rounded-xl border border-slate-700/50 flex flex-col justify-between">
+<p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">PDV Crítico</p>
+<div>
+<p class="text-sm font-bold text-white flex items-center gap-1">
+<span class="material-symbols-outlined text-yellow-500 text-sm">warning</span>
+                                     Supermercado Central
+                                 </p>
+<p class="text-xs text-slate-400 mt-1">Recorrência de fotos escuras (Corredor 3)</p>
+</div>
+</div>
+<div class="bg-gradient-to-br from-primary/20 to-slate-800 p-4 rounded-xl border border-primary/20 flex flex-col justify-between relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-white">school</span>
+</div>
+<p class="text-xs font-semibold text-primary uppercase tracking-wider mb-2">Ação Recomendada</p>
+<div>
+<p class="text-sm font-bold text-white">Treinamento de Foco</p>
+<button class="text-xs text-primary font-medium hover:text-white hover:underline mt-1 flex items-center gap-1">
+                                    Agendar Treinamento <span class="material-symbols-outlined text-[10px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</footer>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Benchmarking Competitivo de Redes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1152d4",
+                        "primary-light": "#3b82f6",
+                        "primary-dark": "#0d3a96",
+                        "background-light": "#f8fafc",
+                        "background-dark": "#0f172a",
+                        "surface-dark": "#1e293b",
+                        "surface-light": "#ffffff",
+                        "slate-800": "#1e293b",
+                        "slate-700": "#334155",
+                        "slate-600": "#475569",
+                        "slate-400": "#94a3b8",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for webkit browsers */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased overflow-hidden">
+<div class="flex h-screen w-full bg-background-light dark:bg-background-dark overflow-hidden">
+<!-- SideNavBar -->
+<aside class="w-72 flex-shrink-0 flex flex-col bg-surface-dark border-r border-slate-700/50 hidden lg:flex">
+<div class="flex flex-col h-full p-4">
+<!-- User Profile / Brand -->
+<div class="flex items-center gap-3 mb-8 px-2 mt-2">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-10 w-10 ring-2 ring-primary/30" data-alt="User profile avatar image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB5le-VOh6fXqPVIoFADkC_Y4_28RscyQqfPChQneIREGn8Bu-qftH6f4H7LzydsHA3SJbAeWhjSN6dnaW6QDEzM-EilW6preOiShUf1cNtNjVS0zUbSV7yCOoc7oD9ONrEeNNxGYzzqyVu42vPOR--waKqyZt-Dpa7S1alQbnhudj_rIjFyH-nemOrm6-GNEzQr1-RRTi6hWbD1XqnlLeuEbUY1kV2Dn1yYsYJ5wg1l6pNdLa5PxZ0RKkkXQoYKCv69Ih56ENK3XA");'></div>
+<div class="flex flex-col">
+<h1 class="text-white text-sm font-semibold leading-tight">Trade Analytics</h1>
+<p class="text-slate-400 text-xs font-normal">Gerência de Mercado</p>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex-1 flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">pie_chart</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary border border-primary/20" href="#">
+<span class="material-symbols-outlined text-primary">balance</span>
+<span class="text-sm font-medium">Benchmarking</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">storefront</span>
+<span class="text-sm font-medium">Redes</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">inventory_2</span>
+<span class="text-sm font-medium">Produtos</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">settings</span>
+<span class="text-sm font-medium">Configurações</span>
+</a>
+</nav>
+<!-- CTA -->
+<div class="mt-auto pt-6 border-t border-slate-700/50">
+<button class="flex w-full items-center justify-center gap-2 rounded-lg h-10 px-4 bg-primary hover:bg-primary-dark text-white text-sm font-bold transition-all shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Novo Relatório</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Header -->
+<header class="flex items-center justify-between border-b border-slate-700/50 bg-background-dark px-6 py-4 z-10">
+<div class="flex items-center gap-4">
+<button class="lg:hidden p-2 text-slate-400 hover:text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="flex items-center gap-3">
+<div class="p-2 bg-primary/20 rounded-lg text-primary">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<div>
+<h2 class="text-white text-lg font-bold leading-tight">Benchmarking Competitivo</h2>
+<p class="text-slate-400 text-xs">Visão consolidada de performance de redes</p>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<!-- Search -->
+<div class="hidden md:flex items-center relative w-64">
+<span class="material-symbols-outlined absolute left-3 text-slate-400 text-[20px]">search</span>
+<input class="w-full bg-surface-dark border border-slate-700 rounded-lg py-2 pl-10 pr-4 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" placeholder="Buscar rede, PDV ou SKU..." type="text"/>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-3 border-l border-slate-700 pl-6">
+<button class="p-2 text-slate-400 hover:text-white hover:bg-surface-dark rounded-full transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border border-background-dark"></span>
+</button>
+<button class="p-2 text-slate-400 hover:text-white hover:bg-surface-dark rounded-full transition-colors">
+<span class="material-symbols-outlined">help</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-slate-700 bg-cover bg-center ring-2 ring-surface-dark cursor-pointer ml-2" data-alt="User profile thumbnail" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCwN-6ov3Kwe7d8X-o9atRCkU_2J2TSbNkZtRgYHOwK185tYRsUxQ45__1zWeRdwiZYoW7T9Tq1_CTCSi1qA-M11xPoC02Hb7gkcInpbs82vEmOPgbEMj9X3tRytMzqEJSgHq3WiYJ9vkoV8BHlRS5O6ZCtMbVvRauinv1KDBTKEnB5DsxW0LV5P-bIuv7CYolnmy_oi29JH4lnatj77cJSENTjbkz3AsfD7o5CdmBTvkD439UbNHoxGOCzTzLfTDSeljAJibw9YC4')"></div>
+</div>
+</div>
+</header>
+<!-- Scrollable Content Area -->
+<div class="flex-1 overflow-y-auto p-6 md:p-8 space-y-6">
+<!-- KPI Cards Row -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-surface-dark rounded-xl p-5 border border-slate-700/50 shadow-sm hover:border-slate-600 transition-colors">
+<div class="flex justify-between items-start mb-2">
+<p class="text-slate-400 text-sm font-medium">Total de PDVs Auditados</p>
+<span class="p-1 bg-green-500/10 text-green-500 rounded text-xs font-bold">+5%</span>
+</div>
+<p class="text-white text-3xl font-bold tracking-tight">1.245</p>
+<p class="text-slate-500 text-xs mt-1">vs 1.185 mês anterior</p>
+</div>
+<div class="bg-surface-dark rounded-xl p-5 border border-slate-700/50 shadow-sm hover:border-slate-600 transition-colors">
+<div class="flex justify-between items-start mb-2">
+<p class="text-slate-400 text-sm font-medium">Cobertura Média</p>
+<span class="p-1 bg-green-500/10 text-green-500 rounded text-xs font-bold">+2.4%</span>
+</div>
+<p class="text-white text-3xl font-bold tracking-tight">87%</p>
+<p class="text-slate-500 text-xs mt-1">Meta: 85%</p>
+</div>
+<div class="bg-surface-dark rounded-xl p-5 border border-slate-700/50 shadow-sm hover:border-slate-600 transition-colors">
+<div class="flex justify-between items-start mb-2">
+<p class="text-slate-400 text-sm font-medium">Nota Geral Execução</p>
+<span class="p-1 bg-green-500/10 text-green-500 rounded text-xs font-bold">+0.3</span>
+</div>
+<p class="text-white text-3xl font-bold tracking-tight">8.4</p>
+<p class="text-slate-500 text-xs mt-1">Escala 0-10</p>
+</div>
+<div class="bg-surface-dark rounded-xl p-5 border border-slate-700/50 shadow-sm hover:border-slate-600 transition-colors">
+<div class="flex justify-between items-start mb-2">
+<p class="text-slate-400 text-sm font-medium">Ruptura Média</p>
+<span class="p-1 bg-red-500/10 text-red-500 rounded text-xs font-bold">+1.2%</span>
+</div>
+<p class="text-white text-3xl font-bold tracking-tight">12%</p>
+<p class="text-slate-500 text-xs mt-1">Alerta crítico em 2 redes</p>
+</div>
+</div>
+<!-- Charts Section Top -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Donut Chart: Share of POS -->
+<div class="lg:col-span-4 bg-surface-dark rounded-xl border border-slate-700/50 p-6 flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-white text-base font-bold">Distribuição de PDVs (Share)</h3>
+<button class="text-slate-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+<div class="flex-1 flex flex-col items-center justify-center relative min-h-[240px]">
+<!-- CSS Donut Chart Implementation -->
+<div class="relative w-48 h-48 rounded-full" style="background: conic-gradient(#1152d4 0% 35%, #3b82f6 35% 60%, #60a5fa 60% 80%, #93c5fd 80% 92%, #1e293b 92% 100%);">
+<div class="absolute inset-4 bg-surface-dark rounded-full flex flex-col items-center justify-center z-10">
+<span class="text-slate-400 text-xs font-medium uppercase tracking-wider">Total</span>
+<span class="text-white text-2xl font-bold">1.245</span>
+</div>
+</div>
+</div>
+<div class="mt-6 grid grid-cols-2 gap-y-3 text-sm">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<span class="text-slate-300">Carrefour (35%)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-blue-500"></div>
+<span class="text-slate-300">GPA (25%)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-blue-400"></div>
+<span class="text-slate-300">Mateus (20%)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-blue-300"></div>
+<span class="text-slate-300">Big (12%)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-slate-700"></div>
+<span class="text-slate-300">Outros (8%)</span>
+</div>
+</div>
+</div>
+<!-- Line Chart: Evolution -->
+<div class="lg:col-span-8 bg-surface-dark rounded-xl border border-slate-700/50 p-6 flex flex-col">
+<div class="flex flex-wrap justify-between items-center mb-6 gap-4">
+<div>
+<h3 class="text-white text-base font-bold">Evolução da Nota de Auditoria</h3>
+<p class="text-slate-400 text-sm mt-1">Comparativo semestral entre principais redes</p>
+</div>
+<div class="flex gap-2">
+<select class="bg-background-dark border border-slate-700 text-slate-300 text-sm rounded-lg focus:ring-primary focus:border-primary p-2">
+<option>Últimos 6 meses</option>
+<option>Ano Atual</option>
+</select>
+</div>
+</div>
+<div class="flex-1 w-full min-h-[300px] relative mt-4">
+<!-- Simplified SVG Line Chart Representation -->
+<svg class="w-full h-full overflow-visible" viewbox="0 0 800 300">
+<!-- Grid Lines -->
+<line stroke="#334155" stroke-dasharray="4" stroke-width="1" x1="0" x2="800" y1="250" y2="250"></line>
+<line stroke="#334155" stroke-dasharray="4" stroke-width="1" x1="0" x2="800" y1="200" y2="200"></line>
+<line stroke="#334155" stroke-dasharray="4" stroke-width="1" x1="0" x2="800" y1="150" y2="150"></line>
+<line stroke="#334155" stroke-dasharray="4" stroke-width="1" x1="0" x2="800" y1="100" y2="100"></line>
+<line stroke="#334155" stroke-dasharray="4" stroke-width="1" x1="0" x2="800" y1="50" y2="50"></line>
+<!-- Labels Y Axis -->
+<text fill="#94a3b8" font-size="10" text-anchor="end" x="-10" y="255">6.0</text>
+<text fill="#94a3b8" font-size="10" text-anchor="end" x="-10" y="155">8.0</text>
+<text fill="#94a3b8" font-size="10" text-anchor="end" x="-10" y="55">10.0</text>
+<!-- Labels X Axis -->
+<text fill="#94a3b8" font-size="12" x="0" y="275">Jan</text>
+<text fill="#94a3b8" font-size="12" x="160" y="275">Fev</text>
+<text fill="#94a3b8" font-size="12" x="320" y="275">Mar</text>
+<text fill="#94a3b8" font-size="12" x="480" y="275">Abr</text>
+<text fill="#94a3b8" font-size="12" x="640" y="275">Mai</text>
+<text fill="#94a3b8" font-size="12" text-anchor="end" x="780" y="275">Jun</text>
+<!-- Line 1: Primary (Carrefour) -->
+<path d="M0,180 C100,170 150,140 320,100 S600,80 800,60" fill="none" stroke="#1152d4" stroke-width="3"></path>
+<circle cx="320" cy="100" fill="#1152d4" r="4" stroke="#1e293b" stroke-width="2"></circle>
+<circle cx="800" cy="60" fill="#1152d4" r="4" stroke="#1e293b" stroke-width="2"></circle>
+<!-- Line 2: Secondary (GPA) -->
+<path d="M0,200 C120,210 200,180 320,160 S550,140 800,150" fill="none" stroke="#60a5fa" stroke-dasharray="5,5" stroke-width="3"></path>
+<circle cx="320" cy="160" fill="#60a5fa" r="4" stroke="#1e293b" stroke-width="2"></circle>
+<circle cx="800" cy="150" fill="#60a5fa" r="4" stroke="#1e293b" stroke-width="2"></circle>
+<!-- Tooltip Simulation -->
+<rect fill="#0f172a" height="40" rx="4" stroke="#334155" width="80" x="290" y="50"></rect>
+<text fill="#fff" font-size="10" font-weight="bold" text-anchor="middle" x="330" y="68">9.2</text>
+<text fill="#94a3b8" font-size="9" text-anchor="middle" x="330" y="82">Março</text>
+</svg>
+</div>
+</div>
+</div>
+<!-- Gaps Competitivos Section -->
+<div class="grid grid-cols-1 gap-6">
+<div class="bg-surface-dark rounded-xl border border-slate-700/50 p-6">
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+<div>
+<h3 class="text-white text-lg font-bold">Gaps Competitivos de Ruptura</h3>
+<p class="text-slate-400 text-sm mt-1">Identificação de fragilidades de estoque por rede.</p>
+</div>
+<button class="text-primary text-sm font-bold hover:text-primary-light flex items-center gap-1 transition-colors">
+                            Ver relatório detalhado 
+                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-slate-700 text-xs text-slate-400 uppercase tracking-wider">
+<th class="py-3 px-4 font-medium">Rede</th>
+<th class="py-3 px-4 font-medium">Status Geral</th>
+<th class="py-3 px-4 font-medium text-right">Ruptura Atual</th>
+<th class="py-3 px-4 font-medium text-right">Gap vs Média</th>
+<th class="py-3 px-4 font-medium text-center">SKU Crítico</th>
+<th class="py-3 px-4 font-medium text-right">Ação</th>
+</tr>
+</thead>
+<tbody class="text-sm">
+<tr class="group hover:bg-slate-800/50 transition-colors border-b border-slate-800">
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-white flex items-center justify-center overflow-hidden p-1">
+<!-- Placeholder for Retailer Logo -->
+<div class="w-full h-full bg-blue-600 rounded-sm" data-alt="Carrefour Logo placeholder"></div>
+</div>
+<span class="text-white font-medium">Carrefour</span>
+</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+<span class="text-slate-300">Estável</span>
+</div>
+</td>
+<td class="py-4 px-4 text-right text-white font-bold">4.2%</td>
+<td class="py-4 px-4 text-right text-green-500">-2.1%</td>
+<td class="py-4 px-4 text-center text-slate-400">Detergente Liq. 500ml</td>
+<td class="py-4 px-4 text-right">
+<button class="text-slate-400 hover:text-primary p-1 rounded hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</td>
+</tr>
+<tr class="group hover:bg-slate-800/50 transition-colors border-b border-slate-800">
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-white flex items-center justify-center overflow-hidden p-1">
+<!-- Placeholder for Retailer Logo -->
+<div class="w-full h-full bg-green-600 rounded-sm" data-alt="GPA Logo placeholder"></div>
+</div>
+<span class="text-white font-medium">GPA (Pão de Açúcar)</span>
+</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+<span class="text-slate-300">Crítico</span>
+</div>
+</td>
+<td class="py-4 px-4 text-right text-white font-bold">18.5%</td>
+<td class="py-4 px-4 text-right text-red-500">+8.2%</td>
+<td class="py-4 px-4 text-center text-slate-400">Sabão Pó 1kg</td>
+<td class="py-4 px-4 text-right">
+<button class="text-slate-400 hover:text-primary p-1 rounded hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</td>
+</tr>
+<tr class="group hover:bg-slate-800/50 transition-colors border-b border-slate-800">
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-white flex items-center justify-center overflow-hidden p-1">
+<!-- Placeholder for Retailer Logo -->
+<div class="w-full h-full bg-red-600 rounded-sm" data-alt="Mateus Logo placeholder"></div>
+</div>
+<span class="text-white font-medium">Grupo Mateus</span>
+</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-yellow-500"></span>
+<span class="text-slate-300">Atenção</span>
+</div>
+</td>
+<td class="py-4 px-4 text-right text-white font-bold">12.1%</td>
+<td class="py-4 px-4 text-right text-yellow-500">+1.5%</td>
+<td class="py-4 px-4 text-center text-slate-400">Amaciante 2L</td>
+<td class="py-4 px-4 text-right">
+<button class="text-slate-400 hover:text-primary p-1 rounded hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</td>
+</tr>
+<tr class="group hover:bg-slate-800/50 transition-colors">
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-white flex items-center justify-center overflow-hidden p-1">
+<!-- Placeholder for Retailer Logo -->
+<div class="w-full h-full bg-yellow-400 rounded-sm" data-alt="Big Logo placeholder"></div>
+</div>
+<span class="text-white font-medium">Big</span>
+</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+<span class="text-slate-300">Estável</span>
+</div>
+</td>
+<td class="py-4 px-4 text-right text-white font-bold">5.8%</td>
+<td class="py-4 px-4 text-right text-green-500">-1.2%</td>
+<td class="py-4 px-4 text-center text-slate-400">Desinfetante 500ml</td>
+<td class="py-4 px-4 text-right">
+<button class="text-slate-400 hover:text-primary p-1 rounded hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

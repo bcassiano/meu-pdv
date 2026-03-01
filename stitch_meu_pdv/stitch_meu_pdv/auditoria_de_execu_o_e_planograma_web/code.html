@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TradeExec Audit</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0a47c2",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#1a2332",
+                        "surface-border": "#2b3649",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col overflow-x-hidden">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-surface-border bg-white dark:bg-background-dark px-10 py-3">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-slate-900 dark:text-white">
+<div class="size-8 flex items-center justify-center bg-primary rounded-lg text-white">
+<span class="material-symbols-outlined text-xl">analytics</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">TradeExec Audit</h2>
+</div>
+<nav class="hidden md:flex items-center gap-9">
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white text-sm font-medium leading-normal transition-colors" href="#">Dashboard</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white text-sm font-medium leading-normal transition-colors" href="#">Lojas</a>
+<a class="text-slate-900 dark:text-white text-sm font-medium leading-normal transition-colors" href="#">Auditorias</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white text-sm font-medium leading-normal transition-colors" href="#">Relatórios</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white text-sm font-medium leading-normal transition-colors" href="#">Configurações</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<label class="hidden lg:flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full border border-slate-200 dark:border-surface-border bg-slate-50 dark:bg-surface-dark overflow-hidden">
+<div class="text-slate-400 dark:text-slate-500 flex items-center justify-center pl-3">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden bg-transparent border-none text-slate-900 dark:text-white focus:outline-0 focus:ring-0 h-full placeholder:text-slate-400 dark:placeholder:text-slate-500 px-3 text-sm font-normal leading-normal" placeholder="Buscar loja ou auditoria..." value=""/>
+</div>
+</label>
+<button class="relative">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-300">notifications</span>
+<span class="absolute top-0 right-0 size-2 bg-red-500 rounded-full border-2 border-white dark:border-background-dark"></span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-slate-200 dark:border-surface-border" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAwYaWP15XSWlK8DAoBSSRBDEK-xNZh1ZJXRR-yCjRZXmCy9dbaDk59dpm8ubmnnVUvYoxJ4JX17q4QR0cE54pobc8yGmxyRq6Ln8tRQ30Y7Mnna7JGiIm22CKV5BkUuqhlgt4nujZcD3wSPVLI_jZlcPDg_LfgCLt6w70koyoKhNEd3qLGzJN2fNRVJGKy_gsLLiNHyrhznifJY3dH-NUg7k5KvzLHOblXOdqHz5nqnUFc1nD6n6d3JZfbl6WiYOgIk68iLhdBO1M");'></div>
+</div>
+</header>
+<main class="flex-1 px-6 py-8 md:px-10 lg:px-20 max-w-[1600px] mx-auto w-full">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-8">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 mb-1">
+<span>Auditorias</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span>Loja Centro #124</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-primary dark:text-blue-400 font-medium">Detalhe</span>
+</div>
+<h1 class="text-slate-900 dark:text-white text-3xl font-bold leading-tight">Auditoria de Planograma: Loja Centro #124</h1>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal">Auditor: Carlos Mendes • Data: 14/10/2023</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-200 dark:border-surface-border text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-surface-dark transition-colors">
+<span class="material-symbols-outlined text-[20px]">share</span>
+<span class="text-sm font-medium">Compartilhar</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary hover:bg-blue-700 text-white transition-colors shadow-lg shadow-blue-900/20">
+<span class="material-symbols-outlined text-[20px]">file_download</span>
+<span class="text-sm font-medium">Exportar Relatório</span>
+</button>
+</div>
+</div>
+<!-- KPI & Chart Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+<!-- Score Card -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-6 border border-slate-200 dark:border-surface-border shadow-sm flex flex-col justify-between">
+<div>
+<h3 class="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">Nota de Execução Atual</h3>
+<div class="flex items-end gap-3 mb-2">
+<span class="text-5xl font-bold text-slate-900 dark:text-white">8.5</span>
+<div class="flex items-center text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded text-sm font-medium mb-2">
+<span class="material-symbols-outlined text-[16px] mr-1">trending_up</span>
+                            +0.5
+                        </div>
+</div>
+<p class="text-slate-400 dark:text-slate-500 text-sm">Baseado em 12 critérios avaliados hoje.</p>
+</div>
+<div class="mt-6">
+<div class="h-2 w-full bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[85%] rounded-full"></div>
+</div>
+<div class="flex justify-between mt-2 text-xs text-slate-400 dark:text-slate-500">
+<span>0</span>
+<span>Meta: 9.0</span>
+<span>10</span>
+</div>
+</div>
+</div>
+<!-- Trend Chart -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-6 border border-slate-200 dark:border-surface-border shadow-sm lg:col-span-2">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-slate-900 dark:text-white text-base font-semibold">Evolução da Nota Média (8 Semanas)</h3>
+<select class="bg-slate-50 dark:bg-background-dark border border-slate-200 dark:border-surface-border rounded-lg text-xs py-1 px-2 text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-1 focus:ring-primary">
+<option>Últimos 2 Meses</option>
+<option>Últimos 6 Meses</option>
+<option>Ano Atual</option>
+</select>
+</div>
+<div class="w-full h-[140px] relative">
+<!-- Simplified SVG Chart -->
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 800 140">
+<!-- Grid Lines -->
+<line class="text-slate-200 dark:text-slate-700" stroke="currentColor" stroke-width="1" x1="0" x2="800" y1="140" y2="140"></line>
+<line class="text-slate-200 dark:text-slate-700" stroke="currentColor" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="800" y1="70" y2="70"></line>
+<line class="text-slate-200 dark:text-slate-700" stroke="currentColor" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="800" y1="0" y2="0"></line>
+<!-- Gradient Definition -->
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#0a47c2" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#0a47c2" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<!-- Area Path -->
+<path d="M0 100 Q 100 80, 200 90 T 400 60 T 600 40 T 800 20 V 140 H 0 Z" fill="url(#chartGradient)"></path>
+<!-- Line Path -->
+<path d="M0 100 Q 100 80, 200 90 T 400 60 T 600 40 T 800 20" fill="none" stroke="#0a47c2" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+<!-- Points -->
+<circle class="fill-white dark:fill-surface-dark stroke-primary" cx="0" cy="100" r="4" stroke-width="2"></circle>
+<circle class="fill-white dark:fill-surface-dark stroke-primary" cx="200" cy="90" r="4" stroke-width="2"></circle>
+<circle class="fill-white dark:fill-surface-dark stroke-primary" cx="400" cy="60" r="4" stroke-width="2"></circle>
+<circle class="fill-white dark:fill-surface-dark stroke-primary" cx="600" cy="40" r="4" stroke-width="2"></circle>
+<circle class="fill-white dark:fill-surface-dark stroke-primary" cx="800" cy="20" r="4" stroke-width="2"></circle>
+</svg>
+</div>
+<div class="flex justify-between mt-4 text-xs text-slate-400 dark:text-slate-500 font-medium">
+<span>Sem 1</span>
+<span>Sem 2</span>
+<span>Sem 3</span>
+<span>Sem 4</span>
+<span>Sem 5</span>
+<span>Sem 6</span>
+<span>Sem 7</span>
+<span>Atual</span>
+</div>
+</div>
+</div>
+<!-- Main Content Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-6 items-start">
+<!-- Comparison Column (Photos) -->
+<div class="xl:col-span-2 flex flex-col gap-6">
+<div class="bg-white dark:bg-surface-dark rounded-xl p-6 border border-slate-200 dark:border-surface-border shadow-sm">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-slate-900 dark:text-white text-lg font-bold">Evidência Fotográfica</h3>
+<div class="flex gap-2">
+<button class="p-2 text-slate-500 hover:text-primary dark:hover:text-white transition-colors" title="Zoom In">
+<span class="material-symbols-outlined">zoom_in</span>
+</button>
+<button class="p-2 text-slate-500 hover:text-primary dark:hover:text-white transition-colors" title="Download All">
+<span class="material-symbols-outlined">download</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Before Photo -->
+<div class="flex flex-col gap-3 group">
+<div class="relative w-full aspect-[4/3] bg-slate-800 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700">
+<div class="absolute top-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider z-10">
+                                    Antes
+                                </div>
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" data-alt="Supermarket shelf before restocking, messy and empty" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBF2A5AeUOCQDz1zbqNBF81NVyNBzKtDno3g2OkaoRJwenr7wOrQCRYlQrGAuVTwpQqPsM7oTXvCoGno1F7wx8bFMotK3_4mEbmV_Lc_lzB5bYGJ0JlHOjdk4PZDI2weRbiqqTqJOdfp4tkdxYPZ0d8MTXlFJY5Yrg2kGDSfIhseGDfkYlagWHVtmuX3J3nuOVMUDtDy0QaPbXzhrsDWQOrAclpDjJstwwNlR8sFFpRl4CPMFywkO40QIo1hdTvYunIH69MNGe8OZI');"></div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<p class="text-slate-900 dark:text-white font-medium">Chegada na Loja</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs mt-0.5">14/10/2023 - 08:30:15</p>
+</div>
+<span class="text-xs font-mono text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">IMG_4921.jpg</span>
+</div>
+</div>
+<!-- After Photo -->
+<div class="flex flex-col gap-3 group">
+<div class="relative w-full aspect-[4/3] bg-slate-800 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700">
+<div class="absolute top-3 left-3 bg-emerald-600/90 backdrop-blur-sm text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider z-10">
+                                    Depois
+                                </div>
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" data-alt="Supermarket shelf after restocking, organized and full" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCuNjF9N_8d7hyCiIr26nHfME4z4uH4tjoNQM40_9IqYmAVHJtKeCEpTItKIUM4KLJ1V2tsfgxi2ucnnsIwNUH2HHxigabNDEZZC-vVmcLXGX2uTgtRfKXsq8KWl13Hj7LZ-t3DAmsbrAhYYtE2YJhpuMSoCsLrrJdl7QO2Ojns_j_biiA0Elz32j2pfemg5SQvae-Y-2maS_jdkCZBSr7NOVA7W8Pb1NFFssmsFjNhDpQOYfwhL_s3x8QsB6sC-wul4KNLji28roY');"></div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<p class="text-slate-900 dark:text-white font-medium">Execução Finalizada</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs mt-0.5">14/10/2023 - 09:45:22</p>
+</div>
+<span class="text-xs font-mono text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">IMG_4955.jpg</span>
+</div>
+</div>
+</div>
+<div class="mt-6 pt-6 border-t border-slate-200 dark:border-surface-border">
+<label class="block text-slate-700 dark:text-slate-300 text-sm font-medium mb-2">Comentários do Auditor</label>
+<p class="text-slate-600 dark:text-slate-400 text-sm italic bg-slate-50 dark:bg-background-dark p-3 rounded-lg border border-slate-200 dark:border-slate-800">
+                            "Reposição realizada conforme planograma de Outubro. Gôndola limpa e etiquetas de preço atualizadas. Ruptura identificada no SKU 1245 (Chocolate Amargo) - pedido de reposição já enviado via sistema."
+                         </p>
+</div>
+</div>
+</div>
+<!-- Compliance Checklist Sidebar -->
+<div class="xl:col-span-1 flex flex-col gap-6">
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-surface-border shadow-sm overflow-hidden sticky top-24">
+<div class="p-6 border-b border-slate-200 dark:border-surface-border bg-slate-50 dark:bg-surface-dark">
+<h3 class="text-slate-900 dark:text-white text-lg font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">fact_check</span>
+                            Checklist de Conformidade
+                        </h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Validação dos critérios obrigatórios</p>
+</div>
+<div class="p-4 space-y-4">
+<!-- Checklist Item 1 -->
+<div class="flex items-start gap-3 p-3 rounded-lg bg-emerald-500/5 border border-emerald-500/20">
+<div class="min-w-6 pt-0.5">
+<span class="material-symbols-outlined text-emerald-500 text-xl">check_circle</span>
+</div>
+<div class="flex-1">
+<p class="text-slate-800 dark:text-slate-200 text-sm font-medium">Planograma Correto</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs">Produtos ordenados conforme guia</p>
+</div>
+<span class="text-emerald-500 text-xs font-bold bg-emerald-500/10 px-2 py-0.5 rounded">OK</span>
+</div>
+<!-- Checklist Item 2 -->
+<div class="flex items-start gap-3 p-3 rounded-lg bg-emerald-500/5 border border-emerald-500/20">
+<div class="min-w-6 pt-0.5">
+<span class="material-symbols-outlined text-emerald-500 text-xl">check_circle</span>
+</div>
+<div class="flex-1">
+<p class="text-slate-800 dark:text-slate-200 text-sm font-medium">Preços Visíveis</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs">Todas as etiquetas presentes</p>
+</div>
+<span class="text-emerald-500 text-xs font-bold bg-emerald-500/10 px-2 py-0.5 rounded">OK</span>
+</div>
+<!-- Checklist Item 3 (Issue) -->
+<div class="flex items-start gap-3 p-3 rounded-lg bg-amber-500/5 border border-amber-500/20">
+<div class="min-w-6 pt-0.5">
+<span class="material-symbols-outlined text-amber-500 text-xl">warning</span>
+</div>
+<div class="flex-1">
+<p class="text-slate-800 dark:text-slate-200 text-sm font-medium">Ruptura Visual</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs">Existem buracos na gôndola</p>
+</div>
+<span class="text-amber-500 text-xs font-bold bg-amber-500/10 px-2 py-0.5 rounded">-0.5</span>
+</div>
+<!-- Checklist Item 4 -->
+<div class="flex items-start gap-3 p-3 rounded-lg bg-emerald-500/5 border border-emerald-500/20">
+<div class="min-w-6 pt-0.5">
+<span class="material-symbols-outlined text-emerald-500 text-xl">check_circle</span>
+</div>
+<div class="flex-1">
+<p class="text-slate-800 dark:text-slate-200 text-sm font-medium">Limpeza</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs">Prateleiras limpas e organizadas</p>
+</div>
+<span class="text-emerald-500 text-xs font-bold bg-emerald-500/10 px-2 py-0.5 rounded">OK</span>
+</div>
+<!-- Checklist Item 5 -->
+<div class="flex items-start gap-3 p-3 rounded-lg bg-emerald-500/5 border border-emerald-500/20">
+<div class="min-w-6 pt-0.5">
+<span class="material-symbols-outlined text-emerald-500 text-xl">check_circle</span>
+</div>
+<div class="flex-1">
+<p class="text-slate-800 dark:text-slate-200 text-sm font-medium">Material de Merchandising</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs">Faixas e stoppers aplicados</p>
+</div>
+<span class="text-emerald-500 text-xs font-bold bg-emerald-500/10 px-2 py-0.5 rounded">OK</span>
+</div>
+</div>
+<div class="p-6 border-t border-slate-200 dark:border-surface-border bg-slate-50 dark:bg-background-dark/50">
+<label class="block text-slate-700 dark:text-slate-300 text-sm font-bold mb-3">Avaliação do Coordenador</label>
+<div class="flex justify-between items-center mb-4">
+<span class="text-sm text-slate-500 dark:text-slate-400">Nota Final</span>
+<div class="flex items-center gap-2">
+<button class="size-8 rounded-full bg-slate-200 dark:bg-surface-border flex items-center justify-center hover:bg-slate-300 text-slate-600 dark:text-slate-200 transition-colors">
+<span class="material-symbols-outlined text-lg">remove</span>
+</button>
+<span class="text-xl font-bold w-12 text-center text-slate-900 dark:text-white">8.5</span>
+<button class="size-8 rounded-full bg-slate-200 dark:bg-surface-border flex items-center justify-center hover:bg-slate-300 text-slate-600 dark:text-slate-200 transition-colors">
+<span class="material-symbols-outlined text-lg">add</span>
+</button>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 py-2.5 rounded-lg border border-slate-300 dark:border-surface-border text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-100 dark:hover:bg-surface-dark transition-colors">
+                                Solicitar Ajuste
+                            </button>
+<button class="flex-1 py-2.5 rounded-lg bg-primary hover:bg-blue-700 text-white font-medium shadow-lg shadow-blue-900/20 transition-colors">
+                                Aprovar Visita
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

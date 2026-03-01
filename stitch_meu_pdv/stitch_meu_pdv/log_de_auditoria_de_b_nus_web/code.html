@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Log de Auditoria de Bônus Web</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6', // Changed to a more corporate blue
+                        'background-light': '#f8fafc',
+                        'background-dark': '#0f172a',
+                        sidebar: '#1e293b',
+                        'card-dark': '#1e293b',
+                        'border-dark': '#334155',
+                        'text-muted': '#94a3b8'
+                    },
+                    fontFamily: {
+                        display: ['Inter', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for high-density data tables */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display antialiased overflow-hidden">
+<div class="flex h-screen w-full bg-background-light dark:bg-background-dark">
+<!-- SideNavBar -->
+<div class="hidden lg:flex w-72 flex-col bg-sidebar dark border-r border-border-dark">
+<div class="flex h-full flex-col justify-between p-4">
+<div class="flex flex-col gap-6">
+<!-- User Profile / Header -->
+<div class="flex items-center gap-3 px-2 py-2">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-12 shadow-md ring-2 ring-primary/20" data-alt="Portrait of admin user" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDBDPfO80qh-GSJr0iAEKxrAYji7XiTGbCtlDTgPZyjZDo28MWSusPadVgc4OUiVUY6ntswvEh-kVtMJ90tva9eWncDu69O_1wD3bAF7SRkenue4F-LeLX9e8aQ1TYf_6MuXdAGsb0wrlStBS2Vjkqs9rS8ifF7vYhgPIEbjeLJgQv_Ic8eL8p-6WvHhD2uNg1PIJfykNoWcNhKHGvhaSVqS86TQCWcFpS0DRXvVnp0ZO-iMNOD4tVQjKMuyTArU61T2dzoqM2QXCw");'></div>
+<div class="flex flex-col">
+<h1 class="text-white text-base font-semibold leading-tight">Admin Panel</h1>
+<p class="text-text-muted text-xs font-medium uppercase tracking-wide">Auditoria Financeira</p>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-muted hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-muted hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">attach_money</span>
+<span class="text-sm font-medium">Regras de Bônus</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-muted hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">track_changes</span>
+<span class="text-sm font-medium">Metas Financeiras</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary ring-1 ring-primary/20 shadow-sm transition-colors" href="#">
+<span class="material-symbols-outlined fill-current">assignment</span>
+<span class="text-sm font-semibold">Log de Auditoria</span>
+</a>
+<div class="my-2 border-t border-slate-700/50 mx-3"></div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-muted hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">settings</span>
+<span class="text-sm font-medium">Configurações</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-muted hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">shield</span>
+<span class="text-sm font-medium">Compliance</span>
+</a>
+</nav>
+</div>
+<!-- Bottom Action -->
+<div class="px-2">
+<button class="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-text-muted hover:text-white hover:bg-slate-700/50 transition-colors">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-sm font-medium">Sair</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Header / Filters -->
+<header class="flex flex-col gap-6 border-b border-border-dark bg-background-dark/95 backdrop-blur z-10 p-6 shrink-0">
+<div class="flex flex-wrap items-end justify-between gap-4">
+<div class="flex flex-col gap-1">
+<h2 class="text-2xl font-bold text-white tracking-tight">Log de Auditoria de Bônus</h2>
+<p class="text-text-muted text-sm">Histórico completo de alterações em regras de bônus e metas financeiras para fins de compliance.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white text-sm font-medium hover:bg-blue-600 transition-colors shadow-lg shadow-blue-500/20">
+<span class="material-symbols-outlined text-[20px]">download</span>
+                        Exportar Relatório
+                    </button>
+</div>
+</div>
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-card-dark rounded-xl p-4 border border-border-dark flex items-start justify-between">
+<div>
+<p class="text-text-muted text-xs font-medium uppercase tracking-wider mb-1">Alterações Hoje</p>
+<div class="flex items-baseline gap-2">
+<h3 class="text-2xl font-bold text-white">24</h3>
+<span class="text-emerald-500 text-xs font-medium flex items-center">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span> 2%
+                            </span>
+</div>
+</div>
+<div class="p-2 bg-slate-800 rounded-lg text-slate-400">
+<span class="material-symbols-outlined">today</span>
+</div>
+</div>
+<div class="bg-card-dark rounded-xl p-4 border border-border-dark flex items-start justify-between">
+<div>
+<p class="text-text-muted text-xs font-medium uppercase tracking-wider mb-1">Reajustes Manuais</p>
+<div class="flex items-baseline gap-2">
+<h3 class="text-2xl font-bold text-white">5</h3>
+<span class="text-emerald-500 text-xs font-medium flex items-center">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span> 10%
+                            </span>
+</div>
+</div>
+<div class="p-2 bg-slate-800 rounded-lg text-slate-400">
+<span class="material-symbols-outlined">edit_note</span>
+</div>
+</div>
+<div class="bg-card-dark rounded-xl p-4 border border-border-dark flex items-start justify-between">
+<div>
+<p class="text-text-muted text-xs font-medium uppercase tracking-wider mb-1">Metas Alteradas</p>
+<div class="flex items-baseline gap-2">
+<h3 class="text-2xl font-bold text-white">12</h3>
+<span class="text-amber-500 text-xs font-medium flex items-center">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span> 5%
+                            </span>
+</div>
+</div>
+<div class="p-2 bg-slate-800 rounded-lg text-slate-400">
+<span class="material-symbols-outlined">ads_click</span>
+</div>
+</div>
+<div class="bg-card-dark rounded-xl p-4 border border-border-dark flex items-start justify-between">
+<div>
+<p class="text-text-muted text-xs font-medium uppercase tracking-wider mb-1">Usuários Ativos</p>
+<div class="flex items-baseline gap-2">
+<h3 class="text-2xl font-bold text-white">8</h3>
+<span class="text-text-muted text-xs font-medium">0%</span>
+</div>
+</div>
+<div class="p-2 bg-slate-800 rounded-lg text-slate-400">
+<span class="material-symbols-outlined">group</span>
+</div>
+</div>
+</div>
+<!-- Filters Toolbar -->
+<div class="flex flex-wrap items-center gap-3 pt-2">
+<div class="relative group">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">person</span>
+</span>
+<select class="h-10 pl-10 pr-8 rounded-lg bg-card-dark border border-border-dark text-sm text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none appearance-none min-w-[160px] cursor-pointer hover:border-slate-500 transition-colors">
+<option>Todos Usuários</option>
+<option>João Silva</option>
+<option>Maria Souza</option>
+</select>
+<span class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none">
+<span class="material-symbols-outlined text-[20px]">arrow_drop_down</span>
+</span>
+</div>
+<div class="relative group">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">location_on</span>
+</span>
+<select class="h-10 pl-10 pr-8 rounded-lg bg-card-dark border border-border-dark text-sm text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none appearance-none min-w-[160px] cursor-pointer hover:border-slate-500 transition-colors">
+<option>Todas Regionais</option>
+<option>Sul</option>
+<option>Sudeste</option>
+<option>Nordeste</option>
+</select>
+<span class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none">
+<span class="material-symbols-outlined text-[20px]">arrow_drop_down</span>
+</span>
+</div>
+<div class="relative group">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">calendar_month</span>
+</span>
+<select class="h-10 pl-10 pr-8 rounded-lg bg-card-dark border border-border-dark text-sm text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none appearance-none min-w-[160px] cursor-pointer hover:border-slate-500 transition-colors">
+<option>Outubro 2023</option>
+<option>Setembro 2023</option>
+<option>Agosto 2023</option>
+</select>
+<span class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none">
+<span class="material-symbols-outlined text-[20px]">arrow_drop_down</span>
+</span>
+</div>
+<div class="ml-auto flex items-center gap-2">
+<div class="relative">
+<input class="h-10 pl-10 pr-4 rounded-lg bg-card-dark border border-border-dark text-sm text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none w-64 placeholder-slate-500" placeholder="Buscar justificativa..." type="text"/>
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Table Container -->
+<div class="flex-1 overflow-auto p-6 pt-0">
+<div class="min-w-full inline-block align-middle">
+<div class="border border-border-dark rounded-xl overflow-hidden shadow-sm bg-card-dark">
+<table class="min-w-full divide-y divide-border-dark">
+<thead class="bg-slate-800/50 sticky top-0 z-10 backdrop-blur-md">
+<tr>
+<th class="px-6 py-4 text-left text-xs font-semibold text-text-muted uppercase tracking-wider w-[180px]" scope="col">Data/Hora</th>
+<th class="px-6 py-4 text-left text-xs font-semibold text-text-muted uppercase tracking-wider w-[220px]" scope="col">Usuário</th>
+<th class="px-6 py-4 text-left text-xs font-semibold text-text-muted uppercase tracking-wider" scope="col">Tipo de Alteração</th>
+<th class="px-6 py-4 text-left text-xs font-semibold text-text-muted uppercase tracking-wider w-[140px]" scope="col">Valor Ant.</th>
+<th class="px-6 py-4 text-left text-xs font-semibold text-text-muted uppercase tracking-wider w-[140px]" scope="col">Valor Novo</th>
+<th class="px-6 py-4 text-left text-xs font-semibold text-text-muted uppercase tracking-wider" scope="col">Justificativa</th>
+<th class="px-6 py-4 text-center text-xs font-semibold text-text-muted uppercase tracking-wider w-[100px]" scope="col">Severidade</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-dark bg-card-dark">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap text-sm text-text-muted font-mono">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-slate-500">schedule</span>
+                                        10/10/2023 14:30
+                                    </div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="h-8 w-8 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-white mr-3 ring-2 ring-transparent group-hover:ring-slate-600">JS</div>
+<div>
+<div class="text-sm font-medium text-white">João Silva</div>
+<div class="text-xs text-text-muted">ID: 452</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-900/40 text-blue-400 border border-blue-800/50">
+                                        Reajuste Valor Visita
+                                    </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-text-muted font-mono">R$ 15,00</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-white font-mono font-medium">R$ 18,00</td>
+<td class="px-6 py-4 text-sm text-text-muted max-w-xs truncate" title="Ajuste inflacionário anual conforme IPCA.">
+                                    Ajuste inflacionário anual conforme IPCA.
+                                </td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="material-symbols-outlined text-emerald-500" title="Baixa Severidade">check_circle</span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap text-sm text-text-muted font-mono">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-slate-500">schedule</span>
+                                        10/10/2023 11:15
+                                    </div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="h-8 w-8 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-white mr-3 ring-2 ring-transparent group-hover:ring-slate-600">MS</div>
+<div>
+<div class="text-sm font-medium text-white">Maria Souza</div>
+<div class="text-xs text-text-muted">ID: 890</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-900/40 text-purple-400 border border-purple-800/50">
+                                        Meta de Ruptura
+                                    </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-text-muted font-mono">5%</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-white font-mono font-medium">3%</td>
+<td class="px-6 py-4 text-sm text-text-muted max-w-xs truncate" title="Nova diretriz comercial Q4 2023.">
+                                    Nova diretriz comercial Q4 2023.
+                                </td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="material-symbols-outlined text-amber-500" title="Média Severidade">warning</span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap text-sm text-text-muted font-mono">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-slate-500">schedule</span>
+                                        09/10/2023 09:45
+                                    </div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="h-8 w-8 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-white mr-3 ring-2 ring-transparent group-hover:ring-slate-600">CL</div>
+<div>
+<div class="text-sm font-medium text-white">Carlos Lima</div>
+<div class="text-xs text-text-muted">ID: 112</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-900/40 text-red-400 border border-red-800/50">
+                                        Ajuste Manual Bônus
+                                    </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-text-muted font-mono">R$ 0,00</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-white font-mono font-medium">R$ 500,00</td>
+<td class="px-6 py-4 text-sm text-text-muted max-w-xs truncate" title="Correção de erro sistêmico no fechamento. Aprovado por Dir. Financeira.">
+                                    Correção de erro sistêmico no fechamento...
+                                </td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="material-symbols-outlined text-red-500" title="Alta Severidade">gpp_maybe</span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap text-sm text-text-muted font-mono">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-slate-500">schedule</span>
+                                        09/10/2023 08:20
+                                    </div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="h-8 w-8 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-white mr-3 ring-2 ring-transparent group-hover:ring-slate-600">JS</div>
+<div>
+<div class="text-sm font-medium text-white">João Silva</div>
+<div class="text-xs text-text-muted">ID: 452</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-900/40 text-purple-400 border border-purple-800/50">
+                                        Meta de Volume
+                                    </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-text-muted font-mono">1000un</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-white font-mono font-medium">1200un</td>
+<td class="px-6 py-4 text-sm text-text-muted max-w-xs truncate" title="Ajuste de Sazonalidade (Black Friday).">
+                                    Ajuste de Sazonalidade (Black Friday).
+                                </td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="material-symbols-outlined text-emerald-500" title="Baixa Severidade">check_circle</span>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap text-sm text-text-muted font-mono">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-slate-500">schedule</span>
+                                        08/10/2023 16:50
+                                    </div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="h-8 w-8 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-white mr-3 ring-2 ring-transparent group-hover:ring-slate-600">AC</div>
+<div>
+<div class="text-sm font-medium text-white">Ana Costa</div>
+<div class="text-xs text-text-muted">ID: 333</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-900/40 text-amber-400 border border-amber-800/50">
+                                        Alteração de Faixa
+                                    </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-text-muted font-mono">Faixa B</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-white font-mono font-medium">Faixa A</td>
+<td class="px-6 py-4 text-sm text-text-muted max-w-xs truncate" title="Promoção de nível baseada em performance trimestral.">
+                                    Promoção de nível baseada em performance.
+                                </td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="material-symbols-outlined text-amber-500" title="Média Severidade">warning</span>
+</td>
+</tr>
+<!-- Row 6 -->
+<tr class="hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap text-sm text-text-muted font-mono">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-slate-500">schedule</span>
+                                        08/10/2023 14:10
+                                    </div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="h-8 w-8 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-white mr-3 ring-2 ring-transparent group-hover:ring-slate-600">FR</div>
+<div>
+<div class="text-sm font-medium text-white">Felipe Rocha</div>
+<div class="text-xs text-text-muted">ID: 551</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-900/40 text-blue-400 border border-blue-800/50">
+                                        Reajuste Valor KM
+                                    </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-text-muted font-mono">R$ 0,90</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-white font-mono font-medium">R$ 1,05</td>
+<td class="px-6 py-4 text-sm text-text-muted max-w-xs truncate" title="Ajuste combustível regional SP.">
+                                    Ajuste combustível regional SP.
+                                </td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="material-symbols-outlined text-emerald-500" title="Baixa Severidade">check_circle</span>
+</td>
+</tr>
+</tbody>
+<tfoot class="bg-slate-800/30">
+<tr>
+<td class="px-6 py-3 text-right" colspan="7">
+<div class="flex items-center justify-end gap-4 text-sm text-text-muted">
+<span>Exibindo 6 de 142 registros</span>
+<div class="flex gap-1">
+<button class="p-1 rounded hover:bg-slate-700 text-slate-400 hover:text-white disabled:opacity-50">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="px-3 py-1 rounded bg-primary text-white text-xs font-medium">1</button>
+<button class="px-3 py-1 rounded hover:bg-slate-700 text-slate-400 hover:text-white text-xs font-medium">2</button>
+<button class="px-3 py-1 rounded hover:bg-slate-700 text-slate-400 hover:text-white text-xs font-medium">3</button>
+<span class="px-1 py-1 text-slate-600">...</span>
+<button class="p-1 rounded hover:bg-slate-700 text-slate-400 hover:text-white">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</td>
+</tr>
+</tfoot>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

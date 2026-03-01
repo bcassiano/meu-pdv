@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Benchmarking de Produtividade</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1152d4",
+                        "primary-dark": "#0d3ca0",
+                        "primary-light": "#3f7af0",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        slate: {
+                            850: '#1a2436', // Custom dark slate for containers
+                            900: '#111722', // Darker background
+                        }
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-hidden">
+<div class="flex h-screen w-full">
+<!-- Sidebar -->
+<aside class="w-64 bg-slate-900 border-r border-slate-800 flex flex-col justify-between p-4 hidden md:flex">
+<div class="flex flex-col gap-6">
+<!-- User Profile -->
+<div class="flex items-center gap-3 px-2">
+<div class="h-10 w-10 rounded-full bg-cover bg-center ring-2 ring-primary/30" data-alt="User profile picture of administrator" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD5YCYQ1TKTuneqMjyJVWGpI78YgrV3ICLN_hXU16V4YD2kfXcU_NdhxWoRS33q_9kHwbx5dSoixwZl2Bj98_LOKu3GpdOw-s3WK0Cqylp30-hhxQstpo-dGEgXB0-_KtnlvP6XAmNvUSEi0IV43Oeak0JWHiguz3KQ-3mhfcz3J00pGDIUVrQKKLiwXr7BesPWyJ19JcJf2sHJ-JNoCE2J8140XBf7evpB3Ky6TgM0elgkDevs5XtH0ShPxIh0VanbS6MRkm0SArg");'>
+</div>
+<div class="flex flex-col">
+<h1 class="text-white text-sm font-semibold">Gestão de Trade</h1>
+<p class="text-slate-400 text-xs">Administrador</p>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">group</span>
+<span class="text-sm font-medium">Equipe</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">assignment</span>
+<span class="text-sm font-medium">Auditorias</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary text-white shadow-lg shadow-primary/20" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<span class="text-sm font-medium">Relatórios</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">settings</span>
+<span class="text-sm font-medium">Configurações</span>
+</a>
+</nav>
+</div>
+<!-- Bottom Action -->
+<div class="mt-auto px-2">
+<button class="w-full flex items-center justify-center gap-2 rounded-lg border border-slate-700 p-2 text-slate-400 hover:text-white hover:border-slate-600 transition-colors">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+<span class="text-xs font-medium uppercase tracking-wider">Sair</span>
+</button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Header -->
+<header class="h-16 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex items-center justify-between px-6 lg:px-10 shrink-0 z-20">
+<div class="flex flex-col">
+<h2 class="text-lg font-bold text-slate-900 dark:text-white leading-tight">Benchmarking de Produtividade</h2>
+<span class="text-xs text-slate-500 dark:text-slate-400">Análise comparativa de performance da equipe de campo</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="hidden md:flex items-center gap-2 text-xs text-slate-500 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-700">
+<span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                        Dados atualizados: Hoje, 09:45
+                    </div>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-lg text-sm font-medium transition-colors shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-[20px]">download</span>
+<span class="hidden sm:inline">Exportar Dados</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Content Area -->
+<div class="flex-1 overflow-y-auto p-6 lg:p-10 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent">
+<div class="max-w-7xl mx-auto flex flex-col gap-8">
+<!-- KPI Cards Summary -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="p-5 rounded-xl bg-white dark:bg-slate-850 border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-primary">inventory_2</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">Presença de Mix</p>
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white">92.4%</h3>
+<div class="flex items-center gap-1 mt-2 text-emerald-500 text-xs font-medium">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span>+2.4% vs mês anterior</span>
+</div>
+</div>
+<div class="p-5 rounded-xl bg-white dark:bg-slate-850 border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-red-500">warning</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">Rupturas Identificadas</p>
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white">4.1%</h3>
+<div class="flex items-center gap-1 mt-2 text-emerald-500 text-xs font-medium">
+<span class="material-symbols-outlined text-[16px]">trending_down</span>
+<span>-0.8% vs mês anterior</span>
+</div>
+</div>
+<div class="p-5 rounded-xl bg-white dark:bg-slate-850 border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-blue-400">price_check</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">Conformidade de Preço</p>
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white">98.2%</h3>
+<div class="flex items-center gap-1 mt-2 text-slate-500 text-xs font-medium">
+<span class="material-symbols-outlined text-[16px]">remove</span>
+<span>Estável</span>
+</div>
+</div>
+<div class="p-5 rounded-xl bg-white dark:bg-slate-850 border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-purple-500">speed</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">Itens Auditados/Min</p>
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white">12.5</h3>
+<div class="flex items-center gap-1 mt-2 text-emerald-500 text-xs font-medium">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span>+1.2 vs média setor</span>
+</div>
+</div>
+</div>
+<!-- Main Chart Section -->
+<div class="p-6 rounded-xl bg-white dark:bg-slate-850 border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Comparativo de KPIs por Promotor</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">Análise de performance nos 3 pilares principais (Últimos 30 dias)</p>
+</div>
+<div class="flex items-center gap-4 text-xs">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-primary"></span>
+<span class="text-slate-600 dark:text-slate-300">Presença de Mix</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-purple-500"></span>
+<span class="text-slate-600 dark:text-slate-300">Preço</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-slate-600 dark:bg-slate-600"></span>
+<span class="text-slate-600 dark:text-slate-300">Ruptura (Inverso)</span>
+</div>
+</div>
+</div>
+<!-- Complex Bar Chart Simulation -->
+<div class="space-y-6">
+<!-- Row 1 -->
+<div class="flex flex-col md:flex-row md:items-center gap-4 group hover:bg-slate-50 dark:hover:bg-slate-800/50 p-3 rounded-lg transition-colors">
+<div class="w-full md:w-48 flex items-center gap-3">
+<div class="h-10 w-10 rounded-full bg-cover bg-center ring-2 ring-slate-200 dark:ring-slate-700" data-alt="Portrait of Ana Silva" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDo87tQnpxHJ_Z01FGjQ5kXY7tn6Xy8ZlraeMtLjsSq3V21LJM_q07GwuOGs8ZE_bZF6CxXs-VUILaFycKpdum-1v4HLg7NzgNnklKYDpJS0gtf7hNs6CkaEI1aHFLXB3yaYC3YwmnEQvre5CHeIY6UoBVRS4_H6hSKuGw-pPe3tZiPtGCfKIh4TDaF2r8Hk3iO_c_YMe1wp2mLIqBfMCqZfWOl74xd18YI2a6WJxDqqJDHUZLgQcYD2dsXJHWycqPoLPQqFO5nLy4");'></div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Ana Silva</p>
+<p class="text-xs text-slate-500">São Paulo - SP</p>
+</div>
+</div>
+<div class="flex-1 flex flex-col justify-center gap-2">
+<!-- Bars Container -->
+<div class="relative h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="absolute left-0 top-0 h-full bg-primary rounded-full" style="width: 92%"></div>
+</div>
+<div class="relative h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="absolute left-0 top-0 h-full bg-purple-500 rounded-full" style="width: 98%"></div>
+</div>
+<div class="relative h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="absolute left-0 top-0 h-full bg-slate-600 rounded-full" style="width: 85%"></div>
+</div>
+</div>
+<div class="w-full md:w-24 flex md:flex-col justify-between md:justify-center md:items-end gap-1 text-right">
+<div class="text-xs font-medium text-primary">92% Mix</div>
+<div class="text-xs font-medium text-purple-500">98% Preço</div>
+<div class="text-xs font-medium text-slate-500 dark:text-slate-400">15% Rupt.</div>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="flex flex-col md:flex-row md:items-center gap-4 group hover:bg-slate-50 dark:hover:bg-slate-800/50 p-3 rounded-lg transition-colors">
+<div class="w-full md:w-48 flex items-center gap-3">
+<div class="h-10 w-10 rounded-full bg-cover bg-center ring-2 ring-slate-200 dark:ring-slate-700" data-alt="Portrait of Carlos Souza" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBfUTYRfr1TLu6q9e4pkJUkzYOdH9agRXpVuq25xrWxtMGT9vreAqbMsuu2ZasKvedb3y2gsUqF5kb3TaSXwnxPz7Fa_ENmBvsud6aN-Qjxf72Thz5USudpGrZU8jEloZdXNTPdV3a6Q5xFyRGNYzWnclVxnKBWAEsCQoOnasSeedIDK10N0AGmi-f-URoMTSNKVqgJ6HOgHPLapIbR2MXsuXpJlBL8K_NAg8BBswouPJ5Te3WmX5-POaZGcPz5c3wBGl2PuV1uYOA");'></div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Carlos Souza</p>
+<p class="text-xs text-slate-500">Rio de Janeiro - RJ</p>
+</div>
+</div>
+<div class="flex-1 flex flex-col justify-center gap-2">
+<div class="relative h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="absolute left-0 top-0 h-full bg-primary rounded-full" style="width: 84%"></div>
+</div>
+<div class="relative h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="absolute left-0 top-0 h-full bg-purple-500 rounded-full" style="width: 92%"></div>
+</div>
+<div class="relative h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="absolute left-0 top-0 h-full bg-slate-600 rounded-full" style="width: 90%"></div>
+</div>
+</div>
+<div class="w-full md:w-24 flex md:flex-col justify-between md:justify-center md:items-end gap-1 text-right">
+<div class="text-xs font-medium text-primary">84% Mix</div>
+<div class="text-xs font-medium text-purple-500">92% Preço</div>
+<div class="text-xs font-medium text-slate-500 dark:text-slate-400">10% Rupt.</div>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="flex flex-col md:flex-row md:items-center gap-4 group hover:bg-slate-50 dark:hover:bg-slate-800/50 p-3 rounded-lg transition-colors">
+<div class="w-full md:w-48 flex items-center gap-3">
+<div class="h-10 w-10 rounded-full bg-cover bg-center ring-2 ring-slate-200 dark:ring-slate-700" data-alt="Portrait of Maria Lima" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAezo7k2tm_4aNuCrVzPGelqRJXSPJvRfhVplJrYdw5PbMMy5vsJH-BNI4ycy4wm1U92jocL5eszLvIrPoCwBWDw38kvMGu2oRqZbIQyml46bt66VEUwOWWzITEi5IFhyGPgjPJnShRSeFtC6q5-TPrKEtXXvRO5tnOzszVnv2581OGAJ5zeiOh9KfEnYhl8N2xHLwmVU7I3reJqR2dkhRJ8l-3AQOEusKwvCcpFdrQ0w7KdGqAU9StBbBZ_7zO6V8l_R_vRbtlNCw");'></div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Maria Lima</p>
+<p class="text-xs text-slate-500">Curitiba - PR</p>
+</div>
+</div>
+<div class="flex-1 flex flex-col justify-center gap-2">
+<div class="relative h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="absolute left-0 top-0 h-full bg-primary rounded-full" style="width: 96%"></div>
+</div>
+<div class="relative h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="absolute left-0 top-0 h-full bg-purple-500 rounded-full" style="width: 99%"></div>
+</div>
+<div class="relative h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="absolute left-0 top-0 h-full bg-slate-600 rounded-full" style="width: 95%"></div>
+</div>
+</div>
+<div class="w-full md:w-24 flex md:flex-col justify-between md:justify-center md:items-end gap-1 text-right">
+<div class="text-xs font-medium text-primary">96% Mix</div>
+<div class="text-xs font-medium text-purple-500">99% Preço</div>
+<div class="text-xs font-medium text-slate-500 dark:text-slate-400">5% Rupt.</div>
+</div>
+</div>
+<!-- Row 4 -->
+<div class="flex flex-col md:flex-row md:items-center gap-4 group hover:bg-slate-50 dark:hover:bg-slate-800/50 p-3 rounded-lg transition-colors">
+<div class="w-full md:w-48 flex items-center gap-3">
+<div class="h-10 w-10 rounded-full bg-cover bg-center ring-2 ring-slate-200 dark:ring-slate-700" data-alt="Portrait of João Paulo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAYMSb9CCa-fyR_PEf5KIKxCynPOUjavauC6G_w09CBR2Abjox0CJ1wDqX2329QIGVL9koY691KaqZ6oxIt23ZhcCQD3-DIQ8uWb46xafwnA7mk36ysJ7DFOT_6W6RDwzro9Fz14ULFdS1l-D5qAXqArLf8NuUjgI1P_yWVAtginmdaijIZhgFOGSLNLIN1m9GkfvJWXjYldYZeOvLSfzsDYserY7nRk5wJtzoe77l_NaIET0pHFWTLHbTs0NUNzWW795pYLihyg7c");'></div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">João Paulo</p>
+<p class="text-xs text-slate-500">Belo Horizonte - MG</p>
+</div>
+</div>
+<div class="flex-1 flex flex-col justify-center gap-2">
+<div class="relative h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="absolute left-0 top-0 h-full bg-primary rounded-full" style="width: 78%"></div>
+</div>
+<div class="relative h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="absolute left-0 top-0 h-full bg-purple-500 rounded-full" style="width: 90%"></div>
+</div>
+<div class="relative h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="absolute left-0 top-0 h-full bg-slate-600 rounded-full" style="width: 75%"></div>
+</div>
+</div>
+<div class="w-full md:w-24 flex md:flex-col justify-between md:justify-center md:items-end gap-1 text-right">
+<div class="text-xs font-medium text-primary">78% Mix</div>
+<div class="text-xs font-medium text-purple-500">90% Preço</div>
+<div class="text-xs font-medium text-slate-500 dark:text-slate-400">25% Rupt.</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Second Section: Productivity Table -->
+<div class="flex flex-col lg:flex-row gap-6">
+<div class="flex-1 p-6 rounded-xl bg-white dark:bg-slate-850 border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Produtividade por Visita</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">Velocidade e eficiência de auditoria</p>
+</div>
+<button class="text-primary text-sm font-medium hover:underline">Ver todos</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-slate-200 dark:border-slate-700">
+<th class="py-3 px-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Promotor</th>
+<th class="py-3 px-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Visitas/Dia</th>
+<th class="py-3 px-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Tempo Médio</th>
+<th class="py-3 px-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 text-right">Itens/Min</th>
+</tr>
+</thead>
+<tbody class="text-sm">
+<tr class="group border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="py-3 px-4 font-medium text-slate-900 dark:text-white">Maria Lima</td>
+<td class="py-3 px-4 text-slate-600 dark:text-slate-300">14</td>
+<td class="py-3 px-4 text-slate-600 dark:text-slate-300">22 min</td>
+<td class="py-3 px-4 text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400">
+                                                    15.2
+                                                </span>
+</td>
+</tr>
+<tr class="group border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="py-3 px-4 font-medium text-slate-900 dark:text-white">Ana Silva</td>
+<td class="py-3 px-4 text-slate-600 dark:text-slate-300">12</td>
+<td class="py-3 px-4 text-slate-600 dark:text-slate-300">25 min</td>
+<td class="py-3 px-4 text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400">
+                                                    13.8
+                                                </span>
+</td>
+</tr>
+<tr class="group border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="py-3 px-4 font-medium text-slate-900 dark:text-white">Carlos Souza</td>
+<td class="py-3 px-4 text-slate-600 dark:text-slate-300">11</td>
+<td class="py-3 px-4 text-slate-600 dark:text-slate-300">28 min</td>
+<td class="py-3 px-4 text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400">
+                                                    10.5
+                                                </span>
+</td>
+</tr>
+<tr class="group hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="py-3 px-4 font-medium text-slate-900 dark:text-white">João Paulo</td>
+<td class="py-3 px-4 text-slate-600 dark:text-slate-300">9</td>
+<td class="py-3 px-4 text-slate-600 dark:text-slate-300">35 min</td>
+<td class="py-3 px-4 text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400">
+                                                    8.1
+                                                </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Mini Insight Card -->
+<div class="lg:w-80 flex flex-col gap-4">
+<div class="p-6 rounded-xl bg-gradient-to-br from-primary to-primary-dark text-white shadow-lg">
+<div class="flex items-center gap-3 mb-4">
+<div class="p-2 bg-white/20 rounded-lg">
+<span class="material-symbols-outlined">tips_and_updates</span>
+</div>
+<h4 class="font-bold">Insight Semanal</h4>
+</div>
+<p class="text-sm text-white/90 mb-4">
+                                    A equipe do Paraná aumentou a eficiência em <span class="font-bold text-white">15%</span> após a implementação da nova rota otimizada.
+                                </p>
+<button class="w-full py-2 px-4 bg-white text-primary font-semibold text-sm rounded-lg hover:bg-slate-100 transition-colors">
+                                    Ver Detalhes
+                                </button>
+</div>
+<div class="p-6 rounded-xl bg-white dark:bg-slate-850 border border-slate-200 dark:border-slate-800 shadow-sm flex-1">
+<h4 class="font-bold text-slate-900 dark:text-white mb-4">Eficiência Regional</h4>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<span class="text-sm text-slate-600 dark:text-slate-300">Sul</span>
+<div class="h-2 w-24 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-emerald-500 w-[85%]"></div>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm text-slate-600 dark:text-slate-300">Sudeste</span>
+<div class="h-2 w-24 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[70%]"></div>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm text-slate-600 dark:text-slate-300">Nordeste</span>
+<div class="h-2 w-24 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-yellow-500 w-[60%]"></div>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm text-slate-600 dark:text-slate-300">Centro-Oeste</span>
+<div class="h-2 w-24 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-orange-500 w-[55%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

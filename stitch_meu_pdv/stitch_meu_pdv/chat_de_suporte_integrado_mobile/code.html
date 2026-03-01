@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chat de Suporte Integrado Mobile</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f4c025",
+                        "primary-dark": "#dca50e",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#221e10",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#2d291c",
+                        "chat-gray": "#f4f0e7",
+                        "chat-black": "#1c180d",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for better mobile feel */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased h-screen flex flex-col overflow-hidden">
+<!-- Persistent Connection Status Bar (Amber) -->
+<div class="bg-primary text-chat-black text-xs font-bold text-center py-1 px-4 z-20 shadow-sm sticky top-0">
+<span class="flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]">wifi</span>
+            Conectado
+        </span>
+</div>
+<!-- Main Layout Container -->
+<div class="flex flex-col h-full w-full max-w-md mx-auto bg-surface-light dark:bg-surface-dark shadow-2xl overflow-hidden relative border-x border-slate-200 dark:border-slate-800">
+<!-- Header -->
+<header class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 px-4 py-3 bg-surface-light dark:bg-surface-dark z-10">
+<div class="flex items-center gap-3">
+<button aria-label="Voltar" class="text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="relative">
+<div class="bg-center bg-no-repeat bg-cover rounded-full w-10 h-10 ring-2 ring-primary" data-alt="Avatar do atendente de suporte" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCXtFQIJsLogV0LqeHL130tzu_y01vqzvncmh8pO_lEQKhbxGsKc1sKVWbKPDVAjGfJ0ctP5nBPL4D3TY_skSJL-Blld1vmF7lNlhhVqMTaXMseNgwXapayPoO8AKxZ0H3tCZstQVgrFuFy0Js8N9ctuCvD-xaXciVLEIeJHOlvGnTptHnFvJ2OZh_revofOKjiMFjJ_2wYvZETKpbgndGqWU1PAc1BLrTNTpt5kXOsKnxIP27nLtkKBct-S_lG7GxGbtop45pQCk8");'></div>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-surface-light dark:border-surface-dark"></div>
+</div>
+<div class="flex flex-col">
+<h2 class="text-slate-900 dark:text-white text-base font-bold leading-tight">Suporte Técnico</h2>
+<span class="text-green-600 dark:text-green-400 text-xs font-medium">Online</span>
+</div>
+</div>
+<button aria-label="Opções" class="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</header>
+<!-- Chat Area -->
+<main class="flex-1 overflow-y-auto p-4 space-y-6 bg-background-light dark:bg-background-dark" id="chat-container">
+<!-- Date Separator -->
+<div class="flex justify-center">
+<span class="text-xs font-medium text-slate-400 bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full">Hoje</span>
+</div>
+<!-- Agent Message -->
+<div class="flex items-end gap-2">
+<div class="bg-center bg-no-repeat bg-cover rounded-full w-8 h-8 shrink-0 mb-1" data-alt="Avatar pequeno do suporte" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC6LD1XIAPxL2JDenWFIpsnri94msfG1zz9Wt4Y4dpbftfwoEr2UVyiqOmjsarsN_DVIV3PdqtsolLvV9xYUhQ0m2xW4hkH-rUDX5pncaDFUz6_V_fzqVsRL454DlnaKlN0SnGYSoKfoVC3Yohit7CU6KW3h-38Sg1o-kdfVGSLghSTZ8Z6Ys0p3iOiD3ThQDRPuQhzpqdZ_bw_PxvNw39y-jNEbHd5o8xogjaclsGx04avWWs4IxuGRdcKfN5uOkxwQJnlqQRuV8w");'></div>
+<div class="flex flex-col gap-1 max-w-[85%]">
+<span class="text-xs text-slate-500 ml-1">Mariana • 09:41</span>
+<div class="rounded-2xl rounded-tl-none bg-chat-gray dark:bg-slate-700 px-4 py-3 text-slate-900 dark:text-slate-100 shadow-sm text-sm md:text-base">
+<p>Olá! Sou a Mariana do suporte técnico. Como posso ajudar com o problema na sincronização hoje?</p>
+</div>
+</div>
+</div>
+<!-- User Message (Promoter) - High Contrast Black Bubble -->
+<div class="flex items-end gap-2 justify-end">
+<div class="flex flex-col gap-1 items-end max-w-[85%]">
+<span class="text-xs text-slate-500 mr-1">Você • 09:43</span>
+<div class="rounded-2xl rounded-tr-none bg-chat-black dark:bg-primary px-4 py-3 text-white dark:text-chat-black shadow-sm text-sm md:text-base">
+<p>Bom dia. O app travou quando tentei enviar as fotos da gôndola.</p>
+</div>
+</div>
+</div>
+<!-- Agent Message -->
+<div class="flex items-end gap-2">
+<div class="bg-center bg-no-repeat bg-cover rounded-full w-8 h-8 shrink-0 mb-1" data-alt="Avatar pequeno do suporte" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDA1u_QZVEBQfm-ayJ1wKYm0hEwRob7VmuLN4tvGNoNFxstUj7_m47DCV-nnzzId9Uxh-QtB9R3HjaYaRhLDkVHMW-LenASjn0-I40HxfbLZ0JC7wk0RsrmiTreD7gf5yMqrwirgVCPD6Ig4la-2y1LCq3jdXLMG2Ao8mZCrZ-ALRNCp2OgVbBQfVfMhMoVGXayUgSyYlYSrp-1hdF3sAUqvw8ErdDwYm1dhPIPpe5rEK-SIh-YxuD56bhgtkBdK-JbcdkXjaQRBvU");'></div>
+<div class="flex flex-col gap-1 max-w-[85%]">
+<span class="text-xs text-slate-500 ml-1">Mariana • 09:44</span>
+<div class="rounded-2xl rounded-tl-none bg-chat-gray dark:bg-slate-700 px-4 py-3 text-slate-900 dark:text-slate-100 shadow-sm text-sm md:text-base">
+<p>Entendido. Apareceu alguma mensagem de erro específica?</p>
+</div>
+</div>
+</div>
+<!-- User Message with Image placeholder -->
+<div class="flex items-end gap-2 justify-end">
+<div class="flex flex-col gap-1 items-end max-w-[85%]">
+<span class="text-xs text-slate-500 mr-1">Você • 09:45</span>
+<div class="rounded-2xl rounded-tr-none bg-chat-black dark:bg-primary p-1 text-white dark:text-chat-black shadow-sm">
+<div class="bg-slate-800 rounded-xl overflow-hidden relative group">
+<div class="h-32 w-48 bg-cover bg-center opacity-80 group-hover:opacity-100 transition-opacity" data-alt="Print da tela de erro" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDobSs-e_r9IXiGhof09IgucOJm1zd8NPafvua6pGi15AnRIcYq6egVrOK3YQCP1LTGTf_bJoDJn-XUHdw31t-RThrsbh41o0G63UBZEfNODwOow8d67OWJSBAVGnVa5WjjjJHqhW6hKxjHg-cXgutgNfBJQkGCVyFL0Zr0WefiZhA-ACTYbdkkLyn8ZAc2PRd7hU2Fsj41Ks543ik6OXuLjyGKCrWhZyEIySRPbCX1lUESl6Iu6Zg70g25dnrxWsNO0Kg8V1sh6nM");'></div>
+</div>
+<p class="px-3 py-2 text-sm md:text-base">Sim, tirei um print. Segue anexo.</p>
+</div>
+</div>
+</div>
+<!-- Agent Message Typing indicator -->
+<div class="flex items-end gap-2">
+<div class="bg-center bg-no-repeat bg-cover rounded-full w-8 h-8 shrink-0 mb-1" data-alt="Avatar pequeno do suporte" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuALcPJ__zI-bq0bUj_q5LAv4i0wFUXFGPxBl9Sy52ck5UjVtc0nc3WJjHxFsIorUaJEQpbb7Xntjc0BN3JJrYp13dXKP9csPixyAqxim_IV4MAST5fcm1oXVs4xm3UFWWuFVsS8BQptyC8PqA7FHNgmvgp0R_rTS1VZnUS607bNn-J-ztoPRJBJQlh3Vly0R6PexHPqj6SXFIopwJmxGM3sg6Hf2WgFSGsx0eeYTcG0RHLTjSigyOhVNGkCeD7WZFFyx-wSc4nMzHQ");'></div>
+<div class="flex flex-col gap-1">
+<div class="rounded-2xl rounded-tl-none bg-chat-gray dark:bg-slate-700 px-4 py-3 text-slate-500 dark:text-slate-400 shadow-sm w-16 flex items-center justify-center gap-1">
+<span class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce"></span>
+<span class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce delay-75"></span>
+<span class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce delay-150"></span>
+</div>
+</div>
+</div>
+</main>
+<!-- Input Footer -->
+<footer class="p-3 bg-surface-light dark:bg-surface-dark border-t border-slate-200 dark:border-slate-800">
+<form class="flex items-end gap-2 w-full max-w-full" onsubmit="event.preventDefault();">
+<!-- Attachment Button -->
+<button aria-label="Anexar foto" class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50" type="button">
+<span class="material-symbols-outlined text-[24px]">add_a_photo</span>
+</button>
+<!-- Text Input -->
+<div class="flex-1 min-h-[44px] bg-slate-100 dark:bg-slate-800 rounded-xl flex items-center px-4 py-2 border border-transparent focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all">
+<textarea aria-label="Mensagem" class="w-full bg-transparent border-none p-0 text-slate-900 dark:text-slate-100 placeholder-slate-500 focus:ring-0 resize-none text-base max-h-24 overflow-y-auto" placeholder="Digite sua mensagem..." rows="1"></textarea>
+</div>
+<!-- Send Button -->
+<button aria-label="Enviar mensagem" class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-primary text-chat-black hover:bg-primary-dark transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" type="submit">
+<span class="material-symbols-outlined text-[20px] font-bold fill-current">send</span>
+</button>
+</form>
+</footer>
+</div>
+</body></html>

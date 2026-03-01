@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Configuração Técnica de Categoria</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for better aesthetics in dark mode */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a2332; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #324467; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4b6696; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased min-h-screen flex flex-col overflow-hidden">
+<div class="flex h-screen w-full flex-col overflow-hidden">
+<!-- Header -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-[#232f48] bg-white dark:bg-[#111722] px-10 py-3 shrink-0 z-20">
+<div class="flex items-center gap-4 text-slate-900 dark:text-white">
+<div class="size-8 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-3xl">admin_panel_settings</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Admin Panel</h2>
+</div>
+<div class="flex gap-4">
+<button class="flex items-center justify-center gap-2 rounded-lg bg-slate-100 dark:bg-[#232f48] px-4 py-2 text-sm font-bold text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-[#324467] transition-colors">
+<span class="material-symbols-outlined text-[20px]">help</span>
+<span class="hidden sm:inline">Ajuda</span>
+</button>
+<div class="h-10 w-10 rounded-full bg-slate-200 dark:bg-[#232f48] flex items-center justify-center overflow-hidden border border-slate-300 dark:border-[#324467]" data-alt="User avatar placeholder">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400">person</span>
+</div>
+</div>
+</header>
+<!-- Main Content Area with Modal Overlay Simulation -->
+<main class="flex-1 relative bg-slate-50 dark:bg-[#0b101b] overflow-auto flex justify-center p-6 sm:p-12">
+<!-- Breadcrumbs / Back navigation (Context) -->
+<div class="absolute top-0 left-0 w-full px-10 py-4 z-0 pointer-events-none opacity-50">
+<div class="flex flex-wrap gap-2 items-center">
+<span class="text-slate-400 dark:text-[#92a4c9] text-base font-medium">Configurações</span>
+<span class="material-symbols-outlined text-sm text-slate-400 dark:text-[#92a4c9]">chevron_right</span>
+<span class="text-slate-400 dark:text-[#92a4c9] text-base font-medium">Categorias</span>
+<span class="material-symbols-outlined text-sm text-slate-400 dark:text-[#92a4c9]">chevron_right</span>
+<span class="text-slate-600 dark:text-white text-base font-medium">Bebidas</span>
+</div>
+</div>
+<!-- Modal Container -->
+<div class="relative w-full max-w-[1000px] bg-white dark:bg-[#161e2c] rounded-xl shadow-2xl border border-slate-200 dark:border-[#232f48] flex flex-col max-h-full overflow-hidden z-10">
+<!-- Modal Header -->
+<div class="flex items-center justify-between px-8 py-6 border-b border-slate-100 dark:border-[#232f48] bg-white dark:bg-[#161e2c]">
+<div>
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Detalhes da Categoria: Bebidas</h1>
+<p class="text-sm text-slate-500 dark:text-[#92a4c9] mt-1">Configure os parâmetros técnicos e regras de negócio para este grupo de produtos.</p>
+</div>
+<button class="text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 transition-colors">
+<span class="material-symbols-outlined text-2xl">close</span>
+</button>
+</div>
+<!-- Modal Body (Scrollable) -->
+<div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Left Column: Settings -->
+<div class="lg:col-span-2 space-y-8">
+<!-- Section 1: Planogram Items -->
+<section>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">checklist</span>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Itens Obrigatórios do Planograma</h3>
+</div>
+<div class="bg-slate-50 dark:bg-[#1e2736] rounded-lg p-5 border border-slate-200 dark:border-[#2d3b55]">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<label class="flex items-start gap-3 cursor-pointer group">
+<input checked="" class="mt-1 h-5 w-5 rounded border-slate-300 dark:border-[#324467] bg-white dark:bg-transparent text-primary focus:ring-primary focus:ring-offset-0 transition-all" type="checkbox"/>
+<div>
+<span class="block text-sm font-medium text-slate-900 dark:text-slate-200 group-hover:text-primary transition-colors">Exibir preço promocional</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Obrigatório em campanhas ativas.</span>
+</div>
+</label>
+<label class="flex items-start gap-3 cursor-pointer group">
+<input checked="" class="mt-1 h-5 w-5 rounded border-slate-300 dark:border-[#324467] bg-white dark:bg-transparent text-primary focus:ring-primary focus:ring-offset-0 transition-all" type="checkbox"/>
+<div>
+<span class="block text-sm font-medium text-slate-900 dark:text-slate-200 group-hover:text-primary transition-colors">Foto do produto obrigatória</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Validação via reconhecimento de imagem.</span>
+</div>
+</label>
+<label class="flex items-start gap-3 cursor-pointer group">
+<input class="mt-1 h-5 w-5 rounded border-slate-300 dark:border-[#324467] bg-white dark:bg-transparent text-primary focus:ring-primary focus:ring-offset-0 transition-all" type="checkbox"/>
+<div>
+<span class="block text-sm font-medium text-slate-900 dark:text-slate-200 group-hover:text-primary transition-colors">Código de barras legível</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Verificação de qualidade de impressão.</span>
+</div>
+</label>
+<label class="flex items-start gap-3 cursor-pointer group">
+<input checked="" class="mt-1 h-5 w-5 rounded border-slate-300 dark:border-[#324467] bg-white dark:bg-transparent text-primary focus:ring-primary focus:ring-offset-0 transition-all" type="checkbox"/>
+<div>
+<span class="block text-sm font-medium text-slate-900 dark:text-slate-200 group-hover:text-primary transition-colors">Validade visível</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Data de vencimento frontal.</span>
+</div>
+</label>
+<label class="flex items-start gap-3 cursor-pointer group">
+<input class="mt-1 h-5 w-5 rounded border-slate-300 dark:border-[#324467] bg-white dark:bg-transparent text-primary focus:ring-primary focus:ring-offset-0 transition-all" type="checkbox"/>
+<div>
+<span class="block text-sm font-medium text-slate-900 dark:text-slate-200 group-hover:text-primary transition-colors">Etiqueta de SKU</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Identificação interna da gôndola.</span>
+</div>
+</label>
+</div>
+</div>
+</section>
+<!-- Section 2: Price Range & Severity -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<section>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">payments</span>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Faixa de Preço Sugerida</h3>
+</div>
+<div class="bg-slate-50 dark:bg-[#1e2736] rounded-lg p-5 border border-slate-200 dark:border-[#2d3b55] space-y-4">
+<div>
+<label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Preço Mínimo (R$)</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="text-slate-500 dark:text-slate-400">R$</span>
+</div>
+<input class="pl-10 block w-full rounded-md border-slate-300 dark:border-[#324467] bg-white dark:bg-[#111722] text-slate-900 dark:text-white focus:border-primary focus:ring-primary sm:text-sm h-10" step="0.10" type="number" value="4.50"/>
+</div>
+</div>
+<div>
+<label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Preço Máximo (R$)</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="text-slate-500 dark:text-slate-400">R$</span>
+</div>
+<input class="pl-10 block w-full rounded-md border-slate-300 dark:border-[#324467] bg-white dark:bg-[#111722] text-slate-900 dark:text-white focus:border-primary focus:ring-primary sm:text-sm h-10" step="0.10" type="number" value="89.90"/>
+</div>
+</div>
+</div>
+</section>
+<section>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">warning</span>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Severidade de Alerta</h3>
+</div>
+<div class="bg-slate-50 dark:bg-[#1e2736] rounded-lg p-5 border border-slate-200 dark:border-[#2d3b55] h-full">
+<div class="space-y-3">
+<label class="flex items-center p-3 border border-slate-200 dark:border-[#324467] rounded-md cursor-pointer hover:bg-slate-100 dark:hover:bg-[#253043] transition-colors bg-white dark:bg-[#111722]">
+<input class="h-4 w-4 text-red-600 border-slate-300 dark:border-slate-500 focus:ring-red-500" name="severity" type="radio"/>
+<span class="ml-3 flex-1 flex flex-col">
+<span class="block text-sm font-medium text-red-600 dark:text-red-400">Alta</span>
+<span class="block text-xs text-slate-500">Notificação push imediata</span>
+</span>
+</label>
+<label class="flex items-center p-3 border border-primary dark:border-primary rounded-md cursor-pointer bg-primary/5 dark:bg-primary/10">
+<input checked="" class="h-4 w-4 text-primary border-slate-300 dark:border-slate-500 focus:ring-primary" name="severity" type="radio"/>
+<span class="ml-3 flex-1 flex flex-col">
+<span class="block text-sm font-medium text-slate-900 dark:text-white">Média</span>
+<span class="block text-xs text-slate-500">Relatório diário</span>
+</span>
+</label>
+<label class="flex items-center p-3 border border-slate-200 dark:border-[#324467] rounded-md cursor-pointer hover:bg-slate-100 dark:hover:bg-[#253043] transition-colors bg-white dark:bg-[#111722]">
+<input class="h-4 w-4 text-green-600 border-slate-300 dark:border-slate-500 focus:ring-green-500" name="severity" type="radio"/>
+<span class="ml-3 flex-1 flex flex-col">
+<span class="block text-sm font-medium text-green-600 dark:text-green-400">Baixa</span>
+<span class="block text-xs text-slate-500">Apenas dashboard</span>
+</span>
+</label>
+</div>
+</div>
+</section>
+</div>
+<!-- Section 3: Justifications -->
+<section>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">assignment_late</span>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Justificativas de Ruptura</h3>
+</div>
+<div class="bg-slate-50 dark:bg-[#1e2736] rounded-lg p-5 border border-slate-200 dark:border-[#2d3b55]">
+<p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Selecione as opções disponíveis para o operador reportar ruptura nesta categoria.</p>
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center rounded-full bg-slate-200 dark:bg-[#324467] px-3 py-1 text-xs font-medium text-slate-700 dark:text-slate-200 border border-transparent hover:border-primary cursor-pointer transition-colors">
+                                            Produto Fantasma
+                                            <button class="ml-2 text-slate-500 hover:text-slate-800 dark:hover:text-white"><span class="material-symbols-outlined text-[16px]">close</span></button>
+</span>
+<span class="inline-flex items-center rounded-full bg-slate-200 dark:bg-[#324467] px-3 py-1 text-xs font-medium text-slate-700 dark:text-slate-200 border border-transparent hover:border-primary cursor-pointer transition-colors">
+                                            Estoque Virtual
+                                            <button class="ml-2 text-slate-500 hover:text-slate-800 dark:hover:text-white"><span class="material-symbols-outlined text-[16px]">close</span></button>
+</span>
+<span class="inline-flex items-center rounded-full bg-slate-200 dark:bg-[#324467] px-3 py-1 text-xs font-medium text-slate-700 dark:text-slate-200 border border-transparent hover:border-primary cursor-pointer transition-colors">
+                                            Avaria
+                                            <button class="ml-2 text-slate-500 hover:text-slate-800 dark:hover:text-white"><span class="material-symbols-outlined text-[16px]">close</span></button>
+</span>
+<span class="inline-flex items-center rounded-full border border-dashed border-slate-400 dark:border-[#92a4c9] px-3 py-1 text-xs font-medium text-slate-500 dark:text-[#92a4c9] hover:bg-slate-100 dark:hover:bg-[#253043] cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-[16px] mr-1">add</span>
+                                            Adicionar Nova
+                                        </span>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: History -->
+<div class="lg:col-span-1">
+<div class="bg-white dark:bg-[#161e2c] rounded-xl border border-slate-200 dark:border-[#232f48] h-full flex flex-col">
+<div class="p-4 border-b border-slate-100 dark:border-[#232f48] flex justify-between items-center">
+<h3 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">Histórico de Alterações</h3>
+<span class="material-symbols-outlined text-slate-400 text-lg">history</span>
+</div>
+<div class="p-4 flex-1 overflow-y-auto max-h-[600px] custom-scrollbar">
+<ul class="relative border-l border-slate-200 dark:border-[#324467] ml-2 space-y-6">
+<li class="mb-6 ml-4">
+<div class="absolute w-3 h-3 bg-primary rounded-full -left-1.5 border border-white dark:border-[#161e2c]"></div>
+<time class="mb-1 text-xs font-normal text-slate-400 dark:text-slate-500">Hoje, 10:23</time>
+<h4 class="text-sm font-semibold text-slate-900 dark:text-white">Regra de Planograma Atualizada</h4>
+<p class="mb-2 text-xs font-normal text-slate-500 dark:text-slate-400">"Exibir preço promocional" ativado por <span class="text-slate-700 dark:text-slate-300 font-medium">Carlos Silva</span>.</p>
+</li>
+<li class="mb-6 ml-4">
+<div class="absolute w-3 h-3 bg-slate-300 dark:bg-[#324467] rounded-full -left-1.5 border border-white dark:border-[#161e2c]"></div>
+<time class="mb-1 text-xs font-normal text-slate-400 dark:text-slate-500">Ontem, 16:45</time>
+<h4 class="text-sm font-semibold text-slate-900 dark:text-white">Preço Mínimo Ajustado</h4>
+<p class="mb-2 text-xs font-normal text-slate-500 dark:text-slate-400">Alterado de R$ 4.00 para R$ 4.50 por <span class="text-slate-700 dark:text-slate-300 font-medium">Ana Souza</span>.</p>
+</li>
+<li class="mb-6 ml-4">
+<div class="absolute w-3 h-3 bg-slate-300 dark:bg-[#324467] rounded-full -left-1.5 border border-white dark:border-[#161e2c]"></div>
+<time class="mb-1 text-xs font-normal text-slate-400 dark:text-slate-500">22 Nov, 09:15</time>
+<h4 class="text-sm font-semibold text-slate-900 dark:text-white">Severidade Alterada</h4>
+<p class="mb-2 text-xs font-normal text-slate-500 dark:text-slate-400">Nível alterado de "Baixa" para "Média" pelo <span class="text-slate-700 dark:text-slate-300 font-medium">Sistema (Auto)</span>.</p>
+</li>
+<li class="ml-4">
+<div class="absolute w-3 h-3 bg-slate-300 dark:bg-[#324467] rounded-full -left-1.5 border border-white dark:border-[#161e2c]"></div>
+<time class="mb-1 text-xs font-normal text-slate-400 dark:text-slate-500">15 Nov, 14:30</time>
+<h4 class="text-sm font-semibold text-slate-900 dark:text-white">Categoria Criada</h4>
+<p class="mb-2 text-xs font-normal text-slate-500 dark:text-slate-400">Configuração inicial por <span class="text-slate-700 dark:text-slate-300 font-medium">Roberto Admin</span>.</p>
+</li>
+</ul>
+</div>
+<div class="p-4 border-t border-slate-100 dark:border-[#232f48]">
+<button class="w-full text-xs text-primary font-medium hover:underline text-center">Ver histórico completo</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="p-6 border-t border-slate-100 dark:border-[#232f48] bg-slate-50 dark:bg-[#161e2c] flex justify-end gap-3 rounded-b-xl">
+<button class="px-5 py-2.5 rounded-lg border border-slate-300 dark:border-[#324467] text-slate-700 dark:text-slate-300 font-medium text-sm hover:bg-slate-100 dark:hover:bg-[#253043] transition-colors">
+                        Cancelar
+                    </button>
+<button class="px-5 py-2.5 rounded-lg bg-primary text-white font-medium text-sm shadow-lg shadow-primary/25 hover:bg-blue-600 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">save</span>
+                        Salvar Alterações
+                    </button>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Campaign Audit Log</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "slate-sidebar": "#1E293B",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased overflow-hidden">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Sidebar -->
+<div class="relative flex h-full w-72 flex-col bg-slate-sidebar border-r border-slate-700/50 flex-shrink-0">
+<div class="flex h-full flex-col justify-between p-4">
+<div class="flex flex-col gap-6">
+<!-- User Profile -->
+<div class="flex gap-3 items-center px-2">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 ring-2 ring-primary/30" data-alt="Professional man portrait" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDKgymO25LAuC0SQ1TpZyOkttbSdxnffquI0xGe-54X0nxfRiR2upTsX2Ozy8jzMiePuTwJ3IfNu7B3CBsSlMG3Q4PnBWsogrH13y8KSsTmQBd69-O_4BKeMjQd9ZMPoFBbWWyn8Hlud-Ruk8dMyHGUqTihhQC17PEDpOxBybOI_-nxONWKqrOkXWxbdkasKsHuyWIBPdLPy9iSEMYViyihgfj8m4u42ENngukwElT9CBZavSdJDCEbp-eZcGyeAkSSH5Mi2Gz_mrQ");'></div>
+<div class="flex flex-col">
+<h1 class="text-white text-sm font-semibold leading-tight">Admin Panel</h1>
+<p class="text-slate-400 text-xs font-normal">Trade Marketing</p>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">campaign</span>
+<span class="text-sm font-medium">Campaigns</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/20 text-white border border-primary/20 shadow-sm shadow-primary/10" href="#">
+<span class="material-symbols-outlined text-primary">description</span>
+<span class="text-sm font-medium">Audit Logs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">group</span>
+<span class="text-sm font-medium">Users</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+</div>
+<!-- Bottom Action -->
+<div class="border-t border-slate-700/50 pt-4 px-2">
+<button class="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/30 transition-colors">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-sm font-medium">Sign Out</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden bg-background-light dark:bg-background-dark">
+<!-- Header / Breadcrumbs -->
+<header class="flex-shrink-0 px-8 py-6 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark z-10">
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Governance</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="font-medium text-slate-900 dark:text-slate-100">Audit Logs</span>
+</div>
+<div class="flex justify-between items-end">
+<div>
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Campaign Audit Log</h1>
+<p class="mt-1 text-slate-500 dark:text-slate-400 max-w-2xl">
+                            Track and verify all modifications made to seasonal campaigns and trade activations for compliance and governance.
+                        </p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors text-sm font-medium">
+<span class="material-symbols-outlined text-[20px]">download</span>
+                            Export CSV
+                        </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-blue-700 text-white rounded-lg transition-colors text-sm font-medium shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+                            Advanced Filters
+                        </button>
+</div>
+</div>
+</div>
+</header>
+<!-- Filters Section -->
+<section class="flex-shrink-0 px-8 py-4 bg-slate-50 dark:bg-[#131b2b] border-b border-slate-200 dark:border-slate-800">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+<!-- Search -->
+<div class="relative group">
+<span class="absolute left-3 top-2.5 text-slate-400 material-symbols-outlined text-[20px]">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-slate-400" placeholder="Search by ID, User, or Value..." type="text"/>
+</div>
+<!-- Filter: Campaign -->
+<div class="relative">
+<select class="w-full pl-4 pr-10 py-2 appearance-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary focus:border-transparent outline-none cursor-pointer">
+<option value="">All Campaigns</option>
+<option value="summer24">Summer 2024</option>
+<option value="bf24">Black Friday 2024</option>
+<option value="xmas24">Christmas 2024</option>
+</select>
+<span class="absolute right-3 top-2.5 text-slate-400 material-symbols-outlined text-[20px] pointer-events-none">expand_more</span>
+</div>
+<!-- Filter: Regional -->
+<div class="relative">
+<select class="w-full pl-4 pr-10 py-2 appearance-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary focus:border-transparent outline-none cursor-pointer">
+<option value="">All Regions</option>
+<option value="north">North America</option>
+<option value="emea">EMEA</option>
+<option value="latam">LATAM</option>
+<option value="apac">APAC</option>
+</select>
+<span class="absolute right-3 top-2.5 text-slate-400 material-symbols-outlined text-[20px] pointer-events-none">expand_more</span>
+</div>
+<!-- Filter: Month -->
+<div class="relative">
+<select class="w-full pl-4 pr-10 py-2 appearance-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary focus:border-transparent outline-none cursor-pointer">
+<option value="">Last 30 Days</option>
+<option value="oct">October</option>
+<option value="sep">September</option>
+<option value="aug">August</option>
+</select>
+<span class="absolute right-3 top-2.5 text-slate-400 material-symbols-outlined text-[20px] pointer-events-none">calendar_month</span>
+</div>
+</div>
+</section>
+<!-- Content Area -->
+<div class="flex-1 overflow-auto p-8">
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-10 backdrop-blur-md">
+<tr>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider w-48">Date/Time</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider w-48">User</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider w-40">Campaign</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider w-48">Modification</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider w-40">Old Value</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider w-40">New Value</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">Criticality</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-[18px]">schedule</span>
+<span>Oct 24, 10:30 AM</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded-full bg-cover bg-center ring-2 ring-slate-100 dark:ring-slate-700" data-alt="Female user avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDH351PsjCxOYVxZIJC5VVTzNbwI783nleXpPLm5aou3qGYf1HT4GdUuRYIhBRf_CoRNgP9WUam5U0jwhkDm83WbbdR_23XbvbuSQyviu3-NrfXM_uW6s3DfUPHzzTSscxGKGR1vsWvJV0D6g2ugW-6Wabgg2_RLqDqwZ7JNlNx8ZvEw86q99tlbtAxn68NG5W4Y95jSkT_3p1uRaiZJ7cPvo0R8-QxJGQVtviQVOou_c5rCu1dd6vnjKr0Y1VvmTeswxAk32o6Spk')"></div>
+<div class="text-sm font-medium text-slate-900 dark:text-slate-100">Sarah M.</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300 border border-purple-200 dark:border-purple-800">
+                                    Black Friday
+                                </span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-700 dark:text-slate-200 font-medium">
+                                Mix Change
+                            </td>
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400 font-mono">
+                                SKU-100
+                            </td>
+<td class="px-6 py-4 text-sm text-slate-900 dark:text-white font-mono font-medium">
+                                SKU-200
+                            </td>
+<td class="px-6 py-4 text-right">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-900/50">
+<span class="material-symbols-outlined text-[16px] animate-pulse">priority_high</span>
+<span class="text-xs font-bold">High</span>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-[18px]">schedule</span>
+<span>Oct 24, 09:15 AM</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded-full bg-cover bg-center ring-2 ring-slate-100 dark:ring-slate-700" data-alt="Male user avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCYno7ojsXgJZCavr9kntPI0K-6EBuAe-DQXHghb0-B0781b0X34-SDFg2n1v3o4mgc9I_TlldzAyw_QbQCk9lBwxne3oAjz7phxVA9eZ_y_ocdNSv71z6tcMSzgzNc__95Om2501ukwn-7pFaSWZc9FK8DUe8Zxa_M81pybZXkyYaWF8auRX0oAHH1Lha1ZTnPu4pmWKWpxu8VImRuTvfqeB2FvfNzikIzjYh3b-0D5Y8Maep3XB2Fhbt2j6mV8ivFu8XvuceDuU0')"></div>
+<div class="text-sm font-medium text-slate-900 dark:text-slate-100">James L.</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300 border border-orange-200 dark:border-orange-800">
+                                    Summer 2024
+                                </span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-700 dark:text-slate-200 font-medium">
+                                Date Extension
+                            </td>
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400 font-mono">
+                                Dec 31
+                            </td>
+<td class="px-6 py-4 text-sm text-slate-900 dark:text-white font-mono font-medium">
+                                Jan 15
+                            </td>
+<td class="px-6 py-4 text-right">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-900/50">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+<span class="text-xs font-bold">Medium</span>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-[18px]">schedule</span>
+<span>Oct 23, 04:45 PM</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded-full bg-purple-600 flex items-center justify-center text-white text-xs font-bold ring-2 ring-slate-100 dark:ring-slate-700">MK</div>
+<div class="text-sm font-medium text-slate-900 dark:text-slate-100">Mike K.</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                                    Xmas 2024
+                                </span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-700 dark:text-slate-200 font-medium">
+                                New POS Linked
+                            </td>
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400 font-mono">
+                                0
+                            </td>
+<td class="px-6 py-4 text-sm text-slate-900 dark:text-white font-mono font-medium">
+                                15
+                            </td>
+<td class="px-6 py-4 text-right">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-700/50 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-600/50">
+<span class="material-symbols-outlined text-[16px]">info</span>
+<span class="text-xs font-bold">Low</span>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-[18px]">schedule</span>
+<span>Oct 23, 02:20 PM</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded-full bg-cover bg-center ring-2 ring-slate-100 dark:ring-slate-700" data-alt="User avatar male glasses" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBDgbHDFLwgUQezZGgRWRaNK4Gv1VhNwS5vnrXKDywZ5Hx2naxJg3pjKxBMPfV0Fe6aV5aE3FISGgXfHAA1voJLMPTBCnbK_ca2039uUKQNPZ5ii3zPYqDdbUdDzNNO2Nj20LpxAdjDbSgJ-alYUnEs3DgkFfT2Oit5HvousZFq4CRKJ7RXcdryvXMe6SUxYgR-1Sc9tNOLg61ytP8QEK_6s9II2FzSzQjhlGq4xIBK6UQurAbyDnlwf2U7u1ZvyLD9qBMrmjfXURQ')"></div>
+<div class="text-sm font-medium text-slate-900 dark:text-slate-100">David R.</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300 border border-purple-200 dark:border-purple-800">
+                                    Black Friday
+                                </span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-700 dark:text-slate-200 font-medium">
+                                Budget Adjustment
+                            </td>
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400 font-mono">
+                                $50,000
+                            </td>
+<td class="px-6 py-4 text-sm text-slate-900 dark:text-white font-mono font-medium">
+                                $60,000
+                            </td>
+<td class="px-6 py-4 text-right">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-900/50">
+<span class="material-symbols-outlined text-[16px]">priority_high</span>
+<span class="text-xs font-bold">High</span>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-[18px]">schedule</span>
+<span>Oct 22, 11:00 AM</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold ring-2 ring-slate-100 dark:ring-slate-700">AL</div>
+<div class="text-sm font-medium text-slate-900 dark:text-slate-100">Ana L.</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300 border border-orange-200 dark:border-orange-800">
+                                    Summer 2024
+                                </span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-700 dark:text-slate-200 font-medium">
+                                Asset Update
+                            </td>
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400 font-mono">
+                                banner_v1.png
+                            </td>
+<td class="px-6 py-4 text-sm text-slate-900 dark:text-white font-mono font-medium">
+                                banner_v2.png
+                            </td>
+<td class="px-6 py-4 text-right">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-700/50 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-600/50">
+<span class="material-symbols-outlined text-[16px]">info</span>
+<span class="text-xs font-bold">Low</span>
+</div>
+</td>
+</tr>
+<!-- Row 6 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-[18px]">schedule</span>
+<span>Oct 21, 09:45 AM</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded-full bg-cover bg-center ring-2 ring-slate-100 dark:ring-slate-700" data-alt="Woman user smiling" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDMl_O13FHdNyhMDjzKu2wII8Ovv2o4uv34MVMkEd7D_7rlbAMZ7fzRn9jtPhO7ZLQgi2HzSEPoA7C-5BHL68N5n6bA4alIzZReqf0c4krq-MoBBOg00GpDx19AAuh1Eau12uLMoe2erXmBXbcqbHVyJCsvqBq-PC-1Kyip5NmL9HtFhPo6SCEMRaKtiqUthbrEtNAoB67FF1DzHMg8f1G3YhszN7FQmOgMcI9W-Uxfl9j1iGLrKAe5x2sAVkf1VFS3qUofqMNIfa8')"></div>
+<div class="text-sm font-medium text-slate-900 dark:text-slate-100">Elena G.</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                                    Xmas 2024
+                                </span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-700 dark:text-slate-200 font-medium">
+                                Promo Text Edit
+                            </td>
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400 font-mono">
+                                "Get 20% off"
+                            </td>
+<td class="px-6 py-4 text-sm text-slate-900 dark:text-white font-mono font-medium">
+                                "Get 25% off"
+                            </td>
+<td class="px-6 py-4 text-right">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-900/50">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+<span class="text-xs font-bold">Medium</span>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Pagination -->
+<div class="px-6 py-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 flex items-center justify-between">
+<span class="text-sm text-slate-500 dark:text-slate-400">Showing <span class="font-medium text-slate-900 dark:text-white">1-6</span> of <span class="font-medium text-slate-900 dark:text-white">128</span> results</span>
+<div class="flex gap-2">
+<button class="px-3 py-1 rounded border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-800 hover:text-primary dark:hover:text-primary transition-colors disabled:opacity-50">Previous</button>
+<button class="px-3 py-1 rounded border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-800 hover:text-primary dark:hover:text-primary transition-colors">Next</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

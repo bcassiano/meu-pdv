@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gestão Trade - Pesos de Auditoria</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px",
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 bg-[#111722] border-r border-slate-800 flex flex-col shrink-0 transition-all duration-300">
+<div class="p-6 flex items-center gap-3 border-b border-slate-800/50">
+<div class="bg-primary/20 bg-center bg-no-repeat bg-cover rounded-lg h-10 w-10 flex items-center justify-center text-primary" data-alt="Trade Management Logo">
+<span class="material-symbols-outlined text-2xl">bar_chart</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-white text-base font-bold leading-tight">Gestão Trade</h1>
+<p class="text-slate-400 text-xs font-normal">Painel Admin</p>
+</div>
+</div>
+<nav class="flex flex-col flex-1 gap-1 p-3 overflow-y-auto">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span class="text-sm font-medium">Auditorias</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/20 text-primary transition-colors" href="#">
+<span class="material-symbols-outlined fill-1">tune</span>
+<span class="text-sm font-medium">Config. de KPIs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-sm font-medium">Equipes</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="text-sm font-medium">Relatórios</span>
+</a>
+<div class="mt-4 pt-4 border-t border-slate-800/50">
+<p class="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Sistema</p>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium">Configurações</span>
+</a>
+</div>
+</nav>
+<div class="p-4 border-t border-slate-800/50">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-white">AD</div>
+<div class="flex flex-col">
+<p class="text-sm font-medium text-white">Admin User</p>
+<p class="text-xs text-slate-500">admin@trade.com</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-screen overflow-hidden bg-background-light dark:bg-background-dark relative">
+<!-- Top Bar -->
+<header class="h-16 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-8 bg-white dark:bg-[#111722] shrink-0 z-10">
+<div class="flex items-center gap-4">
+<h2 class="text-xl font-bold text-slate-900 dark:text-white">Pesos de Auditoria</h2>
+<span class="px-2 py-1 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-wider">Edição</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<span class="text-sm text-slate-500 dark:text-slate-400">Versão da Regra:</span>
+<select class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-sm rounded-lg focus:ring-primary focus:border-primary block p-2.5 pr-8 min-w-[160px]">
+<option selected="">v3.2 - Out 2023</option>
+<option>v3.1 - Set 2023</option>
+<option>v3.0 - Ago 2023</option>
+<option>v2.5 - Legacy</option>
+</select>
+</div>
+<button class="flex items-center gap-2 bg-primary hover:bg-blue-700 text-white font-medium py-2.5 px-5 rounded-lg transition-colors shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-[20px]">save</span>
+<span>SALVAR NOVOS PESOS</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Content Area -->
+<div class="flex-1 overflow-y-auto p-8">
+<div class="max-w-6xl mx-auto flex flex-col gap-6">
+<!-- Introduction Card -->
+<div class="bg-white dark:bg-[#151b2b] rounded-xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex items-start justify-between gap-6">
+<div class="flex flex-col gap-2 max-w-2xl">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">info</span>
+                            Configuração de Impacto
+                        </h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                            Defina a importância percentual de cada KPI para o cálculo da nota final ("Perfect Store"). A soma de todos os pesos deve ser obrigatoriamente 100%. Alterações aqui impactam todos os relatórios a partir da data de vigência.
+                        </p>
+</div>
+<div class="flex flex-col items-end justify-center bg-slate-50 dark:bg-slate-800/50 p-4 rounded-lg border border-slate-100 dark:border-slate-700/50 min-w-[180px]">
+<span class="text-slate-500 dark:text-slate-400 text-xs uppercase font-semibold tracking-wider">Status da Soma</span>
+<div class="flex items-baseline gap-1">
+<span class="text-3xl font-black text-emerald-500">100</span>
+<span class="text-lg font-bold text-emerald-500">%</span>
+</div>
+<span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium bg-emerald-100 dark:bg-emerald-900/30 px-2 py-0.5 rounded-full mt-1">Válido</span>
+</div>
+</div>
+<!-- KPI Configuration Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Column 1: Inputs -->
+<div class="lg:col-span-2 flex flex-col gap-4">
+<div class="bg-white dark:bg-[#151b2b] rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
+<div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 flex justify-between items-center">
+<h4 class="font-semibold text-slate-900 dark:text-white">KPIs Ativos</h4>
+<span class="text-xs text-slate-500">5 Indicadores</span>
+</div>
+<div class="divide-y divide-slate-100 dark:divide-slate-800">
+<!-- Item 1 -->
+<div class="p-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<div class="flex items-center gap-4">
+<div class="p-2 rounded-lg bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400">
+<span class="material-symbols-outlined">category</span>
+</div>
+<div>
+<p class="font-medium text-slate-900 dark:text-slate-100">Presença de Mix</p>
+<p class="text-xs text-slate-500">Obrigatório em todas as lojas</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<input class="w-24 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white text-right rounded-lg focus:ring-primary focus:border-primary block p-2.5 font-bold" max="100" min="0" type="number" value="30"/>
+<span class="absolute right-8 top-1/2 -translate-y-1/2 text-slate-400 text-sm font-medium">%</span>
+</div>
+<div class="w-32 h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-blue-500 rounded-full" style="width: 30%"></div>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="p-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<div class="flex items-center gap-4">
+<div class="p-2 rounded-lg bg-indigo-100 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div>
+<p class="font-medium text-slate-900 dark:text-slate-100">Coleta de Preço</p>
+<p class="text-xs text-slate-500">Monitoramento de concorrentes</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<input class="w-24 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white text-right rounded-lg focus:ring-primary focus:border-primary block p-2.5 font-bold" max="100" min="0" type="number" value="25"/>
+<span class="absolute right-8 top-1/2 -translate-y-1/2 text-slate-400 text-sm font-medium">%</span>
+</div>
+<div class="w-32 h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-indigo-500 rounded-full" style="width: 25%"></div>
+</div>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="p-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<div class="flex items-center gap-4">
+<div class="p-2 rounded-lg bg-rose-100 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400">
+<span class="material-symbols-outlined">production_quantity_limits</span>
+</div>
+<div>
+<p class="font-medium text-slate-900 dark:text-slate-100">Registro de Ruptura</p>
+<p class="text-xs text-slate-500">Alertas de estoque crítico</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<input class="w-24 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white text-right rounded-lg focus:ring-primary focus:border-primary block p-2.5 font-bold" max="100" min="0" type="number" value="20"/>
+<span class="absolute right-8 top-1/2 -translate-y-1/2 text-slate-400 text-sm font-medium">%</span>
+</div>
+<div class="w-32 h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-rose-500 rounded-full" style="width: 20%"></div>
+</div>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="p-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<div class="flex items-center gap-4">
+<div class="p-2 rounded-lg bg-amber-100 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400">
+<span class="material-symbols-outlined">add_a_photo</span>
+</div>
+<div>
+<p class="font-medium text-slate-900 dark:text-slate-100">Qualidade de Foto</p>
+<p class="text-xs text-slate-500">Validação visual de gôndola</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<input class="w-24 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white text-right rounded-lg focus:ring-primary focus:border-primary block p-2.5 font-bold" max="100" min="0" type="number" value="15"/>
+<span class="absolute right-8 top-1/2 -translate-y-1/2 text-slate-400 text-sm font-medium">%</span>
+</div>
+<div class="w-32 h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-amber-500 rounded-full" style="width: 15%"></div>
+</div>
+</div>
+</div>
+<!-- Item 5 -->
+<div class="p-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<div class="flex items-center gap-4">
+<div class="p-2 rounded-lg bg-teal-100 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400">
+<span class="material-symbols-outlined">schedule</span>
+</div>
+<div>
+<p class="font-medium text-slate-900 dark:text-slate-100">Pontualidade/Check-in</p>
+<p class="text-xs text-slate-500">Conformidade de rota</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<input class="w-24 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white text-right rounded-lg focus:ring-primary focus:border-primary block p-2.5 font-bold" max="100" min="0" type="number" value="10"/>
+<span class="absolute right-8 top-1/2 -translate-y-1/2 text-slate-400 text-sm font-medium">%</span>
+</div>
+<div class="w-32 h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-teal-500 rounded-full" style="width: 10%"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="px-6 py-4 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center">
+<span class="text-sm font-medium text-slate-600 dark:text-slate-400">Total Configurado</span>
+<div class="flex items-center gap-2">
+<span class="text-lg font-bold text-slate-900 dark:text-white">100%</span>
+<span class="material-symbols-outlined text-emerald-500 text-xl">check_circle</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 2: Simulator -->
+<div class="lg:col-span-1 flex flex-col h-full">
+<div class="bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl border border-slate-700 p-6 flex flex-col h-full shadow-lg relative overflow-hidden">
+<!-- Background Pattern -->
+<div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0); background-size: 20px 20px;"></div>
+<h4 class="font-semibold text-white mb-6 flex items-center gap-2 relative z-10">
+<span class="material-symbols-outlined">analytics</span>
+                                Simulador de Impacto
+                            </h4>
+<div class="flex-1 flex flex-col gap-6 relative z-10">
+<div class="flex flex-col gap-2">
+<p class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Nota Média Atual</p>
+<div class="flex items-baseline gap-2">
+<span class="text-4xl font-black text-white">8.4</span>
+<span class="text-sm text-slate-400">/ 10</span>
+</div>
+</div>
+<div class="h-px bg-slate-700 w-full"></div>
+<div class="flex flex-col gap-4">
+<p class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Projeção com novos pesos</p>
+<div class="flex items-center justify-between">
+<span class="text-sm text-slate-300">Nota Estimada</span>
+<span class="text-xl font-bold text-white">8.6 <span class="text-xs font-normal text-emerald-400 ml-1">(+0.2)</span></span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm text-slate-300">Lojas "Perfect Store"</span>
+<span class="text-xl font-bold text-white">142 <span class="text-xs font-normal text-emerald-400 ml-1">(+12)</span></span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm text-slate-300">Desvio Padrão</span>
+<span class="text-xl font-bold text-white">1.2 <span class="text-xs font-normal text-rose-400 ml-1">(-0.1)</span></span>
+</div>
+</div>
+<div class="mt-auto bg-slate-800/50 rounded-lg p-3 border border-slate-700">
+<div class="flex gap-2 items-start">
+<span class="material-symbols-outlined text-amber-400 text-sm mt-0.5">lightbulb</span>
+<p class="text-xs text-slate-300 leading-relaxed">
+                                            Aumentar o peso de "Presença de Mix" tende a elevar a nota média em lojas de grande porte (Hipermercados).
+                                        </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer / History hint -->
+<div class="flex justify-center mt-4">
+<p class="text-xs text-slate-400 dark:text-slate-600">Última alteração em 12/10/2023 por <span class="font-medium text-slate-500 dark:text-slate-500">Roberta Silva (Gerente Trade)</span></p>
+</div>
+</div>
+</div>
+</main>
+</body></html>

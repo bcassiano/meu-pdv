@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Comparativo Visual de Gôndola Web</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0a47c2",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for better look in dark mode */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #475569; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-hidden">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Sidebar -->
+<aside class="flex w-64 flex-col bg-[#1E293B] border-r border-slate-700/50 shrink-0 z-20 transition-all duration-300">
+<div class="flex h-full flex-col justify-between p-4">
+<div class="flex flex-col gap-6">
+<!-- User Profile -->
+<div class="flex gap-3 items-center pb-4 border-b border-slate-700/50">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 shrink-0 border-2 border-primary/50" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCRLv_5fLqSJ9Aty2Dy2DjaS3m2QA87jhAzgyFJpSgE59cP7v27QkCL8WUz16rfvNZmtpUDYue9K6GgqXVmN7S3UQ30pxAAn6mqRPqb1ZzSBLPRdjiT2_QhOea4rMrstGK5EXiBJRKEVMTYQ3_Jqxrn1r9P2vFMxCArcqc4QOAOKLIjo5ZBdGMYb-MRKI0Ou0zZKHURdSYza3fjmkBt05dm-5zCloCKdFr3AeJWMHoQQ7luCDy5w3D4krfz3skIzUVubbd4mxf5tZA");'></div>
+<div class="flex flex-col overflow-hidden">
+<h1 class="text-white text-sm font-semibold leading-tight truncate">Carlos Silva</h1>
+<p class="text-slate-400 text-xs font-medium leading-tight truncate">Coordenador Trade</p>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white transition-colors">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white transition-colors">assignment</span>
+<span class="text-sm font-medium">Auditoria</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary text-white shadow-lg shadow-primary/20 transition-colors group" href="#">
+<span class="material-symbols-outlined text-white">photo_camera</span>
+<span class="text-sm font-medium">Comparativo</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white transition-colors">storefront</span>
+<span class="text-sm font-medium">PDVs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white transition-colors">description</span>
+<span class="text-sm font-medium">Relatórios</span>
+</a>
+</nav>
+</div>
+<!-- Bottom Actions -->
+<div class="flex flex-col gap-2 mt-auto">
+<button class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors w-full text-left">
+<span class="material-symbols-outlined text-slate-400">settings</span>
+<span class="text-sm font-medium">Configurações</span>
+</button>
+<button class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-red-900/20 hover:text-red-400 transition-colors w-full text-left">
+<span class="material-symbols-outlined text-slate-400 hover:text-red-400">logout</span>
+<span class="text-sm font-medium">Sair</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full bg-background-light dark:bg-background-dark overflow-hidden relative">
+<!-- Header / Filters -->
+<header class="bg-white dark:bg-[#1E293B] border-b border-slate-200 dark:border-slate-700/50 p-6 flex flex-col gap-6 shrink-0 z-10 shadow-sm">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h2 class="text-2xl font-bold text-slate-800 dark:text-white tracking-tight">Comparativo de Gôndola</h2>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Auditoria visual de execução no ponto de venda</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-lg text-slate-700 dark:text-slate-200 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">file_download</span>
+                        Exportar Relatório
+                    </button>
+</div>
+</div>
+<!-- Filters Bar -->
+<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+<div class="flex flex-col gap-1.5">
+<label class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Ponto de Venda (PDV)</label>
+<div class="relative">
+<select class="w-full appearance-none bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-600 text-slate-900 dark:text-white text-sm rounded-lg focus:ring-primary focus:border-primary block p-2.5 pr-10">
+<option>Supermercado Central - Loja 01</option>
+<option>Hipermercado Norte</option>
+<option>Express Market Sul</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Data da Auditoria</label>
+<div class="relative">
+<input class="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-600 text-slate-900 dark:text-white text-sm rounded-lg focus:ring-primary focus:border-primary block p-2.5 [color-scheme:dark]" type="date" value="2023-10-24"/>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Categoria</label>
+<div class="relative">
+<select class="w-full appearance-none bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-600 text-slate-900 dark:text-white text-sm rounded-lg focus:ring-primary focus:border-primary block p-2.5 pr-10">
+<option>Bebidas Não Alcoólicas</option>
+<option>Higiene e Beleza</option>
+<option>Mercearia Doce</option>
+<option>Limpeza</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Status</label>
+<div class="flex items-center h-[42px]">
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+<span class="size-2 rounded-full bg-emerald-500"></span>
+                            Conforme
+                         </span>
+</div>
+</div>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-6 scroll-smooth">
+<div class="flex flex-col gap-8 max-w-7xl mx-auto pb-10">
+<!-- Comparison Card 1 -->
+<div class="flex flex-col bg-white dark:bg-[#1E293B] rounded-xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-700/50">
+<div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700/50 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/30">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400">shelves</span>
+<h3 class="font-semibold text-slate-800 dark:text-slate-200">Corredor 04 - Refrigerantes</h3>
+</div>
+<button class="text-primary hover:text-primary/80 text-sm font-medium flex items-center gap-1 transition-colors group">
+<span class="material-symbols-outlined text-lg group-hover:scale-110 transition-transform">zoom_in</span>
+                            Zoom Comparativo
+                        </button>
+</div>
+<div class="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6 relative">
+<!-- Before Image -->
+<div class="flex flex-col gap-3 group/image">
+<div class="relative aspect-video w-full rounded-lg overflow-hidden bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-inner">
+<div class="absolute top-3 left-3 z-10 bg-red-500/90 text-white text-[10px] font-bold px-2.5 py-1 rounded shadow-sm backdrop-blur-sm tracking-wide">
+                                    ANTES
+                                </div>
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover/image:scale-105" data-alt="Disorganized supermarket shelf with soda bottles" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAAYAiK6iN-cU_N71dH98SBPVkP71OjYipt795GzIz_1WSqAWRoRxAD7hOxwywDUwY3ExdTiyawTc1JhaU-pn8KYoMQh3Tl-yhwL3d6uGVQzVCX8RVCxfd6usVQY0JSo3cVTUiajLLStlJfObPJG07lvKQVMM9gWQEzRhItVO4g-DyMEyLbUR0xfZ0yNH0mMEwKvdDfCMhF3lkSB97ZyEMMBiBgy66qtW-E4Tj4ljwQzNT1OdcmSwri3Lc4JnQjGh7zQOfxTbE7sbQ');"></div>
+</div>
+<div class="flex flex-col gap-1 px-1">
+<div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>Capturado às 08:15</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[16px]">person</span>
+<span>Promotor Chegada</span>
+</div>
+</div>
+</div>
+<!-- Divider Arrow (Visual connector for desktop) -->
+<div class="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 bg-white dark:bg-slate-800 rounded-full p-2 border border-slate-200 dark:border-slate-600 shadow-lg text-slate-400">
+<span class="material-symbols-outlined">arrow_forward</span>
+</div>
+<!-- After Image -->
+<div class="flex flex-col gap-3 group/image">
+<div class="relative aspect-video w-full rounded-lg overflow-hidden bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-inner">
+<div class="absolute top-3 right-3 z-10 bg-emerald-500/90 text-white text-[10px] font-bold px-2.5 py-1 rounded shadow-sm backdrop-blur-sm tracking-wide">
+                                    DEPOIS
+                                </div>
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover/image:scale-105" data-alt="Organized supermarket shelf with fully stocked soda bottles" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCRXZY2oWDliyxq8BkpWP_49aNTI7aV_lJP0Tu52hXJADvEP_gc1JuvOj4Z-b3jeKZ0CLOlgSRJ3rSm2wDUpsSxZZ9IKssoNpCdd-ad9Iac-5e54e9WPrPR6zN_tGB-BPGWbOtJBs99q2LLjaYCjsCAyRiTXu4JZAPpD7hjbaDoDm-fbgIoU7BmGhxV-LHPBTn_lRO0IQmbO_KM2JuwjA0f7Lge_9_lqdX0hWOgY5xgW7vdaRzUEra5CqT-ElsxRI2q7PhDSSdLkxE');"></div>
+</div>
+<div class="flex flex-col gap-1 px-1">
+<div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>Capturado às 09:45</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[16px]">badge</span>
+<span>Promotor: João Mendes</span>
+</div>
+</div>
+</div>
+</div>
+<!-- KPI Summary footer -->
+<div class="px-6 py-3 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-200 dark:border-slate-700/50 flex gap-6 text-xs text-slate-600 dark:text-slate-400">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span>Share de Gôndola: <strong>35%</strong> (+2%)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-blue-500"></span>
+<span>Ruptura: <strong>0%</strong> (Resolvido)</span>
+</div>
+</div>
+</div>
+<!-- Comparison Card 2 -->
+<div class="flex flex-col bg-white dark:bg-[#1E293B] rounded-xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-700/50">
+<div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700/50 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/30">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400">shelves</span>
+<h3 class="font-semibold text-slate-800 dark:text-slate-200">Ponta de Gôndola - Promoção</h3>
+</div>
+<button class="text-primary hover:text-primary/80 text-sm font-medium flex items-center gap-1 transition-colors group">
+<span class="material-symbols-outlined text-lg group-hover:scale-110 transition-transform">zoom_in</span>
+                            Zoom Comparativo
+                        </button>
+</div>
+<div class="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6 relative">
+<!-- Before Image -->
+<div class="flex flex-col gap-3 group/image">
+<div class="relative aspect-video w-full rounded-lg overflow-hidden bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-inner">
+<div class="absolute top-3 left-3 z-10 bg-red-500/90 text-white text-[10px] font-bold px-2.5 py-1 rounded shadow-sm backdrop-blur-sm tracking-wide">
+                                    ANTES
+                                </div>
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover/image:scale-105" data-alt="Partially empty shelf in a store aisle" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDNGWSxNLy5s6vGHre9_PAD8tFkk94Xp9aP69cMOvU-n2WcIaGovxW4GZdVskE1OmTdqyb_-z5Hpz6RtsKHXgFpv-Fs6IlVNk0NKd-42rKJI5aKEc1vbFDKAcfesEA1cnvu2KfSEVqrvQYtzeMnCEV12dG71excRbdKh4TBmdRonPEuBfCxM61PxPxqa9FCtnL6yuCQ3F6RADf2BIRd3_QMzHWFWENTrj3AYcfMsmdsNg-4N1tQ0wV5ABYbJexF5ziH5AvLvH1ml7M');"></div>
+</div>
+<div class="flex flex-col gap-1 px-1">
+<div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>Capturado às 08:20</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[16px]">person</span>
+<span>Promotor Chegada</span>
+</div>
+</div>
+</div>
+<!-- Divider Arrow -->
+<div class="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 bg-white dark:bg-slate-800 rounded-full p-2 border border-slate-200 dark:border-slate-600 shadow-lg text-slate-400">
+<span class="material-symbols-outlined">arrow_forward</span>
+</div>
+<!-- After Image -->
+<div class="flex flex-col gap-3 group/image">
+<div class="relative aspect-video w-full rounded-lg overflow-hidden bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-inner">
+<div class="absolute top-3 right-3 z-10 bg-emerald-500/90 text-white text-[10px] font-bold px-2.5 py-1 rounded shadow-sm backdrop-blur-sm tracking-wide">
+                                    DEPOIS
+                                </div>
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover/image:scale-105" data-alt="Fully stocked and organized grocery shelf" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAsW9rtLCrLvf9-w7huMaRhDBE0QDWZvRV06cPQUYa2DSMOL2z5zwbfWBx2ucIz0f7Qj_P37QlUd1Naicfa1sSw5Av4v3O0OJj9iogbp7rNpYfIsn464Z-i8Ld7_Jmhk1zmzGRjHCqjX8WcumRBQDlQKz31cKgm2P-dlRC1XyBaBjRKJFQTGJNhhi_6QI9Nl7BWMCX4LSpcbt4T_kmXdegu7aKot4yWzRDZiR9CoATYjP9IgsQ40_7KvAIFCroPvhoDd3A3Md2fXq8');"></div>
+</div>
+<div class="flex flex-col gap-1 px-1">
+<div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>Capturado às 10:15</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[16px]">badge</span>
+<span>Promotor: João Mendes</span>
+</div>
+</div>
+</div>
+</div>
+<div class="px-6 py-3 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-200 dark:border-slate-700/50 flex gap-6 text-xs text-slate-600 dark:text-slate-400">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span>Precificação: <strong>100%</strong> Correta</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

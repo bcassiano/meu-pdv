@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Painel de Auditoria Web</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0d59f2",
+                        "primary-content": "#ffffff",
+                        "primary-dark": "#0b4bc6",
+                        "secondary": "#475569",
+                        "secondary-content": "#f1f5f9",
+                        "accent": "#3b82f6",
+                        "neutral": "#3d4451",
+                        "base-100": "#ffffff",
+                        "base-200": "#f8fafc",
+                        "base-300": "#e2e8f0",
+                        "success": "#22c55e",
+                        "warning": "#f59e0b",
+                        "error": "#ef4444",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-base-200 text-slate-900 min-h-screen flex overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 bg-slate-800 text-slate-100 flex flex-col h-screen fixed left-0 top-0 z-20 shadow-xl transition-all duration-300">
+<!-- Logo / User Profile -->
+<div class="p-6 border-b border-slate-700 bg-slate-900/50">
+<div class="flex items-center gap-3">
+<div class="relative w-10 h-10 rounded-full overflow-hidden bg-slate-700 border-2 border-slate-600">
+<img alt="Avatar do usuário" class="w-full h-full object-cover" data-alt="User avatar profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyb4gLtq4xEjvuiL2PetkE2bFDzLpYIuko6-GmWafhRMu0j704jWyEasm4XOaRz81IdOaABJgO-OG0uFCPUNC4SHaytG2my38_K5IIMg7j5Hl-Gl5x6QQWFpfn0ROxF4BjN-87sio6li7ilbPTZvJqRBksRyUv07gX955nU9i93I8XCltJ0IesF4qyzegEFUjzaQaQc_XQVfYIKtT0sOlknPRwD_gRxK4-KaQgIox6HgvgN99YzU8T0LX3n7uU_FSdp4uUa-wZrjA"/>
+</div>
+<div class="flex flex-col">
+<h2 class="text-sm font-semibold tracking-wide">Painel Gerência</h2>
+<p class="text-xs text-slate-400">Coordenador Regional</p>
+</div>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex-1 overflow-y-auto py-4 px-3 space-y-1">
+<!-- Group: Cadastros -->
+<div class="mb-4">
+<p class="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Cadastros</p>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">group</span>
+<span class="text-sm font-medium">Promotores</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">storefront</span>
+<span class="text-sm font-medium">Lojas (PDVs)</span>
+</a>
+</div>
+<!-- Group: Auditoria -->
+<div class="mb-4">
+<p class="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Operação</p>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/20 text-primary-content border-l-4 border-primary" href="#">
+<span class="material-symbols-outlined text-primary">playlist_add_check</span>
+<span class="text-sm font-medium text-white">Auditoria PDV</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">map</span>
+<span class="text-sm font-medium">Rota em Mapa</span>
+</a>
+</div>
+<!-- Group: Relatórios -->
+<div>
+<p class="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Analytics</p>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">bar_chart</span>
+<span class="text-sm font-medium">Desempenho</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">download</span>
+<span class="text-sm font-medium">Exportar Dados</span>
+</a>
+</div>
+</nav>
+<!-- Footer Actions -->
+<div class="p-4 border-t border-slate-700">
+<button class="flex w-full items-center justify-center gap-2 rounded-lg bg-slate-700/50 py-2 text-sm font-medium text-slate-300 hover:bg-slate-700 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">logout</span>
+                Sair
+            </button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="ml-64 flex-1 flex flex-col h-screen overflow-hidden bg-base-200">
+<!-- Header -->
+<header class="h-16 bg-white border-b border-base-300 flex items-center justify-between px-8 shadow-sm z-10">
+<div class="flex items-center gap-4">
+<h1 class="text-xl font-bold text-slate-800">Auditoria de PDVs</h1>
+<span class="px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 text-xs font-medium border border-blue-100">Atualizado agora</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="relative p-2 text-slate-500 hover:bg-slate-100 rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
+</button>
+<button class="relative p-2 text-slate-500 hover:bg-slate-100 rounded-full transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Content Area -->
+<div class="flex-1 overflow-auto p-8">
+<div class="max-w-7xl mx-auto flex flex-col gap-6">
+<!-- Header Section & Filters -->
+<div class="flex flex-col gap-4">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div>
+<p class="text-slate-500 text-sm">Gerencie e acompanhe as atividades dos promotores em tempo real.</p>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 shadow-sm transition-all">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                                Filtros Avançados
+                            </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-primary-dark shadow-sm hover:shadow transition-all">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                                Nova Auditoria
+                            </button>
+</div>
+</div>
+<!-- Quick Filters Bar -->
+<div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-wrap items-center gap-3">
+<div class="flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200 flex-1 min-w-[200px]">
+<span class="material-symbols-outlined text-slate-400 text-[20px]">search</span>
+<input class="bg-transparent border-none text-sm w-full focus:ring-0 p-0 text-slate-700 placeholder:text-slate-400" placeholder="Buscar por promotor ou loja..." type="text"/>
+</div>
+<div class="h-8 w-px bg-slate-200 mx-2 hidden md:block"></div>
+<div class="relative group">
+<button class="flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-sm text-slate-600 hover:border-primary hover:text-primary transition-colors min-w-[140px] justify-between">
+<span>Estado (UF)</span>
+<span class="material-symbols-outlined text-[18px]">expand_more</span>
+</button>
+</div>
+<div class="relative group">
+<button class="flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-sm text-slate-600 hover:border-primary hover:text-primary transition-colors min-w-[140px] justify-between">
+<span>Rede</span>
+<span class="material-symbols-outlined text-[18px]">expand_more</span>
+</button>
+</div>
+<div class="relative group">
+<button class="flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-sm text-slate-600 hover:border-primary hover:text-primary transition-colors min-w-[140px] justify-between">
+<span>Loja</span>
+<span class="material-symbols-outlined text-[18px]">expand_more</span>
+</button>
+</div>
+<div class="relative group ml-auto">
+<button class="flex items-center gap-2 px-3 py-1.5 text-sm text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">restart_alt</span>
+                                Limpar
+                            </button>
+</div>
+</div>
+</div>
+<!-- Data Table Container -->
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 border-b border-slate-200">
+<th class="py-4 px-6 text-xs font-semibold uppercase tracking-wider text-slate-500 w-[20%]">Promotor</th>
+<th class="py-4 px-6 text-xs font-semibold uppercase tracking-wider text-slate-500 w-[20%]">Loja / Rede</th>
+<th class="py-4 px-6 text-xs font-semibold uppercase tracking-wider text-slate-500 w-[15%]">Status</th>
+<th class="py-4 px-6 text-xs font-semibold uppercase tracking-wider text-slate-500 w-[25%]">
+<div class="flex items-center gap-1">
+                                            Check-in/Out (GPS)
+                                            <span class="material-symbols-outlined text-[16px]" title="Baseado na localização do dispositivo">info</span>
+</div>
+</th>
+<th class="py-4 px-6 text-xs font-semibold uppercase tracking-wider text-slate-500 text-right w-[15%]">Ações</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 transition-colors group">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-xs">JS</div>
+<div>
+<p class="text-sm font-medium text-slate-900">João Silva</p>
+<p class="text-xs text-slate-500">ID: 4821</p>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<p class="text-sm text-slate-900 font-medium">Carrefour Bairro</p>
+<p class="text-xs text-slate-500">Jardins, SP</p>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">
+<span class="w-1.5 h-1.5 rounded-full bg-green-600 mr-1.5"></span>
+                                            Sincronizado
+                                        </span>
+</td>
+<td class="py-4 px-6">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 text-xs text-slate-700">
+<span class="material-symbols-outlined text-[16px] text-green-600">login</span>
+                                                10:00 - <span class="text-slate-500">R. Pamplona, 120</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-slate-700">
+<span class="material-symbols-outlined text-[16px] text-red-500">logout</span>
+                                                11:30 - <span class="text-slate-500">R. Pamplona, 120</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors p-1.5 rounded hover:bg-primary/10">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+<button class="text-slate-400 hover:text-slate-700 transition-colors p-1.5 rounded hover:bg-slate-100">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 transition-colors group">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold text-xs">MO</div>
+<div>
+<p class="text-sm font-medium text-slate-900">Maria Oliveira</p>
+<p class="text-xs text-slate-500">ID: 9932</p>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<p class="text-sm text-slate-900 font-medium">Pão de Açúcar</p>
+<p class="text-xs text-slate-500">Copacabana, RJ</p>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 border border-yellow-200">
+<span class="w-1.5 h-1.5 rounded-full bg-yellow-600 mr-1.5 animate-pulse"></span>
+                                            Pendente
+                                        </span>
+</td>
+<td class="py-4 px-6">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 text-xs text-slate-700">
+<span class="material-symbols-outlined text-[16px] text-green-600">login</span>
+                                                09:15 - <span class="text-slate-500">Av. Atlântica, 200</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-slate-400">
+<span class="material-symbols-outlined text-[16px]">logout</span>
+                                                --:--
+                                            </div>
+</div>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors p-1.5 rounded hover:bg-primary/10">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+<button class="text-slate-400 hover:text-slate-700 transition-colors p-1.5 rounded hover:bg-slate-100">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 transition-colors group">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold text-xs">CS</div>
+<div>
+<p class="text-sm font-medium text-slate-900">Carlos Souza</p>
+<p class="text-xs text-slate-500">ID: 1102</p>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<p class="text-sm text-slate-900 font-medium">Extra Hiper</p>
+<p class="text-xs text-slate-500">Morumbi, SP</p>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 border border-red-200">
+<span class="w-1.5 h-1.5 rounded-full bg-red-600 mr-1.5"></span>
+                                            Erro Sync
+                                        </span>
+</td>
+<td class="py-4 px-6">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 text-xs text-slate-700">
+<span class="material-symbols-outlined text-[16px] text-green-600">login</span>
+                                                13:00 - <span class="text-slate-500">Av. Morumbi, 5000</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-slate-700">
+<span class="material-symbols-outlined text-[16px] text-red-500">logout</span>
+                                                14:20 - <span class="text-red-500 font-medium">Localização Divergente (5km)</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors p-1.5 rounded hover:bg-primary/10">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+<button class="text-slate-400 hover:text-slate-700 transition-colors p-1.5 rounded hover:bg-slate-100">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 transition-colors group">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-teal-100 flex items-center justify-center text-teal-600 font-bold text-xs">AC</div>
+<div>
+<p class="text-sm font-medium text-slate-900">Ana Costa</p>
+<p class="text-xs text-slate-500">ID: 3341</p>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<p class="text-sm text-slate-900 font-medium">Walmart</p>
+<p class="text-xs text-slate-500">Alphaville, SP</p>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">
+<span class="w-1.5 h-1.5 rounded-full bg-green-600 mr-1.5"></span>
+                                            Sincronizado
+                                        </span>
+</td>
+<td class="py-4 px-6">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 text-xs text-slate-700">
+<span class="material-symbols-outlined text-[16px] text-green-600">login</span>
+                                                08:00 - <span class="text-slate-500">Al. Rio Negro, 500</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-slate-700">
+<span class="material-symbols-outlined text-[16px] text-red-500">logout</span>
+                                                09:30 - <span class="text-slate-500">Al. Rio Negro, 500</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors p-1.5 rounded hover:bg-primary/10">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+<button class="text-slate-400 hover:text-slate-700 transition-colors p-1.5 rounded hover:bg-slate-100">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-slate-50 transition-colors group">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-xs">PS</div>
+<div>
+<p class="text-sm font-medium text-slate-900">Pedro Santos</p>
+<p class="text-xs text-slate-500">ID: 5521</p>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<p class="text-sm text-slate-900 font-medium">Dia Supermercado</p>
+<p class="text-xs text-slate-500">Centro, SP</p>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">
+<span class="w-1.5 h-1.5 rounded-full bg-green-600 mr-1.5"></span>
+                                            Sincronizado
+                                        </span>
+</td>
+<td class="py-4 px-6">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 text-xs text-slate-700">
+<span class="material-symbols-outlined text-[16px] text-green-600">login</span>
+                                                15:00 - <span class="text-slate-500">R. Direita, 40</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-slate-700">
+<span class="material-symbols-outlined text-[16px] text-red-500">logout</span>
+                                                16:15 - <span class="text-slate-500">R. Direita, 40</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors p-1.5 rounded hover:bg-primary/10">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+<button class="text-slate-400 hover:text-slate-700 transition-colors p-1.5 rounded hover:bg-slate-100">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="bg-white px-6 py-4 border-t border-slate-200 flex items-center justify-between">
+<div class="text-sm text-slate-500">
+                            Mostrando <span class="font-medium text-slate-900">1</span> a <span class="font-medium text-slate-900">5</span> de <span class="font-medium text-slate-900">248</span> resultados
+                        </div>
+<div class="flex items-center gap-2">
+<button class="flex items-center justify-center w-8 h-8 rounded-lg border border-slate-200 text-slate-400 hover:bg-slate-50 hover:text-slate-600 disabled:opacity-50 disabled:cursor-not-allowed" disabled="">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary text-white text-sm font-medium">1</button>
+<button class="flex items-center justify-center w-8 h-8 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-800 text-sm font-medium">2</button>
+<button class="flex items-center justify-center w-8 h-8 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-800 text-sm font-medium">3</button>
+<span class="text-slate-400 px-1">...</span>
+<button class="flex items-center justify-center w-8 h-8 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-800 text-sm font-medium">12</button>
+<button class="flex items-center justify-center w-8 h-8 rounded-lg border border-slate-200 text-slate-400 hover:bg-slate-50 hover:text-slate-600">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

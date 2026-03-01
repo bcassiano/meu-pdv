@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Interface de Captura de Foto PWA</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for dark mode feeling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101922;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display flex flex-col h-screen overflow-hidden">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111a22] px-4 py-3 shrink-0 z-20">
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Captura de Gôndola</h2>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center justify-center overflow-hidden rounded-lg size-10 bg-slate-100 dark:bg-[#233648] text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-[#2f455a] transition-colors">
+<span class="material-symbols-outlined" style="font-size: 20px;">flash_on</span>
+</button>
+<button class="flex items-center justify-center overflow-hidden rounded-lg size-10 bg-slate-100 dark:bg-[#233648] text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-[#2f455a] transition-colors">
+<span class="material-symbols-outlined" style="font-size: 20px;">signal_cellular_alt</span>
+</button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col relative w-full h-full overflow-hidden bg-black">
+<!-- Status Indicator -->
+<div class="absolute top-4 left-0 right-0 z-10 flex justify-center pointer-events-none">
+<div class="bg-black/60 backdrop-blur-sm text-white/90 px-3 py-1 rounded-full text-xs font-medium border border-white/10 flex items-center gap-1.5 shadow-lg">
+<span class="material-symbols-outlined text-green-400" style="font-size: 14px;">check_circle</span>
+                Qualidade Otimizada (150kb)
+            </div>
+</div>
+<!-- Camera Viewport / Preview -->
+<div class="relative flex-1 bg-neutral-900 w-full flex items-center justify-center overflow-hidden group">
+<!-- Placeholder for Camera Feed -->
+<div class="absolute inset-0 bg-cover bg-center opacity-80" data-alt="Supermarket shelf stocked with various products view from camera preview" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBz4Hdv5SAfiQ0MFIdtpIu5ODrPkHpb8XZo6b8FQZ35Ty-UJZ-hk6StQiq35ppB7UN0TlE-KfD4OEV-LC4-WA8b4caQaOTkrkHlxUTQ87uvibyOijkI4qg7aypcq70nKCUVNRKpxIvYcI1v8Xo73qV7sEz5Is4hCq1qFC5T9CNMe8o2au1TodiQd_yLCoflR0uuErBQu7gPZQHt09Te94ky_2KAtPGM9Bt0OV8nj1UGnViZGQyfoqx9bYhNGRCmBGPDeiXUjkvu_V0');"></div>
+<!-- Grid Overlay (Rule of Thirds / Alignment) -->
+<div class="absolute inset-0 pointer-events-none opacity-30">
+<div class="w-full h-full grid grid-cols-3 grid-rows-3">
+<div class="border-r border-b border-white/40"></div>
+<div class="border-r border-b border-white/40"></div>
+<div class="border-b border-white/40"></div>
+<div class="border-r border-b border-white/40"></div>
+<div class="border-r border-b border-white/40"></div>
+<div class="border-b border-white/40"></div>
+<div class="border-r border-white/40"></div>
+<div class="border-r border-white/40"></div>
+<div></div>
+</div>
+</div>
+<!-- Central Focus Reticle -->
+<div class="absolute inset-0 pointer-events-none flex items-center justify-center">
+<div class="size-64 border-2 border-primary/50 rounded-lg relative">
+<div class="absolute -top-1 -left-1 w-4 h-4 border-t-4 border-l-4 border-primary"></div>
+<div class="absolute -top-1 -right-1 w-4 h-4 border-t-4 border-r-4 border-primary"></div>
+<div class="absolute -bottom-1 -left-1 w-4 h-4 border-b-4 border-l-4 border-primary"></div>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 border-b-4 border-r-4 border-primary"></div>
+</div>
+</div>
+<!-- Capture Feedback Message (Hidden by default) -->
+<!-- <div class="absolute bottom-20 bg-emerald-500 text-white px-4 py-2 rounded shadow-lg animate-bounce">
+                Foto salva!
+            </div> -->
+</div>
+<!-- Bottom Controls Bar -->
+<div class="bg-[#111a22] border-t border-slate-800 p-6 pb-8 shrink-0 flex items-center justify-between relative z-20 gap-4">
+<!-- Left: Gallery / Last Photo -->
+<div class="flex-1 flex justify-start">
+<button class="relative group cursor-pointer">
+<div class="w-12 h-12 rounded-lg bg-slate-800 border-2 border-slate-600 overflow-hidden relative">
+<div class="w-full h-full bg-cover bg-center opacity-70 group-hover:opacity-100 transition-opacity" data-alt="Thumbnail of the last captured photo showing shelves" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBzpeBQNxEKOMqIJWzrWjA-f6EY02e0wbW6KtQqz9O63KATRyz82TmFYkklubGkl9WiHn_uG1uVi8GP5zxM4DvOQp9E3Y715l1YAG2-RbItaR4_b4CuPjmqu7qOh68pZW_ytopLps4AGPZ30svpVj0OrLC2mkbaulVZs0DwDMoHjnOeME_bV5Zop-nxvwyY-mQJPNENfgoLguHl_ZQn5lkS7LxCaHk6o5S6Bwe43Zf-ZChYJ-bOQ-vJYznr5JdjbYCmQUzhWRw-VRg');"></div>
+</div>
+<div class="absolute -top-2 -right-2 bg-primary text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-[#111a22]">
+                        12
+                    </div>
+</button>
+</div>
+<!-- Center: Shutter Button -->
+<div class="flex-0 flex items-center justify-center">
+<button class="relative group cursor-pointer transform active:scale-95 transition-transform duration-100">
+<!-- Outer Ring -->
+<div class="w-20 h-20 rounded-full border-4 border-white/20 group-hover:border-white/40 transition-colors flex items-center justify-center">
+<!-- Inner Circle -->
+<div class="w-16 h-16 rounded-full bg-white shadow-lg flex items-center justify-center">
+<!-- Optional Icon inside, usually empty for shutter -->
+<span class="material-symbols-outlined text-primary group-active:text-primary/80" style="font-size: 32px;">photo_camera</span>
+</div>
+</div>
+</button>
+</div>
+<!-- Right: Secondary Action (Finish/Upload) -->
+<div class="flex-1 flex justify-end">
+<button class="flex items-center justify-center w-12 h-12 rounded-full bg-slate-800 text-white hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined">check</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Offline Status Bar (Optional for PWA context) -->
+<div class="bg-amber-500 text-amber-950 text-xs font-semibold py-1 px-4 text-center hidden">
+        Modo Offline • Fotos serão sincronizadas quando reconectar
+    </div>
+</body></html>
