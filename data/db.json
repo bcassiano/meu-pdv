@@ -1,0 +1,19 @@
+{
+  "usuarios": [
+    {
+      "id": "0a9843a5-57be-4db9-b0dc-19de052efa59",
+      "createdAt": "2026-03-02T19:31:10.239Z",
+      "nome": "Bruno Cassiano",
+      "login": "bruno.cassiano",
+      "email": "bruno.cassiano@fantasticoalimentos.com.br",
+      "senha": "Mudar@123",
+      "push": "",
+      "version": "",
+      "imei": "",
+      "idioma": "pt",
+      "tipo": "adm",
+      "equipe": "",
+      "ativo": true
+    }
+  ]
+}

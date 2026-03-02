@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Sidebar from "@/components/Sidebar";
+import Header from "@/components/Header";
 
 export default function PermissoesPerfilPage() {
     const [selectedProfile, setSelectedProfile] = useState("Administrador");
@@ -40,36 +41,15 @@ export default function PermissoesPerfilPage() {
 
             <main className="flex-1 flex flex-col h-screen overflow-hidden">
                 {/* Top Navigation (Admin Console Header) */}
-                <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#232f48] bg-[#1a2332] px-10 py-3 sticky top-0 z-50 shrink-0">
-                    <div className="flex items-center gap-8">
-                        <div className="flex items-center gap-4 text-white">
-                            <div className="size-8 text-[#1152d4]">
-                                <span className="material-symbols-outlined text-[32px]">admin_panel_settings</span>
-                            </div>
-                            <h2 className="text-white text-lg font-bold leading-tight tracking-[-0.015em]">Admin Console</h2>
-                        </div>
-                        <nav className="hidden md:flex items-center gap-9">
-                            <a className="text-[#92a4c9] hover:text-white text-sm font-medium leading-normal transition-colors" href="#">Dashboard</a>
-                            <a className="text-[#92a4c9] hover:text-white text-sm font-medium leading-normal transition-colors" href="#">Usuários</a>
-                            <a className="text-[#92a4c9] hover:text-white text-sm font-medium leading-normal transition-colors" href="#">Relatórios</a>
-                            <a className="text-white text-sm font-medium leading-normal" href="#">Configurações</a>
-                        </nav>
-                    </div>
-                    <div className="flex flex-1 justify-end gap-6">
-                        <label className="hidden lg:flex flex-col min-w-40 h-10 max-w-64">
-                            <div className="flex w-full flex-1 items-stretch rounded-lg h-full border border-[#324467] bg-[#232f48] focus-within:ring-2 focus-within:ring-[#1152d4]">
-                                <div className="text-[#92a4c9] flex items-center justify-center pl-3">
-                                    <span className="material-symbols-outlined text-[20px]">search</span>
-                                </div>
-                                <input className="w-full bg-transparent border-none text-white placeholder:text-[#92a4c9] px-3 text-sm focus:ring-0 outline-none" placeholder="Buscar configurações..." />
-                            </div>
-                        </label>
-                        <div className="relative group">
-                            <div className="bg-center bg-no-repeat bg-cover rounded-full size-10 ring-2 ring-[#324467] cursor-pointer" style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuD4Nxsg2RqjzidiOw2kXR0i0pJ1fZaPTct4hVQK1ILJYQnEmd7zKPPQxiCvrmS58HvLdaAy6QI0noNFpiWubzAKt6knSm5IILje-b8r6M-gzS-oNhPxYUIjIDoEqh9XIwc8nCwCCHI92bFbJFlr2qm0gvteADKVksRAC4Ih9aZBm7KRbJGTKvq6BLgbX4fLz2SQIbtPG_Lgk3bW7p4cBM5XE0U0jhyCIJNg6yf50OQRPV2IZfvZTTDXKssCP7m8jSnk2eHpvVslZkg")' }}></div>
-                            <div className="absolute right-0 top-0 size-3 bg-green-500 rounded-full border-2 border-[#1a2332]"></div>
-                        </div>
-                    </div>
-                </header>
+                <Header
+                    title="Permissões de Perfil"
+                    icon="shield_person"
+                    searchPlaceholder="Buscar configurações..."
+                    navigation={[
+                        { label: "Lista de Usuários", href: "/usuarios", icon: "group" },
+                        { label: "Permissões de Perfil", href: "/usuarios/permissoes", active: true, icon: "shield_person" },
+                    ]}
+                />
 
                 <div className="flex-1 flex flex-col lg:flex-row h-full overflow-hidden relative">
                     {/* Left Sidebar: Profiles List */}

@@ -10,7 +10,6 @@ export default function Sidebar() {
     const navItems = [
         { icon: "dashboard", label: "Overview", href: "/" },
         { icon: "storefront", label: "PDVs Ativos", href: "/pdv/cadastro" },
-        { icon: "group", label: "Gestão de Equipe", href: "/usuarios" },
         { icon: "analytics", label: "Performance", href: "#" },
         { icon: "shield_person", label: "Permissões de Perfil", href: "/usuarios/permissoes" },
     ];
@@ -72,10 +71,10 @@ export default function Sidebar() {
 
                 {/* Bottom Sidebar Action */}
                 <div className="p-6">
-                    <button className="flex w-full items-center justify-center gap-3 rounded-2xl bg-white/5 px-4 py-4 text-slate-400 hover:bg-red-500/10 hover:text-red-500 transition-all text-xs font-black tracking-[0.2em] uppercase border border-white/5">
+                    <Link href="/logon" className="flex w-full items-center justify-center gap-3 rounded-2xl bg-white/5 px-4 py-4 text-slate-400 hover:bg-red-500/10 hover:text-red-500 transition-all text-xs font-black tracking-[0.2em] uppercase border border-white/5">
                         <span className="material-symbols-outlined text-[18px]">logout</span>
-                        Sair da Estação
-                    </button>
+                        Sair
+                    </Link>
                 </div>
             </div>
         </aside>

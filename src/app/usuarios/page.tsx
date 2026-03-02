@@ -1,29 +1,67 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
+import Header from "@/components/Header";
+import { getUsuarios } from "./novo/actions";
 
 export default function GestaoUsuariosPage() {
-    const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
+    const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
+    const [users, setUsers] = useState<any[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
 
-    // Dados mockados baseados no protótipo original
-    const users = [
-        { id: 1, name: "João Silva", email: "joao.silva@empresa.com", initials: "JS", role: "Gerente", roleColor: "text-blue-400 bg-blue-500/10 border-blue-500/20", team: "Vendas Norte", teamIcon: "store", status: "Ativo", statusColor: "bg-emerald-500 text-emerald-400" },
-        { id: 2, name: "Maria Oliveira", email: "maria.oliveira@empresa.com", avatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuAhRW7t-_7mS-Uzw5zWBGIPmJi0Xsxr8hdaIZclWzRFY7Qhk1byvnp_EO2KDQyaQ8oydQKmVipiPzyxWxVM2AL3PmhPF_lcyGBH_ltxMTFpOxqlEQuxnt_NVwHJriDFPOHnpUxF2ZP-b7FTUR09_kzbUDZCUluL4h3KynVdAGGwz-Qf2qu77C3GvhvZ59rs2HYsFJpSTe9tUzCm-xXrykcTMFpm9YEczSvUBABR1CtPPSbaD0Gl6N76B2tDsy3v4LX_Nj_jdL1qUcg", role: "Coordenador", roleColor: "text-purple-400 bg-purple-500/10 border-purple-500/20", team: "Operações Sul", teamIcon: "hub", status: "Ativo", statusColor: "bg-emerald-500 text-emerald-400" },
-        { id: 3, name: "Carlos Santos", email: "carlos.santos@empresa.com", initials: "CS", role: "Promotor", roleColor: "text-slate-300 bg-slate-700 border-slate-600", team: "PDV Centro", teamIcon: "storefront", status: "Inativo", statusColor: "bg-red-500 text-red-400" },
-        { id: 4, name: "Roberto Alves", email: "roberto.alves@empresa.com", avatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuBlWLamTGp9T-dN9b709ZHU2k_ud4_roOiENI7LeCmCKeg51s7YrDsnR15Z5lgtrggUvzH8A3ni8Fp6msYVWtvgAbo1zrISsuTv_l-A5AJNvK3Kx2ABdQTdh1eNj-5HEAcXT-0hyS8J7Tf54bGe3G_AH0Sb0l4SVKK_i6RydPOOSEOpXP2E6J5o67s9K8L4_t0u4zKj7RBofQ8lWYOFFSq0bVE4-xE1pYu_B49Xfx3ktaX91ME85DfPEk-ZRHp3O85rjYbMkFTRwQc", role: "Promotor", roleColor: "text-slate-300 bg-slate-700 border-slate-600", team: "PDV Shopping", teamIcon: "storefront", status: "Ativo", statusColor: "bg-emerald-500 text-emerald-400" },
-        { id: 5, name: "Ana Lima", email: "ana.lima@empresa.com", initials: "AL", role: "Coordenador", roleColor: "text-purple-400 bg-purple-500/10 border-purple-500/20", team: "Operações SP", teamIcon: "hub", status: "Pendente", statusColor: "bg-yellow-500 text-yellow-400" },
-    ];
+    useEffect(() => {
+        const fetchUsuarios = async () => {
+            try {
+                const response = await getUsuarios();
+                if (response.success && response.data) {
+                    // Mapeia os dados do json local para o formato da UI
+                    const formattedUsers = response.data.map((u: any) => {
+                        // Lógica visual baseada no tipo e status digitado
+                        const isAtivo = u.ativo;
+
+                        let roleName = "Indefinido";
+                        let roleColor = "text-slate-500 bg-slate-500/10 border-slate-500/20";
+                        if (u.tipo === "promotor") { roleName = "Promotor"; roleColor = "text-amber-500 bg-amber-500/10 border-amber-500/20"; }
+                        if (u.tipo === "coordenador") { roleName = "Coordenador"; roleColor = "text-purple-400 bg-purple-500/10 border-purple-500/20"; }
+                        if (u.tipo === "supervisor") { roleName = "Supervisor"; roleColor = "text-blue-400 bg-blue-500/10 border-blue-500/20"; }
+                        if (u.tipo === "adm") { roleName = "Administrador"; roleColor = "text-emerald-500 bg-emerald-500/10 border-emerald-500/20"; }
+
+                        let teamDisplay = "Sem Equipe";
+                        if (u.equipe === "eq1") teamDisplay = "Alpha - Operações";
+                        if (u.equipe === "eq2") teamDisplay = "Beta - Logística";
+                        if (u.equipe === "eq3") teamDisplay = "Gamma - Estratégia";
+
+                        return {
+                            id: u.id,
+                            name: u.nome || "Usuário Vazio",
+                            email: u.email || "Sem e-mail",
+                            initials: (u.nome || "UU").substring(0, 2).toUpperCase(),
+                            role: roleName,
+                            roleColor: roleColor,
+                            team: teamDisplay,
+                            teamIcon: "hub",
+                            status: isAtivo ? "Ativo" : "Inativo",
+                            statusColor: isAtivo ? "bg-emerald-500 text-emerald-400" : "bg-slate-500 text-slate-400"
+                        };
+                    });
+                    setUsers(formattedUsers);
+                }
+            } catch (error) {
+                console.error("Falha ao carregar usuários:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchUsuarios();
+    }, []);
 
     const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.checked) {
-            setSelectedUsers(users.map(u => u.id));
-        } else {
-            setSelectedUsers([]);
-        }
+        if (e.target.checked) setSelectedUsers(users.map(u => u.id));
+        else setSelectedUsers([]);
     };
 
-    const handleSelectOne = (id: number) => {
+    const handleSelectOne = (id: string) => {
         setSelectedUsers(prev => prev.includes(id) ? prev.filter(uid => uid !== id) : [...prev, id]);
     };
 
@@ -34,28 +72,14 @@ export default function GestaoUsuariosPage() {
             {/* Main Content Area */}
             <main className="flex-1 flex flex-col min-w-0 h-full relative">
                 {/* Top Header Bar */}
-                <header className="h-20 flex items-center justify-between px-10 bg-white/80 dark:bg-[#1e293b]/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 z-10 sticky top-0">
-                    <div className="flex items-center gap-4">
-                        <button className="h-10 w-10 flex items-center justify-center rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-500 hover:text-primary hover:bg-primary/10 transition-colors xl:hidden">
-                            <span className="material-symbols-outlined">menu</span>
-                        </button>
-                        <div className="flex items-center gap-3 text-xs font-black uppercase tracking-widest text-slate-400">
-                            <span className="hover:text-primary cursor-pointer transition-colors">Sistema</span>
-                            <span className="material-symbols-outlined text-[16px]">chevron_right</span>
-                            <span className="text-slate-900 dark:text-white">Lista de Usuários</span>
-                        </div>
-                    </div>
-
-                    <div className="flex items-center gap-5">
-                        <button className="relative h-11 w-11 flex items-center justify-center rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 hover:text-primary hover:border-primary/50 transition-all">
-                            <span className="material-symbols-outlined">notifications</span>
-                            <span className="absolute top-2.5 right-2.5 h-2.5 w-2.5 rounded-full bg-red-500 border-2 border-white dark:border-slate-800" />
-                        </button>
-                        <button className="h-11 w-11 flex items-center justify-center rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 hover:text-primary hover:border-primary/50 transition-all">
-                            <span className="material-symbols-outlined">help</span>
-                        </button>
-                    </div>
-                </header>
+                <Header
+                    title="Permissões de Perfil"
+                    icon="shield_person"
+                    navigation={[
+                        { label: "Lista de Usuários", href: "/usuarios", active: true, icon: "group" },
+                        { label: "Permissões de Perfil", href: "/usuarios/permissoes", icon: "shield_person" },
+                    ]}
+                />
 
                 {/* Scrollable Workspace */}
                 <div className="flex-1 overflow-y-auto p-10 2xl:p-14 pb-24">
@@ -76,10 +100,10 @@ export default function GestaoUsuariosPage() {
                                     <span className="material-symbols-outlined text-[20px]">file_download</span>
                                     Exportar CSV
                                 </button>
-                                <button className="px-8 py-4 bg-primary hover:bg-blue-600 text-white text-sm font-black rounded-2xl shadow-xl shadow-primary/30 hover:-translate-y-1 active:translate-y-0 transition-all flex items-center gap-3">
+                                <a href="/usuarios/novo" className="px-8 py-4 bg-primary hover:bg-blue-600 text-white text-sm font-black rounded-2xl shadow-xl shadow-primary/30 hover:-translate-y-1 active:translate-y-0 transition-all flex items-center gap-3">
                                     <span className="material-symbols-outlined text-[22px]">add</span>
                                     NOVO USUÁRIO
-                                </button>
+                                </a>
                             </div>
                         </div>
 
@@ -142,121 +166,122 @@ export default function GestaoUsuariosPage() {
                             </div>
                         </div>
 
-                        {/* Modern Data Table */}
-                        <div className="bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-white/5 rounded-[2rem] overflow-hidden shadow-xl shadow-slate-200/40 dark:shadow-none">
-                            <div className="overflow-x-auto">
-                                <table className="w-full text-left border-collapse whitespace-nowrap">
-                                    <thead>
-                                        <tr className="bg-slate-50/80 dark:bg-black/20 border-b border-slate-200 dark:border-white/5">
-                                            <th className="px-8 py-5 w-16">
-                                                <input
-                                                    type="checkbox"
-                                                    checked={selectedUsers.length === users.length}
-                                                    onChange={handleSelectAll}
-                                                    className="h-5 w-5 rounded-md border-slate-300 dark:border-slate-600 outline-none text-primary focus:ring-primary bg-white dark:bg-slate-800 cursor-pointer"
-                                                />
-                                            </th>
-                                            <th className="px-6 py-5 text-xs font-black text-slate-400 uppercase tracking-[0.15em]">Usuário & Contato</th>
-                                            <th className="px-6 py-5 text-xs font-black text-slate-400 uppercase tracking-[0.15em]">Perfil de Acesso</th>
-                                            <th className="px-6 py-5 text-xs font-black text-slate-400 uppercase tracking-[0.15em]">Alocação Geográfica</th>
-                                            <th className="px-6 py-5 text-xs font-black text-slate-400 uppercase tracking-[0.15em]">Status</th>
-                                            <th className="px-8 py-5 text-xs font-black text-slate-400 uppercase tracking-[0.15em] text-right">Ações Rápidas</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="divide-y divide-slate-100 dark:divide-white/5">
-                                        {users.map((user) => (
-                                            <tr key={user.id} className="group hover:bg-primary/5 dark:hover:bg-white/[0.02] transition-colors cursor-pointer" onClick={() => handleSelectOne(user.id)}>
-                                                <td className="px-8 py-4" onClick={(e) => e.stopPropagation()}>
+                        {isLoading ? (
+                            <div className="flex flex-col items-center justify-center p-20 gap-4 text-slate-400">
+                                <span className="material-symbols-outlined text-4xl animate-spin text-primary">refresh</span>
+                                <p className="font-medium animate-pulse">Sincronizando usuários...</p>
+                            </div>
+                        ) : users.length === 0 ? (
+                            <div className="flex flex-col items-center justify-center py-20 bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-white/5 rounded-[2rem] shadow-sm">
+                                <span className="material-symbols-outlined text-6xl text-slate-300 dark:text-slate-700 mb-4">group_off</span>
+                                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Nenhum usuário cadastrado</h3>
+                                <p className="text-slate-500 dark:text-slate-400 mb-6">Comece adicionando seu primeiro colaborador ao sistema.</p>
+                                <a href="/usuarios/novo" className="px-6 py-3 bg-primary hover:bg-blue-600 text-white text-sm font-bold rounded-xl shadow-lg shadow-primary/20 transition-all">
+                                    Criar Usuário
+                                </a>
+                            </div>
+                        ) : (
+                            <div className="bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-white/5 rounded-[2rem] overflow-hidden shadow-xl shadow-slate-200/40 dark:shadow-none">
+                                <div className="overflow-x-auto">
+                                    <table className="w-full text-left border-collapse whitespace-nowrap">
+                                        <thead>
+                                            <tr className="bg-slate-50/80 dark:bg-black/20 border-b border-slate-200 dark:border-white/5">
+                                                <th className="px-8 py-5 w-16">
                                                     <input
                                                         type="checkbox"
-                                                        checked={selectedUsers.includes(user.id)}
-                                                        onChange={() => handleSelectOne(user.id)}
-                                                        className="h-5 w-5 rounded-md border-slate-300 dark:border-slate-600 outline-none text-primary focus:ring-primary bg-white dark:bg-slate-800 cursor-pointer transition-all"
+                                                        checked={selectedUsers.length === users.length && users.length > 0}
+                                                        onChange={handleSelectAll}
+                                                        className="h-5 w-5 rounded-md border-slate-300 dark:border-slate-600 outline-none text-primary focus:ring-primary bg-white dark:bg-slate-800 cursor-pointer"
                                                     />
-                                                </td>
-                                                <td className="px-6 py-4">
-                                                    <div className="flex items-center gap-4">
-                                                        {user.avatar ? (
-                                                            <img src={user.avatar} alt={`Avatar de ${user.name}`} className="h-12 w-12 rounded-full object-cover shadow-sm bg-slate-100 dark:bg-slate-800" />
-                                                        ) : (
-                                                            <div className="h-12 w-12 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 font-black text-sm shadow-sm">
-                                                                {user.initials}
-                                                            </div>
-                                                        )}
-                                                        <div className="flex flex-col">
-                                                            <p className="text-base font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">{user.name}</p>
-                                                            <p className="text-xs font-medium text-slate-500 font-mono tracking-tight mt-0.5">{user.email}</p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td className="px-6 py-4">
-                                                    <div className={`inline-flex items-center px-4 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider border ${user.roleColor} shadow-inner`}>
-                                                        {user.role}
-                                                    </div>
-                                                </td>
-                                                <td className="px-6 py-4">
-                                                    <div className="flex items-center gap-2.5 text-slate-600 dark:text-slate-300 font-medium bg-slate-50 dark:bg-white/5 w-max px-3 py-1.5 rounded-lg border border-slate-100 dark:border-transparent">
-                                                        <span className="material-symbols-outlined text-[20px] text-slate-400">{user.teamIcon}</span>
-                                                        {user.team}
-                                                    </div>
-                                                </td>
-                                                <td className="px-6 py-4">
-                                                    <div className="flex items-center gap-2.5">
-                                                        <div className="relative flex h-3 w-3 items-center justify-center">
-                                                            {user.status === "Ativo" && <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>}
-                                                            <div className={`h-2.5 w-2.5 rounded-full ${user.statusColor.split(' ')[0]}`} />
-                                                        </div>
-                                                        <span className={`text-sm font-bold uppercase tracking-wider ${user.statusColor.split(' ')[1]}`}>{user.status}</span>
-                                                    </div>
-                                                </td>
-                                                <td className="px-8 py-4 text-right">
-                                                    <div className="flex items-center justify-end gap-2" onClick={(e) => e.stopPropagation()}>
-                                                        <button className="h-10 w-10 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-400 hover:text-primary hover:border-primary border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5" title="Editar Usuário">
-                                                            <span className="material-symbols-outlined text-[20px]">edit</span>
-                                                        </button>
-                                                        <button className="h-10 w-10 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-400 hover:text-orange-500 hover:border-orange-500 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5" title="Resetar Senha">
-                                                            <span className="material-symbols-outlined text-[20px]">lock_reset</span>
-                                                        </button>
-                                                        <button className="h-10 w-10 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-400 hover:text-red-500 hover:border-red-500 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5" title="Desativar Conta">
-                                                            <span className="material-symbols-outlined text-[20px]">person_off</span>
-                                                        </button>
-                                                    </div>
-                                                </td>
+                                                </th>
+                                                <th className="px-6 py-5 text-xs font-black text-slate-400 uppercase tracking-[0.15em]">Usuário & Contato</th>
+                                                <th className="px-6 py-5 text-xs font-black text-slate-400 uppercase tracking-[0.15em]">Perfil de Acesso</th>
+                                                <th className="px-6 py-5 text-xs font-black text-slate-400 uppercase tracking-[0.15em]">Alocação Geográfica</th>
+                                                <th className="px-6 py-5 text-xs font-black text-slate-400 uppercase tracking-[0.15em]">Status</th>
+                                                <th className="px-8 py-5 text-xs font-black text-slate-400 uppercase tracking-[0.15em] text-right">Ações Rápidas</th>
                                             </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
+                                        </thead>
+                                        <tbody className="divide-y divide-slate-100 dark:divide-white/5">
+                                            {users.map((user) => (
+                                                <tr key={user.id} className="group hover:bg-primary/5 dark:hover:bg-white/[0.02] transition-colors cursor-pointer" onClick={() => handleSelectOne(user.id)}>
+                                                    <td className="px-8 py-4" onClick={(e) => e.stopPropagation()}>
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={selectedUsers.includes(user.id)}
+                                                            onChange={() => handleSelectOne(user.id)}
+                                                            className="h-5 w-5 rounded-md border-slate-300 dark:border-slate-600 outline-none text-primary focus:ring-primary bg-white dark:bg-slate-800 cursor-pointer transition-all"
+                                                        />
+                                                    </td>
+                                                    <td className="px-6 py-4">
+                                                        <div className="flex items-center gap-4">
+                                                            {user.avatar ? (
+                                                                <img src={user.avatar} alt={`Avatar de ${user.name}`} className="h-12 w-12 rounded-full object-cover shadow-sm bg-slate-100 dark:bg-slate-800" />
+                                                            ) : (
+                                                                <div className="h-12 w-12 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 font-black text-sm shadow-sm">
+                                                                    {user.initials}
+                                                                </div>
+                                                            )}
+                                                            <div className="flex flex-col">
+                                                                <p className="text-base font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">{user.name}</p>
+                                                                <p className="text-xs font-medium text-slate-500 font-mono tracking-tight mt-0.5">{user.email}</p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-6 py-4">
+                                                        <div className={`inline-flex items-center px-4 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider border ${user.roleColor} shadow-inner`}>
+                                                            {user.role}
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-6 py-4">
+                                                        <div className="flex items-center gap-2.5 text-slate-600 dark:text-slate-300 font-medium bg-slate-50 dark:bg-white/5 w-max px-3 py-1.5 rounded-lg border border-slate-100 dark:border-transparent">
+                                                            <span className="material-symbols-outlined text-[20px] text-slate-400">{user.teamIcon}</span>
+                                                            {user.team}
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-6 py-4">
+                                                        <div className="flex items-center gap-2.5">
+                                                            <div className="relative flex h-3 w-3 items-center justify-center">
+                                                                {user.status === "Ativo" && <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>}
+                                                                <div className={`h-2.5 w-2.5 rounded-full ${user.statusColor.split(' ')[0]}`} />
+                                                            </div>
+                                                            <span className={`text-sm font-bold uppercase tracking-wider ${user.statusColor.split(' ')[1]}`}>{user.status}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-8 py-4 text-right">
+                                                        <div className="flex items-center justify-end gap-2" onClick={(e) => e.stopPropagation()}>
+                                                            <button className="h-10 w-10 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-400 hover:text-primary hover:border-primary border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5" title="Editar Usuário">
+                                                                <span className="material-symbols-outlined text-[20px]">edit</span>
+                                                            </button>
+                                                            <button className="h-10 w-10 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-400 hover:text-orange-500 hover:border-orange-500 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5" title="Resetar Senha">
+                                                                <span className="material-symbols-outlined text-[20px]">lock_reset</span>
+                                                            </button>
+                                                            <button className="h-10 w-10 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-400 hover:text-red-500 hover:border-red-500 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5" title="Desativar Conta">
+                                                                <span className="material-symbols-outlined text-[20px]">person_off</span>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
 
-                            {/* Enhanced Pagination Controls */}
-                            <div className="px-8 py-6 bg-slate-50/50 dark:bg-black/20 border-t border-slate-200 dark:border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
-                                <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
-                                    Apresentando <span className="font-black text-slate-900 dark:text-white">1</span> a <span className="font-black text-slate-900 dark:text-white">5</span> de <span className="font-black text-slate-900 dark:text-white">1,245</span> registros validados
-                                </p>
-                                <div className="flex items-center gap-2">
-                                    <button className="h-10 px-4 text-sm font-bold flex items-center gap-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400 hover:border-primary hover:text-primary bg-white dark:bg-slate-800 shadow-sm transition-all">
-                                        <span className="material-symbols-outlined text-[18px]">chevron_left</span> Anterior
-                                    </button>
-                                    <div className="flex gap-1">
-                                        <button className="h-10 w-10 text-sm font-black rounded-xl border border-primary bg-primary text-white shadow-lg shadow-primary/30">1</button>
-                                        <button className="h-10 w-10 text-sm font-bold rounded-xl border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-800 hover:border-primary hover:text-primary transition-colors">2</button>
-                                        <button className="h-10 w-10 text-sm font-bold rounded-xl border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-800 hover:border-primary hover:text-primary transition-colors">3</button>
-                                        <span className="flex items-center justify-center w-8 text-slate-400">...</span>
-                                        <button className="h-10 w-10 text-sm font-bold rounded-xl border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-800 hover:border-primary hover:text-primary transition-colors">42</button>
-                                    </div>
-                                    <button className="h-10 px-4 text-sm font-bold flex items-center gap-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400 hover:border-primary hover:text-primary bg-white dark:bg-slate-800 shadow-sm transition-all">
-                                        Próximo <span className="material-symbols-outlined text-[18px]">chevron_right</span>
-                                    </button>
+                                {/* Enhanced Pagination Controls */}
+                                <div className="px-8 py-6 bg-slate-50/50 dark:bg-black/20 border-t border-slate-200 dark:border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
+                                    <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
+                                        Apresentando <span className="font-black text-slate-900 dark:text-white">1</span> a <span className="font-black text-slate-900 dark:text-white">{users.length}</span> de <span className="font-black text-slate-900 dark:text-white">{users.length}</span> registros validados
+                                    </p>
+                                    {/* Pagination Controls (Mocked for layout) */}
                                 </div>
                             </div>
-                        </div>
+                        )}
 
                     </div>
                 </div>
-            </main>
+            </main >
 
             {/* Global styling additions specifically for RBAC layout */}
-            <style jsx global>{`
+            < style jsx global > {`
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb {
@@ -267,7 +292,7 @@ export default function GestaoUsuariosPage() {
         }
         .dark ::-webkit-scrollbar-thumb { background: #334155; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-      `}</style>
-        </div>
+      `}</style >
+        </div >
     );
 }
