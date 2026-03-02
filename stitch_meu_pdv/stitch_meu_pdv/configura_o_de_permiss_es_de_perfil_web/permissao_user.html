@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Configuração de Permissões de Perfil Web</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#1a2332",
+                        "surface-highlight": "#232f48",
+                        "text-secondary": "#92a4c9",
+                    },
+                    fontFamily: {
+                        "sans": ["Inter", "sans-serif"],
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Custom Toggle Switch */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #1152d4;
+        }
+
+        .toggle-checkbox:checked+.toggle-label {
+            background-color: #1152d4;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #101622;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #232f48;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #324467;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen flex flex-col overflow-x-hidden">
+    <!-- Top Navigation -->
+    <header
+        class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-[#232f48] bg-white dark:bg-surface-dark px-10 py-3 sticky top-0 z-50">
+        <div class="flex items-center gap-8">
+            <div class="flex items-center gap-4 text-slate-900 dark:text-white">
+                <div class="size-8 text-primary">
+                    <span class="material-symbols-outlined text-[32px]">admin_panel_settings</span>
+                </div>
+                <h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Admin
+                    Console</h2>
+            </div>
+            <nav class="hidden md:flex items-center gap-9">
+                <a class="text-slate-500 dark:text-text-secondary hover:text-primary dark:hover:text-white text-sm font-medium leading-normal transition-colors"
+                    href="#">Dashboard</a>
+                <a class="text-slate-500 dark:text-text-secondary hover:text-primary dark:hover:text-white text-sm font-medium leading-normal transition-colors"
+                    href="#">Usuários</a>
+                <a class="text-slate-500 dark:text-text-secondary hover:text-primary dark:hover:text-white text-sm font-medium leading-normal transition-colors"
+                    href="#">Relatórios</a>
+                <a class="text-slate-900 dark:text-white text-sm font-medium leading-normal" href="#">Configurações</a>
+            </nav>
+        </div>
+        <div class="flex flex-1 justify-end gap-6">
+            <label class="hidden lg:flex flex-col min-w-40 h-10 max-w-64">
+                <div
+                    class="flex w-full flex-1 items-stretch rounded-lg h-full border border-slate-200 dark:border-[#324467] bg-slate-50 dark:bg-[#232f48] focus-within:ring-2 focus-within:ring-primary">
+                    <div class="text-slate-400 dark:text-[#92a4c9] flex items-center justify-center pl-3">
+                        <span class="material-symbols-outlined text-[20px]">search</span>
+                    </div>
+                    <input
+                        class="w-full bg-transparent border-none text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-[#92a4c9] px-3 text-sm focus:ring-0"
+                        placeholder="Buscar configurações..." />
+                </div>
+            </label>
+            <div class="relative group">
+                <div class="bg-center bg-no-repeat bg-cover rounded-full size-10 ring-2 ring-slate-200 dark:ring-[#324467] cursor-pointer"
+                    data-alt="User profile picture"
+                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD4Nxsg2RqjzidiOw2kXR0i0pJ1fZaPTct4hVQK1ILJYQnEmd7zKPPQxiCvrmS58HvLdaAy6QI0noNFpiWubzAKt6knSm5IILje-b8r6M-gzS-oNhPxYUIjIDoEqh9XIwc8nCwCCHI92bFbJFlr2qm0gvteADKVksRAC4Ih9aZBm7KRbJGTKvq6BLgbX4fLz2SQIbtPG_Lgk3bW7p4cBM5XE0U0jhyCIJNg6yf50OQRPV2IZfvZTTDXKssCP7m8jSnk2eHpvVslZkg");'>
+                </div>
+                <div
+                    class="absolute right-0 top-0 size-3 bg-green-500 rounded-full border-2 border-white dark:border-surface-dark">
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col lg:flex-row h-[calc(100vh-65px)] overflow-hidden">
+        <!-- Left Sidebar: Profiles List -->
+        <aside
+            class="w-full lg:w-80 border-r border-slate-200 dark:border-[#232f48] bg-slate-50 dark:bg-[#111722] flex flex-col shrink-0 h-full overflow-y-auto">
+            <div class="p-6 border-b border-slate-200 dark:border-[#232f48]">
+                <h1 class="text-slate-900 dark:text-white text-xl font-bold leading-tight mb-1">Perfis de Acesso</h1>
+                <p class="text-slate-500 dark:text-text-secondary text-sm">Selecione um perfil para editar</p>
+            </div>
+            <div class="flex flex-col p-4 gap-2">
+                <!-- Active Item -->
+                <button
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white shadow-lg shadow-primary/20 transition-all hover:scale-[1.02]">
+                    <span class="material-symbols-outlined">shield_person</span>
+                    <div class="flex flex-col items-start">
+                        <span class="text-sm font-semibold">Administrador</span>
+                        <span class="text-xs opacity-80">Acesso total ao sistema</span>
+                    </div>
+                </button>
+                <!-- Inactive Items -->
+                <button
+                    class="group flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-200 dark:hover:bg-surface-highlight text-slate-600 dark:text-slate-300 transition-all">
+                    <span
+                        class="material-symbols-outlined text-slate-400 group-hover:text-primary dark:text-slate-500 dark:group-hover:text-white">manage_accounts</span>
+                    <div class="flex flex-col items-start">
+                        <span class="text-sm font-medium">Gerente Regional</span>
+                        <span class="text-xs text-slate-400 dark:text-slate-500">Gestão de área e equipe</span>
+                    </div>
+                </button>
+                <button
+                    class="group flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-200 dark:hover:bg-surface-highlight text-slate-600 dark:text-slate-300 transition-all">
+                    <span
+                        class="material-symbols-outlined text-slate-400 group-hover:text-primary dark:text-slate-500 dark:group-hover:text-white">supervisor_account</span>
+                    <div class="flex flex-col items-start">
+                        <span class="text-sm font-medium">Coordenador</span>
+                        <span class="text-xs text-slate-400 dark:text-slate-500">Supervisão operacional</span>
+                    </div>
+                </button>
+                <button
+                    class="group flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-200 dark:hover:bg-surface-highlight text-slate-600 dark:text-slate-300 transition-all">
+                    <span
+                        class="material-symbols-outlined text-slate-400 group-hover:text-primary dark:text-slate-500 dark:group-hover:text-white">person</span>
+                    <div class="flex flex-col items-start">
+                        <span class="text-sm font-medium">Promotor</span>
+                        <span class="text-xs text-slate-400 dark:text-slate-500">Registro de visitas</span>
+                    </div>
+                </button>
+                <button
+                    class="group flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-200 dark:hover:bg-surface-highlight text-slate-600 dark:text-slate-300 transition-all mt-4 border border-dashed border-slate-300 dark:border-slate-700">
+                    <span class="material-symbols-outlined text-slate-400">add</span>
+                    <span class="text-sm font-medium">Criar Novo Perfil</span>
+                </button>
+            </div>
+        </aside>
+        <!-- Right Content: Permissions Matrix -->
+        <section class="flex-1 flex flex-col h-full bg-white dark:bg-surface-dark overflow-hidden relative">
+            <!-- Header of Section -->
+            <div class="p-6 pb-2 shrink-0">
+                <div class="flex justify-between items-start mb-6">
+                    <div>
+                        <div class="flex items-center gap-3 mb-2">
+                            <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Permissões: Administrador</h2>
+                            <span
+                                class="bg-primary/10 text-primary text-xs font-bold px-2 py-1 rounded uppercase tracking-wide">Padrão</span>
+                        </div>
+                        <p class="text-slate-500 dark:text-text-secondary max-w-2xl">Defina granularmente o que este
+                            perfil pode acessar. As alterações são aplicadas imediatamente após salvar.</p>
+                    </div>
+                    <div class="flex gap-3">
+                        <button
+                            class="flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-200 dark:border-[#324467] text-slate-700 dark:text-slate-300 text-sm font-medium hover:bg-slate-50 dark:hover:bg-[#232f48] transition-colors">
+                            <span class="material-symbols-outlined text-[18px]">history</span>
+                            Histórico
+                        </button>
+                        <button
+                            class="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-500/10 text-red-600 hover:bg-red-500/20 text-sm font-medium transition-colors">
+                            <span class="material-symbols-outlined text-[18px]">delete</span>
+                            Excluir Perfil
+                        </button>
+                    </div>
+                </div>
+                <!-- Tabs/Filters -->
+                <div class="flex border-b border-slate-200 dark:border-[#324467]">
+                    <button class="px-6 py-3 text-sm font-medium text-primary border-b-2 border-primary">Módulos do
+                        Sistema</button>
+                    <button
+                        class="px-6 py-3 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors">API
+                        &amp; Integrações</button>
+                    <button
+                        class="px-6 py-3 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors">Notificações</button>
+                </div>
+            </div>
+            <!-- Scrollable Content Area -->
+            <div class="flex-1 overflow-y-auto p-6 pt-2">
+                <!-- Permissions Table -->
+                <div class="rounded-xl border border-slate-200 dark:border-[#324467] overflow-hidden mb-8">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-50 dark:bg-[#111722] border-b border-slate-200 dark:border-[#324467]">
+                                <th
+                                    class="p-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-text-secondary w-1/3">
+                                    Módulo</th>
+                                <th
+                                    class="p-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-text-secondary text-center w-1/6">
+                                    Visualizar</th>
+                                <th
+                                    class="p-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-text-secondary text-center w-1/6">
+                                    Editar</th>
+                                <th
+                                    class="p-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-text-secondary text-center w-1/6">
+                                    Excluir</th>
+                                <th
+                                    class="p-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-text-secondary text-center w-1/6">
+                                    Exportar</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 dark:divide-[#324467] bg-white dark:bg-surface-dark">
+                            <!-- Row 1: Vendas -->
+                            <tr class="hover:bg-slate-50 dark:hover:bg-[#232f48]/50 transition-colors group">
+                                <td class="p-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="p-2 rounded bg-blue-500/10 text-blue-500 dark:text-blue-400">
+                                            <span class="material-symbols-outlined">point_of_sale</span>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium text-slate-900 dark:text-white">Vendas</p>
+                                            <p class="text-xs text-slate-500 dark:text-slate-400">Transações e
+                                                faturamento</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div
+                                        class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                                        <input checked=""
+                                            class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-slate-300 dark:border-slate-600 checked:right-0 checked:border-primary transition-all duration-300"
+                                            id="toggle-view-1" name="toggle" type="checkbox" />
+                                        <label
+                                            class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-300 dark:bg-slate-700 cursor-pointer"
+                                            for="toggle-view-1"></label>
+                                    </div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div
+                                        class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                                        <input checked=""
+                                            class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-slate-300 dark:border-slate-600 checked:right-0 checked:border-primary transition-all duration-300"
+                                            id="toggle-edit-1" name="toggle" type="checkbox" />
+                                        <label
+                                            class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-300 dark:bg-slate-700 cursor-pointer"
+                                            for="toggle-edit-1"></label>
+                                    </div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div
+                                        class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                                        <input
+                                            class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-slate-300 dark:border-slate-600 checked:right-0 checked:border-primary transition-all duration-300"
+                                            id="toggle-del-1" name="toggle" type="checkbox" />
+                                        <label
+                                            class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-300 dark:bg-slate-700 cursor-pointer"
+                                            for="toggle-del-1"></label>
+                                    </div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div
+                                        class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                                        <input checked=""
+                                            class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-slate-300 dark:border-slate-600 checked:right-0 checked:border-primary transition-all duration-300"
+                                            id="toggle-exp-1" name="toggle" type="checkbox" />
+                                        <label
+                                            class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-300 dark:bg-slate-700 cursor-pointer"
+                                            for="toggle-exp-1"></label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Row 2: Estoque -->
+                            <tr class="hover:bg-slate-50 dark:hover:bg-[#232f48]/50 transition-colors group">
+                                <td class="p-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="p-2 rounded bg-purple-500/10 text-purple-500 dark:text-purple-400">
+                                            <span class="material-symbols-outlined">inventory_2</span>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium text-slate-900 dark:text-white">Estoque</p>
+                                            <p class="text-xs text-slate-500 dark:text-slate-400">Controle de produtos e
+                                                SKUs</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div
+                                        class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                                        <input checked=""
+                                            class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-slate-300 dark:border-slate-600 checked:right-0 checked:border-primary transition-all duration-300"
+                                            id="toggle-view-2" name="toggle" type="checkbox" />
+                                        <label
+                                            class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-300 dark:bg-slate-700 cursor-pointer"
+                                            for="toggle-view-2"></label>
+                                    </div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div
+                                        class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                                        <input checked=""
+                                            class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-slate-300 dark:border-slate-600 checked:right-0 checked:border-primary transition-all duration-300"
+                                            id="toggle-edit-2" name="toggle" type="checkbox" />
+                                        <label
+                                            class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-300 dark:bg-slate-700 cursor-pointer"
+                                            for="toggle-edit-2"></label>
+                                    </div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div
+                                        class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                                        <input checked=""
+                                            class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-slate-300 dark:border-slate-600 checked:right-0 checked:border-primary transition-all duration-300"
+                                            id="toggle-del-2" name="toggle" type="checkbox" />
+                                        <label
+                                            class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-300 dark:bg-slate-700 cursor-pointer"
+                                            for="toggle-del-2"></label>
+                                    </div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div
+                                        class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                                        <input
+                                            class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-slate-300 dark:border-slate-600 checked:right-0 checked:border-primary transition-all duration-300"
+                                            id="toggle-exp-2" name="toggle" type="checkbox" />
+                                        <label
+                                            class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-300 dark:bg-slate-700 cursor-pointer"
+                                            for="toggle-exp-2"></label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Row 3: Usuários -->
+                            <tr class="hover:bg-slate-50 dark:hover:bg-[#232f48]/50 transition-colors group">
+                                <td class="p-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="p-2 rounded bg-orange-500/10 text-orange-500 dark:text-orange-400">
+                                            <span class="material-symbols-outlined">group</span>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium text-slate-900 dark:text-white">Usuários</p>
+                                            <p class="text-xs text-slate-500 dark:text-slate-400">Gestão de acessos</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div
+                                        class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                                        <input checked=""
+                                            class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-slate-300 dark:border-slate-600 checked:right-0 checked:border-primary transition-all duration-300"
+                                            id="toggle-view-3" name="toggle" type="checkbox" />
+                                        <label
+                                            class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-300 dark:bg-slate-700 cursor-pointer"
+                                            for="toggle-view-3"></label>
+                                    </div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div
+                                        class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                                        <input
+                                            class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-slate-300 dark:border-slate-600 checked:right-0 checked:border-primary transition-all duration-300"
+                                            id="toggle-edit-3" name="toggle" type="checkbox" />
+                                        <label
+                                            class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-300 dark:bg-slate-700 cursor-pointer"
+                                            for="toggle-edit-3"></label>
+                                    </div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div
+                                        class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                                        <input
+                                            class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-slate-300 dark:border-slate-600 checked:right-0 checked:border-primary transition-all duration-300"
+                                            id="toggle-del-3" name="toggle" type="checkbox" />
+                                        <label
+                                            class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-300 dark:bg-slate-700 cursor-pointer"
+                                            for="toggle-del-3"></label>
+                                    </div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div
+                                        class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                                        <input
+                                            class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-slate-300 dark:border-slate-600 checked:right-0 checked:border-primary transition-all duration-300"
+                                            id="toggle-exp-3" name="toggle" type="checkbox" />
+                                        <label
+                                            class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-300 dark:bg-slate-700 cursor-pointer"
+                                            for="toggle-exp-3"></label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Row 4: Auditoria -->
+                            <tr class="hover:bg-slate-50 dark:hover:bg-[#232f48]/50 transition-colors group">
+                                <td class="p-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="p-2 rounded bg-pink-500/10 text-pink-500 dark:text-pink-400">
+                                            <span class="material-symbols-outlined">receipt_long</span>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium text-slate-900 dark:text-white">Auditoria</p>
+                                            <p class="text-xs text-slate-500 dark:text-slate-400">Logs e registros
+                                                fiscais</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div
+                                        class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                                        <input checked=""
+                                            class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-slate-300 dark:border-slate-600 checked:right-0 checked:border-primary transition-all duration-300"
+                                            id="toggle-view-4" name="toggle" type="checkbox" />
+                                        <label
+                                            class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-300 dark:bg-slate-700 cursor-pointer"
+                                            for="toggle-view-4"></label>
+                                    </div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div
+                                        class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in opacity-50 cursor-not-allowed">
+                                        <input
+                                            class="absolute block w-5 h-5 rounded-full bg-slate-100 dark:bg-slate-600 border-4 appearance-none border-slate-300 dark:border-slate-500"
+                                            disabled="" type="checkbox" />
+                                        <label
+                                            class="block overflow-hidden h-5 rounded-full bg-slate-200 dark:bg-slate-800"></label>
+                                    </div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div
+                                        class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in opacity-50 cursor-not-allowed">
+                                        <input
+                                            class="absolute block w-5 h-5 rounded-full bg-slate-100 dark:bg-slate-600 border-4 appearance-none border-slate-300 dark:border-slate-500"
+                                            disabled="" type="checkbox" />
+                                        <label
+                                            class="block overflow-hidden h-5 rounded-full bg-slate-200 dark:bg-slate-800"></label>
+                                    </div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div
+                                        class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                                        <input checked=""
+                                            class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-slate-300 dark:border-slate-600 checked:right-0 checked:border-primary transition-all duration-300"
+                                            id="toggle-exp-4" name="toggle" type="checkbox" />
+                                        <label
+                                            class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-300 dark:bg-slate-700 cursor-pointer"
+                                            for="toggle-exp-4"></label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Jurisdiction Restrictions Section -->
+                <div class="mb-24">
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">public</span>
+                        Restrições por Jurisdição
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Card 1 -->
+                        <div
+                            class="p-5 rounded-xl border border-slate-200 dark:border-[#324467] bg-slate-50 dark:bg-[#111722]">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <p class="text-sm font-semibold text-slate-900 dark:text-white">Abrangência
+                                        Geográfica</p>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Quais estados este perfil
+                                        pode visualizar.</p>
+                                </div>
+                                <div
+                                    class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                                    <input checked=""
+                                        class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-slate-300 dark:border-slate-600 checked:right-0 checked:border-primary transition-all duration-300"
+                                        id="toggle-geo" name="toggle" type="checkbox" />
+                                    <label
+                                        class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-300 dark:bg-slate-700 cursor-pointer"
+                                        for="toggle-geo"></label>
+                                </div>
+                            </div>
+                            <select
+                                class="w-full bg-white dark:bg-[#232f48] border border-slate-300 dark:border-[#324467] rounded-lg px-3 py-2 text-sm text-slate-900 dark:text-white focus:ring-primary focus:border-primary">
+                                <option>Todo o Território Nacional</option>
+                                <option>Apenas Região Sul</option>
+                                <option>Apenas Região Sudeste</option>
+                                <option>Personalizado...</option>
+                            </select>
+                        </div>
+                        <!-- Card 2 -->
+                        <div
+                            class="p-5 rounded-xl border border-slate-200 dark:border-[#324467] bg-slate-50 dark:bg-[#111722]">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <p class="text-sm font-semibold text-slate-900 dark:text-white">Restrição de Rede
+                                    </p>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Limitar acesso a
+                                        redes/IPs específicos.</p>
+                                </div>
+                                <div
+                                    class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                                    <input
+                                        class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-slate-300 dark:border-slate-600 checked:right-0 checked:border-primary transition-all duration-300"
+                                        id="toggle-net" name="toggle" type="checkbox" />
+                                    <label
+                                        class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-300 dark:bg-slate-700 cursor-pointer"
+                                        for="toggle-net"></label>
+                                </div>
+                            </div>
+                            <input
+                                class="w-full bg-slate-100 dark:bg-[#1a2332] border border-slate-300 dark:border-[#324467] rounded-lg px-3 py-2 text-sm text-slate-400 dark:text-slate-500 cursor-not-allowed"
+                                disabled="" placeholder="Ex: 192.168.0.1/24" type="text" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Sticky Footer Action Bar -->
+            <div
+                class="absolute bottom-0 left-0 right-0 p-4 bg-white dark:bg-surface-dark border-t border-slate-200 dark:border-[#324467] flex items-center justify-between z-10 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+                <p class="text-xs text-slate-500 hidden sm:block">Última alteração feita por <span
+                        class="font-medium text-slate-700 dark:text-slate-300">Roberto Almeida</span> há 2 horas.</p>
+                <div class="flex items-center gap-3 ml-auto">
+                    <button
+                        class="px-5 py-2.5 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#232f48] transition-colors">
+                        Cancelar
+                    </button>
+                    <button
+                        class="flex items-center gap-2 px-6 py-2.5 rounded-lg bg-primary text-white text-sm font-bold shadow-lg shadow-primary/30 hover:bg-blue-600 hover:shadow-primary/50 transition-all transform active:scale-95">
+                        <span class="material-symbols-outlined text-[20px]">check</span>
+                        SALVAR ALTERAÇÕES
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>
