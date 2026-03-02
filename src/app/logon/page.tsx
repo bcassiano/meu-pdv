@@ -9,6 +9,8 @@ export default function LogonPage() {
     const [theme, setTheme] = useState<"light" | "dark" | "system">("system");
     const [systemIsDark, setSystemIsDark] = useState(false);
     const [isLoggingIn, setIsLoggingIn] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [isShaking, setIsShaking] = useState(false);
 
     const router = useRouter();
 
@@ -27,6 +29,15 @@ export default function LogonPage() {
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError(null);
+
+        if (!cpf.trim() || !senha.trim()) {
+            setError("Preencha todos os campos para acessar.");
+            setIsShaking(true);
+            setTimeout(() => setIsShaking(false), 500);
+            return;
+        }
+
         setIsLoggingIn(true);
 
         // Simulação de login com um pequeno delay para UX premium
@@ -95,8 +106,16 @@ export default function LogonPage() {
                         </p>
                     </div>
 
+                    {/* Erro de Validação */}
+                    {error && (
+                        <div className="mx-10 mt-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center gap-3 animate-in fade-in slide-in-from-top-2 duration-300">
+                            <span className="material-symbols-outlined text-red-500 text-[20px]">error</span>
+                            <span className="text-xs font-bold text-red-500">{error}</span>
+                        </div>
+                    )}
+
                     {/* Form */}
-                    <form onSubmit={handleLogin} className="p-10 pt-0 space-y-6">
+                    <form onSubmit={handleLogin} className={`p-10 ${error ? 'pt-4' : 'pt-0'} space-y-6 ${isShaking ? 'animate-shake' : ''}`}>
                         <div className="space-y-4">
                             <label className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-widest" htmlFor="cpf">
                                 Identificação do Promotor
@@ -106,8 +125,12 @@ export default function LogonPage() {
                                     id="cpf"
                                     type="text"
                                     placeholder="Usuário:"
+                                    required
                                     value={cpf}
-                                    onChange={(e) => setCpf(e.target.value)}
+                                    onChange={(e) => {
+                                        setCpf(e.target.value);
+                                        if (error) setError(null);
+                                    }}
                                     className="w-full h-14 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-[#121629] px-5 text-lg font-bold text-slate-600 dark:text-white placeholder:text-slate-300 dark:placeholder:text-slate-600 focus:border-[#0d59f2] focus:bg-white dark:focus:bg-[#121629] focus:ring-4 focus:ring-[#0d59f2]/10 outline-none transition-all"
                                 />
                                 <div className="absolute right-4 text-slate-400 dark:text-slate-500">
@@ -119,8 +142,12 @@ export default function LogonPage() {
                                     id="senha"
                                     type="password"
                                     placeholder="Senha:"
+                                    required
                                     value={senha}
-                                    onChange={(e) => setSenha(e.target.value)}
+                                    onChange={(e) => {
+                                        setSenha(e.target.value);
+                                        if (error) setError(null);
+                                    }}
                                     className="w-full h-14 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-[#121629] px-5 text-lg font-bold text-slate-600 dark:text-white placeholder:text-slate-300 dark:placeholder:text-slate-600 focus:border-[#0d59f2] focus:bg-white dark:focus:bg-[#121629] focus:ring-4 focus:ring-[#0d59f2]/10 outline-none transition-all"
                                 />
                                 <div className="absolute right-4 text-slate-400 dark:text-slate-500">
@@ -193,8 +220,16 @@ export default function LogonPage() {
           0%, 100% { transform: translateX(0); }
           50% { transform: translateX(5px); }
         }
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          25% { transform: translateX(-4px); }
+          75% { transform: translateX(4px); }
+        }
         .animate-bounce-x {
           animation: bounce-x 1s infinite;
+        }
+        .animate-shake {
+          animation: shake 0.2s ease-in-out infinite;
         }
       `}</style>
         </main>
