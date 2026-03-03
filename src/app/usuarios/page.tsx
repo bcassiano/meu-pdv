@@ -73,10 +73,10 @@ export default function GestaoUsuariosPage() {
             <main className="flex-1 flex flex-col min-w-0 h-full relative">
                 {/* Top Header Bar */}
                 <Header
-                    title="Permissões de Perfil"
-                    icon="shield_person"
+                    title="Usuários e Acessos"
+                    icon="group"
                     navigation={[
-                        { label: "Lista de Usuários", href: "/usuarios", active: true, icon: "group" },
+                        { label: "Lista de Usuários", href: "/usuarios", active: true, icon: "list" },
                         { label: "Permissões de Perfil", href: "/usuarios/permissoes", icon: "shield_person" },
                     ]}
                 />

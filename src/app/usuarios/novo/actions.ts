@@ -12,7 +12,7 @@ export async function salvarUsuario(formData: any) {
         await new Promise((resolve) => setTimeout(resolve, 800));
 
         // Let's read the current users
-        let data = { usuarios: [] };
+        let data: { usuarios: any[] } = { usuarios: [] };
         if (fs.existsSync(dbPath)) {
             const raw = fs.readFileSync(dbPath, "utf-8");
             if (raw) data = JSON.parse(raw);

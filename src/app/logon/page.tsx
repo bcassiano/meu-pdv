@@ -1,31 +1,18 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { autenticarUsuario } from "./actions";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function LogonPage() {
     const [cpf, setCpf] = useState("");
     const [senha, setSenha] = useState("");
-    const [theme, setTheme] = useState<"light" | "dark" | "system">("system");
-    const [systemIsDark, setSystemIsDark] = useState(false);
     const [isLoggingIn, setIsLoggingIn] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [isShaking, setIsShaking] = useState(false);
 
     const router = useRouter();
-
-    useEffect(() => {
-        // Checagem inicial do sistema
-        if (typeof window !== "undefined") {
-            const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-            setSystemIsDark(mediaQuery.matches);
-
-            // Listener para mudanças dinâmicas no SO
-            const handler = (e: MediaQueryListEvent) => setSystemIsDark(e.matches);
-            mediaQuery.addEventListener("change", handler);
-            return () => mediaQuery.removeEventListener("change", handler);
-        }
-    }, []);
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -40,52 +27,42 @@ export default function LogonPage() {
 
         setIsLoggingIn(true);
 
-        // Simulação de login com um pequeno delay para UX premium
-        console.log("Login com Usuário:", cpf, "Senha:", senha);
+        try {
+            const result = await autenticarUsuario(cpf, senha);
 
-        setTimeout(() => {
-            router.push("/pdv/cadastro");
-        }, 800);
+            if (result.success) {
+                // Sucesso: Redireciona
+                router.push("/pdv/cadastro");
+            } else {
+                // Falha: Exibe erro e chacoalha o form
+                setError(result.message || "Erro na autenticação.");
+                setIsShaking(true);
+                setTimeout(() => setIsShaking(false), 500);
+                setIsLoggingIn(false);
+            }
+        } catch (err) {
+            setError("Falha na conexão com o servidor.");
+            setIsLoggingIn(false);
+        }
     };
 
-    // Helper logic for applying the theme class
-    const isDark = theme === "dark" || (theme === "system" && systemIsDark);
-
     return (
-        <main className={`min-h-screen w-full flex flex-col items-center justify-center p-4 transition-colors duration-500 overflow-hidden relative ${isDark ? "bg-[#101622] text-slate-100" : "bg-[#eef0f6] text-slate-900"} ${isDark ? "dark" : ""}`}>
+        <main className="min-h-screen w-full flex flex-col items-center justify-center p-4 transition-colors duration-500 overflow-hidden relative bg-[#eef0f6] dark:bg-[#101622] text-slate-900 dark:text-slate-100">
             {/* Background Layers */}
             <div className="absolute top-0 right-0 w-[50%] h-full bg-gradient-to-l from-white/40 dark:from-white/5 to-transparent pointer-events-none transition-colors duration-500" />
             <div className="absolute top-0 left-0 w-full h-8 bg-gradient-to-b from-[#0d59f2]/10 dark:from-[#0d59f2]/20 to-transparent pointer-events-none transition-colors duration-500" />
 
             {/* Tema Switcher e Barra de Status */}
             <div className="absolute top-8 right-8 flex items-center gap-4 z-20">
-                <div className="flex items-center gap-1 p-1 bg-white/50 dark:bg-slate-800/50 backdrop-blur rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
-                    <button
-                        onClick={() => setTheme("light")}
-                        className={`h-8 w-8 rounded-lg flex items-center justify-center transition-all ${theme === "light" ? "bg-white dark:bg-slate-700 text-[#0d59f2] shadow-sm" : "text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"}`}
-                        title="Modo Claro"
-                    >
-                        <span className="material-symbols-outlined text-[18px]">light_mode</span>
-                    </button>
-                    <button
-                        onClick={() => setTheme("dark")}
-                        className={`h-8 w-8 rounded-lg flex items-center justify-center transition-all ${theme === "dark" ? "bg-white dark:bg-slate-700 text-[#0d59f2] shadow-sm" : "text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"}`}
-                        title="Modo Escuro"
-                    >
-                        <span className="material-symbols-outlined text-[18px]">dark_mode</span>
-                    </button>
-                    <button
-                        onClick={() => setTheme("system")}
-                        className={`h-8 w-8 rounded-lg flex items-center justify-center transition-all ${theme === "system" ? "bg-white dark:bg-slate-700 text-[#0d59f2] shadow-sm" : "text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"}`}
-                        title="Modo Sistema"
-                    >
-                        <span className="material-symbols-outlined text-[18px]">desktop_windows</span>
-                    </button>
-                </div>
 
-                <div className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/90 dark:bg-slate-800/90 backdrop-blur border border-slate-100 dark:border-slate-700 shadow-sm transition-colors duration-500">
-                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
-                    <span className="text-[10px] font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest">Sistema Online</span>
+                <ThemeToggle />
+
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/90 dark:bg-slate-800/90 backdrop-blur border border-slate-100 dark:border-slate-700 shadow-sm transition-colors duration-500">
+                    <div className="relative flex h-2 w-2 items-center justify-center">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+                    </div>
+                    <span className="text-[9px] font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest whitespace-nowrap">Sistema Online</span>
                 </div>
             </div>
 

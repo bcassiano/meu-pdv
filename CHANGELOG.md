@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.1.1] - 2026-03-02
+## [1.2.0] - 2026-03-02
+
+### Added
+- UX/Aesthetics: Suporte global a temas (Dark/Light/System) implantado via `next-themes` no `RootLayout`. Adição do botão de alternância fluído com transição de 500ms configurado no `<Header />`.
+- Components: Novo componente `<ThemeToggle />` estilizado via Tailwind com suporte a feedback via Toast nativo de DOM.
+
+### Changed
+- UI Refinement: A página de `Novo Usuário` abandonou a header engessada e local; ela agora herda o componente `<Header />` global preservando contexto e botões "Salvar" no DOM flexível.
+- Bugfix (Critical): Solução definitiva da falha de assets corrompidos (Erro 404 em `layout.css`, Chunks Next e `935.js`/`682.js`) via expurgo agressivo do Webpack Cache (`rmdir /s /q .next`) e transição do dev server para a porta 3006, mitigando colapso de file locking do Windows OS.
 
 ### Fixed
 - Security: Validação de campos obrigatórios na tela de Logon para impedir acessos sem credenciais.
