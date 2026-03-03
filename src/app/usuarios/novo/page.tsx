@@ -3,11 +3,17 @@
 import React, { useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
-import { salvarUsuario } from "./actions";
+import { ActionResponse, Usuario, UsuarioTipo } from "@/types/usuario";
+import { salvarUsuario as registerUser } from "./actions";
+import { useTranslation } from "@/locales/useTranslation";
+import { useRouter } from "next/navigation";
 
-export default function NovoUsuarioPage() {
+export default function NovoUsuarioPage(): JSX.Element {
+    const { t } = useTranslation();
+    const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
-    const [formData, setFormData] = useState({
+    const [error, setError] = useState<string | null>(null);
+    const [formData, setFormData] = useState<Omit<Usuario, "id" | "createdAt">>({
         nome: "",
         login: "",
         email: "",
@@ -16,7 +22,7 @@ export default function NovoUsuarioPage() {
         version: "",
         imei: "",
         idioma: "pt",
-        tipo: "",
+        tipo: "promotor", // Valor default válido do union
         equipe: "",
         ativo: true
     });
@@ -33,20 +39,19 @@ export default function NovoUsuarioPage() {
 
     const handleSubmit = async (e?: React.FormEvent) => {
         if (e) e.preventDefault();
-
+        setError(null);
         setIsLoading(true);
         try {
-            const response = await salvarUsuario(formData);
+            const response = await registerUser(formData);
             if (response.success) {
                 alert(response.message);
-                // Opcional: Redirecionar para /usuarios ou limpar form
-                window.location.reload();
+                router.push("/usuarios"); // Redirecionar para a lista de usuários
             } else {
-                alert(response.message || "Falha ao salvar usuário");
+                setError(response.message || t('usuariosNovo.form.saveError'));
             }
-        } catch (error) {
-            console.error("Erro no forms:", error);
-            alert("Falha de rede ao tentar criar o usuário.");
+        } catch (err) {
+            console.error("Erro no forms:", err);
+            setError(t('usuariosNovo.form.networkError'));
         } finally {
             setIsLoading(false);
         }
@@ -59,12 +64,12 @@ export default function NovoUsuarioPage() {
             <main className="flex-1 flex flex-col min-w-0 h-full relative">
                 {/* Top Header Bar */}
                 <Header
-                    title="Usuários e Acessos"
+                    title={t('usuariosNovo.headerTitle')}
                     icon="group"
                     navigation={[
-                        { label: "Lista de Usuários", href: "/usuarios", icon: "list" },
-                        { label: "Permissões de Perfil", href: "/usuarios/permissoes", icon: "shield_person" },
-                        { label: "Nova Conta", href: "/usuarios/novo", active: true, icon: "person_add" },
+                        { label: t('usuariosNovo.headerNav.userList'), href: "/usuarios", icon: "list" },
+                        { label: t('usuariosNovo.headerNav.profilePermissions'), href: "/usuarios/permissoes", icon: "shield_person" },
+                        { label: t('usuariosNovo.headerNav.newAccount'), href: "/usuarios/novo", active: true, icon: "person_add" },
                     ]}
                 />
 
@@ -77,47 +82,64 @@ export default function NovoUsuarioPage() {
                             <div className="space-y-3">
                                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-black uppercase tracking-[0.2em] border border-primary/20">
                                     <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
-                                    Módulo Administrativo
+                                    {t('usuariosNovo.adminModule')}
                                 </div>
-                                <h2 className="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight">Cadastro de Usuário</h2>
-                                <p className="text-slate-500 dark:text-slate-400 text-lg font-medium max-w-xl">Insira as informações básicas para criar uma conta e integrar um novo colaborador ao sistema global.</p>
+                                <h1 className="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight">{t('usuariosNovo.title')}</h1>
+                                <p className="text-slate-500 dark:text-slate-400 text-lg font-medium max-w-xl">{t('usuariosNovo.subtitle')}</p>
                             </div>
                             <div className="flex items-center gap-4">
-                                <button type="button" onClick={() => window.history.back()} className="px-6 py-4 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-bold rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm transition-all flex items-center gap-3">
-                                    Cancelar
+                                <button type="button" onClick={() => router.back()} className="px-6 py-4 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-bold rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm transition-all flex items-center gap-3">
+                                    {t('usuariosNovo.cancelButton')}
                                 </button>
-                                <button type="button" onClick={handleSubmit} className="px-8 py-4 bg-primary hover:bg-blue-600 text-white text-sm font-black rounded-2xl shadow-xl shadow-primary/30 hover:-translate-y-1 active:translate-y-0 transition-all flex items-center gap-3">
+                                <button type="button" onClick={handleSubmit} disabled={isLoading} className="px-8 py-4 bg-primary hover:bg-blue-600 text-white text-sm font-black rounded-2xl shadow-xl shadow-primary/30 hover:-translate-y-1 active:translate-y-0 transition-all flex items-center gap-3">
                                     <span className="material-symbols-outlined text-[20px]">save</span>
-                                    SALVAR CADASTRO
+                                    {isLoading ? t('usuariosNovo.form.saving') : t('usuariosNovo.saveButton')}
                                 </button>
                             </div>
                         </div>
+
+                        {error && (
+                            <div role="alert" aria-live="assertive" className="mb-8 p-4 bg-red-50 dark:bg-red-500/10 border-l-4 border-red-500 text-red-700 dark:text-red-400 font-medium rounded-r-xl flex items-center gap-3">
+                                <span className="material-symbols-outlined text-xl">error</span>
+                                {error}
+                            </div>
+                        )}
 
                         <form onSubmit={handleSubmit} className="space-y-8">
                             {/* Section: Informações de Acesso */}
                             <section className="bg-white dark:bg-slate-900/40 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
                                 <div className="flex items-center gap-2 mb-6 border-b border-slate-100 dark:border-slate-800 pb-4">
                                     <span className="material-symbols-outlined text-primary">key</span>
-                                    <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">Informações de Acesso</h3>
+                                    <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">{t('usuariosNovo.form.accessInfoTitle')}</h3>
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="flex flex-col gap-1.5">
-                                        <label className="text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="nome">Nome Completo</label>
-                                        <input value={formData.nome} onChange={handleChange} className="bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700 rounded text-sm px-4 py-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600" id="nome" placeholder="Ex: João Silva" type="text" />
+                                        <label className="text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="nome">{t('usuariosNovo.form.nameLabel')}</label>
+                                        <div className="relative group">
+                                            <span aria-hidden="true" className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">person</span>
+                                            <input value={formData.nome} onChange={handleChange} className="pl-11 bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700 rounded text-sm px-4 py-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600" id="nome" name="nome" placeholder={t('usuariosNovo.form.namePlaceholder')} type="text" autoComplete="name" required />
+                                        </div>
                                     </div>
                                     <div className="flex flex-col gap-1.5">
-                                        <label className="text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="login">Login</label>
-                                        <input value={formData.login} onChange={handleChange} className="bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700 rounded text-sm px-4 py-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600" id="login" placeholder="usuario.exemplo" type="text" />
+                                        <label className="text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="login">{t('usuariosNovo.form.loginLabel')}</label>
+                                        <div className="relative group">
+                                            <span aria-hidden="true" className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">alternate_email</span>
+                                            <input value={formData.login} onChange={handleChange} className="pl-11 bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700 rounded text-sm px-4 py-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600" id="login" name="login" placeholder={t('usuariosNovo.form.loginPlaceholder')} type="text" autoComplete="username" required />
+                                        </div>
                                     </div>
                                     <div className="flex flex-col gap-1.5">
-                                        <label className="text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="email">E-mail Corporativo</label>
-                                        <input value={formData.email} onChange={handleChange} className="bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700 rounded text-sm px-4 py-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600" id="email" placeholder="nome@empresa.com.br" type="email" />
+                                        <label className="text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="email">{t('usuariosNovo.form.emailLabel')}</label>
+                                        <div className="relative group">
+                                            <span aria-hidden="true" className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">mail</span>
+                                            <input value={formData.email} onChange={handleChange} className="pl-11 bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700 rounded text-sm px-4 py-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600" id="email" name="email" placeholder={t('usuariosNovo.form.emailPlaceholder')} type="email" autoComplete="email" required />
+                                        </div>
                                     </div>
                                     <div className="flex flex-col gap-1.5">
-                                        <label className="text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="senha">Senha Provisória</label>
-                                        <div className="relative">
-                                            <input value={formData.senha} onChange={handleChange} className="w-full bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700 rounded text-sm px-4 py-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none text-slate-900 dark:text-white pr-10" id="senha" type="password" />
-                                            <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 cursor-pointer text-[20px]">visibility</span>
+                                        <label className="text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="senha">{t('usuariosNovo.form.passwordLabel')}</label>
+                                        <div className="relative group">
+                                            <span aria-hidden="true" className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">lock</span>
+                                            <input value={formData.senha} onChange={handleChange} className="pl-11 w-full bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700 rounded text-sm px-4 py-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none text-slate-900 dark:text-white pr-10" id="senha" name="senha" type="password" autoComplete="new-password" required />
+                                            <button type="button" aria-pressed="false" aria-label={t('usuariosNovo.form.togglePasswordVisibility')} className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 cursor-pointer text-[20px] focus:outline-none focus:text-primary transition-colors hover:text-primary" onClick={() => { }}>visibility</button>
                                         </div>
                                     </div>
                                 </div>
@@ -127,20 +149,20 @@ export default function NovoUsuarioPage() {
                             <section className="bg-white dark:bg-slate-900/40 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
                                 <div className="flex items-center gap-2 mb-6 border-b border-slate-100 dark:border-slate-800 pb-4">
                                     <span className="material-symbols-outlined text-primary">smartphone</span>
-                                    <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">Informações do Dispositivo</h3>
+                                    <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">{t('usuariosNovo.form.deviceInfoTitle')}</h3>
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                     <div className="flex flex-col gap-1.5">
-                                        <label className="text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="push">Smartpush Alias</label>
-                                        <input value={formData.push} onChange={handleChange} className="bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700 rounded text-sm px-4 py-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600" id="push" placeholder="ID Push" type="text" />
+                                        <label className="text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="push">{t('usuariosNovo.form.pushAliasLabel')}</label>
+                                        <input value={formData.push} onChange={handleChange} className="bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700 rounded text-sm px-4 py-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600" id="push" name="push" placeholder={t('usuariosNovo.form.pushAliasPlaceholder')} type="text" />
                                     </div>
                                     <div className="flex flex-col gap-1.5">
-                                        <label className="text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="version">Versão App Mobile</label>
-                                        <input value={formData.version} onChange={handleChange} className="bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700 rounded text-sm px-4 py-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600" id="version" placeholder="Ex: 2.1.4" type="text" />
+                                        <label className="text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="version">{t('usuariosNovo.form.appVersionLabel')}</label>
+                                        <input value={formData.version} onChange={handleChange} className="bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700 rounded text-sm px-4 py-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600" id="version" name="version" placeholder={t('usuariosNovo.form.appVersionPlaceholder')} type="text" />
                                     </div>
                                     <div className="flex flex-col gap-1.5">
-                                        <label className="text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="imei">IMEI do Aparelho</label>
-                                        <input value={formData.imei} onChange={handleChange} className="bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700 rounded text-sm px-4 py-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600" id="imei" placeholder="000000-00-000000-0" type="text" />
+                                        <label className="text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="imei">{t('usuariosNovo.form.imeiLabel')}</label>
+                                        <input value={formData.imei} onChange={handleChange} className="bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700 rounded text-sm px-4 py-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600" id="imei" name="imei" placeholder={t('usuariosNovo.form.imeiPlaceholder')} type="text" />
                                     </div>
                                 </div>
                             </section>
@@ -150,34 +172,34 @@ export default function NovoUsuarioPage() {
                                 <section className="lg:col-span-2 bg-white dark:bg-slate-900/40 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
                                     <div className="flex items-center gap-2 mb-6 border-b border-slate-100 dark:border-slate-800 pb-4">
                                         <span className="material-symbols-outlined text-primary">hub</span>
-                                        <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">Preferências e Vínculos</h3>
+                                        <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">{t('usuariosNovo.form.preferencesTitle')}</h3>
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="flex flex-col gap-1.5">
-                                            <label className="text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="idioma">Idioma</label>
-                                            <select value={formData.idioma} onChange={handleChange} className="bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700 rounded text-sm px-4 py-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none text-slate-900 dark:text-white" id="idioma">
-                                                <option value="pt">Português (Brasil)</option>
-                                                <option value="en">English (US)</option>
-                                                <option value="es">Español</option>
+                                            <label className="text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="idioma">{t('usuariosNovo.form.languageLabel')}</label>
+                                            <select value={formData.idioma} onChange={handleChange} className="bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700 rounded text-sm px-4 py-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none text-slate-900 dark:text-white" id="idioma" name="idioma">
+                                                <option value="pt">{t('usuariosNovo.form.languageOptionPt')}</option>
+                                                <option value="en">{t('usuariosNovo.form.languageOptionEn')}</option>
+                                                <option value="es">{t('usuariosNovo.form.languageOptionEs')}</option>
                                             </select>
                                         </div>
                                         <div className="flex flex-col gap-1.5">
-                                            <label className="text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="tipo">Tipo de Pessoa</label>
-                                            <select value={formData.tipo} onChange={handleChange} className="bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700 rounded text-sm px-4 py-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none text-slate-900 dark:text-white" id="tipo">
-                                                <option disabled value="">Selecione o cargo</option>
-                                                <option value="promotor">Promotor</option>
-                                                <option value="coordenador">Coordenador</option>
-                                                <option value="supervisor">Supervisor</option>
-                                                <option value="adm">Administrador</option>
+                                            <label className="text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="tipo">{t('usuariosNovo.form.userTypeLabel')}</label>
+                                            <select value={formData.tipo} onChange={handleChange} className="bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700 rounded text-sm px-4 py-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none text-slate-900 dark:text-white" id="tipo" name="tipo">
+                                                <option disabled value="">{t('usuariosNovo.form.userTypePlaceholder')}</option>
+                                                <option value="promotor">{t('usuariosNovo.form.userTypeOptionPromotor')}</option>
+                                                <option value="coordenador">{t('usuariosNovo.form.userTypeOptionCoordinator')}</option>
+                                                <option value="supervisor">{t('usuariosNovo.form.userTypeOptionSupervisor')}</option>
+                                                <option value="adm">{t('usuariosNovo.form.userTypeOptionAdmin')}</option>
                                             </select>
                                         </div>
                                         <div className="flex flex-col gap-1.5 md:col-span-2">
-                                            <label className="text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="equipe">Equipe Vinculada</label>
-                                            <select value={formData.equipe} onChange={handleChange} className="bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700 rounded text-sm px-4 py-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none text-slate-900 dark:text-white" id="equipe">
-                                                <option disabled value="">Selecione uma equipe para o usuário</option>
-                                                <option value="eq1">Equipe Alpha - Operações</option>
-                                                <option value="eq2">Equipe Beta - Logística</option>
-                                                <option value="eq3">Equipe Gamma - Estratégia</option>
+                                            <label className="text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="equipe">{t('usuariosNovo.form.teamLabel')}</label>
+                                            <select value={formData.equipe} onChange={handleChange} className="bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700 rounded text-sm px-4 py-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none text-slate-900 dark:text-white" id="equipe" name="equipe">
+                                                <option disabled value="">{t('usuariosNovo.form.teamPlaceholder')}</option>
+                                                <option value="eq1">{t('usuariosNovo.form.teamOptionAlpha')}</option>
+                                                <option value="eq2">{t('usuariosNovo.form.teamOptionBeta')}</option>
+                                                <option value="eq3">{t('usuariosNovo.form.teamOptionGamma')}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -186,15 +208,15 @@ export default function NovoUsuarioPage() {
                                 <section className="bg-white dark:bg-slate-900/40 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
                                     <div className="flex items-center gap-2 mb-6 border-b border-slate-100 dark:border-slate-800 pb-4">
                                         <span className="material-symbols-outlined text-primary">toggle_on</span>
-                                        <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">Status da Conta</h3>
+                                        <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">{t('usuariosNovo.form.accountStatusTitle')}</h3>
                                     </div>
                                     <div className="flex flex-col items-center justify-center py-4">
-                                        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4 text-center">Usuário terá acesso imediato após a criação se definido como Ativo.</p>
+                                        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4 text-center">{t('usuariosNovo.form.accountStatusDescription')}</p>
                                         <label className="inline-flex items-center cursor-pointer">
-                                            <input id="ativo" type="checkbox" checked={formData.ativo} onChange={handleChange} className="sr-only peer" />
-                                            <span className="mr-3 text-sm font-bold text-slate-700 dark:text-slate-300 peer-checked:text-slate-400">Inativo</span>
-                                            <div className="relative w-14 h-7 bg-slate-300 dark:bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[3px] after:left-[4px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-[22px] after:w-[22px] after:transition-all peer-checked:bg-primary"></div>
-                                            <span className="ml-3 text-sm font-bold text-slate-400 peer-checked:text-primary">Ativo</span>
+                                            <input id="ativo" name="ativo" type="checkbox" checked={formData.ativo} onChange={handleChange} className="sr-only peer" />
+                                            <span className="mr-3 text-sm font-bold text-slate-700 dark:text-slate-300 peer-checked:text-slate-400">{t('usuariosNovo.form.inactive')}</span>
+                                            <div className="relative w-14 h-7 bg-slate-300 dark:bg-slate-700 rounded-full peer peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary/50 peer-focus:ring-offset-2 dark:peer-focus:ring-offset-[#1e293b] peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[3px] after:left-[4px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-[22px] after:w-[22px] after:transition-all peer-checked:bg-primary"></div>
+                                            <span className="ml-3 text-sm font-bold text-slate-400 peer-checked:text-primary">{t('usuariosNovo.form.active')}</span>
                                         </label>
                                     </div>
                                 </section>
@@ -202,21 +224,23 @@ export default function NovoUsuarioPage() {
                         </form>
 
                         <footer className="mt-10 border-t border-slate-200 dark:border-slate-800 pt-8 flex justify-end gap-4">
-                            <button type="button" onClick={() => window.location.reload()} disabled={isLoading} className="px-6 py-2.5 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors disabled:opacity-50">
-                                Limpar Formulário
+                            <button type="button" onClick={() => setFormData({
+                                nome: "", login: "", email: "", senha: "", push: "", version: "", imei: "", idioma: "pt", tipo: "promotor", equipe: "", ativo: true
+                            })} disabled={isLoading} className="px-6 py-2.5 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors disabled:opacity-50">
+                                {t('usuariosNovo.clearFormButton')}
                             </button>
                             <div className="flex gap-3">
-                                <button type="button" onClick={() => window.history.back()} disabled={isLoading} className="px-6 py-2.5 text-sm font-semibold text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-white dark:hover:bg-slate-800 transition-colors disabled:opacity-50">
-                                    Cancelar
+                                <button type="button" onClick={() => router.back()} disabled={isLoading} className="px-6 py-2.5 text-sm font-semibold text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-white dark:hover:bg-slate-800 transition-colors disabled:opacity-50">
+                                    {t('usuariosNovo.cancelButton')}
                                 </button>
-                                <button type="button" onClick={handleSubmit} disabled={isLoading} className="px-10 py-2.5 text-sm font-bold text-white bg-primary rounded-lg hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                                <button type="submit" onClick={handleSubmit} disabled={isLoading} className="px-10 py-2.5 text-sm font-bold text-white bg-primary rounded-lg hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
                                     {isLoading ? (
                                         <>
                                             <span className="material-symbols-outlined text-sm animate-spin">refresh</span>
-                                            Salvando...
+                                            {t('usuariosNovo.form.saving')}
                                         </>
                                     ) : (
-                                        "Salvar e Concluir"
+                                        t('usuariosNovo.submitButton')
                                     )}
                                 </button>
                             </div>

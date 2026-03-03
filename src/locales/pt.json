@@ -1,0 +1,117 @@
+{
+    "home": {
+        "title": "MEU PDV",
+        "subtitle": "Navegação Rápida (Ambiente de Desenvolvimento)",
+        "navAriaLabel": "Menu principal de rotas do sistema",
+        "links": {
+            "logon": "Tela de Logon",
+            "pdvCadastro": "Cadastro de PDV (Admin)",
+            "usuarios": "Gestão de Usuários (RBAC)",
+            "permissoes": "Permissões de Perfil",
+            "mobile": "Módulos Mobile"
+        }
+    },
+    "logon": {
+        "title": "MEU PDV",
+        "subtitle": "Célula de Atendimento",
+        "form": {
+            "cpfLabel": "Identificação do Promotor",
+            "cpfPlaceholder": "Usuário:",
+            "senhaLabel": "Senha",
+            "senhaPlaceholder": "Senha:",
+            "submitButton": "ENTRAR NO SISTEMA",
+            "authenticating": "AUTENTICANDO...",
+            "biometriaInfo": "Sincronização biométrica configurada para este dispositivo."
+        },
+        "footer": {
+            "support": "Suporte Master",
+            "faq": "Dúvidas",
+            "offline": "Offline",
+            "version": "v3.4.0 Final Cluster",
+            "verified": "MD5 Verified",
+            "securityWarning": "Segurança de Camada 4 Ativa. Ao acessar, você concorda com o monitoramento de geolocalização e as políticas de auditoria em tempo real."
+        }
+    },
+    "usuarios": {
+        "title": "Gestão de Usuários",
+        "subtitle": "Centralize os acessos, gerencie perfis, permissões e associe colaboradores a equipes estratégicas.",
+        "kpi": {
+            "total": "Total de Usuários",
+            "ativos": "Usuários Ativos",
+            "admins": "Administradores",
+            "inativos": "Inativos"
+        },
+        "actions": {
+            "export": "Exportar CSV",
+            "new": "NOVO USUÁRIO"
+        },
+        "filters": {
+            "searchPlaceholder": "Buscar por nome, e-mail ou ID de matrícula...",
+            "searchAria": "Campo de busca rápida por nome, e-mail ou matrícula"
+        }
+    },
+    "usuariosNovo": {
+        "title": "Cadastro de Usuário",
+        "subtitle": "Insira as informações básicas para criar uma conta e integrar um novo colaborador ao sistema global.",
+        "adminModule": "Módulo Administrativo",
+        "headerTitle": "Usuários e Acessos",
+        "headerNav": {
+            "userList": "Lista de Usuários",
+            "profilePermissions": "Permissões de Perfil",
+            "newAccount": "Nova Conta"
+        },
+        "cancelButton": "Cancelar",
+        "saveButton": "SALVAR CADASTRO",
+        "clearFormButton": "Limpar Formulário",
+        "submitButton": "Salvar e Concluir",
+        "form": {
+            "saveError": "Falha ao salvar usuário",
+            "networkError": "Falha de rede ao tentar criar o usuário.",
+            "saving": "Salvando...",
+            "accessInfoTitle": "Informações de Acesso",
+            "nameLabel": "Nome Completo",
+            "namePlaceholder": "Ex: João Silva",
+            "loginLabel": "Login",
+            "loginPlaceholder": "usuario.exemplo",
+            "emailLabel": "E-mail Corporativo",
+            "emailPlaceholder": "nome@empresa.com.br",
+            "passwordLabel": "Senha Provisória",
+            "togglePasswordVisibility": "Alternar visibilidade da senha provisória",
+            "deviceInfoTitle": "Informações do Dispositivo",
+            "pushAliasLabel": "Smartpush Alias",
+            "pushAliasPlaceholder": "ID Push",
+            "appVersionLabel": "Versão App Mobile",
+            "appVersionPlaceholder": "Ex: 2.1.4",
+            "imeiLabel": "IMEI do Aparelho",
+            "imeiPlaceholder": "000000-00-000000-0",
+            "preferencesTitle": "Preferências e Vínculos",
+            "languageLabel": "Idioma",
+            "languageOptionPt": "Português (Brasil)",
+            "languageOptionEn": "English (US)",
+            "languageOptionEs": "Español",
+            "userTypeLabel": "Tipo de Pessoa",
+            "userTypePlaceholder": "Selecione o cargo",
+            "userTypeOptionPromotor": "Promotor",
+            "userTypeOptionCoordinator": "Coordenador",
+            "userTypeOptionSupervisor": "Supervisor",
+            "userTypeOptionAdmin": "Administrador",
+            "teamLabel": "Equipe Vinculada",
+            "teamPlaceholder": "Selecione uma equipe para o usuário",
+            "teamOptionAlpha": "Equipe Alpha - Operações",
+            "teamOptionBeta": "Equipe Beta - Logística",
+            "teamOptionGamma": "Equipe Gamma - Estratégia",
+            "accountStatusTitle": "Status da Conta",
+            "accountStatusDescription": "Usuário terá acesso imediato após a criação se definido como Ativo.",
+            "inactive": "Inativo",
+            "active": "Ativo"
+        }
+    },
+    "importacao": {
+        "title": "Importação em Lote",
+        "subtitle": "Cadastre múltiplos Pontos de Venda simultaneamente via planilha.",
+        "actions": {
+            "downloadBase": "Baixar Modelo Base",
+            "import": "Importar Dados"
+        }
+    }
+}

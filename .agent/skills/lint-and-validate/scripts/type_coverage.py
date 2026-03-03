@@ -27,7 +27,8 @@ def check_typescript_coverage(project_path: Path) -> dict:
     if not ts_files:
         return {'type': 'typescript', 'files': 0, 'passed': [], 'issues': ["[!] No TypeScript files found"], 'stats': stats}
     
-    for file_path in ts_files[:30]:  # Limit
+    file_issues = []
+    for file_path in ts_files:
         try:
             content = file_path.read_text(encoding='utf-8', errors='ignore')
             
@@ -36,19 +37,27 @@ def check_typescript_coverage(project_path: Path) -> dict:
             stats['any_count'] += len(any_matches)
             
             # Find functions without return types
-            # function name(params) { - no return type
-            untyped = re.findall(r'function\s+\w+\s*\([^)]*\)\s*{', content)
-            # Arrow functions without types: const fn = (x) => or (x) =>
-            untyped += re.findall(r'=\s*\([^:)]*\)\s*=>', content)
+            untyped = re.findall(r'function\s+\w+\s*\([^)]*\)\s*\{', content)
+            untyped += re.findall(r'=\s*\([^:)]*\)\s*=>\s*\{', content)
+            
+            if untyped:
+                file_issues.append((file_path.name, len(untyped)))
+            
             stats['untyped_functions'] += len(untyped)
             
-            # Count typed functions
-            typed = re.findall(r'function\s+\w+\s*\([^)]*\)\s*:\s*\w+', content)
-            typed += re.findall(r':\s*\([^)]*\)\s*=>\s*\w+', content)
+            # Count typed functions (supporting dots, generics, spaces)
+            type_regex = r'[a-zA-Z0-9_<>\[\].\s]+'
+            typed = re.findall(r'function\s+\w+\s*\([^)]*\)\s*:\s*' + type_regex + r'\s*\{', content)
+            typed += re.findall(r'=\s*\([^)]*\)\s*:\s*' + type_regex + r'\s*=>', content)
             stats['total_functions'] += len(typed) + len(untyped)
             
         except Exception:
             continue
+    
+    if file_issues:
+        file_issues.sort(key=lambda x: x[1], reverse=True)
+        for name, count in file_issues[:5]:
+            issues.append(f"[!] Top untyped: {name} ({count} funcs)")
     
     # Analyze results
     if stats['any_count'] == 0:
@@ -78,12 +87,12 @@ def check_python_coverage(project_path: Path) -> dict:
     stats = {'untyped_functions': 0, 'typed_functions': 0, 'any_count': 0}
     
     py_files = list(project_path.rglob("*.py"))
-    py_files = [f for f in py_files if not any(x in str(f) for x in ['venv', '__pycache__', '.git', 'node_modules'])]
+    py_files = [f for f in py_files if not any(x in str(f) for x in ['venv', '__pycache__', '.git', 'node_modules', '.agent'])]
     
     if not py_files:
         return {'type': 'python', 'files': 0, 'passed': [], 'issues': ["[!] No Python files found"], 'stats': stats}
     
-    for file_path in py_files[:30]:  # Limit
+    for file_path in py_files:
         try:
             content = file_path.read_text(encoding='utf-8', errors='ignore')
             

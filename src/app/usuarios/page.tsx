@@ -3,20 +3,24 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
+import Image from "next/image";
 import { getUsuarios } from "./novo/actions";
+import { ActionResponse, Usuario, UsuarioVisual } from "@/types/usuario";
+import { useTranslation } from "@/locales/useTranslation";
 
-export default function GestaoUsuariosPage() {
+export default function GestaoUsuariosPage(): JSX.Element {
+    const { t } = useTranslation();
     const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
-    const [users, setUsers] = useState<any[]>([]);
+    const [users, setUsers] = useState<UsuarioVisual[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchUsuarios = async () => {
             try {
-                const response = await getUsuarios();
+                const response: ActionResponse<Usuario[]> = await getUsuarios();
                 if (response.success && response.data) {
                     // Mapeia os dados do json local para o formato da UI
-                    const formattedUsers = response.data.map((u: any) => {
+                    const formattedUsers: UsuarioVisual[] = response.data.map((u: Usuario) => {
                         // Lógica visual baseada no tipo e status digitado
                         const isAtivo = u.ativo;
 
@@ -42,7 +46,8 @@ export default function GestaoUsuariosPage() {
                             team: teamDisplay,
                             teamIcon: "hub",
                             status: isAtivo ? "Ativo" : "Inativo",
-                            statusColor: isAtivo ? "bg-emerald-500 text-emerald-400" : "bg-slate-500 text-slate-400"
+                            statusColor: isAtivo ? "bg-emerald-500 text-emerald-400" : "bg-slate-500 text-slate-400",
+                            avatar: u.avatar
                         };
                     });
                     setUsers(formattedUsers);
@@ -92,17 +97,17 @@ export default function GestaoUsuariosPage() {
                                     <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
                                     Módulo Operacional
                                 </div>
-                                <h2 className="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight">Gestão de Usuários</h2>
-                                <p className="text-slate-500 dark:text-slate-400 text-lg font-medium max-w-xl">Centralize os acessos, gerencie perfis, permissões e associe colaboradores a equipes estratégicas.</p>
+                                <h1 className="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight">{t('usuarios.title')}</h1>
+                                <p className="text-slate-500 dark:text-slate-400 text-lg font-medium max-w-xl">{t('usuarios.subtitle')}</p>
                             </div>
                             <div className="flex items-center gap-4">
-                                <button className="px-6 py-4 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-bold rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm transition-all flex items-center gap-3">
-                                    <span className="material-symbols-outlined text-[20px]">file_download</span>
-                                    Exportar CSV
+                                <button type="button" className="px-6 py-4 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-bold rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm transition-all flex items-center gap-3">
+                                    <span aria-hidden="true" className="material-symbols-outlined text-[20px]">file_download</span>
+                                    {t('usuarios.actions.export')}
                                 </button>
                                 <a href="/usuarios/novo" className="px-8 py-4 bg-primary hover:bg-blue-600 text-white text-sm font-black rounded-2xl shadow-xl shadow-primary/30 hover:-translate-y-1 active:translate-y-0 transition-all flex items-center gap-3">
-                                    <span className="material-symbols-outlined text-[22px]">add</span>
-                                    NOVO USUÁRIO
+                                    <span aria-hidden="true" className="material-symbols-outlined text-[22px]">add</span>
+                                    {t('usuarios.actions.new')}
                                 </a>
                             </div>
                         </div>
@@ -133,35 +138,36 @@ export default function GestaoUsuariosPage() {
                         {/* Smart Filters Toolbar */}
                         <div className="bg-white dark:bg-[#1e293b] p-3 rounded-2xl border border-slate-200 dark:border-white/5 shadow-sm flex flex-col xl:flex-row gap-3">
                             <div className="relative flex-1 group">
-                                <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">search</span>
+                                <span aria-hidden="true" className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">search</span>
                                 <input
+                                    aria-label={t('usuarios.filters.searchAria')}
                                     type="text"
-                                    placeholder="Buscar por nome, e-mail ou ID de matrícula..."
+                                    placeholder={t('usuarios.filters.searchPlaceholder')}
                                     className="w-full h-14 bg-slate-50 dark:bg-black/20 border-2 border-transparent focus:border-primary focus:bg-white dark:focus:bg-slate-900 text-slate-900 dark:text-white text-base font-medium rounded-xl pl-12 pr-4 outline-none transition-all placeholder:text-slate-400"
                                 />
                             </div>
                             <div className="flex flex-col sm:flex-row gap-3">
                                 <div className="relative min-w-[220px]">
-                                    <select className="w-full h-14 appearance-none bg-slate-50 dark:bg-black/20 border-2 border-transparent hover:border-slate-200 dark:hover:border-slate-700 focus:border-primary text-slate-700 dark:text-slate-200 text-sm font-bold rounded-xl pl-5 pr-12 cursor-pointer outline-none transition-all">
+                                    <select aria-label="Filtrar grid por tipo de Perfil de Acesso" className="w-full h-14 appearance-none bg-slate-50 dark:bg-black/20 border-2 border-transparent hover:border-slate-200 dark:hover:border-slate-700 focus:border-primary text-slate-700 dark:text-slate-200 text-sm font-bold rounded-xl pl-5 pr-12 cursor-pointer outline-none transition-all">
                                         <option>Todos os Perfis</option>
                                         <option>Administrador</option>
                                         <option>Gerente</option>
                                         <option>Coordenador</option>
                                         <option>Promotor</option>
                                     </select>
-                                    <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_content</span>
+                                    <span aria-hidden="true" className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_content</span>
                                 </div>
                                 <div className="relative min-w-[200px]">
-                                    <select className="w-full h-14 appearance-none bg-slate-50 dark:bg-black/20 border-2 border-transparent hover:border-slate-200 dark:hover:border-slate-700 focus:border-primary text-slate-700 dark:text-slate-200 text-sm font-bold rounded-xl pl-5 pr-12 cursor-pointer outline-none transition-all">
+                                    <select aria-label="Filtrar grid pelo status do Usuário" className="w-full h-14 appearance-none bg-slate-50 dark:bg-black/20 border-2 border-transparent hover:border-slate-200 dark:hover:border-slate-700 focus:border-primary text-slate-700 dark:text-slate-200 text-sm font-bold rounded-xl pl-5 pr-12 cursor-pointer outline-none transition-all">
                                         <option>Status: Todos</option>
                                         <option>Ativo</option>
                                         <option>Inativo</option>
                                         <option>Pendente</option>
                                     </select>
-                                    <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">filter_list</span>
+                                    <span aria-hidden="true" className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">filter_list</span>
                                 </div>
-                                <button className="h-14 w-14 flex flex-shrink-0 flex-grow-0 items-center justify-center bg-slate-50 hover:bg-red-50 dark:bg-black/20 dark:hover:bg-red-500/10 text-slate-400 hover:text-red-500 rounded-xl transition-colors border-2 border-transparent group" title="Limpar Filtros">
-                                    <span className="material-symbols-outlined group-hover:scale-110 transition-transform">filter_alt_off</span>
+                                <button type="button" aria-label="Limpar Filtros Analíticos" className="h-14 w-14 flex flex-shrink-0 flex-grow-0 items-center justify-center bg-slate-50 hover:bg-red-50 dark:bg-black/20 dark:hover:bg-red-500/10 text-slate-400 hover:text-red-500 rounded-xl transition-colors border-2 border-transparent group" title="Limpar Filtros">
+                                    <span aria-hidden="true" className="material-symbols-outlined group-hover:scale-110 transition-transform">filter_alt_off</span>
                                 </button>
                             </div>
                         </div>
@@ -188,17 +194,18 @@ export default function GestaoUsuariosPage() {
                                             <tr className="bg-slate-50/80 dark:bg-black/20 border-b border-slate-200 dark:border-white/5">
                                                 <th className="px-8 py-5 w-16">
                                                     <input
+                                                        aria-label="Selecionar todos os usuários"
                                                         type="checkbox"
                                                         checked={selectedUsers.length === users.length && users.length > 0}
                                                         onChange={handleSelectAll}
-                                                        className="h-5 w-5 rounded-md border-slate-300 dark:border-slate-600 outline-none text-primary focus:ring-primary bg-white dark:bg-slate-800 cursor-pointer"
+                                                        className="h-5 w-5 rounded-md border-slate-300 dark:border-slate-600 outline-none text-primary focus:ring-primary focus:ring-2 focus:ring-offset-1 bg-white dark:bg-slate-800 cursor-pointer transition-all"
                                                     />
                                                 </th>
-                                                <th className="px-6 py-5 text-xs font-black text-slate-400 uppercase tracking-[0.15em]">Usuário & Contato</th>
-                                                <th className="px-6 py-5 text-xs font-black text-slate-400 uppercase tracking-[0.15em]">Perfil de Acesso</th>
-                                                <th className="px-6 py-5 text-xs font-black text-slate-400 uppercase tracking-[0.15em]">Alocação Geográfica</th>
-                                                <th className="px-6 py-5 text-xs font-black text-slate-400 uppercase tracking-[0.15em]">Status</th>
-                                                <th className="px-8 py-5 text-xs font-black text-slate-400 uppercase tracking-[0.15em] text-right">Ações Rápidas</th>
+                                                <th scope="col" className="px-6 py-5 text-xs font-black text-slate-400 uppercase tracking-[0.15em]">Usuário & Contato</th>
+                                                <th scope="col" className="px-6 py-5 text-xs font-black text-slate-400 uppercase tracking-[0.15em]">Perfil de Acesso</th>
+                                                <th scope="col" className="px-6 py-5 text-xs font-black text-slate-400 uppercase tracking-[0.15em]">Alocação Geográfica</th>
+                                                <th scope="col" className="px-6 py-5 text-xs font-black text-slate-400 uppercase tracking-[0.15em]">Status</th>
+                                                <th scope="col" className="px-8 py-5 text-xs font-black text-slate-400 uppercase tracking-[0.15em] text-right">Ações Rápidas</th>
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-slate-100 dark:divide-white/5">
@@ -206,16 +213,17 @@ export default function GestaoUsuariosPage() {
                                                 <tr key={user.id} className="group hover:bg-primary/5 dark:hover:bg-white/[0.02] transition-colors cursor-pointer" onClick={() => handleSelectOne(user.id)}>
                                                     <td className="px-8 py-4" onClick={(e) => e.stopPropagation()}>
                                                         <input
+                                                            aria-label={`Selecionar o usuário ${user.name}`}
                                                             type="checkbox"
                                                             checked={selectedUsers.includes(user.id)}
                                                             onChange={() => handleSelectOne(user.id)}
-                                                            className="h-5 w-5 rounded-md border-slate-300 dark:border-slate-600 outline-none text-primary focus:ring-primary bg-white dark:bg-slate-800 cursor-pointer transition-all"
+                                                            className="h-5 w-5 rounded-md border-slate-300 dark:border-slate-600 outline-none text-primary focus:ring-primary focus:ring-2 focus:ring-offset-1 bg-white dark:bg-slate-800 cursor-pointer transition-all"
                                                         />
                                                     </td>
                                                     <td className="px-6 py-4">
                                                         <div className="flex items-center gap-4">
                                                             {user.avatar ? (
-                                                                <img src={user.avatar} alt={`Avatar de ${user.name}`} className="h-12 w-12 rounded-full object-cover shadow-sm bg-slate-100 dark:bg-slate-800" />
+                                                                <Image src={user.avatar} alt={`Avatar de ${user.name}`} width={48} height={48} className="h-12 w-12 rounded-full object-cover shadow-sm bg-slate-100 dark:bg-slate-800" />
                                                             ) : (
                                                                 <div className="h-12 w-12 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 font-black text-sm shadow-sm">
                                                                     {user.initials}
@@ -249,13 +257,13 @@ export default function GestaoUsuariosPage() {
                                                     </td>
                                                     <td className="px-8 py-4 text-right">
                                                         <div className="flex items-center justify-end gap-2" onClick={(e) => e.stopPropagation()}>
-                                                            <button className="h-10 w-10 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-400 hover:text-primary hover:border-primary border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5" title="Editar Usuário">
+                                                            <button aria-label="Editar Usuário" className="h-10 w-10 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-400 hover:text-primary hover:border-primary border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5" title="Editar Usuário">
                                                                 <span className="material-symbols-outlined text-[20px]">edit</span>
                                                             </button>
-                                                            <button className="h-10 w-10 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-400 hover:text-orange-500 hover:border-orange-500 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5" title="Resetar Senha">
+                                                            <button aria-label="Disparar reset de senha para o usuário" className="h-10 w-10 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-400 hover:text-orange-500 hover:border-orange-500 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5" title="Resetar Senha">
                                                                 <span className="material-symbols-outlined text-[20px]">lock_reset</span>
                                                             </button>
-                                                            <button className="h-10 w-10 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-400 hover:text-red-500 hover:border-red-500 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5" title="Desativar Conta">
+                                                            <button aria-label="Desativar Conta de Usuário" className="h-10 w-10 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-400 hover:text-red-500 hover:border-red-500 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5" title="Desativar Conta">
                                                                 <span className="material-symbols-outlined text-[20px]">person_off</span>
                                                             </button>
                                                         </div>

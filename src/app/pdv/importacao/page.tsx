@@ -1,12 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useTranslation } from "@/locales/useTranslation";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 
-export default function ImportacaoPDVPage() {
+export default function PdvImportacaoPage(): JSX.Element {
+    const { t } = useTranslation();
+    const [file, setFile] = useState<File | null>(null);
     const [isDragging, setIsDragging] = useState(false);
     const [fileStatus, setFileStatus] = useState<"idle" | "uploading" | "error" | "success">("idle");
+    const [status, setStatus] = useState<{ message: string, type: string }>({ message: '', type: '' });
 
     const handleDragOver = (e: React.DragEvent) => {
         e.preventDefault();
@@ -45,8 +50,12 @@ export default function ImportacaoPDVPage() {
                         {/* Page Header */}
                         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 border-b border-slate-200 dark:border-slate-800 pb-8">
                             <div className="flex flex-col gap-2">
-                                <h1 className="text-slate-900 dark:text-white text-3xl font-black leading-tight tracking-tight">Importação em Lote</h1>
-                                <p className="text-slate-500 dark:text-slate-400 text-base font-medium">Cadastre múltiplos Pontos de Venda simultaneamente via planilha.</p>
+                                <h1 className="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
+                                    {t('importacao.title')}
+                                </h1>
+                                <p className="text-slate-500 dark:text-slate-400 text-lg font-medium">
+                                    {t('importacao.subtitle')}
+                                </p>
                             </div>
                             <div className="flex gap-3">
                                 <button className="flex items-center gap-2 cursor-pointer justify-center rounded-xl h-12 px-6 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-bold shadow-sm transition-all">
@@ -70,6 +79,10 @@ export default function ImportacaoPDVPage() {
                                     </h3>
 
                                     <div
+                                        role="button"
+                                        tabIndex={0}
+                                        aria-label="Área de upload de planilhas de importação. Arraste arquivos ou aperte Enter para selecionar."
+                                        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); /* invoke file input.click() */ } }}
                                         onDragOver={handleDragOver}
                                         onDragLeave={handleDragLeave}
                                         onDrop={handleDrop}
@@ -118,12 +131,12 @@ export default function ImportacaoPDVPage() {
                                                         Nome Fantasia
                                                     </td>
                                                     <td className="px-6 py-3 border-l border-slate-100 dark:border-slate-800 relative">
-                                                        <select className="w-full h-12 px-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 focus:border-primary focus:ring-2 focus:ring-primary/20 text-slate-900 dark:text-white font-semibold text-sm transition-all outline-none appearance-none cursor-pointer">
+                                                        <select aria-label="Selecione o campo interno para vincular à coluna Nome Fantasia do arquivo em lote" className="w-full h-12 px-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 focus:border-primary focus:ring-2 focus:ring-primary/20 text-slate-900 dark:text-white font-semibold text-sm transition-all outline-none appearance-none cursor-pointer">
                                                             <option>Nome do PDV</option>
                                                             <option>Razão Social</option>
                                                             <option>CNPJ</option>
                                                         </select>
-                                                        <span className="material-symbols-outlined absolute right-10 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_more</span>
+                                                        <span aria-hidden="true" className="material-symbols-outlined absolute right-10 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_more</span>
                                                     </td>
                                                     <td className="px-6 py-4 text-center">
                                                         <span className="inline-flex items-center rounded-lg bg-green-50 dark:bg-emerald-500/10 px-3 py-1.5 text-xs font-bold text-green-700 dark:text-emerald-400 border border-green-200 dark:border-emerald-500/20 shadow-sm">Mapeado</span>
@@ -139,11 +152,11 @@ export default function ImportacaoPDVPage() {
                                                         CNPJ
                                                     </td>
                                                     <td className="px-6 py-3 border-l border-slate-100 dark:border-slate-800 relative">
-                                                        <select className="w-full h-12 px-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 focus:border-primary focus:ring-2 focus:ring-primary/20 text-slate-900 dark:text-white font-semibold text-sm transition-all outline-none appearance-none cursor-pointer" defaultValue="CNPJ">
+                                                        <select aria-label="Selecione o campo interno para vincular à coluna CNPJ do arquivo em lote" className="w-full h-12 px-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 focus:border-primary focus:ring-2 focus:ring-primary/20 text-slate-900 dark:text-white font-semibold text-sm transition-all outline-none appearance-none cursor-pointer" defaultValue="CNPJ">
                                                             <option value="CNPJ">CNPJ</option>
                                                             <option value="IE">Inscrição Estadual</option>
                                                         </select>
-                                                        <span className="material-symbols-outlined absolute right-10 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_more</span>
+                                                        <span aria-hidden="true" className="material-symbols-outlined absolute right-10 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_more</span>
                                                     </td>
                                                     <td className="px-6 py-4 text-center">
                                                         <span className="inline-flex items-center rounded-lg bg-green-50 dark:bg-emerald-500/10 px-3 py-1.5 text-xs font-bold text-green-700 dark:text-emerald-400 border border-green-200 dark:border-emerald-500/20 shadow-sm">Mapeado</span>
@@ -159,11 +172,11 @@ export default function ImportacaoPDVPage() {
                                                         Endereço
                                                     </td>
                                                     <td className="px-6 py-3 border-l border-slate-100 dark:border-slate-800 relative">
-                                                        <select className="w-full h-12 px-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 focus:border-primary focus:ring-2 focus:ring-primary/20 text-slate-900 dark:text-white font-semibold text-sm transition-all outline-none appearance-none cursor-pointer" defaultValue="End">
+                                                        <select aria-label="Selecione o campo interno para vincular à coluna Endereço do arquivo em lote" className="w-full h-12 px-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 focus:border-primary focus:ring-2 focus:ring-primary/20 text-slate-900 dark:text-white font-semibold text-sm transition-all outline-none appearance-none cursor-pointer" defaultValue="End">
                                                             <option value="End">Endereço Completo</option>
                                                             <option value="Log">Logradouro</option>
                                                         </select>
-                                                        <span className="material-symbols-outlined absolute right-10 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_more</span>
+                                                        <span aria-hidden="true" className="material-symbols-outlined absolute right-10 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_more</span>
                                                     </td>
                                                     <td className="px-6 py-4 text-center">
                                                         <span className="inline-flex items-center rounded-lg bg-green-50 dark:bg-emerald-500/10 px-3 py-1.5 text-xs font-bold text-green-700 dark:text-emerald-400 border border-green-200 dark:border-emerald-500/20 shadow-sm">Mapeado</span>
@@ -179,12 +192,12 @@ export default function ImportacaoPDVPage() {
                                                         Telefone Contato
                                                     </td>
                                                     <td className="px-6 py-3 border-l border-red-100 dark:border-red-900/30 relative">
-                                                        <select className="w-full h-12 px-4 rounded-xl bg-white dark:bg-slate-900 border-2 border-red-300 dark:border-red-500/50 text-red-900 dark:text-red-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 font-semibold text-sm transition-all outline-none appearance-none cursor-pointer" defaultValue="">
+                                                        <select aria-label="Selecione o campo interno para vincular à coluna Telefone Contato do arquivo em lote" className="w-full h-12 px-4 rounded-xl bg-white dark:bg-slate-900 border-2 border-red-300 dark:border-red-500/50 text-red-900 dark:text-red-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 font-semibold text-sm transition-all outline-none appearance-none cursor-pointer" defaultValue="">
                                                             <option value="" disabled>Selecione um campo...</option>
                                                             <option value="tel1">Telefone Principal</option>
                                                             <option value="cel">Celular</option>
                                                         </select>
-                                                        <span className="material-symbols-outlined absolute right-10 top-1/2 -translate-y-1/2 text-red-400 dark:text-red-500/50 pointer-events-none">expand_more</span>
+                                                        <span aria-hidden="true" className="material-symbols-outlined absolute right-10 top-1/2 -translate-y-1/2 text-red-400 dark:text-red-500/50 pointer-events-none">expand_more</span>
                                                     </td>
                                                     <td className="px-6 py-4 text-center">
                                                         <span className="inline-flex items-center rounded-lg bg-red-50 dark:bg-red-500/10 px-3 py-1.5 text-xs font-bold text-red-700 dark:text-red-400 border border-red-200 dark:border-red-500/20 shadow-sm animate-pulse">Pendente</span>
@@ -209,7 +222,7 @@ export default function ImportacaoPDVPage() {
                                         <span className="bg-red-100 dark:bg-red-500/20 text-red-700 dark:text-red-400 text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full border border-red-200 dark:border-red-500/30">3 erros</span>
                                     </div>
 
-                                    <div className="p-6 flex flex-col gap-4 flex-1 overflow-y-auto max-h-[600px] scroll-smooth">
+                                    <div role="status" aria-live="polite" className="p-6 flex flex-col gap-4 flex-1 overflow-y-auto max-h-[600px] scroll-smooth">
                                         {/* Error Item: Invalid */}
                                         <div className="p-5 rounded-2xl border border-red-200 dark:border-red-900/50 bg-red-50/50 dark:bg-red-900/10 flex gap-4 items-start shadow-sm hover:shadow-md transition-shadow">
                                             <div className="mt-1 min-w-4 text-red-600 dark:text-red-400">
@@ -220,7 +233,7 @@ export default function ImportacaoPDVPage() {
                                                     <p className="text-sm font-black text-red-900 dark:text-red-200 tracking-tight">Linha 4</p>
                                                     <span className="text-[10px] uppercase tracking-wider text-red-700 dark:text-red-300 font-bold bg-red-100 dark:bg-red-900/50 px-2 py-1 rounded-md border border-red-200 dark:border-red-500/20">CNPJ Inválido</span>
                                                 </div>
-                                                <p className="text-sm font-medium text-red-700 dark:text-red-300/80 leading-snug">O valor '123.456.789-00' não corresponde a um formato de CNPJ válido do algoritmo federal.</p>
+                                                <p className="text-sm font-medium text-red-700 dark:text-red-300/80 leading-snug">O valor &apos;123.456.789-00&apos; não corresponde a um formato de CNPJ válido do algoritmo federal.</p>
                                             </div>
                                         </div>
 
@@ -234,7 +247,7 @@ export default function ImportacaoPDVPage() {
                                                     <p className="text-sm font-black text-amber-900 dark:text-amber-200 tracking-tight">Linha 12</p>
                                                     <span className="text-[10px] uppercase tracking-wider text-amber-700 dark:text-amber-300 font-bold bg-amber-100 dark:bg-amber-900/50 px-2 py-1 rounded-md border border-amber-200 dark:border-amber-500/20">Campo Vazio</span>
                                                 </div>
-                                                <p className="text-sm font-medium text-amber-700 dark:text-amber-300/80 leading-snug">O campo obrigatório 'Endereço Local' está em branco, prejudicando o roteiro.</p>
+                                                <p className="text-sm font-medium text-amber-700 dark:text-amber-300/80 leading-snug">O campo obrigatório &apos;Endereço Local&apos; está em branco, prejudicando o roteiro.</p>
                                             </div>
                                         </div>
 

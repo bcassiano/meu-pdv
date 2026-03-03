@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export default function Sidebar() {
+export default function Sidebar(): JSX.Element {
     const pathname = usePathname();
     const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -22,7 +22,7 @@ export default function Sidebar() {
         }
     }, []);
 
-    const toggleSidebar = () => {
+    const toggleSidebar = (): void => {
         setIsCollapsed(prev => {
             const next = !prev;
             localStorage.setItem('sidebarCollapsed', String(next));

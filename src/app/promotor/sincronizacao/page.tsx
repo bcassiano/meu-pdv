@@ -2,7 +2,7 @@
 
 import React from "react";
 
-export default function PromotorSyncPage() {
+export default function PromotorSyncPage(): JSX.Element {
     return (
         <div className="bg-[#f8f9fc] text-[#1e293b] font-display min-h-screen flex flex-col antialiased">
             <div className="bg-[#fffbeb] border-b border-[#f59e0b]/20 px-4 py-3 flex items-center justify-between gap-4 sticky top-0 z-10">

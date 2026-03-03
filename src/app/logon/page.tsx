@@ -4,8 +4,10 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { autenticarUsuario } from "./actions";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { useTranslation } from "@/locales/useTranslation";
 
-export default function LogonPage() {
+export default function LogonPage(): JSX.Element {
+    const { t } = useTranslation();
     const [cpf, setCpf] = useState("");
     const [senha, setSenha] = useState("");
     const [isLoggingIn, setIsLoggingIn] = useState(false);
@@ -76,16 +78,16 @@ export default function LogonPage() {
                             </div>
                         </div>
                         <h1 className="text-3xl font-black tracking-tighter text-slate-900 dark:text-white mb-1">
-                            MEU <span className="text-[#0d59f2]">PDV</span>
+                            {t('logon.title').split(' ')[0]} <span className="text-[#0d59f2]">{t('logon.title').split(' ')[1]}</span>
                         </h1>
                         <p className="text-[13px] font-bold text-slate-500 dark:text-slate-400">
-                            Célula de Atendimento
+                            {t('logon.subtitle')}
                         </p>
                     </div>
 
                     {/* Erro de Validação */}
                     {error && (
-                        <div className="mx-10 mt-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center gap-3 animate-in fade-in slide-in-from-top-2 duration-300">
+                        <div role="alert" aria-live="assertive" className="mx-10 mt-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center gap-3 animate-in fade-in slide-in-from-top-2 duration-300">
                             <span className="material-symbols-outlined text-red-500 text-[20px]">error</span>
                             <span className="text-xs font-bold text-red-500">{error}</span>
                         </div>
@@ -95,13 +97,13 @@ export default function LogonPage() {
                     <form onSubmit={handleLogin} className={`p-10 ${error ? 'pt-4' : 'pt-0'} space-y-6 ${isShaking ? 'animate-shake' : ''}`}>
                         <div className="space-y-4">
                             <label className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-widest" htmlFor="cpf">
-                                Identificação do Promotor
+                                {t('logon.form.cpfLabel')}
                             </label>
                             <div className="relative flex items-center">
                                 <input
                                     id="cpf"
                                     type="text"
-                                    placeholder="Usuário:"
+                                    placeholder={t('logon.form.cpfPlaceholder')}
                                     required
                                     value={cpf}
                                     onChange={(e) => {
@@ -111,14 +113,15 @@ export default function LogonPage() {
                                     className="w-full h-14 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-[#121629] px-5 text-lg font-bold text-slate-600 dark:text-white placeholder:text-slate-300 dark:placeholder:text-slate-600 focus:border-[#0d59f2] focus:bg-white dark:focus:bg-[#121629] focus:ring-4 focus:ring-[#0d59f2]/10 outline-none transition-all"
                                 />
                                 <div className="absolute right-4 text-slate-400 dark:text-slate-500">
-                                    <span className="material-symbols-outlined text-[20px]">person</span>
+                                    <span aria-hidden="true" className="material-symbols-outlined text-[20px]">person</span>
                                 </div>
                             </div>
+                            <label className="sr-only" htmlFor="senha">{t('logon.form.senhaLabel')}</label>
                             <div className="relative flex items-center">
                                 <input
                                     id="senha"
                                     type="password"
-                                    placeholder="Senha:"
+                                    placeholder={t('logon.form.senhaPlaceholder')}
                                     required
                                     value={senha}
                                     onChange={(e) => {
@@ -128,7 +131,7 @@ export default function LogonPage() {
                                     className="w-full h-14 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-[#121629] px-5 text-lg font-bold text-slate-600 dark:text-white placeholder:text-slate-300 dark:placeholder:text-slate-600 focus:border-[#0d59f2] focus:bg-white dark:focus:bg-[#121629] focus:ring-4 focus:ring-[#0d59f2]/10 outline-none transition-all"
                                 />
                                 <div className="absolute right-4 text-slate-400 dark:text-slate-500">
-                                    <span className="material-symbols-outlined text-[20px]">lock</span>
+                                    <span aria-hidden="true" className="material-symbols-outlined text-[20px]">lock</span>
                                 </div>
                             </div>
                             <p className="text-[11px] text-slate-400 dark:text-slate-500 italic pt-1">
@@ -143,13 +146,13 @@ export default function LogonPage() {
                         >
                             {isLoggingIn ? (
                                 <>
-                                    <span className="material-symbols-outlined text-[20px] animate-spin">sync</span>
-                                    AUTENTICANDO...
+                                    <span aria-hidden="true" className="material-symbols-outlined text-[20px] animate-spin">sync</span>
+                                    {t('logon.form.authenticating')}
                                 </>
                             ) : (
                                 <>
-                                    ENTRAR NO SISTEMA
-                                    <span className="material-symbols-outlined text-[20px] animate-bounce-x">arrow_forward</span>
+                                    {t('logon.form.submitButton')}
+                                    <span aria-hidden="true" className="material-symbols-outlined text-[20px] animate-bounce-x">arrow_forward</span>
                                 </>
                             )}
                         </button>
@@ -163,15 +166,15 @@ export default function LogonPage() {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="flex items-center justify-center gap-2 h-12 rounded-xl border border-slate-100 dark:border-slate-800 text-sm font-bold text-slate-500 dark:text-slate-400 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
-                                <span className="material-symbols-outlined text-[18px]">help</span>
-                                Dúvidas
-                            </div>
-                            <div className="flex items-center justify-center gap-2 h-12 rounded-xl border border-slate-100 dark:border-slate-800 text-sm font-bold text-slate-500 dark:text-slate-400 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
-                                <span className="material-symbols-outlined text-[18px]">wifi_off</span>
-                                Offline
-                            </div>
+                        <div className="grid grid-cols-2 gap-4" role="navigation" aria-label="Links de Suporte">
+                            <button type="button" className="flex w-full items-center justify-center gap-2 h-12 rounded-xl border border-slate-100 dark:border-slate-800 text-sm font-bold text-slate-500 dark:text-slate-400 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span aria-hidden="true" className="material-symbols-outlined text-[18px]">help</span>
+                                {t('logon.footer.faq')}
+                            </button>
+                            <button type="button" className="flex w-full items-center justify-center gap-2 h-12 rounded-xl border border-slate-100 dark:border-slate-800 text-sm font-bold text-slate-500 dark:text-slate-400 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span aria-hidden="true" className="material-symbols-outlined text-[18px]">wifi_off</span>
+                                {t('logon.footer.offline')}
+                            </button>
                         </div>
                     </form>
 

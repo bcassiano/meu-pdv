@@ -3,7 +3,7 @@
 import { useTheme } from "next-themes";
 import { useEffect, useState, useRef } from "react";
 
-export function ThemeToggle() {
+export function ThemeToggle(): JSX.Element {
     const { theme, setTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
     const [themeMessage, setThemeMessage] = useState<string | null>(null);
@@ -13,7 +13,7 @@ export function ThemeToggle() {
         setMounted(true);
     }, []);
 
-    const toggleTheme = () => {
+    const toggleTheme = (): void => {
         let nextTheme = "system";
         let msg = "";
 

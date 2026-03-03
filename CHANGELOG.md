@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2026-03-03
+
+### Changed
+- UX/Acessibilidade: Adequação estrutural das rotas principais (`/`, `/logon`, `/usuarios`, `/usuarios/novo`, `/pdv/importacao`) garantindo `h1` único, inputs com `aria-label`/`label` explícitos e correção de roles/focos.
+- SEO: Injeção sistemática de metadados (`title`, `description`, `robots`, `alternates`) na raiz de `layout.tsx` e `page.tsx` de cada módulo operante.
+- i18n: Configuração mínima viável de internacionalização baseada em hook customizado e injeção do dicionário `locales/pt.json` para textos literais críticos.
+
 ## [1.3.0] - 2026-03-02
 
 ### Added

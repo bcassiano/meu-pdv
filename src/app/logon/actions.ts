@@ -3,9 +3,11 @@
 import fs from "fs";
 import path from "path";
 
+import { ActionResponse, Usuario } from "@/types/usuario";
+
 const dbPath = path.join(process.cwd(), "data", "db.json");
 
-export async function autenticarUsuario(login: string, senha: string) {
+export async function autenticarUsuario(login: string, senha: string): Promise<ActionResponse<{ id: string; nome: string; tipo: string }>> {
     try {
         // Garantir delay para UX (e segurança básica contra brute force simples)
         await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -17,11 +19,11 @@ export async function autenticarUsuario(login: string, senha: string) {
         const raw = fs.readFileSync(dbPath, "utf-8");
         if (!raw) return { success: false, message: "Erro ao ler base de dados." };
 
-        const data = JSON.parse(raw);
+        const data: { usuarios: Usuario[] } = JSON.parse(raw);
         const usuarios = data.usuarios || [];
 
         // Busca o usuário pelo login exato e senha
-        const usuario = usuarios.find((u: any) =>
+        const usuario = usuarios.find((u: Usuario) =>
             u.login === login && u.senha === senha
         );
 
@@ -33,7 +35,7 @@ export async function autenticarUsuario(login: string, senha: string) {
             // Retorna apenas dados não sensíveis
             return {
                 success: true,
-                user: {
+                data: {
                     id: usuario.id,
                     nome: usuario.nome,
                     tipo: usuario.tipo

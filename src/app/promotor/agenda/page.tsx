@@ -2,7 +2,7 @@
 
 import React from "react";
 
-export default function PromotorAgendaPage() {
+export default function PromotorAgendaPage(): JSX.Element {
     return (
         <div className="bg-[#f5f6f8] dark:bg-[#101622] font-display text-slate-900 dark:text-slate-100 antialiased selection:bg-[#0d59f2]/20">
             <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden">

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 
-export default function PermissoesPerfilPage() {
+export default function PermissoesPerfilPage(): JSX.Element {
     const [selectedProfile, setSelectedProfile] = useState("Administrador");
 
     const profiles = [

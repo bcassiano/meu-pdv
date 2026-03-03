@@ -4,7 +4,7 @@ import React from "react";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 
-export default function CadastroPDVPage() {
+export default function CadastroPDVPage(): JSX.Element {
     return (
         <div className="flex h-screen w-full overflow-hidden bg-[#f8fafc] dark:bg-[#0f172a] font-display transition-colors">
             <Sidebar />

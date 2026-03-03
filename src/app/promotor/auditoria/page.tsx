@@ -2,7 +2,7 @@
 
 import React from "react";
 
-export default function PromotorAuditoriaPage() {
+export default function PromotorAuditoriaPage(): JSX.Element {
     return (
         <div className="bg-[#000000] font-display text-white min-h-screen flex flex-col antialiased selection:bg-white selection:text-black">
             <div className="flex-1 flex flex-col max-w-5xl mx-auto w-full bg-[#000000] min-h-screen">

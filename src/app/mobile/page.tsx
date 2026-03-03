@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function MobileHubPage() {
+export default function MobileHubPage(): JSX.Element {
     return (
         <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-slate-50 dark:bg-slate-950">
             <h1 className="text-5xl font-black tracking-tighter mb-4 text-slate-900 dark:text-white">Módulos <span className="text-orange-500 italic">Mobile</span></h1>

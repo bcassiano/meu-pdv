@@ -3,23 +3,25 @@
 import fs from "fs";
 import path from "path";
 
+import { ActionResponse, Usuario } from "@/types/usuario";
+
 // Caminho para o nosso banco de dados fake (db.json na pasta data)
 const dbPath = path.join(process.cwd(), "data", "db.json");
 
-export async function salvarUsuario(formData: any) {
+export async function salvarUsuario(formData: Omit<Usuario, "id" | "createdAt">): Promise<ActionResponse<Usuario>> {
     try {
         // Delay simulado para UX realista de requisição de rede
         await new Promise((resolve) => setTimeout(resolve, 800));
 
         // Let's read the current users
-        let data: { usuarios: any[] } = { usuarios: [] };
+        let data: { usuarios: Usuario[] } = { usuarios: [] };
         if (fs.existsSync(dbPath)) {
             const raw = fs.readFileSync(dbPath, "utf-8");
             if (raw) data = JSON.parse(raw);
         }
 
         // Criar o novo usuário com ID, data e dados do forms
-        const novoUsuario = {
+        const novoUsuario: Usuario = {
             id: crypto.randomUUID(),
             createdAt: new Date().toISOString(),
             ...formData,
@@ -37,7 +39,7 @@ export async function salvarUsuario(formData: any) {
     }
 }
 
-export async function getUsuarios() {
+export async function getUsuarios(): Promise<ActionResponse<Usuario[]>> {
     try {
         if (!fs.existsSync(dbPath)) return { success: true, data: [] };
 

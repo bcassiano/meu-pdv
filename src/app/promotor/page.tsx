@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function PromotorHubPage() {
+export default function PromotorHubPage(): JSX.Element {
     return (
         <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-slate-50 dark:bg-slate-950">
             <div className="flex flex-col items-center mb-12">
