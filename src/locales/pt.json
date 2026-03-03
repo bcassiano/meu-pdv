@@ -6,6 +6,7 @@
         "links": {
             "logon": "Tela de Logon",
             "pdvCadastro": "Cadastro de PDV (Admin)",
+            "pdvCargaInicial": "Carga Inicial de Lojas",
             "usuarios": "Gestão de Usuários (RBAC)",
             "permissoes": "Permissões de Perfil",
             "mobile": "Módulos Mobile"
@@ -112,6 +113,46 @@
         "actions": {
             "downloadBase": "Baixar Modelo Base",
             "import": "Importar Dados"
+        }
+    },
+    "cargaInicial": {
+        "title": "Carga Inicial de Lojas",
+        "subtitle": "Faça o upload da planilha mestre para estruturar a hierarquia de PDVs da rede.",
+        "downloadBase": "Baixar Modelo Base",
+        "importData": "Importar Dados",
+        "step1": {
+            "title": "Upload de Arquivo",
+            "dropNow": "Solte a planilha agora",
+            "dragDrop": "Arraste e solte sua planilha aqui",
+            "orClick": "ou clique para selecionar",
+            "fromComputer": "do seu computador",
+            "supportText": "Suporta .CSV e .XLSX até 10MB",
+            "ariaLabel": "Área de upload de planilhas de carga inicial. Arraste arquivos ou aperte Enter para selecionar."
+        },
+        "step2": {
+            "title": "Resumo da Carga",
+            "totalPdvs": "Total de PDVs",
+            "new": "Novos",
+            "updates": "Atualizações",
+            "errors": "Inconsistências"
+        },
+        "step3": {
+            "title": "Preview de Dados",
+            "identified": "Identificado",
+            "columns": {
+                "cnpj": "CNPJ",
+                "name": "Nome Fantasia",
+                "city": "Cidade/UF",
+                "profile": "Perfil"
+            }
+        },
+        "qualityCheck": {
+            "title": "Check de Qualidade",
+            "fixMessage": "Corrija os erros na planilha e faça o seu re-envio inteligente."
+        },
+        "actions": {
+            "cancel": "Cancelar Carga",
+            "finish": "Iniciar Processamento"
         }
     }
 }

@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-03-03
+
+### Added
+- Features: Nova tela de "Carga Inicial de Lojas" adicionada ao módulo PDV (`/pdv/carga-inicial`), provendo interface de upload com validação drag-and-drop e pré-visualização de dados.
+- Navigation: Expansão coordenada da navegação global (Sidebar, Header do cadastro de PDV e atalhos na Home) para integrar a nova tela organicamente.
+
+### Changed
+- i18n: Evolução do dicionário `locales/pt.json` de modo a englobar as novas chaves literais para os componentes da Carga Inicial, reforçando a escalabilidade do sistema.
+
 ## [1.4.0] - 2026-03-03
 
 ### Changed

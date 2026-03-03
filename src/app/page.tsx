@@ -27,6 +27,10 @@ export default function HomePage(): JSX.Element {
                     <span className="sr-only">Acessar o </span>{t('home.links.pdvCadastro')}
                     <span aria-hidden="true" className="material-symbols-outlined text-[20px] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all">arrow_forward</span>
                 </a>
+                <a href="/pdv/carga-inicial" className="flex items-center justify-between px-6 py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 rounded-2xl font-bold shadow-sm hover:border-primary hover:text-primary transition-all group">
+                    <span className="sr-only">Acessar a </span>{t('home.links.pdvCargaInicial')}
+                    <span aria-hidden="true" className="material-symbols-outlined text-[20px] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all">arrow_forward</span>
+                </a>
                 <a href="/usuarios" className="flex items-center justify-between px-6 py-4 bg-primary border border-primary text-white rounded-2xl font-black shadow-lg shadow-primary/20 hover:-translate-y-1 transition-all group">
                     <span className="sr-only">Acessar a </span>{t('home.links.usuarios')}
                     <span aria-hidden="true" className="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
