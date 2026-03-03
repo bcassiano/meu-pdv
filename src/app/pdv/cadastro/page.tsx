@@ -2,49 +2,37 @@
 
 import React from "react";
 import Sidebar from "@/components/Sidebar";
+import Header from "@/components/Header";
 
 export default function CadastroPDVPage() {
     return (
-        <div className="flex h-screen bg-[#f5f6f8] dark:bg-[#0a0f18] font-display overflow-hidden">
+        <div className="flex h-screen w-full overflow-hidden bg-[#f8fafc] dark:bg-[#0f172a] font-display transition-colors">
             <Sidebar />
 
-            {/* Main Content Area */}
-            <main className="flex-1 flex flex-col h-full bg-[#f8fafc] dark:bg-[#0a0f18] relative">
-                {/* Header Glassmorphism */}
-                <header className="h-20 border-b border-slate-200 dark:border-white/5 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl flex items-center justify-between px-10 sticky top-0 z-10">
-                    <div className="flex items-center gap-3 text-xs font-black uppercase tracking-widest text-slate-400">
-                        <span className="hover:text-primary cursor-pointer transition-colors">PDVs</span>
-                        <span className="material-symbols-outlined text-[16px]">chevron_right</span>
-                        <span className="text-slate-900 dark:text-white">Novo Cadastro Corporativo</span>
-                    </div>
-                    <div className="flex items-center gap-6">
-                        <div className="flex items-center gap-2 pr-6 border-r border-slate-200 dark:border-white/10">
-                            <div className="flex flex-col items-end">
-                                <span className="text-[10px] text-slate-400 font-bold uppercase tracking-tighter">Último Sync</span>
-                                <span className="text-xs text-slate-900 dark:text-white font-mono">20:55:42</span>
-                            </div>
-                            <button className="h-10 w-10 flex items-center justify-center rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 transition-colors relative">
-                                <span className="material-symbols-outlined text-slate-500">notifications</span>
-                                <span className="absolute top-2.5 right-2.5 h-2 w-2 rounded-full bg-red-500 border-2 border-white dark:border-slate-900" />
-                            </button>
-                        </div>
-                        <button className="h-11 w-11 flex items-center justify-center rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-xl shadow-slate-900/10 transition-transform active:scale-95">
-                            <span className="material-symbols-outlined">person</span>
-                        </button>
-                    </div>
-                </header>
+            <main className="flex-1 flex flex-col min-w-0 h-full relative">
+                {/* Global Unified Header */}
+                <Header
+                    title="PDVs"
+                    icon="storefront"
+                    navigation={[
+                        { label: "Dashboard", href: "/pdv" },
+                        { label: "Novo Cadastro", href: "/pdv/cadastro", active: true, icon: "add_box" },
+                        { label: "Importação em Lote", href: "/pdv/importacao", icon: "cloud_upload" },
+                    ]}
+                />
 
                 {/* Scrollable Workspace */}
-                <div className="flex-1 overflow-y-auto overflow-x-hidden p-12 scroll-smooth">
-                    <div className="max-w-5xl mx-auto space-y-12">
+                <div className="flex-1 overflow-y-auto overflow-x-hidden p-10 2xl:p-14 pb-24 scroll-smooth">
+                    <div className="max-w-[1000px] mx-auto space-y-10">
 
                         {/* Title & Introduction */}
-                        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-slate-200 dark:border-white/5 pb-10">
+                        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6">
                             <div className="space-y-4">
-                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-black uppercase tracking-[0.2em]">
+                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-black uppercase tracking-[0.2em] border border-primary/20">
+                                    <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
                                     Módulo de Expansão
                                 </div>
-                                <h1 className="text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+                                <h1 className="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
                                     Novo Ponto de <br /> <span className="text-primary italic">Venda Especial</span>
                                 </h1>
                                 <p className="text-slate-500 dark:text-slate-400 max-w-xl text-lg font-medium leading-relaxed">
@@ -52,9 +40,11 @@ export default function CadastroPDVPage() {
                                 </p>
                             </div>
                             <div className="flex items-center gap-4">
-                                <button className="px-6 py-4 rounded-2xl text-slate-500 font-bold text-sm hover:bg-slate-100 dark:hover:bg-white/5 transition-all">Descartar</button>
-                                <button className="px-10 py-4 rounded-2xl bg-primary text-white font-black text-sm shadow-2xl shadow-primary/30 hover:shadow-primary/50 hover:-translate-y-1 active:translate-y-0 transition-all flex items-center gap-3">
-                                    <span className="material-symbols-outlined">bolt</span>
+                                <button className="px-6 py-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-200 font-bold text-sm hover:bg-slate-50 dark:hover:bg-slate-700 shadow-sm transition-all flex items-center gap-3 w-full sm:w-auto justify-center">
+                                    Descartar
+                                </button>
+                                <button className="px-8 py-4 rounded-2xl bg-primary text-white font-black text-sm shadow-xl shadow-primary/30 hover:shadow-primary/50 hover:-translate-y-1 active:translate-y-0 transition-all flex items-center gap-3 w-full sm:w-auto justify-center">
+                                    <span className="material-symbols-outlined text-[20px]">bolt</span>
                                     ATIVAR PDV
                                 </button>
                             </div>

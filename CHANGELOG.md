@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-03-02
+
+### Added
+- Features: Novo módulo de "Importação de PDVs em Lote" (`/pdv/importacao`) com conversão nativa do layout projetado. Adição de Drag & Drop zone e painel dinâmico de tracking de erros geográficos/fiscais.
+- UX/Aesthetics: Expansão do sistema `dark:` do Tailwind permitindo uma mesclagem suave e compatibilidade com o atual ThemeToggle para tabelas e selects.
+
+### Changed
+- UI Refinement: A página de `Novo Cadastro de PDV` (`/pdv/cadastro`) abandonou seu header engessado estático, herdando agora o `<Header />` global com abas de navegação (Dashboard / Novo Cadastro / Importação em Lote).
+- UX: Componente de rodapé da página de Lote corrigido do seu fluxo absoluto, voltando a respeitar a hierarquia de rolamento padrão (evitando oclussão).
+
 ## [1.2.0] - 2026-03-02
 
 ### Added
