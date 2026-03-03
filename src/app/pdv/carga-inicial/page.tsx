@@ -17,10 +17,9 @@ export default function PdvCargaInicialPage(): JSX.Element {
 
             <main className="flex-1 flex flex-col min-w-0 h-full relative">
                 <Header
-                    title="Carga Inicial de Lojas"
-                    icon="upload_file"
+                    title="PDVs"
+                    icon="storefront"
                     navigation={[
-                        { label: "Dashboard", href: "/pdv" },
                         { label: "Novo Cadastro", href: "/pdv/cadastro", icon: "add_box" },
                         { label: "Importação em Lote", href: "/pdv/importacao", icon: "cloud_upload" },
                         { label: "Carga Inicial", href: "/pdv/carga-inicial", active: true, icon: "upload_file" },

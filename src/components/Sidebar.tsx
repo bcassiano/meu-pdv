@@ -89,7 +89,7 @@ export default function Sidebar(): JSX.Element {
                 {/* Navigation Section */}
                 <nav className="flex-1 px-4 space-y-1 overflow-x-hidden">
                     {navItems.map((item, i) => {
-                        const isActive = pathname === item.href;
+                        const isActive = pathname === item.href || (item.href === "/pdv/cadastro" && pathname.startsWith("/pdv/"));
 
                         return (
                             <Link

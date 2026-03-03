@@ -39,7 +39,6 @@ export default function PdvImportacaoPage(): JSX.Element {
                     title="PDVs"
                     icon="storefront"
                     navigation={[
-                        { label: "Dashboard", href: "/pdv" },
                         { label: "Novo Cadastro", href: "/pdv/cadastro", icon: "add_box" },
                         { label: "Importação em Lote", href: "/pdv/importacao", active: true, icon: "cloud_upload" },
                         { label: "Carga Inicial", href: "/pdv/carga-inicial", icon: "upload_file" },

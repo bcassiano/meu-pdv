@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.1] - 2026-03-03
+
+### Changed
+- UX Refinement: Remoção do link redundante "Dashboard" do cabeçalho (`Header`) em todas as páginas do módulo PDV, limpando a interface. Padronização de ícones e títulos na tela de Carga Inicial.
+- Navigation: Correção da lógica de seleção da `Sidebar`, garantindo que o menu principal "PDVs Ativos" permaneça iluminado mesmo ao navegar por sub-rotas como Carga Inicial ou Importação.
+- Features: Adição de interatividade de teste (mock de upload com feedback visual temporizado e download de template CSV validado) na tela de Carga Inicial.
+
 ## [1.5.0] - 2026-03-03
 
 ### Added
