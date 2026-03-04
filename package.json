@@ -1,32 +1,38 @@
 {
     "name": "meu-pdv",
-    "version": "0.1.0",
+    "version": "1.7.0",
     "private": true,
     "scripts": {
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "typecheck": "tsc --noEmit"
+        "typecheck": "tsc --noEmit",
+        "migrate-pdvs": "npx ts-node src/scripts/migratePdvs.ts"
     },
     "dependencies": {
         "clsx": "^2.1.1",
+        "firebase-admin": "^13.7.0",
         "lucide-react": "^0.378.0",
         "next": "14.2.3",
         "next-themes": "^0.4.6",
+        "papaparse": "^5.5.3",
         "react": "^18",
         "react-dom": "^18",
         "tailwind-merge": "^2.3.0"
     },
     "devDependencies": {
         "@types/node": "^20",
+        "@types/papaparse": "^5.5.2",
         "@types/react": "^18",
         "@types/react-dom": "^18",
         "autoprefixer": "^10.4.27",
+        "dotenv": "^17.3.1",
         "eslint": "^8",
         "eslint-config-next": "14.2.3",
         "postcss": "^8.5.8",
         "tailwindcss": "^3.4.19",
+        "ts-node": "^10.9.2",
         "typescript": "^5"
     }
 }

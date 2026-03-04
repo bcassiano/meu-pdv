@@ -5,6 +5,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.0] - 2026-03-04
+
+### Added
+- **Features**: Nova tela de "Listagem de PDVs" em `/pdv/lista` com pesquisa dinâmica e suporte a dados legados.
+- **Backend**: Endpoint de consulta `/api/pdv/list` integrado ao Pattern Repository e Firestore.
+- **Scripts**: Automação administrativa `migrate-pdvs` para saneamento e padronização (camelCase) de registros na base.
+
+### Fixed
+- **Runtime**: Resolução definitiva de erros de Chunk e Sintaxe via limpeza profunda do cache e saneamento de codificação no frontend.
+- **Navegação**: Sincronização de rotas e redirecionamento automático pós-importação bem-sucedida.
+
+### Changed
+- **Arquitetura**: Implementação de lógica de fallback defensivo para leitura de campos antigos de CSV (ex: RAZÃO SOCIAL LOCAL) na UI de listagem.
+- **Dependencies**: Inclusão de `dotenv` e `ts-node` para suporte a scripts administrativos CLI.
+
+
+## [1.6.0] - 2026-03-04
+
+### Added
+- Database: Implementação robusta do Padrão Repository (`IPdvRepository`), abstraindo a camada de dados para permitir transição futura (Azure PostgreSQL) sem refatoração de UI/API.
+- Backend: Nova API route finalizadora (`/api/pdv/save-import`) acoplada a Factory Method injetável (`DatabaseFactory`).
+- Persistência: Integração e instalação oficial nativa do `firebase-admin` realizando commits assíncronos em formato WriteBatch para o Firestore.
+
+## [1.6.1] - 2026-03-04
+
+### Fixed
+- **API Importação**: Correção no retorno HTTP 422 para devolver a lista `validRows`, permitindo que o frontend libere a importação mista (com erros ignoráveis).
+- **Backend Firestore**: Sanitização rigorosa no `FirestorePdvRepository` para remover chaves `undefined` do payload, evitando Erro 500 no Google Cloud.
+- **Frontend Navegação**: Redirecionamento da tela pós-importação corrigido de `/pdv/lista` (rota ausente) para a Home `/`.
+
+### Changed
+- UX/API: Refatoração da API principal de parse (`/api/pdv/import`) para devolver os registros pré-limpos (`validRows`).
+- UI/Carga Inicial: Atualização atômica do Componente `ClientCargaInicial.tsx`. O botão de "Finalizar", ao ser engatilhado (considerando ignoreError alert logic), agora deflagra POST direto na API para inserir blocos brutos via Service Account.
+
 ## [1.5.1] - 2026-03-03
 
 ### Changed

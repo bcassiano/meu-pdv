@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "slate-sidebar": "#1E293B",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+<div class="flex min-h-screen">
+<!-- Sidebar -->
+<aside class="w-64 bg-slate-sidebar hidden md:flex flex-col border-r border-slate-700/50">
+<div class="p-6 flex flex-col gap-8">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined">layers</span>
+</div>
+<div>
+<h1 class="text-white text-base font-bold leading-tight">Slate Admin</h1>
+<p class="text-slate-400 text-xs">Gestão de Franquias</p>
+</div>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">storefront</span>
+<span class="text-sm font-medium">Lojas</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-white bg-primary rounded-lg" href="#">
+<span class="material-symbols-outlined">upload_file</span>
+<span class="text-sm font-medium">Carga Inicial</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-sm font-medium">Relatórios</span>
+</a>
+<div class="mt-4 pt-4 border-t border-slate-700/50">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium">Configurações</span>
+</a>
+</div>
+</nav>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col overflow-hidden">
+<!-- Header -->
+<header class="h-16 flex items-center justify-between px-8 bg-white dark:bg-background-dark border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-2">
+<span class="text-slate-400 text-sm">Início</span>
+<span class="material-symbols-outlined text-slate-400 text-sm">chevron_right</span>
+<span class="text-slate-900 dark:text-white text-sm font-medium">Carga Inicial de Lojas</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-background-dark"></span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-slate-200 dark:border-slate-800">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-bold text-slate-900 dark:text-white leading-none">Admin User</p>
+<p class="text-xs text-slate-500 mt-1">Gestor Central</p>
+</div>
+<div class="w-9 h-9 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+<img alt="Avatar do usuário" data-alt="User profile avatar placeholder" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNT91goS-rC8aBj1lhJqoFeTR_sfHJw3GfJZwOERx4IrNkGmIbsdf5otTGzxVK-VG9Uv9FZNhXm5R4wYsoTLxCch_kBFN4Mf68uvCIQmgylgxVl9SfYmhleCVzmcsvWxbqVZod1oK0ANqyOGQgXjHyItYeavgpOE91seXn4wivpApMxb_rRm3MNRwYodOwyapT328Ca7-oqhk1-8Yc0ORp-cmQhHZs-_7thwUpwiHEPWDpQzbBajWbHc36Wd6Ozc22rdxIMBRSKrQ"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Content Area -->
+<div class="flex-1 overflow-y-auto p-8 space-y-8">
+<!-- Page Title -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h2 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Carga Inicial de Lojas</h2>
+<p class="text-slate-500 dark:text-slate-400 mt-1">Importação massiva de unidades via planilha Excel ou CSV.</p>
+</div>
+<button class="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 font-bold text-sm shadow-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
+<span class="material-symbols-outlined text-lg">download</span>
+                        Baixar Template (.xlsx)
+                    </button>
+</div>
+<!-- Step 1: Upload -->
+<section class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 p-8">
+<div class="max-w-3xl mx-auto">
+<div class="relative group cursor-pointer">
+<div class="flex flex-col items-center justify-center border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-xl py-12 px-6 bg-slate-50/50 dark:bg-slate-800/20 group-hover:border-primary/50 group-hover:bg-primary/5 dark:group-hover:bg-primary/5 transition-all">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 text-primary">
+<span class="material-symbols-outlined text-4xl">cloud_upload</span>
+</div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Arraste seu arquivo aqui</h3>
+<p class="text-slate-500 dark:text-slate-400 text-center mt-2 text-sm">
+                                    Suporta arquivos .CSV, .XLS ou .XLSX (Tamanho máx: 10MB)
+                                </p>
+<button class="mt-6 px-6 py-2 bg-primary text-white rounded-lg font-bold text-sm hover:bg-primary/90 transition-colors">
+                                    Selecionar do Computador
+                                </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Step 2: Validation Summary -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-xl shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<span class="text-slate-500 text-sm font-medium uppercase tracking-wider">Linhas Detectadas</span>
+<span class="material-symbols-outlined text-slate-400">list_alt</span>
+</div>
+<p class="text-3xl font-bold text-slate-900 dark:text-white">154</p>
+<p class="text-xs text-slate-500 mt-2">Total de registros no arquivo</p>
+</div>
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-xl shadow-sm border-l-4 border-l-green-500">
+<div class="flex items-center justify-between mb-4">
+<span class="text-green-600 dark:text-green-400 text-sm font-medium uppercase tracking-wider">Registros Válidos</span>
+<span class="material-symbols-outlined text-green-500">check_circle</span>
+</div>
+<p class="text-3xl font-bold text-slate-900 dark:text-white">148</p>
+<p class="text-xs text-slate-500 mt-2">Prontos para importação imediata</p>
+</div>
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-xl shadow-sm border-l-4 border-l-red-500">
+<div class="flex items-center justify-between mb-4">
+<span class="text-red-600 dark:text-red-400 text-sm font-medium uppercase tracking-wider">Erros Encontrados</span>
+<span class="material-symbols-outlined text-red-500">error</span>
+</div>
+<p class="text-3xl font-bold text-slate-900 dark:text-white">6</p>
+<p class="text-xs text-slate-500 mt-2">Registros precisam de correção</p>
+</div>
+</section>
+<!-- Step 3: Error List & Data Preview -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Preview Table -->
+<div class="lg:col-span-8 space-y-4">
+<div class="flex items-center justify-between">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Pré-visualização dos Dados</h3>
+<span class="text-xs text-slate-500">Exibindo os primeiros 5 registros</span>
+</div>
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden overflow-x-auto shadow-sm">
+<table class="w-full text-left text-sm">
+<thead class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800 text-slate-500 font-medium">
+<tr>
+<th class="px-6 py-4">Status</th>
+<th class="px-6 py-4">Unidade</th>
+<th class="px-6 py-4">CNPJ</th>
+<th class="px-6 py-4">Cidade/UF</th>
+<th class="px-6 py-4">Gerente</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4"><span class="w-2.5 h-2.5 rounded-full bg-green-500 inline-block"></span></td>
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">Loja Centro SP</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-400">12.345.678/0001-90</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-400">São Paulo / SP</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-400">Ricardo Silva</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4"><span class="w-2.5 h-2.5 rounded-full bg-red-500 inline-block"></span></td>
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">Loja Barra RJ</td>
+<td class="px-6 py-4 text-red-500 font-bold">INVÁLIDO</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-400">Rio de Janeiro / RJ</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-400">Ana Souza</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4"><span class="w-2.5 h-2.5 rounded-full bg-green-500 inline-block"></span></td>
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">Unidade Sul RS</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-400">98.765.432/0001-21</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-400">Porto Alegre / RS</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-400">Fábio Lima</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Error Suggestions -->
+<div class="lg:col-span-4 space-y-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Correções Necessárias</h3>
+<div class="space-y-3">
+<div class="p-4 bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/30 rounded-xl">
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-red-500">report</span>
+<div>
+<p class="text-sm font-bold text-red-700 dark:text-red-400">CNPJ Inválido (Linha 12)</p>
+<p class="text-xs text-red-600 dark:text-red-500/80 mt-1">O formato não segue o padrão nacional. Verifique pontos e traços.</p>
+</div>
+</div>
+</div>
+<div class="p-4 bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-900/30 rounded-xl">
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-amber-500">warning</span>
+<div>
+<p class="text-sm font-bold text-amber-700 dark:text-amber-400">Endereço Incompleto (Linha 45)</p>
+<p class="text-xs text-amber-600 dark:text-amber-500/80 mt-1">O campo 'Número' está vazio. Este campo é obrigatório.</p>
+</div>
+</div>
+</div>
+<div class="p-4 bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-900/30 rounded-xl">
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-amber-500">warning</span>
+<div>
+<p class="text-sm font-bold text-amber-700 dark:text-amber-400">Telefone Inválido (Linha 89)</p>
+<p class="text-xs text-amber-600 dark:text-amber-500/80 mt-1">Deve incluir o DDD entre parênteses. Ex: (11) 99999-9999.</p>
+</div>
+</div>
+</div>
+</div>
+<button class="w-full py-2 text-primary font-bold text-sm hover:underline">Ver todos os 6 erros</button>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="flex items-center justify-end gap-4 pt-8 border-t border-slate-200 dark:border-slate-800">
+<button class="px-6 py-2.5 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-lg font-bold text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                        Cancelar Importação
+                    </button>
+<button class="px-10 py-2.5 bg-primary text-white rounded-lg font-bold text-sm hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">rocket_launch</span>
+                        Processar 148 Lojas
+                    </button>
+</div>
+</div>
+</main>
+</div>
+</body></html>

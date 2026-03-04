@@ -23,6 +23,7 @@ export default function PdvCargaInicialPage(): JSX.Element {
                         { label: "Novo Cadastro", href: "/pdv/cadastro", icon: "add_box" },
                         { label: "Importação em Lote", href: "/pdv/importacao", icon: "cloud_upload" },
                         { label: "Carga Inicial", href: "/pdv/carga-inicial", active: true, icon: "upload_file" },
+                        { label: "Listagem", href: "/pdv/lista", icon: "format_list_bulleted" },
                     ]}
                 />
 

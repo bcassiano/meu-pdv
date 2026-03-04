@@ -2,21 +2,40 @@
 
 import React, { useState, useRef } from "react";
 import { useTranslation } from "@/locales/useTranslation";
+import Papa from "papaparse";
+import { useRouter } from "next/navigation";
 
-// Mock de dados da planilha para exibição pós-upload
-const MOCK_DATA = [
-    { id: 1, valid: true, textStatus: "Válido", name: "Loja Centro SP", cnpj: "12.345.678/0001-90", end: "São Paulo / SP" },
-    { id: 2, valid: false, textStatus: "Inválido", errorDesc: "INVÁLIDO", name: "Loja Barra RJ", cnpj: "99.111.222/0001-50", end: "Rio de Janeiro / RJ" },
-    { id: 3, valid: true, textStatus: "Válido", name: "Loja Savassi MG", cnpj: "44.555.666/0002-10", end: "Belo Horizonte / MG" },
-    { id: 4, valid: true, textStatus: "Válido", name: "Loja Batel PR", cnpj: "88.777.666/0001-20", end: "Curitiba / PR" },
-    { id: 5, valid: false, textStatus: "Inválido", errorDesc: "ERRO DE FORMATO", name: "Loja Centro SC", cnpj: "----", end: "Florianópolis / SC" },
-];
+interface PreviewRow {
+    id: number;
+    valid: boolean;
+    textStatus: string;
+    errorDesc?: string;
+    name: string;
+    cnpj: string;
+    end: string;
+}
+
+interface ValidationError {
+    linha: number;
+    tipo: string;
+    descricao: string;
+    isWarning?: boolean;
+}
 
 export default function ClientCargaInicial(): JSX.Element {
     const { t } = useTranslation();
+    const router = useRouter();
     const [isDragging, setIsDragging] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
     const [dataLoaded, setDataLoaded] = useState(false);
+    const [previewData, setPreviewData] = useState<PreviewRow[]>([]);
+    const [totalRows, setTotalRows] = useState(0);
+    const [validationErrors, setValidationErrors] = useState<ValidationError[]>([]);
+    const [validationWarnings, setValidationWarnings] = useState<ValidationError[]>([]);
+    const [ignoreErrors, setIgnoreErrors] = useState(false);
+    const [validDataToSave, setValidDataToSave] = useState<any[]>([]);
+    const [isSaving, setIsSaving] = useState(false);
+
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleDragOver = (e: React.DragEvent) => {
@@ -31,11 +50,81 @@ export default function ClientCargaInicial(): JSX.Element {
 
     const processFile = (file: File) => {
         setIsUploading(true);
-        // Simular leitura/processamento do arquivo
-        setTimeout(() => {
-            setIsUploading(false);
-            setDataLoaded(true);
-        }, 1500);
+        setDataLoaded(false);
+        setValidationErrors([]);
+        setValidationWarnings([]);
+        setIgnoreErrors(false);
+
+        Papa.parse(file, {
+            header: true,
+            skipEmptyLines: true,
+            transformHeader: (header) => header.replace(/^\uFEFF/, '').trim(),
+            complete: async (results) => {
+                const rowCount = results.data.length;
+                setTotalRows(rowCount);
+
+                const getPreviewRows = (dataRows: any[]) => dataRows.slice(0, 5).map((row: any, i: number) => {
+                    const cnpj = String(row['CNPJ'] || row['cnpj'] || '').trim();
+                    const razao = row['RAZÃO SOCIAL LOCAL'] || row['DESCRIÇÃO LOCAL'] || 'Sem Nome';
+                    const cidade = row['CIDADE'] || 'Desconhecida';
+                    const estado = row['ESTADO'] || 'XX';
+                    return {
+                        id: i + 1,
+                        valid: true,
+                        textStatus: 'Pendente',
+                        name: razao,
+                        cnpj: cnpj || 'VAZIO',
+                        end: `${cidade} / ${estado}`
+                    };
+                });
+                setPreviewData(getPreviewRows(results.data));
+
+                const formData = new FormData();
+                formData.append("file", file);
+
+                try {
+                    const response = await fetch("/api/pdv/import", {
+                        method: "POST",
+                        body: formData,
+                    });
+                    const data = await response.json();
+
+                    let errs: ValidationError[] = [];
+                    let warns: ValidationError[] = [];
+                    if (!response.ok) {
+                        if (response.status === 422) {
+                            const allErrors = data.errors || [];
+                            errs = allErrors.filter((e: ValidationError) => !e.isWarning);
+                            warns = allErrors.filter((e: ValidationError) => !!e.isWarning);
+                        } else {
+                            errs = [{ linha: 0, tipo: "ERRO DE SERVIDOR", descricao: data.error || "Erro ao processar" }];
+                        }
+                    } else {
+                        warns = data.warnings || [];
+                    }
+
+                    setValidationErrors(errs);
+                    setValidationWarnings(warns);
+                    setValidDataToSave(data.validRows || []);
+
+                    const errorLines = new Set(errs.map(e => e.linha));
+
+                    setPreviewData(getPreviewRows(results.data).map(row => {
+                        const apiLine = row.id + 1; // +1 zero-index, +1 header
+                        if (errorLines.has(apiLine)) {
+                            return { ...row, valid: false, textStatus: 'Inválido', errorDesc: 'ERRO' };
+                        }
+                        return { ...row, valid: true, textStatus: 'Válido' };
+                    }));
+
+                } catch (error) {
+                    setValidationErrors([{ linha: 0, tipo: "ERRO DE REDE", descricao: "Não foi possível conectar ao servidor." }]);
+                } finally {
+                    setIsUploading(false);
+                    setDataLoaded(true);
+                }
+            }
+        });
     };
 
     const handleDrop = (e: React.DragEvent) => {
@@ -54,6 +143,14 @@ export default function ClientCargaInicial(): JSX.Element {
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             processFile(e.target.files[0]);
+        }
+    };
+
+    const handleAcknowledgeErrors = () => {
+        const uniqueErrorLines = new Set(validationErrors.map((e) => e.linha)).size;
+        const confirm = window.confirm(`Atenção: A planilha contém ${uniqueErrorLines} registro(s) com erro(s). Deseja ignorá-los e continuar a importação apenas com os ${totalRows - uniqueErrorLines} registros válidos?`);
+        if (confirm) {
+            setIgnoreErrors(true);
         }
     };
 
@@ -139,7 +236,7 @@ export default function ClientCargaInicial(): JSX.Element {
                                 <span className="text-slate-500 text-sm font-medium uppercase tracking-wider">{t('cargaInicial.step2.totalPdvs')}</span>
                                 <span aria-hidden="true" className="material-symbols-outlined text-slate-400">list_alt</span>
                             </div>
-                            <p className="text-3xl font-bold text-slate-900 dark:text-white">{MOCK_DATA.length}</p>
+                            <p className="text-3xl font-bold text-slate-900 dark:text-white">{totalRows}</p>
                             <p className="text-xs text-slate-500 mt-2">Total de registros encontrados</p>
                         </div>
                         <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-xl shadow-sm border-l-4 border-l-green-500">
@@ -147,7 +244,9 @@ export default function ClientCargaInicial(): JSX.Element {
                                 <span className="text-green-600 dark:text-green-400 text-sm font-medium uppercase tracking-wider">{t('cargaInicial.step2.new')}</span>
                                 <span aria-hidden="true" className="material-symbols-outlined text-green-500">check_circle</span>
                             </div>
-                            <p className="text-3xl font-bold text-slate-900 dark:text-white">{MOCK_DATA.filter((m) => m.valid).length}</p>
+                            <p className="text-3xl font-bold text-slate-900 dark:text-white">
+                                {totalRows - new Set(validationErrors.map(e => e.linha)).size}
+                            </p>
                             <p className="text-xs text-slate-500 mt-2">Prontos para importação imediata</p>
                         </div>
                         <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-xl shadow-sm border-l-4 border-l-red-500">
@@ -155,7 +254,9 @@ export default function ClientCargaInicial(): JSX.Element {
                                 <span className="text-red-600 dark:text-red-400 text-sm font-medium uppercase tracking-wider">{t('cargaInicial.step2.errors')}</span>
                                 <span aria-hidden="true" className="material-symbols-outlined text-red-500">error</span>
                             </div>
-                            <p className="text-3xl font-bold text-slate-900 dark:text-white">{MOCK_DATA.filter((m) => !m.valid).length}</p>
+                            <p className="text-3xl font-bold text-slate-900 dark:text-white">
+                                {new Set(validationErrors.map(e => e.linha)).size}
+                            </p>
                             <p className="text-xs text-slate-500 mt-2">Registros precisam de correção</p>
                         </div>
                     </section>
@@ -180,7 +281,7 @@ export default function ClientCargaInicial(): JSX.Element {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-                                        {MOCK_DATA.map((row) => (
+                                        {previewData.map((row) => (
                                             <tr key={row.id} className={`hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors ${!row.valid ? 'bg-red-50/20 dark:bg-red-900/5' : ''}`}>
                                                 <td className="px-6 py-4 text-center">
                                                     <span className={`w-2.5 h-2.5 rounded-full ${row.valid ? 'bg-green-500' : 'bg-red-500'} inline-block`} aria-label={row.textStatus} title={row.textStatus}></span>
@@ -208,24 +309,34 @@ export default function ClientCargaInicial(): JSX.Element {
                                 {t('cargaInicial.qualityCheck.title')}
                             </h2>
 
-                            <div className="flex flex-col gap-3" role="status" aria-live="polite">
-                                {/* Error item */}
-                                <div className="p-4 bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/30 rounded-xl flex gap-3 shadow-sm transition-all hover:shadow-md cursor-pointer">
-                                    <span aria-hidden="true" className="material-symbols-outlined text-red-500">report</span>
-                                    <div className="flex-1">
-                                        <p className="text-sm font-black text-red-800 dark:text-red-300">CNPJ Inválido (Linha 12)</p>
-                                        <p className="text-xs text-red-600 dark:text-red-400 mt-1 font-medium">O formato não segue o padrão nacional. Verifique pontos e traços.</p>
+                            <div className="flex flex-col gap-3 max-h-[400px] overflow-y-auto pr-2" role="status" aria-live="polite">
+                                {validationErrors.length === 0 && validationWarnings.length === 0 && (
+                                    <div className="p-4 bg-green-50 dark:bg-emerald-900/10 border border-green-100 dark:border-emerald-900/30 rounded-xl flex gap-3 shadow-sm">
+                                        <span aria-hidden="true" className="material-symbols-outlined text-green-500">check_circle</span>
+                                        <div className="flex-1">
+                                            <p className="text-sm font-black text-green-800 dark:text-green-300">Tudo Certo!</p>
+                                            <p className="text-xs text-green-600 dark:text-green-400 mt-1 font-medium">Nenhum erro de validação encontrado.</p>
+                                        </div>
                                     </div>
-                                </div>
-
-                                {/* Error item */}
-                                <div className="p-4 bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-900/30 rounded-xl flex gap-3 shadow-sm transition-all hover:shadow-md cursor-pointer">
-                                    <span aria-hidden="true" className="material-symbols-outlined text-amber-500">warning</span>
-                                    <div className="flex-1">
-                                        <p className="text-sm font-black text-amber-800 dark:text-amber-300">Endereço Incompleto (Linha 45)</p>
-                                        <p className="text-xs text-amber-600 dark:text-amber-400 mt-1 font-medium">O campo &apos;Número&apos; está vazio. Este campo é obrigatório.</p>
+                                )}
+                                {validationErrors.concat(validationWarnings).slice(0, 50).map((err, idx) => (
+                                    <div key={idx} className={`p-4 rounded-xl flex gap-3 shadow-sm transition-all hover:shadow-md cursor-pointer ${err.isWarning ? 'bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-900/30' : 'bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/30'}`}>
+                                        <span aria-hidden="true" className={`material-symbols-outlined ${err.isWarning ? 'text-amber-500' : 'text-red-500'}`}>
+                                            {err.isWarning ? 'warning' : 'report'}
+                                        </span>
+                                        <div className="flex-1">
+                                            <p className={`text-sm font-black ${err.isWarning ? 'text-amber-800 dark:text-amber-300' : 'text-red-800 dark:text-red-300'}`}>
+                                                {err.tipo} (Linha {err.linha})
+                                            </p>
+                                            <p className={`text-xs mt-1 font-medium ${err.isWarning ? 'text-amber-600 dark:text-amber-400' : 'text-red-600 dark:text-red-400'}`}>
+                                                {err.descricao}
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
+                                ))}
+                                {validationErrors.length + validationWarnings.length > 50 && (
+                                    <p className="text-xs text-center text-slate-500 mt-2 font-medium">+ {validationErrors.length + validationWarnings.length - 50} outros avisos listados</p>
+                                )}
                             </div>
                         </aside>
                     </div>
@@ -234,14 +345,62 @@ export default function ClientCargaInicial(): JSX.Element {
 
             {/* Action Footer */}
             {dataLoaded && (
-                <footer className="flex items-center justify-end gap-4 pt-8 border-t border-slate-200 dark:border-slate-800 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-150">
-                    <button onClick={() => setDataLoaded(false)} className="px-6 py-2.5 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 rounded-lg font-bold text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors focus:ring-2 focus:ring-slate-400 outline-none">
-                        {t('cargaInicial.actions.cancel')}
-                    </button>
-                    <button className="px-8 py-2.5 bg-primary text-white rounded-lg font-bold text-sm hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all flex items-center gap-2 focus:ring-2 focus:ring-primary focus:ring-offset-2 outline-none">
-                        <span aria-hidden="true" className="material-symbols-outlined text-lg">rocket_launch</span>
-                        {t('cargaInicial.actions.finish')}
-                    </button>
+                <footer className="flex items-center justify-between gap-4 pt-8 border-t border-slate-200 dark:border-slate-800 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-150">
+                    <div className="flex items-center gap-3">
+                        {validationErrors.length > 0 && !ignoreErrors && (
+                            <button
+                                onClick={handleAcknowledgeErrors}
+                                className="text-amber-600 dark:text-amber-500 underline font-bold text-sm hover:text-amber-700 dark:hover:text-amber-400 transition-colors flex items-center gap-1"
+                            >
+                                <span aria-hidden="true" className="material-symbols-outlined text-sm">warning</span>
+                                Ciente. Ignorar os {new Set(validationErrors.map(e => e.linha)).size} erro(s) e habilitar importação.
+                            </button>
+                        )}
+                        {ignoreErrors && (
+                            <span className="text-green-600 dark:text-green-500 font-bold text-sm flex items-center gap-1">
+                                <span aria-hidden="true" className="material-symbols-outlined text-lg">check_circle</span>
+                                Erros ignorados. Importação liberada!
+                            </span>
+                        )}
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                        <button disabled={isSaving} onClick={() => setDataLoaded(false)} className="px-6 py-2.5 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 rounded-lg font-bold text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors focus:ring-2 focus:ring-slate-400 outline-none">
+                            {t('cargaInicial.actions.cancel')}
+                        </button>
+                        <button
+                            disabled={(validationErrors.length > 0 && !ignoreErrors) || isSaving || validDataToSave.length === 0}
+                            onClick={async () => {
+                                setIsSaving(true);
+                                try {
+                                    const res = await fetch("/api/pdv/save-import", {
+                                        method: "POST",
+                                        headers: { "Content-Type": "application/json" },
+                                        body: JSON.stringify({ pdvs: validDataToSave })
+                                    });
+                                    if (res.ok) {
+                                        alert("Carga iniciada e registros salvos com sucesso no servidor!");
+                                        router.push("/pdv/lista");
+                                    } else {
+                                        const errorData = await res.json();
+                                        alert("Falha ao salvar no servidor: " + (errorData.error || "Erro desconhecido"));
+                                        setIsSaving(false);
+                                    }
+                                } catch (e) {
+                                    alert("Erro de conexão ao tentar salvar.");
+                                    setIsSaving(false);
+                                }
+                            }}
+                            className={`px-8 py-2.5 text-white rounded-lg font-bold text-sm shadow-lg transition-all flex items-center gap-2 outline-none ${(validationErrors.length === 0 || ignoreErrors) && validDataToSave.length > 0 && !isSaving ? 'bg-primary hover:bg-primary/90 shadow-primary/20 focus:ring-2 focus:ring-primary focus:ring-offset-2' : 'bg-slate-400 cursor-not-allowed opacity-70'}`}
+                        >
+                            {isSaving ? (
+                                <span className="material-symbols-outlined text-lg animate-spin">refresh</span>
+                            ) : (
+                                <span aria-hidden="true" className="material-symbols-outlined text-lg">rocket_launch</span>
+                            )}
+                            {isSaving ? 'Salvando PDVs...' : t('cargaInicial.actions.finish')}
+                        </button>
+                    </div>
                 </footer>
             )}
         </div>

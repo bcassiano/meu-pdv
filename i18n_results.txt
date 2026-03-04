@@ -1,0 +1,22 @@
+
+============================================================
+  i18n CHECKER - Internationalization Audit
+============================================================
+
+[LOCALE FILES]
+----------------------------------------
+  [OK] Found 1 locale file(s)
+
+[CODE ANALYSIS]
+----------------------------------------
+  [OK] Analyzed 449 code files
+  [OK] 25 files use i18n
+  [X] 10 files may have hardcoded strings
+     → Sidebar.tsx: >Sair</...
+     → Sidebar.tsx: h2...
+     → ThemeToggle.tsx: title...
+     → page.tsx: >Mobile</...
+     → page.tsx: span...
+
+============================================================
+[X] i18n CHECK: 1 issues found

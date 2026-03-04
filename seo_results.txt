@@ -1,0 +1,34 @@
+
+============================================================
+  SEO CHECKER - Search Engine Optimization Audit
+============================================================
+Project: C:\Projetos\meu_pdv\meu-pdv
+Time: 2026-03-03 17:39:03
+------------------------------------------------------------
+Found 50 page files to analyze
+
+============================================================
+SEO ANALYSIS RESULTS
+============================================================
+
+Issue Summary:
+  [50] Missing meta description
+  [50] Missing Open Graph tags
+  [5] Multiple H1 tags (2)
+
+Affected files (50):
+  - cadastro_de_usuario_web.html
+  - code.html
+  - code.html
+  - code.html
+  - code.html
+  ... and 45 more
+
+{
+  "script": "seo_checker",
+  "project": "C:\\Projetos\\meu_pdv\\meu-pdv",
+  "files_checked": 50,
+  "files_with_issues": 50,
+  "issues_found": 105,
+  "passed": false
+}

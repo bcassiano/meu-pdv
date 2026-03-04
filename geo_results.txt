@@ -1,0 +1,111 @@
+
+============================================================
+  GEO CHECKER - AI Citation Readiness Audit
+============================================================
+Project: C:\Projetos\meu_pdv\meu-pdv
+------------------------------------------------------------
+Found 30 public pages to analyze
+
+[!] cadastro_de_usuario_web.html: 20%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - Add more H2 subheadings for scannable content
+[!] code.html: 0%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - Multiple H1 headings (2) - confusing for AI
+[!] code.html: 0%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - No H1 heading - page topic unclear
+[!] code.html: 20%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - Add more H2 subheadings for scannable content
+[!] code.html: 33%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - Add more H2 subheadings for scannable content
+[!] code.html: 20%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - Add more H2 subheadings for scannable content
+[!] code.html: 20%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - Add more H2 subheadings for scannable content
+[!] code.html: 17%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - Multiple H1 headings (2) - confusing for AI
+[!] code.html: 20%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - Add more H2 subheadings for scannable content
+[!] code.html: 50%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - No author info (AI prefers attributed content)
+[!] code.html: 33%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - Add more H2 subheadings for scannable content
+[!] code.html: 33%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - Multiple H1 headings (2) - confusing for AI
+[!] code.html: 33%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - Add more H2 subheadings for scannable content
+[!] code.html: 33%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - Add more H2 subheadings for scannable content
+[!] code.html: 20%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - Add more H2 subheadings for scannable content
+[!] code.html: 33%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - Add more H2 subheadings for scannable content
+[!] code.html: 33%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - Add more H2 subheadings for scannable content
+[!] code.html: 33%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - Add more H2 subheadings for scannable content
+[!] code.html: 0%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - Multiple H1 headings (2) - confusing for AI
+[!] code.html: 40%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - No author info (AI prefers attributed content)
+[!] code.html: 0%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - No H1 heading - page topic unclear
+[!] code.html: 33%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - Add more H2 subheadings for scannable content
+[!] code.html: 33%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - Add more H2 subheadings for scannable content
+[!] code.html: 33%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - Add more H2 subheadings for scannable content
+[!] code.html: 33%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - Add more H2 subheadings for scannable content
+[!] code.html: 20%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - Add more H2 subheadings for scannable content
+[!] code.html: 20%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - Add more H2 subheadings for scannable content
+[!] code.html: 40%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - No author info (AI prefers attributed content)
+[!] code.html: 20%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - Add more H2 subheadings for scannable content
+[!] permissao_user.html: 50%
+    - No JSON-LD structured data (AI engines prefer structured content)
+    - No author info (AI prefers attributed content)
+
+============================================================
+AVERAGE GEO SCORE: 26%
+============================================================
+[X] Poor - Content needs GEO optimization
+
+{
+  "script": "geo_checker",
+  "project": "C:\\Projetos\\meu_pdv\\meu-pdv",
+  "pages_checked": 30,
+  "average_score": 26,
+  "passed": false
+}
