@@ -5,7 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.8.0] - 2026-03-05
+## [1.9.0] - 2026-03-05
+
+### Added
+- **Backend**: Método `update(id, data)` adicionado ao repositório para futura migração ao Azure PostgreSQL.
+- **Backend**: Trava de segurança no `saveMany` para impedir duplicatas por e-mail e deduplicação interna automática.
+- **Server Actions**: Novas actions `updateUsuarioAction`, `toggleStatusUsuarioAction` e `resetSenhaUsuarioAction`.
+- **UI/Modais**: Componentes `EditUserModal` e `ResetPasswordModal` integrados à grid de usuários.
+- **UX**: Botão dinâmico de Ativar/Desativar na grid com feedback visual de cores.
+- **Scripts**: Automação `run-sanitize-users.ts` para limpeza de duplicatas legadas.
+
+### Changed
+- **Database**: Saneamento completo da base de usuários (341 duplicatas removidas).
+- **page.tsx**: Recarregamento automático dos dados após ações interativas na grid.
+
 
 ### Added
 - **Features**: Implementação de interatividade na tela de "Listagem de Usuários" (Filtros dinâmicos de Perfil/Status, pesquisa de texto e recálculo de Cards Analíticos em tempo real).

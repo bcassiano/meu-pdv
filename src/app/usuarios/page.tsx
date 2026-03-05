@@ -6,9 +6,11 @@ import Header from "@/components/Header";
 import Image from "next/image";
 import Link from "next/link";
 import Papa from "papaparse";
-import { getUsuarios } from "./novo/actions";
+import { getUsuarios, toggleStatusUsuarioAction } from "./novo/actions";
 import { ActionResponse, Usuario, UsuarioVisual } from "@/types/usuario";
 import { useTranslation } from "@/locales/useTranslation";
+import EditUserModal from "./EditUserModal";
+import ResetPasswordModal from "./ResetPasswordModal";
 
 export default function GestaoUsuariosPage(): JSX.Element {
     const { t } = useTranslation();
@@ -19,52 +21,88 @@ export default function GestaoUsuariosPage(): JSX.Element {
     const [profileFilter, setProfileFilter] = useState("Todos os Perfis");
     const [statusFilter, setStatusFilter] = useState("Status: Todos");
 
+    // States for Modals & Actions
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [isResetModalOpen, setIsResetModalOpen] = useState(false);
+    const [selectedUserForAction, setSelectedUserForAction] = useState<UsuarioVisual | null>(null);
+
+    const fetchUsuarios = async () => {
+        setIsLoading(true);
+        try {
+            const response: ActionResponse<Usuario[]> = await getUsuarios();
+            if (response.success && response.data) {
+                // Mapeia os dados do json local para o formato da UI
+                const formattedUsers: UsuarioVisual[] = response.data.map((u: Usuario) => {
+                    // Lógica visual baseada no tipo e status digitado
+                    const isAtivo = u.ativo;
+
+                    let roleName = "Indefinido";
+                    let roleColor = "text-slate-500 bg-slate-500/10 border-slate-500/20";
+                    if (u.tipo === "promotor") { roleName = "Promotor"; roleColor = "text-amber-500 bg-amber-500/10 border-amber-500/20"; }
+                    if (u.tipo === "coordenador") { roleName = "Coordenador"; roleColor = "text-purple-400 bg-purple-500/10 border-purple-500/20"; }
+                    if (u.tipo === "supervisor") { roleName = "Supervisor"; roleColor = "text-blue-400 bg-blue-500/10 border-blue-500/20"; }
+                    if (u.tipo === "adm") { roleName = "Administrador"; roleColor = "text-emerald-500 bg-emerald-500/10 border-emerald-500/20"; }
+
+                    let teamDisplay = "Sem Equipe";
+                    if (u.equipe === "eq1") teamDisplay = "Alpha - Operações";
+                    if (u.equipe === "eq2") teamDisplay = "Beta - Logística";
+                    if (u.equipe === "eq3") teamDisplay = "Gamma - Estratégia";
+
+                    return {
+                        id: u.id,
+                        name: u.nome || "Usuário Vazio",
+                        email: u.email || "Sem e-mail",
+                        initials: (u.nome || "UU").substring(0, 2).toUpperCase(),
+                        role: roleName,
+                        roleColor: roleColor,
+                        team: teamDisplay,
+                        teamIcon: "hub",
+                        status: isAtivo ? "Ativo" : "Inativo",
+                        statusColor: isAtivo ? "bg-emerald-500 text-emerald-400" : "bg-slate-500 text-slate-400",
+                        avatar: u.avatar
+                    };
+                });
+                setUsers(formattedUsers);
+            }
+        } catch (error) {
+            console.error("Falha ao carregar usuários:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     useEffect(() => {
-        const fetchUsuarios = async () => {
+        fetchUsuarios();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+
+    const handleActionSuccess = () => {
+        fetchUsuarios(); // Recarrega a tabela após edição ou reset
+    };
+
+    const handleToggleStatus = async (user: UsuarioVisual) => {
+        const confirmMessage = user.status === "Ativo"
+            ? `Tem certeza que deseja inativar o usuário ${user.name}?`
+            : `Tem certeza que deseja ativar o usuário ${user.name}?`;
+
+        if (confirm(confirmMessage)) {
+            setIsLoading(true);
             try {
-                const response: ActionResponse<Usuario[]> = await getUsuarios();
-                if (response.success && response.data) {
-                    // Mapeia os dados do json local para o formato da UI
-                    const formattedUsers: UsuarioVisual[] = response.data.map((u: Usuario) => {
-                        // Lógica visual baseada no tipo e status digitado
-                        const isAtivo = u.ativo;
-
-                        let roleName = "Indefinido";
-                        let roleColor = "text-slate-500 bg-slate-500/10 border-slate-500/20";
-                        if (u.tipo === "promotor") { roleName = "Promotor"; roleColor = "text-amber-500 bg-amber-500/10 border-amber-500/20"; }
-                        if (u.tipo === "coordenador") { roleName = "Coordenador"; roleColor = "text-purple-400 bg-purple-500/10 border-purple-500/20"; }
-                        if (u.tipo === "supervisor") { roleName = "Supervisor"; roleColor = "text-blue-400 bg-blue-500/10 border-blue-500/20"; }
-                        if (u.tipo === "adm") { roleName = "Administrador"; roleColor = "text-emerald-500 bg-emerald-500/10 border-emerald-500/20"; }
-
-                        let teamDisplay = "Sem Equipe";
-                        if (u.equipe === "eq1") teamDisplay = "Alpha - Operações";
-                        if (u.equipe === "eq2") teamDisplay = "Beta - Logística";
-                        if (u.equipe === "eq3") teamDisplay = "Gamma - Estratégia";
-
-                        return {
-                            id: u.id,
-                            name: u.nome || "Usuário Vazio",
-                            email: u.email || "Sem e-mail",
-                            initials: (u.nome || "UU").substring(0, 2).toUpperCase(),
-                            role: roleName,
-                            roleColor: roleColor,
-                            team: teamDisplay,
-                            teamIcon: "hub",
-                            status: isAtivo ? "Ativo" : "Inativo",
-                            statusColor: isAtivo ? "bg-emerald-500 text-emerald-400" : "bg-slate-500 text-slate-400",
-                            avatar: u.avatar
-                        };
-                    });
-                    setUsers(formattedUsers);
+                const isAtivoAtual = user.status === "Ativo";
+                const res = await toggleStatusUsuarioAction(user.id, isAtivoAtual);
+                if (res.success) {
+                    fetchUsuarios();
+                } else {
+                    alert(res.message);
                 }
             } catch (error) {
-                console.error("Falha ao carregar usuários:", error);
+                console.error("Erro ao alterar status:", error);
             } finally {
                 setIsLoading(false);
             }
-        };
-        fetchUsuarios();
-    }, []);
+        }
+    };
 
     const handleExportCSV = () => {
         if (users.length === 0) return;
@@ -311,14 +349,40 @@ export default function GestaoUsuariosPage(): JSX.Element {
                                                     </td>
                                                     <td className="px-8 py-4 text-right">
                                                         <div className="flex items-center justify-end gap-2" onClick={(e) => e.stopPropagation()}>
-                                                            <button onClick={(e) => { e.stopPropagation(); alert("Editar usuário em desenvolvimento") }} aria-label="Editar Usuário" className="h-10 w-10 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-400 hover:text-primary hover:border-primary border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5" title="Editar Usuário">
+                                                            <button
+                                                                onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                    setSelectedUserForAction(user);
+                                                                    setIsEditModalOpen(true);
+                                                                }}
+                                                                aria-label="Editar Usuário"
+                                                                className="h-10 w-10 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-400 hover:text-primary hover:border-primary border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5"
+                                                                title="Editar Usuário"
+                                                            >
                                                                 <span className="material-symbols-outlined text-[20px]">edit</span>
                                                             </button>
-                                                            <button onClick={(e) => { e.stopPropagation(); alert("Reset de senha em desenvolvimento") }} aria-label="Disparar reset de senha para o usuário" className="h-10 w-10 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-400 hover:text-orange-500 hover:border-orange-500 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5" title="Resetar Senha">
+                                                            <button
+                                                                onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                    setSelectedUserForAction(user);
+                                                                    setIsResetModalOpen(true);
+                                                                }}
+                                                                aria-label="Disparar reset de senha para o usuário"
+                                                                className="h-10 w-10 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-400 hover:text-orange-500 hover:border-orange-500 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5"
+                                                                title="Resetar Senha"
+                                                            >
                                                                 <span className="material-symbols-outlined text-[20px]">lock_reset</span>
                                                             </button>
-                                                            <button onClick={(e) => { e.stopPropagation(); alert("Desativação em desenvolvimento") }} aria-label="Desativar Conta de Usuário" className="h-10 w-10 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-400 hover:text-red-500 hover:border-red-500 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5" title="Desativar Conta">
-                                                                <span className="material-symbols-outlined text-[20px]">person_off</span>
+                                                            <button
+                                                                onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                    handleToggleStatus(user);
+                                                                }}
+                                                                aria-label={user.status === "Ativo" ? "Desativar Conta" : "Ativar Conta"}
+                                                                className={`h-10 w-10 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 ${user.status === "Ativo" ? "text-slate-400 hover:text-red-500 hover:border-red-500" : "text-red-500 border-red-500 hover:text-emerald-500 hover:border-emerald-500 bg-red-50 dark:bg-red-500/10"}`}
+                                                                title={user.status === "Ativo" ? "Desativar Conta" : "Ativar Conta"}
+                                                            >
+                                                                <span className="material-symbols-outlined text-[20px]">{user.status === "Ativo" ? "person_off" : "person"}</span>
                                                             </button>
                                                         </div>
                                                     </td>
@@ -341,6 +405,21 @@ export default function GestaoUsuariosPage(): JSX.Element {
                     </div>
                 </div>
             </main >
+
+            {/* Modals Injected at Root Level */}
+            <EditUserModal
+                isOpen={isEditModalOpen}
+                onClose={() => { setIsEditModalOpen(false); setSelectedUserForAction(null); }}
+                user={selectedUserForAction}
+                onSuccess={handleActionSuccess}
+            />
+
+            <ResetPasswordModal
+                isOpen={isResetModalOpen}
+                onClose={() => { setIsResetModalOpen(false); setSelectedUserForAction(null); }}
+                user={selectedUserForAction}
+                onSuccess={handleActionSuccess}
+            />
 
             {/* Global styling additions specifically for RBAC layout */}
             < style jsx global > {`
