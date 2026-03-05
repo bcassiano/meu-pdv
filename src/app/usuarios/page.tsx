@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 import Image from "next/image";
+import Link from "next/link";
+import Papa from "papaparse";
 import { getUsuarios } from "./novo/actions";
 import { ActionResponse, Usuario, UsuarioVisual } from "@/types/usuario";
 import { useTranslation } from "@/locales/useTranslation";
@@ -13,6 +15,9 @@ export default function GestaoUsuariosPage(): JSX.Element {
     const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
     const [users, setUsers] = useState<UsuarioVisual[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [profileFilter, setProfileFilter] = useState("Todos os Perfis");
+    const [statusFilter, setStatusFilter] = useState("Status: Todos");
 
     useEffect(() => {
         const fetchUsuarios = async () => {
@@ -61,6 +66,25 @@ export default function GestaoUsuariosPage(): JSX.Element {
         fetchUsuarios();
     }, []);
 
+    const handleExportCSV = () => {
+        if (users.length === 0) return;
+        const csv = Papa.unparse(users.map(u => ({
+            Nome: u.name,
+            Email: u.email,
+            Perfil: u.role,
+            Equipe: u.team,
+            Status: u.status
+        })));
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "usuarios_export.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.checked) setSelectedUsers(users.map(u => u.id));
         else setSelectedUsers([]);
@@ -68,6 +92,30 @@ export default function GestaoUsuariosPage(): JSX.Element {
 
     const handleSelectOne = (id: string) => {
         setSelectedUsers(prev => prev.includes(id) ? prev.filter(uid => uid !== id) : [...prev, id]);
+    };
+
+    const filteredUsers = users.filter(user => {
+        const matchSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            user.email.toLowerCase().includes(searchTerm.toLowerCase());
+
+        const matchProfile = profileFilter === "Todos os Perfis" || user.role === profileFilter;
+
+        let matchStatus = true;
+        if (statusFilter === "Ativo") matchStatus = user.status === "Ativo";
+        if (statusFilter === "Inativo") matchStatus = user.status === "Inativo";
+        if (statusFilter === "Pendente") matchStatus = user.status === "Pendente";
+
+        return matchSearch && matchProfile && matchStatus;
+    });
+
+    const activeCount = users.filter(u => u.status === "Ativo").length;
+    const adminCount = users.filter(u => u.role === "Administrador").length;
+    const inactiveCount = users.filter(u => u.status === "Inativo").length;
+
+    const clearFilters = () => {
+        setSearchTerm("");
+        setProfileFilter("Todos os Perfis");
+        setStatusFilter("Status: Todos");
     };
 
     return (
@@ -101,24 +149,28 @@ export default function GestaoUsuariosPage(): JSX.Element {
                                 <p className="text-slate-500 dark:text-slate-400 text-lg font-medium max-w-xl">{t('usuarios.subtitle')}</p>
                             </div>
                             <div className="flex items-center gap-4">
-                                <button type="button" className="px-6 py-4 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-bold rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm transition-all flex items-center gap-3">
+                                <button type="button" onClick={handleExportCSV} className="px-6 py-4 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-bold rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm transition-all flex items-center gap-3">
                                     <span aria-hidden="true" className="material-symbols-outlined text-[20px]">file_download</span>
                                     {t('usuarios.actions.export')}
                                 </button>
-                                <a href="/usuarios/novo" className="px-8 py-4 bg-primary hover:bg-blue-600 text-white text-sm font-black rounded-2xl shadow-xl shadow-primary/30 hover:-translate-y-1 active:translate-y-0 transition-all flex items-center gap-3">
+                                <Link href="/usuarios/importacao" className="px-6 py-4 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-bold rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm transition-all flex items-center gap-3">
+                                    <span aria-hidden="true" className="material-symbols-outlined text-[20px]">upload_file</span>
+                                    {t('usuarios.actions.import')}
+                                </Link>
+                                <Link href="/usuarios/novo" className="px-8 py-4 bg-primary hover:bg-blue-600 text-white text-sm font-black rounded-2xl shadow-xl shadow-primary/30 hover:-translate-y-1 active:translate-y-0 transition-all flex items-center gap-3">
                                     <span aria-hidden="true" className="material-symbols-outlined text-[22px]">add</span>
                                     {t('usuarios.actions.new')}
-                                </a>
+                                </Link>
                             </div>
                         </div>
 
                         {/* KPI Cards Grid */}
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                             {[
-                                { title: "Total de Usuários", value: "1,245", trend: "+5%", trendColor: "text-emerald-500 bg-emerald-500/10", icon: "group", iconColor: "text-blue-500 bg-blue-500/10" },
-                                { title: "Usuários Ativos", value: "1,100", trend: "+2%", trendColor: "text-emerald-500 bg-emerald-500/10", icon: "check_circle", iconColor: "text-emerald-500 bg-emerald-500/10" },
-                                { title: "Administradores", value: "45", trend: "0%", trendColor: "text-slate-500 bg-slate-500/10", icon: "admin_panel_settings", iconColor: "text-purple-500 bg-purple-500/10" },
-                                { title: "Inativos", value: "145", trend: "-1%", trendColor: "text-orange-500 bg-orange-500/10", icon: "block", iconColor: "text-orange-500 bg-orange-500/10" }
+                                { title: "Total de Usuários", value: users.length.toString(), trend: "+5%", trendColor: "text-emerald-500 bg-emerald-500/10", icon: "group", iconColor: "text-blue-500 bg-blue-500/10" },
+                                { title: "Usuários Ativos", value: activeCount.toString(), trend: "+2%", trendColor: "text-emerald-500 bg-emerald-500/10", icon: "check_circle", iconColor: "text-emerald-500 bg-emerald-500/10" },
+                                { title: "Administradores", value: adminCount.toString(), trend: "0%", trendColor: "text-slate-500 bg-slate-500/10", icon: "admin_panel_settings", iconColor: "text-purple-500 bg-purple-500/10" },
+                                { title: "Inativos", value: inactiveCount.toString(), trend: "-1%", trendColor: "text-orange-500 bg-orange-500/10", icon: "block", iconColor: "text-orange-500 bg-orange-500/10" }
                             ].map((kpi, index) => (
                                 <div key={index} className="bg-white dark:bg-[#1e293b] p-6 rounded-[2rem] border border-slate-200 dark:border-white/5 shadow-xl shadow-slate-200/40 dark:shadow-none hover:border-primary/20 transition-all group">
                                     <div className="flex justify-between items-start mb-4">
@@ -142,23 +194,25 @@ export default function GestaoUsuariosPage(): JSX.Element {
                                 <input
                                     aria-label={t('usuarios.filters.searchAria')}
                                     type="text"
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
                                     placeholder={t('usuarios.filters.searchPlaceholder')}
                                     className="w-full h-14 bg-slate-50 dark:bg-black/20 border-2 border-transparent focus:border-primary focus:bg-white dark:focus:bg-slate-900 text-slate-900 dark:text-white text-base font-medium rounded-xl pl-12 pr-4 outline-none transition-all placeholder:text-slate-400"
                                 />
                             </div>
                             <div className="flex flex-col sm:flex-row gap-3">
                                 <div className="relative min-w-[220px]">
-                                    <select aria-label="Filtrar grid por tipo de Perfil de Acesso" className="w-full h-14 appearance-none bg-slate-50 dark:bg-black/20 border-2 border-transparent hover:border-slate-200 dark:hover:border-slate-700 focus:border-primary text-slate-700 dark:text-slate-200 text-sm font-bold rounded-xl pl-5 pr-12 cursor-pointer outline-none transition-all">
+                                    <select value={profileFilter} onChange={(e) => setProfileFilter(e.target.value)} aria-label="Filtrar grid por tipo de Perfil de Acesso" className="w-full h-14 appearance-none bg-slate-50 dark:bg-black/20 border-2 border-transparent hover:border-slate-200 dark:hover:border-slate-700 focus:border-primary text-slate-700 dark:text-slate-200 text-sm font-bold rounded-xl pl-5 pr-12 cursor-pointer outline-none transition-all">
                                         <option>Todos os Perfis</option>
                                         <option>Administrador</option>
-                                        <option>Gerente</option>
+                                        <option>Supervisor</option>
                                         <option>Coordenador</option>
                                         <option>Promotor</option>
                                     </select>
                                     <span aria-hidden="true" className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_content</span>
                                 </div>
                                 <div className="relative min-w-[200px]">
-                                    <select aria-label="Filtrar grid pelo status do Usuário" className="w-full h-14 appearance-none bg-slate-50 dark:bg-black/20 border-2 border-transparent hover:border-slate-200 dark:hover:border-slate-700 focus:border-primary text-slate-700 dark:text-slate-200 text-sm font-bold rounded-xl pl-5 pr-12 cursor-pointer outline-none transition-all">
+                                    <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} aria-label="Filtrar grid pelo status do Usuário" className="w-full h-14 appearance-none bg-slate-50 dark:bg-black/20 border-2 border-transparent hover:border-slate-200 dark:hover:border-slate-700 focus:border-primary text-slate-700 dark:text-slate-200 text-sm font-bold rounded-xl pl-5 pr-12 cursor-pointer outline-none transition-all">
                                         <option>Status: Todos</option>
                                         <option>Ativo</option>
                                         <option>Inativo</option>
@@ -166,7 +220,7 @@ export default function GestaoUsuariosPage(): JSX.Element {
                                     </select>
                                     <span aria-hidden="true" className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">filter_list</span>
                                 </div>
-                                <button type="button" aria-label="Limpar Filtros Analíticos" className="h-14 w-14 flex flex-shrink-0 flex-grow-0 items-center justify-center bg-slate-50 hover:bg-red-50 dark:bg-black/20 dark:hover:bg-red-500/10 text-slate-400 hover:text-red-500 rounded-xl transition-colors border-2 border-transparent group" title="Limpar Filtros">
+                                <button type="button" onClick={clearFilters} aria-label="Limpar Filtros Analíticos" className="h-14 w-14 flex flex-shrink-0 flex-grow-0 items-center justify-center bg-slate-50 hover:bg-red-50 dark:bg-black/20 dark:hover:bg-red-500/10 text-slate-400 hover:text-red-500 rounded-xl transition-colors border-2 border-transparent group" title="Limpar Filtros">
                                     <span aria-hidden="true" className="material-symbols-outlined group-hover:scale-110 transition-transform">filter_alt_off</span>
                                 </button>
                             </div>
@@ -182,9 +236,9 @@ export default function GestaoUsuariosPage(): JSX.Element {
                                 <span className="material-symbols-outlined text-6xl text-slate-300 dark:text-slate-700 mb-4">group_off</span>
                                 <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Nenhum usuário cadastrado</h3>
                                 <p className="text-slate-500 dark:text-slate-400 mb-6">Comece adicionando seu primeiro colaborador ao sistema.</p>
-                                <a href="/usuarios/novo" className="px-6 py-3 bg-primary hover:bg-blue-600 text-white text-sm font-bold rounded-xl shadow-lg shadow-primary/20 transition-all">
+                                <Link href="/usuarios/novo" className="px-6 py-3 bg-primary hover:bg-blue-600 text-white text-sm font-bold rounded-xl shadow-lg shadow-primary/20 transition-all">
                                     Criar Usuário
-                                </a>
+                                </Link>
                             </div>
                         ) : (
                             <div className="bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-white/5 rounded-[2rem] overflow-hidden shadow-xl shadow-slate-200/40 dark:shadow-none">
@@ -209,7 +263,7 @@ export default function GestaoUsuariosPage(): JSX.Element {
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-slate-100 dark:divide-white/5">
-                                            {users.map((user) => (
+                                            {filteredUsers.map((user) => (
                                                 <tr key={user.id} className="group hover:bg-primary/5 dark:hover:bg-white/[0.02] transition-colors cursor-pointer" onClick={() => handleSelectOne(user.id)}>
                                                     <td className="px-8 py-4" onClick={(e) => e.stopPropagation()}>
                                                         <input
@@ -257,13 +311,13 @@ export default function GestaoUsuariosPage(): JSX.Element {
                                                     </td>
                                                     <td className="px-8 py-4 text-right">
                                                         <div className="flex items-center justify-end gap-2" onClick={(e) => e.stopPropagation()}>
-                                                            <button aria-label="Editar Usuário" className="h-10 w-10 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-400 hover:text-primary hover:border-primary border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5" title="Editar Usuário">
+                                                            <button onClick={(e) => { e.stopPropagation(); alert("Editar usuário em desenvolvimento") }} aria-label="Editar Usuário" className="h-10 w-10 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-400 hover:text-primary hover:border-primary border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5" title="Editar Usuário">
                                                                 <span className="material-symbols-outlined text-[20px]">edit</span>
                                                             </button>
-                                                            <button aria-label="Disparar reset de senha para o usuário" className="h-10 w-10 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-400 hover:text-orange-500 hover:border-orange-500 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5" title="Resetar Senha">
+                                                            <button onClick={(e) => { e.stopPropagation(); alert("Reset de senha em desenvolvimento") }} aria-label="Disparar reset de senha para o usuário" className="h-10 w-10 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-400 hover:text-orange-500 hover:border-orange-500 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5" title="Resetar Senha">
                                                                 <span className="material-symbols-outlined text-[20px]">lock_reset</span>
                                                             </button>
-                                                            <button aria-label="Desativar Conta de Usuário" className="h-10 w-10 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-400 hover:text-red-500 hover:border-red-500 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5" title="Desativar Conta">
+                                                            <button onClick={(e) => { e.stopPropagation(); alert("Desativação em desenvolvimento") }} aria-label="Desativar Conta de Usuário" className="h-10 w-10 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-400 hover:text-red-500 hover:border-red-500 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5" title="Desativar Conta">
                                                                 <span className="material-symbols-outlined text-[20px]">person_off</span>
                                                             </button>
                                                         </div>
@@ -277,7 +331,7 @@ export default function GestaoUsuariosPage(): JSX.Element {
                                 {/* Enhanced Pagination Controls */}
                                 <div className="px-8 py-6 bg-slate-50/50 dark:bg-black/20 border-t border-slate-200 dark:border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
                                     <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
-                                        Apresentando <span className="font-black text-slate-900 dark:text-white">1</span> a <span className="font-black text-slate-900 dark:text-white">{users.length}</span> de <span className="font-black text-slate-900 dark:text-white">{users.length}</span> registros validados
+                                        Apresentando <span className="font-black text-slate-900 dark:text-white">{filteredUsers.length > 0 ? 1 : 0}</span> a <span className="font-black text-slate-900 dark:text-white">{filteredUsers.length}</span> de <span className="font-black text-slate-900 dark:text-white">{filteredUsers.length}</span> registros validados
                                     </p>
                                     {/* Pagination Controls (Mocked for layout) */}
                                 </div>

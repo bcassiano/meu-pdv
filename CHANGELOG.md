@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.0] - 2026-03-05
+
+### Added
+- **Features**: Implementação de interatividade na tela de "Listagem de Usuários" (Filtros dinâmicos de Perfil/Status, pesquisa de texto e recálculo de Cards Analíticos em tempo real).
+- **Backend / DB**: Integração completa do Módulo de Usuários (Cadastro e Consulta) ao Firestore usando o princípio de injeção Custom Repository via Factory Abstract.
+
+### Fixed
+- **UI/UX**: Restabelecimento da funcionalidade do botão *toggle* (Mostrar/Ocultar Senha) no formulário de Criação de Novo Usuário.
+
+
 ## [1.7.0] - 2026-03-04
 
 ### Added

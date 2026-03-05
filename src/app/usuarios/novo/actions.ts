@@ -1,55 +1,37 @@
 "use server";
 
-import fs from "fs";
-import path from "path";
-
 import { ActionResponse, Usuario } from "@/types/usuario";
-
-// Caminho para o nosso banco de dados fake (db.json na pasta data)
-const dbPath = path.join(process.cwd(), "data", "db.json");
+import { DatabaseFactory } from "@/db/factory";
 
 export async function salvarUsuario(formData: Omit<Usuario, "id" | "createdAt">): Promise<ActionResponse<Usuario>> {
     try {
-        // Delay simulado para UX realista de requisição de rede
-        await new Promise((resolve) => setTimeout(resolve, 800));
+        const repo = DatabaseFactory.getUsuarioRepository();
 
-        // Let's read the current users
-        let data: { usuarios: Usuario[] } = { usuarios: [] };
-        if (fs.existsSync(dbPath)) {
-            const raw = fs.readFileSync(dbPath, "utf-8");
-            if (raw) data = JSON.parse(raw);
-        }
-
-        // Criar o novo usuário com ID, data e dados do forms
         const novoUsuario: Usuario = {
             id: crypto.randomUUID(),
             createdAt: new Date().toISOString(),
             ...formData,
         };
 
-        // Salvar no "banco"
-        data.usuarios.push(novoUsuario);
-        fs.writeFileSync(dbPath, JSON.stringify(data, null, 2), "utf-8");
+        // Salvar no Firestore
+        await repo.saveMany([novoUsuario]);
 
         return { success: true, message: "Usuário cadastrado com sucesso!", data: novoUsuario };
 
     } catch (error) {
-        console.error("Erro ao salvar no db.json:", error);
+        console.error("Erro ao salvar no Firestore:", error);
         return { success: false, message: "Erro interno ao salvar no banco de dados." };
     }
 }
 
 export async function getUsuarios(): Promise<ActionResponse<Usuario[]>> {
     try {
-        if (!fs.existsSync(dbPath)) return { success: true, data: [] };
+        const repo = DatabaseFactory.getUsuarioRepository();
+        const usuarios = await repo.getAll();
 
-        const raw = fs.readFileSync(dbPath, "utf-8");
-        if (!raw) return { success: true, data: [] };
-
-        const json = JSON.parse(raw);
-        return { success: true, data: json.usuarios || [] };
+        return { success: true, data: usuarios || [] };
     } catch (error) {
-        console.error("Erro ao ler db.json:", error);
+        console.error("Erro ao ler do Firestore:", error);
         return { success: false, message: "Erro ao carregar banco de dados", data: [] };
     }
 }

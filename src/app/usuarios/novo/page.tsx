@@ -13,6 +13,7 @@ export default function NovoUsuarioPage(): JSX.Element {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState<Omit<Usuario, "id" | "createdAt">>({
         nome: "",
         login: "",
@@ -138,8 +139,8 @@ export default function NovoUsuarioPage(): JSX.Element {
                                         <label className="text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="senha">{t('usuariosNovo.form.passwordLabel')}</label>
                                         <div className="relative group">
                                             <span aria-hidden="true" className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">lock</span>
-                                            <input value={formData.senha} onChange={handleChange} className="pl-11 w-full bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700 rounded text-sm px-4 py-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none text-slate-900 dark:text-white pr-10" id="senha" name="senha" type="password" autoComplete="new-password" required />
-                                            <button type="button" aria-pressed="false" aria-label={t('usuariosNovo.form.togglePasswordVisibility')} className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 cursor-pointer text-[20px] focus:outline-none focus:text-primary transition-colors hover:text-primary" onClick={() => { }}>visibility</button>
+                                            <input value={formData.senha} onChange={handleChange} className="pl-11 w-full bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700 rounded text-sm px-4 py-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none text-slate-900 dark:text-white pr-10" id="senha" name="senha" type={showPassword ? "text" : "password"} autoComplete="new-password" required />
+                                            <button type="button" aria-pressed={showPassword} aria-label={t('usuariosNovo.form.togglePasswordVisibility')} className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 cursor-pointer text-[20px] focus:outline-none focus:text-primary transition-colors hover:text-primary" onClick={() => setShowPassword(!showPassword)}>{showPassword ? "visibility_off" : "visibility"}</button>
                                         </div>
                                     </div>
                                 </div>

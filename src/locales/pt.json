@@ -44,6 +44,7 @@
         },
         "actions": {
             "export": "Exportar CSV",
+            "import": "IMPORTAR DADOS",
             "new": "NOVO USUÁRIO"
         },
         "filters": {
@@ -113,6 +114,46 @@
         "actions": {
             "downloadBase": "Baixar Modelo Base",
             "import": "Importar Dados"
+        }
+    },
+    "usuariosImportacao": {
+        "title": "Importação de Usuários",
+        "subtitle": "Faça o upload da planilha mestre para criar múltiplos acessos corporativos.",
+        "downloadBase": "Baixar Planilha Modelo",
+        "importData": "Importar Dados",
+        "step1": {
+            "title": "Upload de Arquivo",
+            "dropNow": "Solte a planilha agora",
+            "dragDrop": "Arraste e solte sua planilha aqui",
+            "orClick": "ou clique para selecionar",
+            "fromComputer": "do seu computador",
+            "supportText": "Suporta .CSV até 5MB",
+            "ariaLabel": "Área de upload de planilhas de usuários. Arraste arquivos ou aperte Enter para selecionar."
+        },
+        "step2": {
+            "title": "Resumo da Carga",
+            "totalUsers": "Total de Linhas",
+            "new": "Novos Perfis",
+            "updates": "Atualizações",
+            "errors": "Inconsistências"
+        },
+        "step3": {
+            "title": "Preview de Dados",
+            "identified": "Identificado",
+            "columns": {
+                "name": "Nome",
+                "email": "E-mail",
+                "role": "Perfil",
+                "team": "Equipe"
+            }
+        },
+        "qualityCheck": {
+            "title": "Auditoria de Campos",
+            "fixMessage": "Encontramos inconsistências. Corrija na planilha e re-envie para validação."
+        },
+        "actions": {
+            "cancel": "Cancelar",
+            "finish": "Iniciar Processamento"
         }
     },
     "cargaInicial": {
