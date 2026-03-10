@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2026-03-10
+
+### Added
+- **Dashboards**: Novo módulo centralizador (`/dashboards`) com layout Bento Grid e design premium (glassmorphism, animações).
+- **Personalização**: Funcionalidade de customização de cards via Modal flutuante, permitindo selecionar componentes e filtros globais.
+- **Persistência**: Implementação de salvar preferências de dashboard no `localStorage` do navegador.
+- **Componentes**: Lançamento do `DashboardCard` e `ConfigModal` como componentes reutilizáveis.
+- **Sub-Módulo Pontos Extras (`/dashboards/pontos-extras`)**: Data Table interativa com fotos da auditoria, Dados Geográficos e navegação profunda.
+- **Integração UI Stitch (`/dashboards/pontos-extras/[id]`)**: Visão de detalhes de auditoria mesclando os componentes originais de foto e geolocalização do Stitch com componentes da aplicação.
+
+### Fixed
+- **Runtime**: Correção de erro de sintaxe em template literals no Next.js App Router (Dashboard Page).
+
 ## [1.9.0] - 2026-03-05
 
 ### Added
