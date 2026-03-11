@@ -23,9 +23,9 @@ const PONTOS_EXTRAS_MOCK = [
         id: "pe-002",
         dataRealFinal: "10/03/2026",
         fotos: [
-             "https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&q=80&w=400&h=300",
-             "https://images.unsplash.com/photo-1588964895597-cfccd6e2b08b?auto=format&fit=crop&q=80&w=400&h=300",
-             "https://images.unsplash.com/photo-1534723452862-4c874018d66d?auto=format&fit=crop&q=80&w=400&h=300"
+            "https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&q=80&w=400&h=300",
+            "https://images.unsplash.com/photo-1588964895597-cfccd6e2b08b?auto=format&fit=crop&q=80&w=400&h=300",
+            "https://images.unsplash.com/photo-1534723452862-4c874018d66d?auto=format&fit=crop&q=80&w=400&h=300"
         ],
         descricao: "SENDAS DISTRIBUIDOR S/A (C005105)",
         cidade: "CARAGUATATUBA",
@@ -46,14 +46,14 @@ export default function PontosExtrasPage(): JSX.Element {
                     title="Pontos Extras"
                     icon="stars"
                     navigation={[
-                        { label: "Overview", href: "/dashboards", active: false },
+                        { label: "Performance Operacional", href: "/dashboards", active: false },
                         { label: "Galeria de Fotos", href: "/dashboards/pontos-extras", active: true, icon: "photo_library" }
                     ]}
                 />
 
                 <div className="flex-1 overflow-y-auto overflow-x-hidden p-6 md:p-8 2xl:p-10 pb-24 scroll-smooth">
                     <div className="max-w-[1600px] mx-auto space-y-6">
-                        
+
                         {/* Title and Back Link */}
                         <div className="flex items-center justify-between">
                             <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">
@@ -88,15 +88,15 @@ export default function PontosExtrasPage(): JSX.Element {
 
                         {/* Data Table Area */}
                         <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-white/5 shadow-xl overflow-hidden flex flex-col">
-                            
+
                             {/* Toolbar */}
                             <div className="p-6 border-b border-slate-100 dark:border-white/5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-50/50 dark:bg-slate-800/30">
                                 <h2 className="text-xl font-bold text-slate-900 dark:text-white">Pontos Extras</h2>
                                 <div className="relative w-full sm:w-72">
                                     <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 material-symbols-outlined text-lg">search</span>
-                                    <input 
-                                        type="text" 
-                                        placeholder="Pesquisar" 
+                                    <input
+                                        type="text"
+                                        placeholder="Pesquisar"
                                         value={searchTerm}
                                         onChange={(e) => setSearchTerm(e.target.value)}
                                         className="w-full h-10 pl-11 pr-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-slate-900 dark:text-white"
@@ -146,15 +146,15 @@ export default function PontosExtrasPage(): JSX.Element {
                                                 <td className="py-6 px-6 whitespace-nowrap text-sm font-medium text-slate-700 dark:text-slate-300">
                                                     {item.dataRealFinal}
                                                 </td>
-                                                
+
                                                 {/* Render 3 Photo Slots */}
                                                 {[0, 1, 2].map((idx) => (
                                                     <td key={idx} className="py-6 px-6 text-center">
                                                         {item.fotos[idx] ? (
                                                             <a href={`/dashboards/pontos-extras/${item.id}`} className="block relative w-32 h-32 md:w-40 md:h-40 mx-auto rounded-2xl overflow-hidden group/img cursor-pointer border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800">
-                                                                <img 
-                                                                    src={item.fotos[idx]} 
-                                                                    alt={`Foto ${idx+1} de ${item.descricao}`}
+                                                                <img
+                                                                    src={item.fotos[idx]}
+                                                                    alt={`Foto ${idx + 1} de ${item.descricao}`}
                                                                     className="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-110"
                                                                 />
                                                                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover/img:opacity-100 transition-opacity flex flex-col items-center justify-center backdrop-blur-[2px]">

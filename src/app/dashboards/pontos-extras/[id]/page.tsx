@@ -19,7 +19,7 @@ export default function DetalhesAuditoriaPage(): JSX.Element {
                     title="Detalhes da Auditoria"
                     icon="preview"
                     navigation={[
-                        { label: "Overview", href: "/dashboards", active: false },
+                        { label: "Performance Operacional", href: "/dashboards", active: false },
                         { label: "Galeria de Fotos", href: "/dashboards/pontos-extras", active: false },
                         { label: "Detalhes do Ponto Extra", href: "#", active: true, icon: "analytics" }
                     ]}
@@ -127,7 +127,7 @@ export default function DetalhesAuditoriaPage(): JSX.Element {
                                             <h2 className="text-xl font-bold text-slate-800 dark:text-white">Evidências Fotográficas</h2>
                                         </div>
                                         <div className="flex gap-2">
-                                            <button 
+                                            <button
                                                 onClick={() => setSelectedTab("all")}
                                                 className={`px-4 py-2 text-sm font-bold rounded-xl transition-colors ${selectedTab === 'all' ? 'bg-slate-800 dark:bg-white text-white dark:text-slate-900' : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
                                             >
@@ -135,7 +135,7 @@ export default function DetalhesAuditoriaPage(): JSX.Element {
                                             </button>
                                         </div>
                                     </div>
-                                    
+
                                     <div className="p-6">
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                             {/* Photo 1 */}
@@ -182,8 +182,8 @@ export default function DetalhesAuditoriaPage(): JSX.Element {
                                                 </div>
                                             </div>
 
-                                             {/* Photo 3 */}
-                                             <div className="group rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50">
+                                            {/* Photo 3 */}
+                                            <div className="group rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50">
                                                 <div className="relative aspect-[4/3] overflow-hidden bg-slate-200 dark:bg-slate-800 cursor-pointer">
                                                     <img src="https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=800&q=80" alt="Produtos Variados" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                                                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-6">
@@ -204,8 +204,8 @@ export default function DetalhesAuditoriaPage(): JSX.Element {
                                                 </div>
                                             </div>
 
-                                             {/* Photo 4 */}
-                                             <div className="group rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50">
+                                            {/* Photo 4 */}
+                                            <div className="group rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50">
                                                 <div className="relative aspect-[4/3] overflow-hidden bg-slate-200 dark:bg-slate-800 cursor-pointer">
                                                     <img src="https://images.unsplash.com/photo-1534723452862-4c874018d66d?auto=format&fit=crop&w=800&q=80" alt="Adega" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                                                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-6">
@@ -250,7 +250,7 @@ export default function DetalhesAuditoriaPage(): JSX.Element {
                                     </div>
                                     <div className="p-1">
                                         <div className="h-64 bg-slate-200 dark:bg-slate-800 rounded-2xl overflow-hidden relative border border-white dark:border-slate-900">
-                                             <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=600&h=400" alt="Map View" className="w-full h-full object-cover" />
+                                            <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=600&h=400" alt="Map View" className="w-full h-full object-cover" />
                                             {/* Pino do Mapa Simulando o ponto */}
                                             <div className="absolute top-1/2 left-1/2 -ml-3 -mt-6 text-rose-500 drop-shadow-md pb-6 flex flex-col items-center animate-bounce">
                                                 <div className="h-6 w-6 bg-rose-500 text-white rounded-full flex items-center justify-center border-2 border-white text-[10px] font-black pointer-events-none">1</div>
@@ -312,7 +312,7 @@ export default function DetalhesAuditoriaPage(): JSX.Element {
                                         </table>
                                     </div>
                                     <div className="p-4 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-800 text-center">
-                                       <button className="text-[#6366f1] text-sm font-bold hover:underline">Ver todos os 42 SKUs detectados</button>
+                                        <button className="text-[#6366f1] text-sm font-bold hover:underline">Ver todos os 42 SKUs detectados</button>
                                     </div>
                                 </div>
                             </div>

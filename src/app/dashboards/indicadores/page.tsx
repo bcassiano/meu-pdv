@@ -22,7 +22,7 @@ export default function IndicadoresHubPage(): JSX.Element {
                     title="Indicadores PDV"
                     icon="monitoring"
                     navigation={[
-                        { label: "Overview", href: "/dashboards", active: false },
+                        { label: "Performance Operacional", href: "/dashboards", active: false },
                         { label: "Indicadores", href: "/dashboards/indicadores", active: true, icon: "analytics" }
                     ]}
                 />
@@ -31,13 +31,12 @@ export default function IndicadoresHubPage(): JSX.Element {
                 <div className="px-8 mt-6">
                     <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800">
                         <div className="flex gap-8">
-                            <button 
+                            <button
                                 onClick={() => setActiveTab('ruptura')}
-                                className={`pb-4 flex items-center gap-2 font-semibold transition-all border-b-2 relative ${
-                                    activeTab === 'ruptura' 
-                                        ? "border-primary text-primary" 
+                                className={`pb-4 flex items-center gap-2 font-semibold transition-all border-b-2 relative ${activeTab === 'ruptura'
+                                        ? "border-primary text-primary"
                                         : "border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
-                                }`}
+                                    }`}
                             >
                                 <span className="material-symbols-outlined text-[20px]">inventory_2</span>
                                 Visão Rupturas
@@ -48,24 +47,22 @@ export default function IndicadoresHubPage(): JSX.Element {
                                     </span>
                                 )}
                             </button>
-                            <button 
+                            <button
                                 onClick={() => setActiveTab('estoque')}
-                                className={`pb-4 flex items-center gap-2 font-semibold transition-all border-b-2 ${
-                                    activeTab === 'estoque' 
-                                        ? "border-emerald-500 text-emerald-500" 
+                                className={`pb-4 flex items-center gap-2 font-semibold transition-all border-b-2 ${activeTab === 'estoque'
+                                        ? "border-emerald-500 text-emerald-500"
                                         : "border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
-                                }`}
+                                    }`}
                             >
                                 <span className="material-symbols-outlined text-[20px]">warehouse</span>
                                 Estoque (Em Breve)
                             </button>
-                            <button 
+                            <button
                                 onClick={() => setActiveTab('preco')}
-                                className={`pb-4 flex items-center gap-2 font-semibold transition-all border-b-2 ${
-                                    activeTab === 'preco' 
-                                        ? "border-amber-500 text-amber-500" 
+                                className={`pb-4 flex items-center gap-2 font-semibold transition-all border-b-2 ${activeTab === 'preco'
+                                        ? "border-amber-500 text-amber-500"
                                         : "border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
-                                }`}
+                                    }`}
                             >
                                 <span className="material-symbols-outlined text-[20px]">sell</span>
                                 Gestão de Preços
@@ -95,10 +92,10 @@ export default function IndicadoresHubPage(): JSX.Element {
                             <VisaoRuptura />
                         </div>
                     )}
-                    
+
                     {activeTab === 'estoque' && (
                         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 ease-out h-[60vh] flex flex-col items-center justify-center text-slate-400">
-                             <div className="h-20 w-20 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center mb-6">
+                            <div className="h-20 w-20 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center mb-6">
                                 <span className="material-symbols-outlined text-4xl text-emerald-500/50">warehouse</span>
                             </div>
                             <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">Módulo em Desenvolvimento</h2>

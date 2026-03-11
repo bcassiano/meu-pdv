@@ -79,7 +79,7 @@ export default function DashboardsPage(): JSX.Element {
                     title="Dashboards"
                     icon="dashboard"
                     navigation={[
-                        { label: "Overview", href: "/dashboards", active: true, icon: "analytics" }
+                        { label: "Performance Operacional", href: "/dashboards", active: true, icon: "analytics" }
                     ]}
                 />
 
@@ -101,7 +101,7 @@ export default function DashboardsPage(): JSX.Element {
                                 </p>
                             </div>
                             <div className="flex items-center gap-4">
-                                <button 
+                                <button
                                     onClick={() => setIsConfigOpen(true)}
                                     className="px-6 py-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-200 font-bold text-sm hover:border-sidebar hover:text-sidebar shadow-sm transition-all flex items-center gap-3 w-full sm:w-auto justify-center"
                                 >
@@ -121,7 +121,7 @@ export default function DashboardsPage(): JSX.Element {
                                 const isPontosExtras = card.id === "pontosExtras";
                                 const isRuptura = card.id === "ruptura";
                                 const CardComponent = (
-                                    <DashboardCard 
+                                    <DashboardCard
                                         key={card.id}
                                         {...card}
                                     >
@@ -187,7 +187,7 @@ export default function DashboardsPage(): JSX.Element {
                                     <p className="text-slate-900 dark:text-white font-black text-xl">Dashboard Vazio</p>
                                     <p className="text-slate-500 dark:text-slate-400 font-medium max-w-xs mx-auto mt-2">Clique em &apos;Personalizar&apos; para adicionar componentes ao seu painel.</p>
                                 </div>
-                                <button 
+                                <button
                                     onClick={() => setIsConfigOpen(true)}
                                     className="px-8 py-3 bg-primary text-white font-black rounded-xl shadow-lg hover:scale-105 transition-all text-sm"
                                 >
@@ -202,7 +202,7 @@ export default function DashboardsPage(): JSX.Element {
             </main>
 
             {/* Modal de Configuração */}
-            <ConfigModal 
+            <ConfigModal
                 isOpen={isConfigOpen}
                 onClose={handleCancelConfig}
                 availableCards={tempCards.map(c => ({ id: c.id, title: c.title, checked: c.checked }))}

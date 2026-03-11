@@ -31,7 +31,7 @@ export default function Sidebar(): JSX.Element {
     };
 
     const navItems = [
-        { icon: "dashboard", label: "Overview", href: "/dashboards" },
+        { icon: "dashboard", label: "Dashboards", href: "/dashboards" },
         { icon: "storefront", label: "PDVs Ativos", href: "/pdv/cadastro" },
         { icon: "inventory_2", label: "Catálogo de Itens", href: "/itens" },
         { icon: "analytics", label: "Performance", href: "#" },
