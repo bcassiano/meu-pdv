@@ -87,13 +87,23 @@ export async function POST(request: Request) {
                 });
             }
 
-            // Validação de Nome/Razão Social
-            const razaoSocial = row['RAZÃO SOCIAL LOCAL'] || row['DESCRIÇÃO LOCAL'];
+            // Validação de Nome/Razão Social e Descrição
+            const razaoSocial = row['RAZÃO SOCIAL LOCAL'];
+            const descricaoLocal = row['DESCRIÇÃO LOCAL'];
+
             if (!razaoSocial || String(razaoSocial).trim() === '') {
                 validationErrors.push({
                     linha: rowNum,
-                    tipo: 'CAMPO VAZIO',
-                    descricao: `A 'RAZÃO SOCIAL LOCAL' ou 'DESCRIÇÃO LOCAL' deve ser preenchida.`
+                    tipo: 'RAZÃO SOCIAL AUSENTE',
+                    descricao: `O campo 'RAZÃO SOCIAL LOCAL' é obrigatório.`
+                });
+            }
+
+            if (!descricaoLocal || String(descricaoLocal).trim() === '') {
+                validationErrors.push({
+                    linha: rowNum,
+                    tipo: 'DESCRIÇÃO AUSENTE',
+                    descricao: `O campo 'DESCRIÇÃO LOCAL' está vazio. Todo PDV precisa de uma descrição clara.`
                 });
             }
 
@@ -102,13 +112,16 @@ export async function POST(request: Request) {
             if (!logradouro || String(logradouro).trim() === '') {
                 validationErrors.push({
                     linha: rowNum,
-                    tipo: 'CAMPO VAZIO',
+                    tipo: 'ENDEREÇO AUSENTE',
                     descricao: `O campo 'LOGRADOURO' está em branco, impedindo a localização do PDV.`
                 });
             }
         });
 
+        const totalRows = data.length;
         const errorLinesSet = new Set(validationErrors.map(e => e.linha));
+        const validRowsCount = totalRows - errorLinesSet.size;
+        const qualityScore = totalRows > 0 ? Math.round((validRowsCount / totalRows) * 100) : 0;
 
         // Mapeamento para o formato canônico PdvRecord
         const validRows = data
@@ -123,22 +136,25 @@ export async function POST(request: Request) {
                 ativo: row['ATIVO LOCAL'] !== 'NÃO' && row['ativo'] !== false,
             }));
 
+        const responseData = {
+            success: validationErrors.length === 0,
+            message: validationErrors.length === 0 
+                ? 'A validação estrutural da planilha foi aprovada.' 
+                : 'O arquivo contém erros de validação impeditivos.',
+            rowsProcessed: totalRows,
+            validRowsCount: validRowsCount,
+            invalidRowsCount: errorLinesSet.size,
+            qualityScore: qualityScore,
+            errors: [...validationErrors, ...validationWarnings],
+            warnings: validationWarnings,
+            validRows: validRows
+        };
+
         if (validationErrors.length > 0) {
-            return NextResponse.json({
-                success: false,
-                message: 'O arquivo contém erros de validação impeditivos.',
-                errors: [...validationErrors, ...validationWarnings],
-                validRows: validRows
-            }, { status: 422 });
+            return NextResponse.json(responseData, { status: 422 });
         }
 
-        return NextResponse.json({
-            success: true,
-            message: 'A validação estrutural da planilha foi aprovada.',
-            rowsProcessed: data.length,
-            warnings: validationWarnings,
-            validRows: validRows // Adicionando as linhas válidas e limpas
-        });
+        return NextResponse.json(responseData);
 
     } catch (error) {
         console.error('Erro na rota de importação:', error);

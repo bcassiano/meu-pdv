@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useTranslation } from "@/locales/useTranslation";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
+import { Database, TableIcon, ShieldCheck, AlertCircle, CheckCircle2, Loader2, Upload, FileText, PieChart } from "lucide-react";
 
 interface ValidationError {
     linha: number;
@@ -22,7 +23,13 @@ export default function PdvImportacaoPage(): JSX.Element {
     const [fileStatus, setFileStatus] = useState<"idle" | "uploading" | "error" | "success">("idle");
     const [errorMessage, setErrorMessage] = useState("");
     const [validationErrors, setValidationErrors] = useState<ValidationError[]>([]);
+    const [validationWarnings, setValidationWarnings] = useState<ValidationError[]>([]);
     const [successMessage, setSuccessMessage] = useState("");
+    const [ignoreErrors, setIgnoreErrors] = useState(false);
+    const [validDataToSave, setValidDataToSave] = useState<any[]>([]);
+    const [isSaving, setIsSaving] = useState(false);
+    const [qualityScore, setQualityScore] = useState(0);
+    const [rowsProcessed, setRowsProcessed] = useState(0);
 
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -98,7 +105,12 @@ export default function PdvImportacaoPage(): JSX.Element {
         setFileStatus("uploading");
         setErrorMessage("");
         setValidationErrors([]);
+        setValidationWarnings([]);
         setSuccessMessage("");
+        setIgnoreErrors(false);
+        setValidDataToSave([]);
+        setQualityScore(0);
+        setRowsProcessed(0);
 
         const formData = new FormData();
         formData.append("file", file);
@@ -113,7 +125,15 @@ export default function PdvImportacaoPage(): JSX.Element {
 
             if (!response.ok) {
                 if (response.status === 422) {
-                    setValidationErrors(data.errors || []);
+                    const allErrors = data.errors || [];
+                    const errs = allErrors.filter((e: ValidationError) => !e.isWarning);
+                    const warns = allErrors.filter((e: ValidationError) => !!e.isWarning);
+                    
+                    setValidationErrors(errs);
+                    setValidationWarnings(warns);
+                    setValidDataToSave(data.validRows || []);
+                    setQualityScore(data.qualityScore || 0);
+                    setRowsProcessed(data.rowsProcessed || 0);
                     setErrorMessage(data.message || "Foram encontrados erros no arquivo.");
                 } else {
                     setErrorMessage(data.error || "Ocorreu um erro ao processar o arquivo.");
@@ -123,7 +143,12 @@ export default function PdvImportacaoPage(): JSX.Element {
             }
 
             setFileStatus("success");
-            setValidationErrors(data.warnings || []);
+            const warns = data.warnings || [];
+            setValidationWarnings(warns);
+            setValidationErrors([]);
+            setValidDataToSave(data.validRows || []);
+            setQualityScore(data.qualityScore || 100);
+            setRowsProcessed(data.rowsProcessed || 0);
             setSuccessMessage(data.message || `Arquivo processado com sucesso (${data.rowsProcessed} linhas).`);
             setFile(null); // Clear file after success
             if (fileInputRef.current) fileInputRef.current.value = ""; // Reset input
@@ -131,6 +156,14 @@ export default function PdvImportacaoPage(): JSX.Element {
         } catch (error) {
             setErrorMessage("Erro de conexão com o servidor. Tente novamente.");
             setFileStatus("error");
+        }
+    };
+
+    const handleAcknowledgeErrors = () => {
+        const uniqueErrorLines = new Set(validationErrors.map((e) => e.linha)).size;
+        const confirm = window.confirm(`Atenção: A planilha contém ${uniqueErrorLines} registro(s) com erro(s). Deseja ignorá-los e continuar a importação apenas com os ${validDataToSave.length} registros válidos?`);
+        if (confirm) {
+            setIgnoreErrors(true);
         }
     };
 
@@ -164,10 +197,28 @@ export default function PdvImportacaoPage(): JSX.Element {
         document.body.removeChild(link);
     };
 
-    const handleFinalizeImport = () => {
-        if (fileStatus === 'success') {
-            alert("Lote de PDVs importado com sucesso na plataforma!");
-            router.push("/pdv/lista");
+    const handleFinalizeImport = async () => {
+        if (fileStatus === 'success' || (fileStatus === 'error' && ignoreErrors)) {
+            setIsSaving(true);
+            try {
+                const res = await fetch("/api/pdv/save-import", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ pdvs: validDataToSave })
+                });
+                
+                if (res.ok) {
+                    alert("Lote de PDVs importado com sucesso na plataforma!");
+                    router.push("/pdv/lista");
+                } else {
+                    const errorData = await res.json();
+                    alert("Falha ao salvar no servidor: " + (errorData.error || "Erro desconhecido"));
+                }
+            } catch (e) {
+                alert("Erro de conexão ao tentar salvar.");
+            } finally {
+                setIsSaving(false);
+            }
         }
     };
 
@@ -224,6 +275,53 @@ export default function PdvImportacaoPage(): JSX.Element {
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                             {/* Left Column: Upload */}
                             <div className="lg:col-span-2 flex flex-col gap-8">
+                                {/* Cards de Resumo */}
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-2">
+                                    <div className="p-5 rounded-2xl bg-white dark:bg-[#1a2333] border border-slate-200 dark:border-slate-800 shadow-sm transition-all hover:shadow-md">
+                                        <div className="flex items-center gap-2 text-[10px] font-black uppercase text-slate-400 dark:text-slate-500 mb-2 tracking-wider">
+                                            <Database size={14} className="text-primary" /> Registros
+                                        </div>
+                                        <div className="flex items-baseline gap-2">
+                                            <span className="text-3xl font-black text-slate-800 dark:text-white">
+                                                {rowsProcessed}
+                                            </span>
+                                            <span className="text-xs font-bold text-slate-400">Total lido</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="p-5 rounded-2xl bg-white dark:bg-[#1a2333] border border-slate-200 dark:border-slate-800 shadow-sm transition-all hover:shadow-md">
+                                        <div className="flex items-center gap-2 text-[10px] font-black uppercase text-slate-400 dark:text-slate-500 mb-2 tracking-wider">
+                                            <TableIcon size={14} className="text-primary" /> Colunas
+                                        </div>
+                                        <div className="flex items-baseline gap-2">
+                                            <span className="text-3xl font-black text-slate-800 dark:text-white">
+                                                {validDataToSave.length > 0 ? Object.keys(validDataToSave[0]).length : 0}
+                                            </span>
+                                            <span className="text-xs font-bold text-slate-400">Identificadas</span>
+                                        </div>
+                                    </div>
+
+                                    <div className={`p-5 rounded-2xl bg-white dark:bg-[#1a2333] border shadow-sm transition-all hover:shadow-md relative overflow-hidden ${
+                                        qualityScore < 50 ? 'border-rose-200 dark:border-rose-900/30' : 
+                                        qualityScore < 100 ? 'border-amber-200 dark:border-amber-900/30' : 
+                                        'border-emerald-200 dark:border-emerald-900/30'
+                                    }`}>
+                                        <div className="flex items-center gap-2 text-[10px] font-black uppercase text-slate-400 dark:text-slate-500 mb-2 tracking-wider">
+                                            <ShieldCheck size={14} className={qualityScore < 50 ? "text-rose-500" : qualityScore < 100 ? "text-amber-500" : "text-emerald-500"} /> Check de Qualidade
+                                        </div>
+                                        <div className="flex items-center gap-3">
+                                            <span className={`text-4xl font-black ${qualityScore < 50 ? "text-rose-500" : qualityScore < 100 ? "text-amber-500" : "text-emerald-500"}`}>
+                                                {qualityScore}%
+                                            </span>
+                                            <div className="flex flex-col">
+                                                <span className={`text-[10px] font-bold uppercase ${qualityScore < 50 ? 'text-rose-500' : qualityScore < 100 ? 'text-amber-500' : 'text-emerald-500'}`}>
+                                                    {qualityScore < 50 ? 'Crítico' : qualityScore < 100 ? 'Regular' : 'Excelente'}
+                                                </span>
+                                                <span className="text-[10px] text-slate-400 font-medium tracking-tight">Saúde dos Dados</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <section className="flex flex-col gap-4">
                                     <h3 className="text-slate-900 dark:text-white text-lg font-bold flex items-center gap-3">
                                         <span className={`flex items-center justify-center h-7 w-7 rounded-full text-xs font-black ${file ? 'bg-green-100 text-green-700 dark:bg-emerald-500/20 dark:text-emerald-400' : 'bg-primary/10 dark:bg-primary/20 text-primary'}`}>
@@ -295,14 +393,14 @@ export default function PdvImportacaoPage(): JSX.Element {
                                             Check de Qualidade
                                         </h3>
 
-                                        {validationErrors.length > 0 && fileStatus === 'error' && (
-                                            <span className="bg-red-100 dark:bg-red-500/20 text-red-700 dark:text-red-400 text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full border border-red-200 dark:border-red-500/30">
-                                                {validationErrors.length} erro{validationErrors.length > 1 ? 's' : ''}
-                                            </span>
-                                        )}
                                         {fileStatus === 'success' && (
                                             <span className="bg-green-100 dark:bg-emerald-500/20 text-green-700 dark:text-emerald-400 text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full border border-green-200 dark:border-emerald-500/30">
-                                                {validationErrors.length > 0 ? 'Aprovado com Avisos' : 'Aprovado'}
+                                                {validationWarnings.length > 0 ? 'Aprovado com Avisos' : 'Aprovado'}
+                                            </span>
+                                        )}
+                                        {fileStatus === 'error' && validationErrors.length > 0 && (
+                                            <span className="bg-red-100 dark:bg-red-500/20 text-red-700 dark:text-red-400 text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full border border-red-200 dark:border-red-500/30">
+                                                {validationErrors.length} erro{validationErrors.length > 1 ? 's' : ''}
                                             </span>
                                         )}
                                     </div>
@@ -331,7 +429,7 @@ export default function PdvImportacaoPage(): JSX.Element {
                                             </div>
                                         )}
 
-                                        {(fileStatus === 'error' || fileStatus === 'success') && validationErrors.length > 0 && validationErrors.map((err, idx) => (
+                                        {(fileStatus === 'error' || fileStatus === 'success') && [...validationErrors, ...validationWarnings].length > 0 && [...validationErrors, ...validationWarnings].map((err, idx) => (
                                             <div key={idx} className={`p-5 rounded-2xl border ${err.isWarning ? 'border-amber-200 dark:border-amber-900/50 bg-amber-50/50 dark:bg-amber-900/10' : 'border-red-200 dark:border-red-900/50 bg-red-50/50 dark:bg-red-900/10'} flex gap-4 items-start shadow-sm hover:shadow-md transition-shadow`}>
                                                 <div className={`mt-1 min-w-4 ${err.isWarning ? 'text-amber-500 dark:text-amber-400' : 'text-red-600 dark:text-red-400'}`}>
                                                     <span className="material-symbols-outlined text-[24px]">
@@ -362,20 +460,46 @@ export default function PdvImportacaoPage(): JSX.Element {
                         </div>
 
                         {/* Action Footer */}
-                        <div className="flex items-center justify-end pt-8 mt-4 border-t border-slate-200 dark:border-slate-800 gap-4">
-                            <button
-                                onClick={cancelUpload}
-                                className="px-6 py-3 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors">
-                                Cancelar Lote
-                            </button>
-                            <button
-                                onClick={handleFinalizeImport}
-                                disabled={fileStatus !== 'success'}
-                                className={`flex items-center justify-center gap-2 rounded-xl h-12 px-8 bg-primary text-white text-sm font-black tracking-wide shadow-xl shadow-primary/30 transition-all ${fileStatus === 'success' ? 'opacity-100 hover:bg-blue-600 hover:-translate-y-1 active:translate-y-0 cursor-pointer' : 'opacity-50 cursor-not-allowed'}`}
-                            >
-                                <span className="material-symbols-outlined text-[18px]">verified</span>
-                                Finalizar Importação
-                            </button>
+                        <div className="flex items-center justify-between pt-8 mt-4 border-t border-slate-200 dark:border-slate-800 gap-4">
+                            <div className="flex items-center gap-3">
+                                {fileStatus === 'error' && validationErrors.length > 0 && !ignoreErrors && (
+                                    <button
+                                        onClick={handleAcknowledgeErrors}
+                                        className="text-amber-600 dark:text-amber-500 underline font-bold text-sm hover:text-amber-700 dark:hover:text-amber-400 transition-colors flex items-center gap-1"
+                                    >
+                                        <span aria-hidden="true" className="material-symbols-outlined text-sm">warning</span>
+                                        Ciente. Ignorar os {new Set(validationErrors.map(e => e.linha)).size} erro(s) e habilitar importação.
+                                    </button>
+                                )}
+                                {ignoreErrors && (
+                                    <span className="text-green-600 dark:text-green-500 font-bold text-sm flex items-center gap-1 animate-in fade-in zoom-in duration-300">
+                                        <span aria-hidden="true" className="material-symbols-outlined text-lg">check_circle</span>
+                                        Erros ignorados. {validDataToSave.length} registros prontos!
+                                    </span>
+                                )}
+                            </div>
+
+                            <div className="flex items-center gap-4">
+                                <button
+                                    onClick={cancelUpload}
+                                    className="px-6 py-3 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors">
+                                    Cancelar Lote
+                                </button>
+                                <button
+                                    onClick={handleFinalizeImport}
+                                    disabled={isSaving || (fileStatus !== 'success' && !ignoreErrors)}
+                                    className={`flex items-center justify-center gap-2 rounded-xl h-12 px-8 bg-primary text-white text-sm font-black tracking-wide shadow-xl shadow-primary/30 transition-all ${isSaving || (fileStatus !== 'success' && !ignoreErrors) ? 'opacity-50 cursor-not-allowed' : 'opacity-100 hover:bg-blue-600 hover:-translate-y-1 active:translate-y-0 cursor-pointer'}`}
+                                >
+                                    {isSaving ? (
+                                        <div className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                                    ) : (
+                                        <>
+                                            <span className="material-symbols-outlined text-[18px]">verified</span>
+                                            Finalizar Importação
+                                        </>
+                                    )}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.1] - 2026-03-11
+
+### Added
+- **Persistência de Itens**: Implementação real do `FirestoreItemRepository` com suporte a operações em lote (Batch) e interface `IItemRepository` para desacoplamento.
+- **API `/api/itens/save`**: Nova rota POST para persistência permanente do catálogo normalizado no Firestore, coleção `itens_catalogo`.
+- **API `/api/itens`**: Nova rota GET para recuperação de itens salvos e exibição automática no carregamento da página.
+
+### Changed
+- **`ClientItens`**: Substituição da simulação de salvamento (`setTimeout`) pela integração real com a API. Simplificação do fluxo de tipos removendo conversões intermediárias e mantendo `ItemNormalizado` como fonte da verdade.
+- **Carregamento Automático**: Implementado carregamento inicial do banco de dados na montagem do componente, garantindo que os itens importados persistam visualmente após recarregar.
+- **Cancelamento Resiliente**: Ajustada a lógica de cancelamento de lote para restaurar os itens preexistentes em vez de limpar a tela.
+
+## [2.3.0] - 2026-03-11
+
+### Added
+- **Módulo de Importação de Itens**: Pipeline completo de normalização para `Cadastro_Itens.csv` em `src/lib/importadores/normalizar-itens.ts` com `forward-fill` de subgrupos, extração de UDM por regex (suporte a fardos `FD N/NKG` e unidades simples), geração de IDs para linhas sem identificador e score de qualidade por item.
+- **API `/api/itens/import`**: Nova rota POST dedicada ao catálogo de itens, separada e independente da rota de PDVs. Retorna total de linhas, itens, alertas por tipo e score de qualidade geral.
+- **Testes Vitest**: Suite de 23 testes unitários em `src/__tests__/normalizar-itens.test.ts` cobrindo todas as funções do motor de normalização.
+
+### Changed
+- **`ImportModal`**: Adicionada prop `mode: 'pdv' | 'itens'` para roteamento para o endpoint correto sem quebrar o fluxo existente de PDVs. Exibe painel de alertas detalhado com tipos `UDM_INFERIDA`, `SUBGRUPO_PROPAGADO`, `ID_GERADO` e card de **Total de Linhas**.
+- **`ClientItens`**: Refatorado para usar `ItemNormalizado` com colunas UDM Preço/Estoque na tabela, alertas inline por item e estado vazio descritivo.
+
 ## [2.1.0] - 2026-03-10
 
 ### Added
@@ -108,6 +131,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - UX/Acessibilidade: Adequação estrutural das rotas principais (`/`, `/logon`, `/usuarios`, `/usuarios/novo`, `/pdv/importacao`) garantindo `h1` único, inputs com `aria-label`/`label` explícitos e correção de roles/focos.
 - SEO: Injeção sistemática de metadados (`title`, `description`, `robots`, `alternates`) na raiz de `layout.tsx` e `page.tsx` de cada módulo operante.
 - i18n: Configuração mínima viável de internacionalização baseada em hook customizado e injeção do dicionário `locales/pt.json` para textos literais críticos.
+
+### [2.2.1] - 2026-03-11
+- Correção no cálculo de qualidade: agora o sistema valida se os registros possuem SKU e Descrição reais.
+- Implementação de filtro automático para ignorar linhas vazias ou malformadas durante a importação.
+- Dinamização das cores do Check de Qualidade (Verde/Laranja/Vermelho).
+
+## [2.2.0] - 2026-03-11
+### Added
+- Implementação funcional da importação de itens via CSV.
+- Adição de mapeamento resiliente de colunas para lidar com diferentes formatos de arquivo.
+- Exibição de estatísticas dinâmicas no modal (Registros, Colunas, Qualidade).
+- Botão "Importar" com padrão visual premium integrado ao sistema.
 
 ## [1.3.0] - 2026-03-02
 

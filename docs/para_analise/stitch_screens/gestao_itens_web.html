@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-br"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Slate Admin - Itens</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0B1120",
+                        "slate-card": "#1E293B",
+                        "slate-border": "#232f48"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between border-b border-solid border-slate-border px-6 md:px-10 py-3 bg-background-dark">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-white">
+<div class="size-6 bg-primary rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-sm">inventory_2</span>
+</div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">Slate Admin</h2>
+</div>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-slate-400 hover:text-white text-sm font-medium transition-colors" href="#">Dashboard</a>
+<a class="text-white text-sm font-bold border-b-2 border-primary pb-1" href="#">Itens</a>
+<a class="text-slate-400 hover:text-white text-sm font-medium transition-colors" href="#">Relatórios</a>
+<a class="text-slate-400 hover:text-white text-sm font-medium transition-colors" href="#">Configurações</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center size-10 rounded-lg bg-slate-border text-slate-400">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-slate-border" data-alt="User profile avatar circle" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBkjwwVuznxE1KPLwhTCIh7Q00vJtetSIew_LBLp9ivtdiBEt8q9gVwAshl4WxET3yAN_gdgztpsDCyFlsI6lONTW9g2uaFVbdS0rtC-ZExYjyMUhwbyknSfsg-IlkuTAH_laxGsFPmuMt1CLhgLaSU5Ru8yMw2HvF5v3KVkdR3bo3YIeVF5jimpTkzKOcNICa9Yuhik2zlbg57T99Ku4hPHam860QKYgY40rcMonTYHwZenqXlHIx4gkMoroQOakE9D77CbI9D_sY");'></div>
+</div>
+</header>
+<main class="flex-1 px-4 md:px-10 py-8 max-w-7xl mx-auto w-full space-y-8">
+<!-- Page Header -->
+<div class="flex flex-wrap items-end justify-between gap-4">
+<div class="flex flex-col gap-1">
+<h1 class="text-white text-4xl font-black leading-tight tracking-[-0.033em]">Itens</h1>
+<p class="text-slate-400 text-base font-normal">Gerenciamento e controle de estoque de produtos</p>
+</div>
+<button class="flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary/90 text-white rounded-lg font-bold transition-all shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">add</span>
+<span>Novo Cadastro</span>
+</button>
+</div>
+<!-- Search & Filters -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+<div class="lg:col-span-8">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full bg-slate-card border-slate-border rounded-lg pl-12 pr-4 py-3 text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" placeholder="Pesquisar por descrição, SKU ou ID..." type="text"/>
+</div>
+</div>
+<div class="lg:col-span-2">
+<button class="w-full flex items-center justify-between px-4 py-3 bg-slate-card border border-slate-border rounded-lg text-slate-300 hover:text-white transition-colors">
+<span class="text-sm font-medium">SKU</span>
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+</div>
+<div class="lg:col-span-2">
+<button class="w-full flex items-center justify-between px-4 py-3 bg-slate-card border border-slate-border rounded-lg text-slate-300 hover:text-white transition-colors">
+<span class="text-sm font-medium">Categoria</span>
+<span class="material-symbols-outlined text-sm">filter_list</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+<!-- Left: Table and Import -->
+<div class="xl:col-span-2 space-y-8">
+<!-- Import Files Section -->
+<div class="bg-slate-card border border-slate-border rounded-xl p-6">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-primary">upload_file</span>
+<h3 class="text-white text-lg font-bold">Importar Arquivos</h3>
+</div>
+<div class="border-2 border-dashed border-slate-border rounded-xl p-8 flex flex-col items-center justify-center text-center bg-background-dark/50 hover:bg-background-dark transition-colors cursor-pointer group">
+<div class="size-14 rounded-full bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-3xl">cloud_upload</span>
+</div>
+<p class="text-white font-semibold mb-1">Arraste e solte seus arquivos aqui</p>
+<p class="text-slate-400 text-sm mb-4">Suporta formatos .xlsx, .xls e .csv</p>
+<button class="px-4 py-2 border border-slate-border rounded-lg text-slate-300 hover:bg-slate-border hover:text-white transition-all text-sm font-bold">Selecionar Arquivo</button>
+</div>
+</div>
+<!-- Product Table -->
+<div class="bg-slate-card border border-slate-border rounded-xl overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-border flex items-center justify-between">
+<h3 class="text-white font-bold">Lista de Produtos</h3>
+<span class="text-xs text-slate-400 bg-background-dark px-2 py-1 rounded">248 itens totais</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-background-dark/50 text-slate-400 text-xs uppercase tracking-wider">
+<th class="px-6 py-4 font-semibold">Foto</th>
+<th class="px-6 py-4 font-semibold">Descrição</th>
+<th class="px-6 py-4 font-semibold">SKU/ID</th>
+<th class="px-6 py-4 font-semibold">Categoria</th>
+<th class="px-6 py-4 font-semibold text-right">Ações</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-border">
+<tr class="hover:bg-background-dark/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="size-12 rounded-lg bg-background-dark border border-slate-border overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Red Nike running shoe thumbnail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGwzxqHwIUKRh2cWTISpRII3GcoMCpYc_XP_9Ap-Oa6_M8Un-jYmkzmV27a-iY6XBH2gRPtnteFSUHXPIwqVe98XBTeMk_TcvIUro36SriLjDa-SDxExUpRMuR1GNAG5nZ1NKZrb7OCIsnN7-DQT4hHx9E-KZyreuaTJhoV2AsrtDdGRYlopfjxCPI61oq_tNMei4PZjXlDgNDM45tpP_4KIaoL2NACLmQfxHDQcd_SoU46I-KDhxVToFG1ykog3uMRwbA20rZenU"/>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="text-sm font-semibold text-white">Tênis Performance Ultra</div>
+<div class="text-xs text-slate-400">Calçados Esportivos</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-300 font-mono">SKU-78291-B</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-primary/10 text-primary text-[10px] font-bold uppercase rounded">Esportes</span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 text-slate-400 hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg">edit</span></button>
+<button class="p-2 text-slate-400 hover:text-red-500 transition-colors"><span class="material-symbols-outlined text-lg">delete</span></button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-background-dark/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="size-12 rounded-lg bg-background-dark border border-slate-border overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="White minimalist wrist watch" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQiOcsWAYX9wVjKoX0jUS9Seai3FcN1QXwCrFnWznUfmPWLYLeWvDHilfHLPCAijHzOUvne_1oKDvzB9-ESI6eORMiASdmQVccfO3FmYUDFe_I4p81QHxQBQOekODc5KVdUk6nFaKDH8yPc2_Wapp-f_5NT-_iZFB7iCz0J58R2TD_SAkzlUdAtrYI-ADMfeySVVMlophycmMtsUrFxx6QnWa5lwS0L5KnbEqcd1nMmzcFYU1mbv4C25qZzXq61D-ushictEtF7F8"/>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="text-sm font-semibold text-white">Relógio Minimalista S1</div>
+<div class="text-xs text-slate-400">Acessórios</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-300 font-mono">SKU-11029-W</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-primary/10 text-primary text-[10px] font-bold uppercase rounded">Moda</span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 text-slate-400 hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg">edit</span></button>
+<button class="p-2 text-slate-400 hover:text-red-500 transition-colors"><span class="material-symbols-outlined text-lg">delete</span></button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-background-dark/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="size-12 rounded-lg bg-background-dark border border-slate-border overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Professional over-ear headphones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfUiIfN9_Qwlkwk4dczK0UvKgOgeNKZpFVL8LZXkEQR-fA0PnGeBHV9eD7n3u94SilPTsYUDAEe7vejBjowYs7F0v5_Qii_WKx813S3X7GPW0LhG9tRRjGLd2ON0aK7ow3dkLqUZKwmoYuxxQIZMIabWSee4QH1kpYhVm2UV9pGURwvUKeS1SPBtSrYEI-e8H3E40CqgL6uYU56azZ3XinW3uO4nzGvvLgZyuxmzdB7aGz0f96T6cRYktRPObBJiJaN4m_vcokSks"/>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="text-sm font-semibold text-white">Fone Wireless Pro Noise</div>
+<div class="text-xs text-slate-400">Eletrônicos</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-300 font-mono">SKU-99021-H</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-primary/10 text-primary text-[10px] font-bold uppercase rounded">Tech</span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 text-slate-400 hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg">edit</span></button>
+<button class="p-2 text-slate-400 hover:text-red-500 transition-colors"><span class="material-symbols-outlined text-lg">delete</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 border-t border-slate-border flex items-center justify-between bg-background-dark/20">
+<button class="text-sm font-medium text-slate-400 hover:text-white transition-colors">Anterior</button>
+<div class="flex gap-2">
+<span class="size-8 flex items-center justify-center rounded bg-primary text-white text-xs font-bold">1</span>
+<span class="size-8 flex items-center justify-center rounded bg-slate-border text-slate-300 text-xs font-bold cursor-pointer hover:bg-slate-border/80">2</span>
+<span class="size-8 flex items-center justify-center rounded bg-slate-border text-slate-300 text-xs font-bold cursor-pointer hover:bg-slate-border/80">3</span>
+</div>
+<button class="text-sm font-medium text-slate-400 hover:text-white transition-colors">Próximo</button>
+</div>
+</div>
+</div>
+<!-- Right: Quick Registration -->
+<div class="space-y-6">
+<div class="bg-slate-card border border-slate-border rounded-xl p-6 sticky top-8">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary">person_add</span>
+<h3 class="text-white text-lg font-bold">Novo Cadastro Individual</h3>
+</div>
+<form class="space-y-5">
+<!-- Image Upload Placeholder -->
+<div class="space-y-2">
+<label class="text-xs font-bold text-slate-400 uppercase tracking-widest">Foto do Produto</label>
+<div class="w-full aspect-video rounded-xl border-2 border-dashed border-slate-border bg-background-dark flex flex-col items-center justify-center gap-2 group cursor-pointer hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-slate-500 group-hover:text-primary transition-colors text-3xl">add_a_photo</span>
+<span class="text-xs text-slate-500">Clique para upload</span>
+</div>
+</div>
+<!-- Descrição -->
+<div class="space-y-2">
+<label class="text-xs font-bold text-slate-400 uppercase tracking-widest">Descrição</label>
+<textarea class="w-full bg-background-dark border-slate-border rounded-lg text-white text-sm focus:ring-1 focus:ring-primary focus:border-primary placeholder:text-slate-600 outline-none resize-none" placeholder="Ex: Cadeira Ergonômica Pro Max..." rows="3"></textarea>
+</div>
+<!-- SKU & Valor -->
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-2">
+<label class="text-xs font-bold text-slate-400 uppercase tracking-widest">SKU/ID</label>
+<input class="w-full bg-background-dark border-slate-border rounded-lg text-white text-sm focus:ring-1 focus:ring-primary focus:border-primary placeholder:text-slate-600 outline-none" placeholder="ABC-123" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold text-slate-400 uppercase tracking-widest">Valor Unitário</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs">R$</span>
+<input class="w-full bg-background-dark border-slate-border rounded-lg text-white text-sm pl-9 focus:ring-1 focus:ring-primary focus:border-primary placeholder:text-slate-600 outline-none" placeholder="0,00" type="text"/>
+</div>
+</div>
+</div>
+<!-- Categorias -->
+<div class="space-y-2">
+<label class="text-xs font-bold text-slate-400 uppercase tracking-widest">Categoria</label>
+<select class="w-full bg-background-dark border-slate-border rounded-lg text-white text-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none py-2">
+<option value="">Selecionar Categoria</option>
+<option>Eletrônicos</option>
+<option>Móveis</option>
+<option>Calçados</option>
+<option>Acessórios</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold text-slate-400 uppercase tracking-widest">Sub-categoria</label>
+<select class="w-full bg-background-dark border-slate-border rounded-lg text-white text-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none py-2">
+<option value="">Selecionar Sub-categoria</option>
+<option>Smartphones</option>
+<option>Notebooks</option>
+<option>Periféricos</option>
+</select>
+</div>
+<div class="pt-4 flex gap-3">
+<button class="flex-1 px-4 py-3 bg-slate-border hover:bg-slate-700 text-white rounded-lg font-bold text-sm transition-all" type="button">Limpar</button>
+<button class="flex-1 px-4 py-3 bg-primary hover:bg-primary/90 text-white rounded-lg font-bold text-sm transition-all" type="submit">Cadastrar</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Meta -->
+<footer class="mt-auto border-t border-slate-border px-10 py-6 text-center bg-background-dark">
+<p class="text-slate-500 text-sm">© 2024 Slate Administrative System. v2.4.1</p>
+</footer>
+</div>
+</div>
+</body></html>

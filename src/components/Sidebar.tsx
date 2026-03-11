@@ -33,6 +33,7 @@ export default function Sidebar(): JSX.Element {
     const navItems = [
         { icon: "dashboard", label: "Overview", href: "/dashboards" },
         { icon: "storefront", label: "PDVs Ativos", href: "/pdv/cadastro" },
+        { icon: "inventory_2", label: "Catálogo de Itens", href: "/itens" },
         { icon: "analytics", label: "Performance", href: "#" },
         { icon: "shield_person", label: "Permissões de Perfil", href: "/usuarios/permissoes" },
     ];

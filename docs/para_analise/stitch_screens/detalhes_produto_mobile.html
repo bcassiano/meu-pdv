@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Detalhes do Produto Mobile</title>
+<!-- Google Fonts & Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#1152d4",
+              "background-light": "#f6f6f8",
+              "background-dark": "#101622",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display antialiased">
+<!-- Mobile Container -->
+<div class="mx-auto max-w-md min-h-screen flex flex-col relative pb-24 shadow-2xl bg-background-light dark:bg-background-dark">
+<!-- Top App Bar -->
+<header class="flex items-center justify-between p-4 bg-white dark:bg-slate-900 sticky top-0 z-20 shadow-sm">
+<button class="flex items-center justify-center size-10 rounded-full text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</button>
+<h1 class="text-lg font-bold flex-1 text-center pr-10 text-slate-900 dark:text-slate-100">Detalhes do Produto</h1>
+</header>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto flex flex-col gap-2">
+<!-- Image & Core Info Section -->
+<section class="bg-white dark:bg-slate-900 pb-5">
+<!-- Product Image -->
+<div class="w-full aspect-square bg-white dark:bg-slate-900 flex items-center justify-center p-6 border-b border-slate-100 dark:border-slate-800">
+<div class="w-full h-full bg-contain bg-center bg-no-repeat rounded-lg" data-alt="Product packaging mock up on white background" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCjVFvTO_4FOTzQjwxSqEF5rXVQx9cZmvWLRW9knqePIfZLJjkOkfsv6dna_GpVk22RY39e6xkblkF47ZivAloeX_nQU7G_SulUBaWdNeSYoW5I1PxDfIp7jAhtN15tSqgQvlQ15Wp9KyTj3YBjyJr56vrtQyrEr51kHgqXAf4GBBxNP8mvM-bRy56y1xRnItQ8POX7lOJCD8_MUToCddJo3kqR7ytNhA36BpZTgYtvDGBICuGoiuwB3J7pPESu88JCpVEWaZLW1kg');">
+</div>
+</div>
+<!-- Titles & Price -->
+<div class="px-5 pt-5 flex flex-col gap-2">
+<h2 class="text-[20px] font-bold leading-tight text-slate-900 dark:text-white">
+                        Detergente Líquido Neutro 500ml - SKU: 847291
+                    </h2>
+<p class="text-[18px] font-bold text-primary dark:text-primary/90">
+                        R$ 2,49 <span class="text-sm font-normal text-slate-500 dark:text-slate-400 ml-1">Preço Sugerido</span>
+</p>
+<!-- Categories/Tags -->
+<div class="flex flex-wrap gap-2 pt-2">
+<span class="inline-flex items-center px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-sm font-medium text-slate-700 dark:text-slate-300">
+                            Limpeza
+                        </span>
+<span class="inline-flex items-center px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-sm font-medium text-slate-700 dark:text-slate-300">
+                            Mix Obrigatório
+                        </span>
+</div>
+</div>
+</section>
+<!-- Description Section -->
+<section class="bg-white dark:bg-slate-900 px-5 py-5">
+<h3 class="text-base font-bold text-slate-900 dark:text-white mb-2 flex items-center justify-between">
+                    Descrição
+                    <span class="material-symbols-outlined text-slate-400 text-xl">expand_more</span>
+</h3>
+<p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed line-clamp-3">
+                    Detergente líquido lava-louças com alto poder desengordurante. Fórmula neutra que não agride as mãos. Ideal para uso diário em cozinhas residenciais e industriais. Embalagem econômica de 500ml.
+                </p>
+<button class="text-primary text-sm font-medium mt-2">Ler mais</button>
+</section>
+<!-- Technical Specs Section -->
+<section class="bg-white dark:bg-slate-900 px-5 py-5 mb-4">
+<h3 class="text-base font-bold text-slate-900 dark:text-white mb-4">Especificações Técnicas</h3>
+<ul class="flex flex-col">
+<li class="flex justify-between py-3 border-b border-slate-100 dark:border-slate-800/50">
+<span class="text-sm text-slate-500 dark:text-slate-400">EAN</span>
+<span class="text-sm font-medium text-slate-900 dark:text-white">7891024123456</span>
+</li>
+<li class="flex justify-between py-3 border-b border-slate-100 dark:border-slate-800/50">
+<span class="text-sm text-slate-500 dark:text-slate-400">Peso Bruto</span>
+<span class="text-sm font-medium text-slate-900 dark:text-white">520g</span>
+</li>
+<li class="flex justify-between py-3 border-b border-slate-100 dark:border-slate-800/50">
+<span class="text-sm text-slate-500 dark:text-slate-400">Dimensões (AxLxP)</span>
+<span class="text-sm font-medium text-slate-900 dark:text-white">22 x 6 x 6 cm</span>
+</li>
+<li class="flex justify-between py-3 border-b border-slate-100 dark:border-slate-800/50">
+<span class="text-sm text-slate-500 dark:text-slate-400">Quantidade Cx.</span>
+<span class="text-sm font-medium text-slate-900 dark:text-white">24 unidades</span>
+</li>
+<li class="flex justify-between py-3 pt-4">
+<span class="text-sm text-slate-500 dark:text-slate-400">Mix Brigatório</span>
+<span class="text-sm font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+                            Sim (Canal Farma/Auto)
+                        </span>
+</li>
+</ul>
+</section>
+</main>
+<!-- Bottom Action Bar -->
+<footer class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 p-4 z-30 flex gap-3 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+<button class="flex-1 py-3.5 px-2 rounded-lg bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 font-bold text-sm text-center transition-colors active:bg-red-100 dark:active:bg-red-900/40">
+                REJEITAR SKU
+            </button>
+<button class="flex-1 py-3.5 px-2 rounded-lg border-2 border-slate-900 dark:border-slate-100 text-slate-900 dark:text-slate-100 font-bold text-sm text-center transition-colors active:bg-slate-50 dark:active:bg-slate-800">
+                EDITAR DADOS
+            </button>
+</footer>
+</div>
+</body></html>
