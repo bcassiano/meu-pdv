@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2026-03-10
+
+### Added
+- **Indicadores Hub**: Novo portal centralizador (`/dashboards/indicadores`) com navegação profissional via TabView (Ruptura, Estoque, Preços).
+- **Módulos de Auditoria**: Integração das interfaces Stitch para "Ruptura de Estoque" e "Gestão de Preços" em componentes React nativos (`VisaoRuptura.tsx`, `VisaoPreco.tsx`).
+- **Navegação**: O card de Ruptura no Dashboard principal foi convertido para link reativo para o Hub de Indicadores.
+
+### Fixed
+- **Next.js Infra**: Refatoração global de estilos scrollbar movidos para `globals.css`, resolvendo erros 500 e instabilidade no servidor de desenvolvimento.
+- **Linting/SSR**: Sanitização de entidades JSX (entities) em componentes provindos do Stitch para garantir build estável.
+
 ## [2.0.0] - 2026-03-10
 
 ### Added

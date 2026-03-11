@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-br"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Relatório de Rupturas - Painel Administrativo</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "accent-amber": "#d97706",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "slate-custom": "#1e293b",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+        }
+        /* Custom scrollbar for dense tables */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="flex flex-col w-full min-h-screen">
+<!-- Header / TopNavBar -->
+<header class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-custom px-6 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<span class="material-symbols-outlined text-3xl">inventory_2</span>
+<h1 class="text-slate-900 dark:text-white text-lg font-bold tracking-tight">Relatório de Rupturas</h1>
+</div>
+<div class="hidden md:flex items-center gap-6">
+<nav class="flex items-center gap-6">
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary font-medium transition-colors" href="#">Dashboard</a>
+<a class="text-primary font-semibold border-b-2 border-primary pb-0.5" href="#">Relatórios</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary font-medium transition-colors" href="#">Configurações</a>
+</nav>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-400 text-sm">search</span>
+</div>
+<input class="block w-64 pl-10 pr-3 py-1.5 border border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-sm focus:ring-primary focus:border-primary transition-all" placeholder="Buscar PDV ou Produto..." type="text"/>
+</div>
+<button class="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+</button>
+<div class="flex items-center gap-3 ml-2 pl-4 border-l border-slate-200 dark:border-slate-700">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-semibold text-slate-900 dark:text-white leading-none">Admin User</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Gestor Nacional</p>
+</div>
+<div class="size-9 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center overflow-hidden border border-slate-300 dark:border-slate-600">
+<img alt="Avatar" data-alt="User profile picture showing a professional male" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDF3ZMGnkPF14BL5pULjpZdzT9WDDOfHA2b-wl_bICRIJ8cHYwVQ0WTUudd2uslQxln3JAnWCH71oylgNdDpx_bLNPax-XXOYCrjASggfaJzI-eyXC5Fzu4txn9YlnNgBBYNOjxuk7faLHXwCl16N8DHbzt_AM0xj1xBAg5tcKEpLXb8H6NmfGOewtGioBKcJ96OcRnXOWxqZPlHE4JRGi4JdOBeRSVStPw_Lg9MJI8NuEMg6MqEIz7MjniW3Wn5pWtzG33XtgWDcM"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Sync Bar (Amber) -->
+<div class="bg-accent-amber/10 border-b border-accent-amber/20 px-6 py-2 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-accent-amber animate-spin" style="font-size: 18px;">sync</span>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="text-xs font-bold text-accent-amber uppercase tracking-wider">Sincronização em curso</span>
+<span class="text-xs text-accent-amber/80 font-medium">85% concluído</span>
+</div>
+<div class="w-48 h-1 bg-accent-amber/20 rounded-full mt-1 overflow-hidden">
+<div class="h-full bg-accent-amber rounded-full" style="width: 85%;"></div>
+</div>
+</div>
+</div>
+<p class="text-xs text-accent-amber font-medium">Última atualização: Hoje às 14:32</p>
+</div>
+<main class="flex-1 p-6 space-y-6 max-w-[1600px] mx-auto w-full">
+<!-- Page Header & Main Actions -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+<div>
+<h2 class="text-2xl font-bold text-slate-900 dark:text-white">Análise de Rupturas de Estoque</h2>
+<p class="text-slate-500 dark:text-slate-400 mt-1">Monitore e gerencie produtos indisponíveis nos pontos de venda em tempo real.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 rounded-lg font-semibold hover:bg-slate-50 dark:hover:bg-slate-700 transition-all shadow-sm">
+<span class="material-symbols-outlined text-xl">picture_as_pdf</span>
+                        PDF
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-all shadow-md">
+<span class="material-symbols-outlined text-xl">description</span>
+                        Exportar Excel
+                    </button>
+</div>
+</div>
+<!-- Cascade Filters -->
+<div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4 p-4 bg-white dark:bg-slate-custom rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="space-y-1.5">
+<label class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">map</span> Regional
+                    </label>
+<select class="w-full bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:ring-primary">
+<option>Todas as Regionais</option>
+<option>Sudeste</option>
+<option>Sul</option>
+<option>Nordeste</option>
+</select>
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">hub</span> Rede
+                    </label>
+<select class="w-full bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:ring-primary">
+<option>Todas as Redes</option>
+<option>Grupo Pão de Açúcar</option>
+<option>Carrefour</option>
+<option>Assaí Atacadista</option>
+</select>
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">store</span> Loja
+                    </label>
+<select class="w-full bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:ring-primary">
+<option>Todas as Lojas</option>
+<option>Loja 101 - Pinheiros</option>
+<option>Loja 204 - Jardins</option>
+<option>Loja 055 - Barra</option>
+</select>
+</div>
+<div class="flex items-end">
+<button class="w-full py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-semibold rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">filter_list_off</span>
+                        Limpar Filtros
+                    </button>
+</div>
+</div>
+<!-- Stats Overview (Optional but recommended for Dashboards) -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-white dark:bg-slate-custom p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+<p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">Total Rupturas</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">1,284</p>
+<span class="text-xs text-red-500 font-medium flex items-center gap-0.5 mt-1">
+<span class="material-symbols-outlined text-xs">trending_up</span> +12% vs ontem
+                    </span>
+</div>
+<div class="bg-white dark:bg-slate-custom p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+<p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">Lojas com Ruptura</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">42</p>
+<span class="text-xs text-green-500 font-medium flex items-center gap-0.5 mt-1">
+<span class="material-symbols-outlined text-xs">trending_down</span> -3% vs ontem
+                    </span>
+</div>
+<div class="bg-white dark:bg-slate-custom p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+<p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">SKUs Afetados</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">156</p>
+<span class="text-xs text-slate-400 font-medium flex items-center gap-0.5 mt-1">Estável</span>
+</div>
+<div class="bg-white dark:bg-slate-custom p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+<p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">Valor em Risco</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">R$ 42.5k</p>
+<span class="text-xs text-red-500 font-medium flex items-center gap-0.5 mt-1">
+<span class="material-symbols-outlined text-xs">priority_high</span> Crítico
+                    </span>
+</div>
+</div>
+<!-- Dense Data Table Container -->
+<div class="bg-white dark:bg-slate-custom rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse min-w-[1000px]">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800">
+<th class="px-4 py-3 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Data Real Final</th>
+<th class="px-4 py-3 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Razão Social (PDV)</th>
+<th class="px-4 py-3 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Logradouro</th>
+<th class="px-4 py-3 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">ID Alternativo</th>
+<th class="px-4 py-3 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Cidade</th>
+<th class="px-4 py-3 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Descrição do Produto</th>
+<th class="px-4 py-3 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-center">Qtd Contada</th>
+<th class="px-4 py-3 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">Ações</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-4 py-3 text-slate-600 dark:text-slate-400 whitespace-nowrap">20/10/2023 14:15</td>
+<td class="px-4 py-3 font-semibold text-slate-900 dark:text-white">Supermercado Alvorada Ltda</td>
+<td class="px-4 py-3 text-slate-500 dark:text-slate-400 text-sm">Av. das Nações, 1500 - Bloco B</td>
+<td class="px-4 py-3 font-mono text-xs text-slate-500 dark:text-slate-500">ID-9928-SP</td>
+<td class="px-4 py-3 text-slate-700 dark:text-slate-300">São Paulo</td>
+<td class="px-4 py-3 text-slate-700 dark:text-slate-300 font-medium">Arroz Integral Tio João 1kg</td>
+<td class="px-4 py-3 text-center">
+<span class="inline-flex items-center justify-center px-2.5 py-1 rounded-full bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 font-bold text-xs">
+                                        0
+                                    </span>
+</td>
+<td class="px-4 py-3 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-4 py-3 text-slate-600 dark:text-slate-400 whitespace-nowrap">20/10/2023 13:40</td>
+<td class="px-4 py-3 font-semibold text-slate-900 dark:text-white">Varejo Central S.A.</td>
+<td class="px-4 py-3 text-slate-500 dark:text-slate-400 text-sm">Rua das Flores, 45</td>
+<td class="px-4 py-3 font-mono text-xs text-slate-500 dark:text-slate-500">ID-8831-PR</td>
+<td class="px-4 py-3 text-slate-700 dark:text-slate-300">Curitiba</td>
+<td class="px-4 py-3 text-slate-700 dark:text-slate-300 font-medium">Feijão Preto Caldo Nobre 1kg</td>
+<td class="px-4 py-3 text-center">
+<span class="inline-flex items-center justify-center px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 font-bold text-xs">
+                                        2
+                                    </span>
+</td>
+<td class="px-4 py-3 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-4 py-3 text-slate-600 dark:text-slate-400 whitespace-nowrap">19/10/2023 17:22</td>
+<td class="px-4 py-3 font-semibold text-slate-900 dark:text-white">Mercado Popular MG</td>
+<td class="px-4 py-3 text-slate-500 dark:text-slate-400 text-sm">Rua do Comércio, 12 - Centro</td>
+<td class="px-4 py-3 font-mono text-xs text-slate-500 dark:text-slate-500">ID-7722-BH</td>
+<td class="px-4 py-3 text-slate-700 dark:text-slate-300">Belo Horizonte</td>
+<td class="px-4 py-3 text-slate-700 dark:text-slate-300 font-medium">Óleo de Soja Liza 900ml</td>
+<td class="px-4 py-3 text-center">
+<span class="inline-flex items-center justify-center px-2.5 py-1 rounded-full bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 font-bold text-xs">
+                                        0
+                                    </span>
+</td>
+<td class="px-4 py-3 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-4 py-3 text-slate-600 dark:text-slate-400 whitespace-nowrap">19/10/2023 15:05</td>
+<td class="px-4 py-3 font-semibold text-slate-900 dark:text-white">Hiper Prime Rio</td>
+<td class="px-4 py-3 text-slate-500 dark:text-slate-400 text-sm">Av. Central, 500 - Barra</td>
+<td class="px-4 py-3 font-mono text-xs text-slate-500 dark:text-slate-500">ID-6610-RJ</td>
+<td class="px-4 py-3 text-slate-700 dark:text-slate-300">Rio de Janeiro</td>
+<td class="px-4 py-3 text-slate-700 dark:text-slate-300 font-medium">Açúcar Refinado União 1kg</td>
+<td class="px-4 py-3 text-center">
+<span class="inline-flex items-center justify-center px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-xs">
+                                        1
+                                    </span>
+</td>
+<td class="px-4 py-3 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-4 py-3 text-slate-600 dark:text-slate-400 whitespace-nowrap">18/10/2023 09:30</td>
+<td class="px-4 py-3 font-semibold text-slate-900 dark:text-white">Loja Conveniência Sul</td>
+<td class="px-4 py-3 text-slate-500 dark:text-slate-400 text-sm">Posto Sul, s/n - Rodovia 101</td>
+<td class="px-4 py-3 font-mono text-xs text-slate-500 dark:text-slate-500">ID-5501-RS</td>
+<td class="px-4 py-3 text-slate-700 dark:text-slate-300">Porto Alegre</td>
+<td class="px-4 py-3 text-slate-700 dark:text-slate-300 font-medium">Café Torrado Pilão 500g</td>
+<td class="px-4 py-3 text-center">
+<span class="inline-flex items-center justify-center px-2.5 py-1 rounded-full bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 font-bold text-xs">
+                                        0
+                                    </span>
+</td>
+<td class="px-4 py-3 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 6 (Duplicated for density) -->
+<tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-4 py-3 text-slate-600 dark:text-slate-400 whitespace-nowrap">18/10/2023 08:45</td>
+<td class="px-4 py-3 font-semibold text-slate-900 dark:text-white">Mercado Alvorada Filial</td>
+<td class="px-4 py-3 text-slate-500 dark:text-slate-400 text-sm">Rua XV de Novembro, 10</td>
+<td class="px-4 py-3 font-mono text-xs text-slate-500 dark:text-slate-500">ID-9930-SP</td>
+<td class="px-4 py-3 text-slate-700 dark:text-slate-300">São Paulo</td>
+<td class="px-4 py-3 text-slate-700 dark:text-slate-300 font-medium">Macarrão Espaguete Adria 500g</td>
+<td class="px-4 py-3 text-center">
+<span class="inline-flex items-center justify-center px-2.5 py-1 rounded-full bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 font-bold text-xs">
+                                        0
+                                    </span>
+</td>
+<td class="px-4 py-3 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-4 py-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/30 dark:bg-slate-800/20">
+<div class="text-sm text-slate-500 dark:text-slate-400">
+                        Mostrando <span class="font-bold">1</span> a <span class="font-bold">10</span> de <span class="font-bold">1,284</span> resultados
+                    </div>
+<div class="flex items-center gap-2">
+<button class="p-1.5 border border-slate-200 dark:border-slate-700 rounded-md hover:bg-white dark:hover:bg-slate-700 disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="px-3 py-1 bg-primary text-white font-bold rounded-md">1</button>
+<button class="px-3 py-1 border border-slate-200 dark:border-slate-700 rounded-md hover:bg-white dark:hover:bg-slate-700">2</button>
+<button class="px-3 py-1 border border-slate-200 dark:border-slate-700 rounded-md hover:bg-white dark:hover:bg-slate-700">3</button>
+<span class="text-slate-500">...</span>
+<button class="px-3 py-1 border border-slate-200 dark:border-slate-700 rounded-md hover:bg-white dark:hover:bg-slate-700">129</button>
+<button class="p-1.5 border border-slate-200 dark:border-slate-700 rounded-md hover:bg-white dark:hover:bg-slate-700">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="p-6 text-center text-slate-500 dark:text-slate-500 text-xs border-t border-slate-200 dark:border-slate-800">
+            © 2023 Relatório de Rupturas Web - Inteligência em Vendas. Todos os direitos reservados.
+        </footer>
+</div>
+</body></html>

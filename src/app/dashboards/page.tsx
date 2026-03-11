@@ -119,12 +119,13 @@ export default function DashboardsPage(): JSX.Element {
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                             {cards.filter(card => card.checked).map((card) => {
                                 const isPontosExtras = card.id === "pontosExtras";
+                                const isRuptura = card.id === "ruptura";
                                 const CardComponent = (
                                     <DashboardCard 
                                         key={card.id}
                                         {...card}
                                     >
-                                        {card.id === "ruptura" && (
+                                        {isRuptura && (
                                             <div className="grid grid-cols-3 gap-4 mt-6">
                                                 <div className="bg-white/5 rounded-xl p-4 border border-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors">
                                                     <p className="text-indigo-300 text-xs font-bold uppercase tracking-wider mb-1">Ruptura</p>
@@ -147,12 +148,27 @@ export default function DashboardsPage(): JSX.Element {
                                                 </div>
                                             </div>
                                         )}
+                                        {isRuptura && (
+                                            <div className="absolute inset-x-0 bottom-0 p-8 flex justify-end pointer-events-none">
+                                                <div className="h-10 w-10 rounded-full bg-indigo-500/20 shadow-md border border-indigo-500/30 flex items-center justify-center pointer-events-auto hover:scale-110 hover:text-indigo-300 text-indigo-400 transition-all">
+                                                    <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                                                </div>
+                                            </div>
+                                        )}
                                     </DashboardCard>
                                 );
 
                                 if (isPontosExtras) {
                                     return (
                                         <a href="/dashboards/pontos-extras" key={card.id} className="block group xl:col-span-1">
+                                            {CardComponent}
+                                        </a>
+                                    );
+                                }
+
+                                if (isRuptura) {
+                                    return (
+                                        <a href="/dashboards/indicadores" key={card.id} className="block group md:col-span-2">
                                             {CardComponent}
                                         </a>
                                     );
@@ -169,7 +185,7 @@ export default function DashboardsPage(): JSX.Element {
                                 </div>
                                 <div className="text-center">
                                     <p className="text-slate-900 dark:text-white font-black text-xl">Dashboard Vazio</p>
-                                    <p className="text-slate-500 dark:text-slate-400 font-medium max-w-xs mx-auto mt-2">Clique em 'Personalizar' para adicionar componentes ao seu painel.</p>
+                                    <p className="text-slate-500 dark:text-slate-400 font-medium max-w-xs mx-auto mt-2">Clique em &apos;Personalizar&apos; para adicionar componentes ao seu painel.</p>
                                 </div>
                                 <button 
                                     onClick={() => setIsConfigOpen(true)}
@@ -194,27 +210,6 @@ export default function DashboardsPage(): JSX.Element {
                 onSave={handleSaveConfig}
             />
 
-            {/* Global CSS for custom animations/elements */}
-            <style jsx global>{`
-        ::-webkit-scrollbar {
-          width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-          background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-          background: #cbd5e1;
-          border-radius: 20px;
-          border: 3px solid transparent;
-          background-clip: content-box;
-        }
-        .dark ::-webkit-scrollbar-thumb {
-          background: #334155;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-          background: #94a3b8;
-        }
-      `}</style>
         </div>
     );
 }

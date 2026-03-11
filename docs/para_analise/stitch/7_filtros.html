@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<title>Gestão de Rupturas - Filtros Avançados</title>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased h-screen overflow-hidden">
+<div class="relative h-full w-full flex overflow-hidden">
+<div class="flex-1 flex flex-col p-6 space-y-6 opacity-40 pointer-events-none select-none">
+<header class="flex justify-between items-center">
+<h1 class="text-2xl font-bold">Relatório de Rupturas</h1>
+<div class="h-10 w-32 bg-slate-200 dark:bg-slate-800 rounded-lg"></div>
+</header>
+<div class="grid grid-cols-4 gap-4">
+<div class="h-24 bg-slate-200 dark:bg-slate-800 rounded-xl"></div>
+<div class="h-24 bg-slate-200 dark:bg-slate-800 rounded-xl"></div>
+<div class="h-24 bg-slate-200 dark:bg-slate-800 rounded-xl"></div>
+<div class="h-24 bg-slate-200 dark:bg-slate-800 rounded-xl"></div>
+</div>
+<div class="flex-1 bg-slate-200 dark:bg-slate-800 rounded-xl overflow-hidden">
+<table class="w-full text-left">
+<thead class="bg-slate-300 dark:bg-slate-700">
+<tr>
+<th class="p-4">Produto</th>
+<th class="p-4">Loja</th>
+<th class="p-4">Status</th>
+<th class="p-4">Data</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-slate-300 dark:border-slate-700">
+<td class="p-4 h-12"></td>
+<td class="p-4 h-12"></td>
+<td class="p-4 h-12"></td>
+<td class="p-4 h-12"></td>
+</tr>
+<tr class="border-b border-slate-300 dark:border-slate-700">
+<td class="p-4 h-12"></td>
+<td class="p-4 h-12"></td>
+<td class="p-4 h-12"></td>
+<td class="p-4 h-12"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm z-10"></div>
+<aside class="absolute right-0 top-0 h-full w-full max-w-md bg-white dark:bg-[#111722] shadow-2xl z-20 flex flex-col border-l border-slate-200 dark:border-slate-800">
+<header class="flex items-center justify-between px-6 py-5 border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">filter_list</span>
+<h2 class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">Filtros Avançados</h2>
+</div>
+<button class="flex items-center justify-center rounded-lg h-9 w-9 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-xl">close</span>
+</button>
+</header>
+<div class="flex-1 overflow-y-auto p-6 space-y-8">
+<section class="space-y-4">
+<h3 class="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Agente (Promotor)</h3>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">Selecionar Promotor</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">person</span>
+<select class="w-full pl-10 pr-4 h-12 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none appearance-none transition-all">
+<option value="">Busque por nome ou ID</option>
+<option value="1">João Silva (ID: 4502)</option>
+<option value="2">Maria Santos (ID: 3819)</option>
+<option value="3">Ricardo Oliveira (ID: 9102)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_more</span>
+</div>
+</div>
+</section>
+<section class="space-y-4">
+<h3 class="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Locais (PDV)</h3>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">Ponto de Venda</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">store</span>
+<select class="w-full pl-10 pr-4 h-12 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none appearance-none transition-all">
+<option value="">Todos os locais</option>
+<option value="sp">São Paulo - Matriz</option>
+<option value="rj">Rio de Janeiro - Filial</option>
+<option value="bh">Belo Horizonte - Centro</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_more</span>
+</div>
+</div>
+</section>
+<section class="space-y-4">
+<h3 class="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Período</h3>
+<div class="grid grid-cols-2 gap-2">
+<button class="flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg bg-primary text-white border border-primary transition-all">
+                            Hoje
+                        </button>
+<button class="flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg bg-transparent text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
+                            Semana
+                        </button>
+<button class="flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg bg-transparent text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
+                            Mês
+                        </button>
+<button class="flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg bg-transparent text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
+                            Customizado
+                        </button>
+</div>
+<div class="relative group mt-3">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">calendar_today</span>
+<input class="w-full pl-10 pr-4 h-12 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" placeholder="01/01/2024 - 31/01/2024" type="text"/>
+</div>
+</section>
+<section class="space-y-4">
+<h3 class="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Categorias de Produto</h3>
+<div class="space-y-2">
+<label class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<input checked="" class="w-5 h-5 rounded border-slate-300 dark:border-slate-600 text-primary focus:ring-primary bg-transparent" type="checkbox"/>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">Bebidas Não Alcoólicas</span>
+</label>
+<label class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<input class="w-5 h-5 rounded border-slate-300 dark:border-slate-600 text-primary focus:ring-primary bg-transparent" type="checkbox"/>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">Mercearia Doce</span>
+</label>
+<label class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<input class="w-5 h-5 rounded border-slate-300 dark:border-slate-600 text-primary focus:ring-primary bg-transparent" type="checkbox"/>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">Higiene e Limpeza</span>
+</label>
+</div>
+</section>
+</div>
+<footer class="p-6 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111722] grid grid-cols-2 gap-4">
+<button class="h-12 rounded-lg font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                    Cancelar
+                </button>
+<button class="h-12 rounded-lg font-bold text-white bg-primary hover:bg-primary/90 transition-all shadow-lg shadow-primary/20">
+                    Aplicar Filtros
+                </button>
+</footer>
+</aside>
+</div>
+</body></html>

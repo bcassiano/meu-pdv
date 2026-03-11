@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Trade Intelligence - Price Evolution</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        slate: {
+                            850: "#1e293b", // Custom slate for sidebar
+                            900: "#0f172a",
+                        }
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display antialiased overflow-hidden">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Sidebar -->
+<div class="flex w-64 flex-col bg-slate-850 dark:bg-slate-850 border-r border-slate-700/50 shrink-0">
+<div class="flex h-full flex-col justify-between p-4">
+<div class="flex flex-col gap-6">
+<!-- User Profile -->
+<div class="flex items-center gap-3 px-2">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-10 w-10 ring-2 ring-primary/30" data-alt="User profile portrait male" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCy2LA9m67CEPJSkyhaEA1DUnv1g_9robMQOa5iKbh-CNZLl_hjBv29l6lkLNuBuN_B7DApp0_psB5v503esEz-vTSTUYJCP2yfP2wNWTuM1e_crt5-YaVwUXkWl0dZp_JICYhWUMO4H6ZOsh_-2XLyV-4TTJNsu0c0kVOkOoexNTgWDg3a31QwDACM7UgwFdZlTPLKdBHw_mabvS9rR6biy4mkeBm9T5YybpOqhniOZ7lLV_Tsw4oEM3Bm08f8PtofextL6t3tgSE");'></div>
+<div class="flex flex-col">
+<h1 class="text-white text-sm font-semibold leading-tight">Trade Intelligence</h1>
+<p class="text-slate-400 text-xs font-normal leading-tight">Market Analytics</p>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">pie_chart</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary text-white shadow-md shadow-primary/20" href="#">
+<span class="material-symbols-outlined text-xl">trending_up</span>
+<span class="text-sm font-medium">Price Evolution</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">grid_view</span>
+<span class="text-sm font-medium">Assortment</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">group</span>
+<span class="text-sm font-medium">Competitors</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+</div>
+<button class="flex w-full items-center justify-center gap-2 rounded-lg h-10 px-4 bg-slate-700/50 hover:bg-slate-700 text-slate-200 text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-lg">logout</span>
+<span>Logout</span>
+</button>
+</div>
+</div>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden bg-background-light dark:bg-background-dark relative">
+<!-- Header Area -->
+<header class="flex-shrink-0 px-8 py-6 border-b border-slate-200 dark:border-slate-800 bg-white/5 dark:bg-slate-900/50 backdrop-blur-sm z-10">
+<div class="flex flex-col gap-1 mb-6">
+<h2 class="text-slate-900 dark:text-white text-2xl font-bold tracking-tight">Price Evolution Analysis</h2>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Historical pricing trends and competitor comparison across major retail chains.</p>
+</div>
+<!-- Filters -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="flex flex-col gap-1.5">
+<label class="text-slate-700 dark:text-slate-300 text-xs font-semibold uppercase tracking-wider">SKU Selection</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 material-symbols-outlined text-lg">inventory_2</span>
+<input class="w-full h-10 pl-10 pr-3 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-sm focus:ring-1 focus:ring-primary focus:border-primary placeholder-slate-400 transition-shadow" placeholder="Search SKU..." type="text" value="Premium Coffee Blend 500g"/>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-slate-700 dark:text-slate-300 text-xs font-semibold uppercase tracking-wider">Retail Chain</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 material-symbols-outlined text-lg">storefront</span>
+<select class="w-full h-10 pl-10 pr-8 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-sm focus:ring-1 focus:ring-primary focus:border-primary appearance-none cursor-pointer">
+<option>All Chains</option>
+<option>Carrefour</option>
+<option>Walmart</option>
+<option>Tesco</option>
+</select>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 material-symbols-outlined text-lg pointer-events-none">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-slate-700 dark:text-slate-300 text-xs font-semibold uppercase tracking-wider">Region</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 material-symbols-outlined text-lg">public</span>
+<select class="w-full h-10 pl-10 pr-8 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-sm focus:ring-1 focus:ring-primary focus:border-primary appearance-none cursor-pointer">
+<option>National</option>
+<option>North America</option>
+<option>Europe</option>
+<option>Asia Pacific</option>
+</select>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 material-symbols-outlined text-lg pointer-events-none">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-slate-700 dark:text-slate-300 text-xs font-semibold uppercase tracking-wider">Date Range</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 material-symbols-outlined text-lg">calendar_today</span>
+<select class="w-full h-10 pl-10 pr-8 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-sm focus:ring-1 focus:ring-primary focus:border-primary appearance-none cursor-pointer">
+<option>Last 12 Months</option>
+<option>Year to Date</option>
+<option>Last Quarter</option>
+<option>Custom Range</option>
+</select>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 material-symbols-outlined text-lg pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
+<!-- KPIs -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+<!-- KPI 1 -->
+<div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between h-32">
+<div class="flex justify-between items-start">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Category Inflation</p>
+<span class="material-symbols-outlined text-slate-400 text-xl">trending_up</span>
+</div>
+<div>
+<p class="text-slate-900 dark:text-white text-2xl font-bold tracking-tight">4.2%</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-emerald-500 text-sm">arrow_upward</span>
+<p class="text-emerald-500 text-xs font-medium">+1.2% vs last year</p>
+</div>
+</div>
+</div>
+<!-- KPI 2 -->
+<div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between h-32">
+<div class="flex justify-between items-start">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Avg Price Change</p>
+<span class="material-symbols-outlined text-slate-400 text-xl">payments</span>
+</div>
+<div>
+<p class="text-slate-900 dark:text-white text-2xl font-bold tracking-tight">+$1.50</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-rose-500 text-sm">arrow_downward</span>
+<p class="text-rose-500 text-xs font-medium">-2.0% MoM</p>
+</div>
+</div>
+</div>
+<!-- KPI 3 -->
+<div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between h-32">
+<div class="flex justify-between items-start">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Min Price Detected</p>
+<span class="material-symbols-outlined text-slate-400 text-xl">vertical_align_bottom</span>
+</div>
+<div>
+<p class="text-slate-900 dark:text-white text-2xl font-bold tracking-tight">$12.99</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-slate-400 text-sm">remove</span>
+<p class="text-slate-400 text-xs font-medium">No change</p>
+</div>
+</div>
+</div>
+<!-- KPI 4 -->
+<div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between h-32">
+<div class="flex justify-between items-start">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Max Price Detected</p>
+<span class="material-symbols-outlined text-slate-400 text-xl">vertical_align_top</span>
+</div>
+<div>
+<p class="text-slate-900 dark:text-white text-2xl font-bold tracking-tight">$18.50</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-emerald-500 text-sm">arrow_upward</span>
+<p class="text-emerald-500 text-xs font-medium">+5% new peak</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Chart Section -->
+<div class="mb-8 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-slate-900 dark:text-white text-lg font-bold">Price Trend Comparison</h3>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-primary"></span>
+<span class="text-slate-500 dark:text-slate-400 text-xs font-medium">Our Product</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-slate-400"></span>
+<span class="text-slate-500 dark:text-slate-400 text-xs font-medium">Competitor Avg</span>
+</div>
+<button class="p-2 text-slate-400 hover:text-white hover:bg-slate-700 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-xl">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Chart Placeholder using CSS Gradients/Lines to simulate a chart without JS -->
+<div class="relative h-80 w-full bg-slate-50 dark:bg-slate-900/50 rounded-lg overflow-hidden flex flex-col justify-end p-4 border border-slate-100 dark:border-slate-800">
+<!-- Y-Axis Lines -->
+<div class="absolute inset-0 flex flex-col justify-between p-4 pointer-events-none">
+<div class="border-b border-slate-200 dark:border-slate-700 w-full h-px"></div>
+<div class="border-b border-slate-200 dark:border-slate-700 w-full h-px"></div>
+<div class="border-b border-slate-200 dark:border-slate-700 w-full h-px"></div>
+<div class="border-b border-slate-200 dark:border-slate-700 w-full h-px"></div>
+<div class="border-b border-slate-200 dark:border-slate-700 w-full h-px"></div>
+</div>
+<!-- Simulated Line Chart -->
+<div class="flex items-end justify-between h-[80%] w-full px-4 gap-2 z-10 relative">
+<!-- Data Points are simulated with heights -->
+<div class="flex-1 flex items-end justify-center group relative cursor-pointer">
+<div class="w-2 bg-primary/50 h-[40%] rounded-t-sm group-hover:bg-primary transition-all"></div>
+<div class="absolute bottom-full mb-2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">$14.20</div>
+</div>
+<div class="flex-1 flex items-end justify-center group relative cursor-pointer">
+<div class="w-2 bg-primary/50 h-[45%] rounded-t-sm group-hover:bg-primary transition-all"></div>
+</div>
+<div class="flex-1 flex items-end justify-center group relative cursor-pointer">
+<div class="w-2 bg-primary/50 h-[42%] rounded-t-sm group-hover:bg-primary transition-all"></div>
+</div>
+<div class="flex-1 flex items-end justify-center group relative cursor-pointer">
+<div class="w-2 bg-primary/50 h-[55%] rounded-t-sm group-hover:bg-primary transition-all"></div>
+</div>
+<div class="flex-1 flex items-end justify-center group relative cursor-pointer">
+<div class="w-2 bg-primary/50 h-[60%] rounded-t-sm group-hover:bg-primary transition-all"></div>
+</div>
+<div class="flex-1 flex items-end justify-center group relative cursor-pointer">
+<div class="w-2 bg-primary/50 h-[58%] rounded-t-sm group-hover:bg-primary transition-all"></div>
+</div>
+<div class="flex-1 flex items-end justify-center group relative cursor-pointer">
+<div class="w-2 bg-primary/50 h-[65%] rounded-t-sm group-hover:bg-primary transition-all"></div>
+</div>
+<div class="flex-1 flex items-end justify-center group relative cursor-pointer">
+<div class="w-2 bg-primary/50 h-[70%] rounded-t-sm group-hover:bg-primary transition-all"></div>
+</div>
+<div class="flex-1 flex items-end justify-center group relative cursor-pointer">
+<div class="w-2 bg-primary/50 h-[68%] rounded-t-sm group-hover:bg-primary transition-all"></div>
+</div>
+<div class="flex-1 flex items-end justify-center group relative cursor-pointer">
+<div class="w-2 bg-primary/50 h-[75%] rounded-t-sm group-hover:bg-primary transition-all"></div>
+</div>
+<div class="flex-1 flex items-end justify-center group relative cursor-pointer">
+<div class="w-2 bg-primary/50 h-[80%] rounded-t-sm group-hover:bg-primary transition-all"></div>
+</div>
+<div class="flex-1 flex items-end justify-center group relative cursor-pointer">
+<div class="w-2 bg-primary/50 h-[78%] rounded-t-sm group-hover:bg-primary transition-all"></div>
+</div>
+</div>
+<!-- X-Axis Labels -->
+<div class="flex justify-between w-full px-4 pt-2 mt-2 border-t border-slate-200 dark:border-slate-700">
+<span class="text-xs text-slate-400">Jan</span>
+<span class="text-xs text-slate-400">Feb</span>
+<span class="text-xs text-slate-400">Mar</span>
+<span class="text-xs text-slate-400">Apr</span>
+<span class="text-xs text-slate-400">May</span>
+<span class="text-xs text-slate-400">Jun</span>
+<span class="text-xs text-slate-400">Jul</span>
+<span class="text-xs text-slate-400">Aug</span>
+<span class="text-xs text-slate-400">Sep</span>
+<span class="text-xs text-slate-400">Oct</span>
+<span class="text-xs text-slate-400">Nov</span>
+<span class="text-xs text-slate-400">Dec</span>
+</div>
+</div>
+</div>
+<!-- Detailed Data Table -->
+<div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+<h3 class="text-slate-900 dark:text-white text-lg font-bold">Detailed Price Variations</h3>
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs font-medium hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
+<span class="material-symbols-outlined text-sm">download</span>
+                            Export CSV
+                        </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead class="bg-slate-50 dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 font-semibold uppercase text-xs border-b border-slate-200 dark:border-slate-700">
+<tr>
+<th class="px-6 py-4">Collection Date</th>
+<th class="px-6 py-4">Avg Price</th>
+<th class="px-6 py-4">Lowest Price</th>
+<th class="px-6 py-4">Highest Price</th>
+<th class="px-6 py-4 text-right">MoM Variation</th>
+<th class="px-6 py-4 text-center">Trend</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-700 text-slate-700 dark:text-slate-300">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+<td class="px-6 py-4">Oct 24, 2023</td>
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">$15.50</td>
+<td class="px-6 py-4 text-emerald-600 dark:text-emerald-400">$12.99</td>
+<td class="px-6 py-4 text-rose-600 dark:text-rose-400">$16.20</td>
+<td class="px-6 py-4 text-right text-emerald-500 font-medium">+1.2%</td>
+<td class="px-6 py-4 text-center">
+<div class="w-16 h-1 bg-emerald-500/20 rounded-full mx-auto overflow-hidden">
+<div class="h-full bg-emerald-500 w-3/4 rounded-full"></div>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+<td class="px-6 py-4">Sep 24, 2023</td>
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">$15.32</td>
+<td class="px-6 py-4 text-emerald-600 dark:text-emerald-400">$13.10</td>
+<td class="px-6 py-4 text-rose-600 dark:text-rose-400">$15.99</td>
+<td class="px-6 py-4 text-right text-rose-500 font-medium">-0.5%</td>
+<td class="px-6 py-4 text-center">
+<div class="w-16 h-1 bg-rose-500/20 rounded-full mx-auto overflow-hidden">
+<div class="h-full bg-rose-500 w-1/4 rounded-full"></div>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+<td class="px-6 py-4">Aug 24, 2023</td>
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">$15.40</td>
+<td class="px-6 py-4 text-emerald-600 dark:text-emerald-400">$13.50</td>
+<td class="px-6 py-4 text-rose-600 dark:text-rose-400">$16.50</td>
+<td class="px-6 py-4 text-right text-slate-400 font-medium">0.0%</td>
+<td class="px-6 py-4 text-center">
+<div class="w-16 h-1 bg-slate-500/20 rounded-full mx-auto overflow-hidden">
+<div class="h-full bg-slate-500 w-1/2 rounded-full"></div>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+<td class="px-6 py-4">Jul 24, 2023</td>
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">$15.40</td>
+<td class="px-6 py-4 text-emerald-600 dark:text-emerald-400">$13.25</td>
+<td class="px-6 py-4 text-rose-600 dark:text-rose-400">$16.75</td>
+<td class="px-6 py-4 text-right text-emerald-500 font-medium">+2.1%</td>
+<td class="px-6 py-4 text-center">
+<div class="w-16 h-1 bg-emerald-500/20 rounded-full mx-auto overflow-hidden">
+<div class="h-full bg-emerald-500 w-4/5 rounded-full"></div>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+<td class="px-6 py-4">Jun 24, 2023</td>
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">$15.10</td>
+<td class="px-6 py-4 text-emerald-600 dark:text-emerald-400">$12.99</td>
+<td class="px-6 py-4 text-rose-600 dark:text-rose-400">$16.00</td>
+<td class="px-6 py-4 text-right text-emerald-500 font-medium">+0.8%</td>
+<td class="px-6 py-4 text-center">
+<div class="w-16 h-1 bg-emerald-500/20 rounded-full mx-auto overflow-hidden">
+<div class="h-full bg-emerald-500 w-2/3 rounded-full"></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 border-t border-slate-200 dark:border-slate-700 flex justify-between items-center bg-slate-50 dark:bg-slate-900/30">
+<p class="text-xs text-slate-500 dark:text-slate-400">Showing 5 of 120 records</p>
+<div class="flex gap-2">
+<button class="p-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 disabled:opacity-50">
+<span class="material-symbols-outlined text-lg">chevron_left</span>
+</button>
+<button class="p-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<footer class="mt-8 mb-4 text-center">
+<p class="text-xs text-slate-500 dark:text-slate-600">© 2023 Trade Intelligence Platform. All rights reserved.</p>
+</footer>
+</div>
+</main>
+</div>
+</body></html>

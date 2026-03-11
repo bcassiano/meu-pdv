@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Matriz de Comparativo de Preços</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d59f2",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101622",
+                        "slate-custom": "#1E293B", 
+                        "green-highlight": "#10b981",
+                        "red-highlight": "#ef4444",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for table */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #475569; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen flex overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 bg-slate-custom flex-shrink-0 flex flex-col h-screen border-r border-slate-700/50">
+<div class="p-4 flex items-center gap-3">
+<div class="bg-primary/20 rounded-lg p-2">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-8" data-alt="Trade Insight Logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB1aU8J-pAWv_xvb2jKhuBkDWU52Foaj_K9_Oi6e3pPFfQ22QCLRDuNY0qegkQHAr7Dbxg9-Wwf1BMFhsk7WjdznZlbEVDLY3A67EjoOh97DolUTbD01ufiHgj8nHVEAhSAHIVAZaoM-ChgdQC3BbZE6yYw0fWKyUDdku7Bssg8PIqq6QgvS0YgEpGLvIzH1YV1FWqiMtjzsR2kILH1FXgZlTFSHD5sb5l8rVXXUbna2EywpsQlSfArrq0pcTlBfb4gtbAWRD8RRw4");'></div>
+</div>
+<div>
+<h1 class="text-white text-base font-bold leading-tight">Trade Insight</h1>
+<p class="text-slate-400 text-xs font-normal">Admin Panel</p>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto px-2 py-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-white">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary text-white shadow-lg shadow-primary/20 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">currency_exchange</span>
+<span class="text-sm font-medium">Comparativo de Preços</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-white">inventory_2</span>
+<span class="text-sm font-medium">Análise de Sortimento</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-white">description</span>
+<span class="text-sm font-medium">Relatórios</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-white">settings</span>
+<span class="text-sm font-medium">Configurações</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-700/50">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-full bg-slate-600 bg-cover bg-center" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCDhnCqSd6ig5_zU90NympImdtmJhJ1hdln4_UTbYe6eN572jVLvogBMG1x4thd1s6KWwKp5Z1J9K6l_THTNxw2iXVKTqVVu9X74leayKQ6i1x2roinZon6lmDY8m_MilfQJW6e8iXKEe7bIBCYIEQO8S-zprwE8dQm7UTElICXAU52dejAxP6GzNse_1rxIp2rAS3H2KVI0-G6bZt5FdyuZIebqyUSMUb7FDw0DINq6hcms9gzb9PdFZQn0HBA08O9aU6AGn-wdGk");'></div>
+<div class="flex flex-col">
+<span class="text-sm font-medium text-white">Ricardo Silva</span>
+<span class="text-xs text-slate-400">Gerente de Trade</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col min-w-0 bg-background-light dark:bg-background-dark overflow-hidden">
+<!-- Header -->
+<header class="bg-background-light dark:bg-background-dark border-b border-slate-200 dark:border-slate-800 h-16 flex items-center justify-between px-6 flex-shrink-0 z-10">
+<div class="flex items-center gap-2">
+<button class="text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white lg:hidden">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h2 class="text-lg font-bold text-slate-900 dark:text-white tracking-tight">Matriz de Comparativo</h2>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</span>
+<input class="w-64 pl-10 pr-4 py-2 text-sm bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-slate-900 dark:text-white placeholder-slate-400" placeholder="Buscar produto..." type="text"/>
+</div>
+<div class="h-6 w-px bg-slate-200 dark:bg-slate-700 mx-2"></div>
+<button class="relative p-2 text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[24px]">notifications</span>
+<span class="absolute top-1.5 right-1.5 size-2 bg-red-500 rounded-full border-2 border-background-light dark:border-background-dark"></span>
+</button>
+<button class="p-2 text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[24px]">help</span>
+</button>
+</div>
+</header>
+<!-- Filters Toolbar -->
+<div class="px-6 py-4 bg-background-light dark:bg-background-dark border-b border-slate-200 dark:border-slate-800 flex flex-wrap gap-4 items-end flex-shrink-0">
+<div class="flex flex-col gap-1.5 min-w-[200px] flex-1">
+<label class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Categoria de Produto</label>
+<div class="relative">
+<select class="w-full appearance-none bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-sm rounded-lg px-3 py-2.5 focus:ring-1 focus:ring-primary focus:border-primary outline-none">
+<option>Bebidas Alcoólicas</option>
+<option>Higiene Pessoal</option>
+<option>Limpeza</option>
+<option>Laticínios</option>
+</select>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+<span class="material-symbols-outlined text-[20px]">expand_more</span>
+</span>
+</div>
+</div>
+<div class="flex flex-col gap-1.5 min-w-[200px] flex-1">
+<label class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Período</label>
+<div class="relative">
+<select class="w-full appearance-none bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-sm rounded-lg px-3 py-2.5 focus:ring-1 focus:ring-primary focus:border-primary outline-none">
+<option>Últimos 7 dias</option>
+<option>Últimos 15 dias</option>
+<option>Este Mês</option>
+<option>Mês Passado</option>
+</select>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span>
+</span>
+</div>
+</div>
+<div class="flex flex-col gap-1.5 min-w-[240px] flex-[1.5]">
+<label class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Redes para Comparar</label>
+<div class="relative">
+<button class="w-full text-left bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-sm rounded-lg px-3 py-2.5 focus:ring-1 focus:ring-primary focus:border-primary outline-none flex justify-between items-center group">
+<span class="truncate">Carrefour, Pão de Açúcar, Assaí...</span>
+<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-slate-300">checklist</span>
+</button>
+</div>
+</div>
+<div class="flex gap-2 ml-auto">
+<button class="flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors font-medium text-sm">
+<span class="material-symbols-outlined text-[18px]">refresh</span>
+<span>Atualizar</span>
+</button>
+<button class="flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors shadow-lg shadow-blue-500/20 font-medium text-sm">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span>Exportar</span>
+</button>
+</div>
+</div>
+<!-- Data Grid -->
+<div class="flex-1 overflow-auto p-6">
+<div class="bg-white dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden min-w-[1000px]">
+<table class="w-full text-left border-collapse">
+<thead class="bg-slate-50 dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 text-xs uppercase font-semibold tracking-wider sticky top-0 z-10 backdrop-blur-sm">
+<tr>
+<th class="px-4 py-4 w-12 text-center border-b border-slate-200 dark:border-slate-700">
+<input class="rounded border-slate-300 dark:border-slate-600 text-primary focus:ring-primary bg-transparent" type="checkbox"/>
+</th>
+<th class="px-4 py-4 w-64 border-b border-slate-200 dark:border-slate-700">Produto (SKU)</th>
+<th class="px-4 py-4 text-center border-b border-slate-200 dark:border-slate-700">Preço Sugerido</th>
+<th class="px-4 py-4 text-center border-b border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 border-x border-slate-200 dark:border-slate-700">Média Mercado</th>
+<th class="px-4 py-4 text-center border-b border-slate-200 dark:border-slate-700">
+<div class="flex items-center justify-center gap-1">Carrefour <span class="material-symbols-outlined text-[14px] text-slate-400">info</span></div>
+</th>
+<th class="px-4 py-4 text-center border-b border-slate-200 dark:border-slate-700">
+<div class="flex items-center justify-center gap-1">Pão de Açúcar <span class="material-symbols-outlined text-[14px] text-slate-400">info</span></div>
+</th>
+<th class="px-4 py-4 text-center border-b border-slate-200 dark:border-slate-700">
+<div class="flex items-center justify-center gap-1">Assaí <span class="material-symbols-outlined text-[14px] text-slate-400">info</span></div>
+</th>
+<th class="px-4 py-4 text-center border-b border-slate-200 dark:border-slate-700">
+<div class="flex items-center justify-center gap-1">Big <span class="material-symbols-outlined text-[14px] text-slate-400">info</span></div>
+</th>
+<th class="px-4 py-4 text-right border-b border-slate-200 dark:border-slate-700">Variação (%)</th>
+</tr>
+</thead>
+<tbody class="text-sm font-medium divide-y divide-slate-200 dark:divide-slate-700/50">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors group">
+<td class="px-4 py-3 text-center">
+<input class="rounded border-slate-300 dark:border-slate-600 text-primary focus:ring-primary bg-transparent" type="checkbox"/>
+</td>
+<td class="px-4 py-3">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-slate-100 dark:bg-slate-700 flex-shrink-0 bg-cover bg-center" data-alt="Whisky bottle" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDXCPTwwWm7V9TVs9l4jMPJz-ZpWwxo0CPA2AwP-qpruU7WunTBthC9qgeDzjcpoY4uWZItDN060H-vNy7C50IRCv8E7g_QaaRX1v20z8b8k_0sAdKgNn6auqgHevCTEfyCEnjy01eZgPZesa-Hl466F8pYqOh7cUI5RCb146C7RXyKUcJMnoeIxtcZTQqu0WkW0Jpy-it7Y1_BhTWZ3jjWUrUkFx6vXQDok3hSilDx84TfiVbVzvmoc6B9WZsm4SepJZBBpAsykps");'></div>
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-white">Whisky Johnnie Walker Red Label 1L</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">SKU: 883920</span>
+</div>
+</div>
+</td>
+<td class="px-4 py-3 text-center text-slate-600 dark:text-slate-400">R$ 99,90</td>
+<td class="px-4 py-3 text-center font-bold text-slate-800 dark:text-slate-200 bg-slate-50 dark:bg-slate-800/50 border-x border-slate-200 dark:border-slate-700">R$ 95,40</td>
+<td class="px-4 py-3 text-center text-slate-700 dark:text-slate-300">R$ 98,50</td>
+<td class="px-4 py-3 text-center text-slate-700 dark:text-slate-300">R$ 102,90</td>
+<td class="px-4 py-3 text-center text-green-800 bg-green-100 dark:text-green-200 dark:bg-green-900/30 rounded font-bold border border-green-200 dark:border-green-800/50">R$ 89,90</td>
+<td class="px-4 py-3 text-center text-slate-700 dark:text-slate-300">R$ 94,50</td>
+<td class="px-4 py-3 text-right">
+<span class="text-red-500 flex items-center justify-end gap-1 font-semibold">
+<span class="material-symbols-outlined text-[16px]">trending_down</span> -12%
+                                </span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors group">
+<td class="px-4 py-3 text-center">
+<input class="rounded border-slate-300 dark:border-slate-600 text-primary focus:ring-primary bg-transparent" type="checkbox"/>
+</td>
+<td class="px-4 py-3">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-slate-100 dark:bg-slate-700 flex-shrink-0 bg-cover bg-center" data-alt="Vodka bottle" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC5fq0wCc7P7wjob6qRhylen8XyK272tQLl6OnxMF4Ag4hMR7OO-OPAxXhc73OmydXVv_xDjOZaUCnritMe-aby60fiyuGHUKD9WWGl8moznNhbdSIZm49mkJeR8Ud36rryEzyq_hSneaBUhlzRHUL2j3wkDgI1k0Mf8BYmMt5aMQOuBe03-U4bclObD_Ymnhsvs3k73UDjy2w1B_ny5vngpWkvhDHttXRgKhD9fqYbIjUSA-qmUGVbMDXxNR3wMIdJAPq3JU-0nzg");'></div>
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-white">Vodka Absolut 1L</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">SKU: 102938</span>
+</div>
+</div>
+</td>
+<td class="px-4 py-3 text-center text-slate-600 dark:text-slate-400">R$ 85,00</td>
+<td class="px-4 py-3 text-center font-bold text-slate-800 dark:text-slate-200 bg-slate-50 dark:bg-slate-800/50 border-x border-slate-200 dark:border-slate-700">R$ 82,10</td>
+<td class="px-4 py-3 text-center text-green-800 bg-green-100 dark:text-green-200 dark:bg-green-900/30 rounded font-bold border border-green-200 dark:border-green-800/50">R$ 79,90</td>
+<td class="px-4 py-3 text-center text-slate-700 dark:text-slate-300">R$ 89,90</td>
+<td class="px-4 py-3 text-center text-slate-700 dark:text-slate-300">R$ 81,50</td>
+<td class="px-4 py-3 text-center text-slate-700 dark:text-slate-300">R$ 83,00</td>
+<td class="px-4 py-3 text-right">
+<span class="text-green-500 flex items-center justify-end gap-1 font-semibold">
+<span class="material-symbols-outlined text-[16px]">trending_up</span> +5%
+                                </span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors group">
+<td class="px-4 py-3 text-center">
+<input class="rounded border-slate-300 dark:border-slate-600 text-primary focus:ring-primary bg-transparent" type="checkbox"/>
+</td>
+<td class="px-4 py-3">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-slate-100 dark:bg-slate-700 flex-shrink-0 bg-cover bg-center" data-alt="Beer can" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDpW-xHW7dvC1G5gksjWFon8j6DQ2e8o9JivPf5tSkYUfaeqvrXD78zdd4UL31OLfu9cdSTPCnuC4xNl2xshOnsGRBTOSv4zuTYiNuuPFBLXIVo21ipRiGQfEe_nQeW4Tr90o_CiTIxIFnDN2EWiiUSXw9Uawv4tqXxPoZr6HrdIzoAvM0642tJUqJVBc7vDDGVnMmOZjVy1gtHrPcC0YbE_nG4q7Hp6UOYctMyxaUdeFvv7d283Ua8coR7BnnXQfb24NRoNWmn3eo");'></div>
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-white">Cerveja Heineken Lata 350ml</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">SKU: 334910</span>
+</div>
+</div>
+</td>
+<td class="px-4 py-3 text-center text-slate-600 dark:text-slate-400">R$ 4,50</td>
+<td class="px-4 py-3 text-center font-bold text-slate-800 dark:text-slate-200 bg-slate-50 dark:bg-slate-800/50 border-x border-slate-200 dark:border-slate-700">R$ 4,25</td>
+<td class="px-4 py-3 text-center text-slate-700 dark:text-slate-300">R$ 4,49</td>
+<td class="px-4 py-3 text-center text-slate-700 dark:text-slate-300">R$ 4,59</td>
+<td class="px-4 py-3 text-center text-green-800 bg-green-100 dark:text-green-200 dark:bg-green-900/30 rounded font-bold border border-green-200 dark:border-green-800/50">R$ 3,99</td>
+<td class="px-4 py-3 text-center text-slate-700 dark:text-slate-300">R$ 4,19</td>
+<td class="px-4 py-3 text-right">
+<span class="text-slate-400 flex items-center justify-end gap-1 font-semibold">
+<span class="material-symbols-outlined text-[16px]">remove</span> 0%
+                                </span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors group">
+<td class="px-4 py-3 text-center">
+<input class="rounded border-slate-300 dark:border-slate-600 text-primary focus:ring-primary bg-transparent" type="checkbox"/>
+</td>
+<td class="px-4 py-3">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-slate-100 dark:bg-slate-700 flex-shrink-0 bg-cover bg-center" data-alt="Wine bottle" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBInWxEbp-n3cjbOUdQjdd21ynWQCR7b4we7giDyzYOB3hmx2BPLFSmPalEzt3Qo1S3VXbcEI8UwxPL2oneQLuYDH2lKcfiNni8_7D7-iaPVIXqd_h_3qKu5gdYflR_kpcgWqcRgBjzf5FcxpCOgcn4dXQ9SzcskYK5QXUhk1OJMRaE8YYxhrMUtYh091WEf2G_NjWBGC3xIFXSGhyDEktU5U9dikvXaepELfgUNra34KArlOsgqeGUY-PDxBaAwcpaQDKGOqhYvkg");'></div>
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-white">Vinho Chileno Reservado 750ml</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">SKU: 554321</span>
+</div>
+</div>
+</td>
+<td class="px-4 py-3 text-center text-slate-600 dark:text-slate-400">R$ 32,90</td>
+<td class="px-4 py-3 text-center font-bold text-slate-800 dark:text-slate-200 bg-slate-50 dark:bg-slate-800/50 border-x border-slate-200 dark:border-slate-700">R$ 29,80</td>
+<td class="px-4 py-3 text-center text-slate-700 dark:text-slate-300">R$ 30,50</td>
+<td class="px-4 py-3 text-center text-green-800 bg-green-100 dark:text-green-200 dark:bg-green-900/30 rounded font-bold border border-green-200 dark:border-green-800/50">R$ 28,90</td>
+<td class="px-4 py-3 text-center text-slate-700 dark:text-slate-300">R$ 29,90</td>
+<td class="px-4 py-3 text-center text-slate-700 dark:text-slate-300">R$ 31,00</td>
+<td class="px-4 py-3 text-right">
+<span class="text-red-500 flex items-center justify-end gap-1 font-semibold">
+<span class="material-symbols-outlined text-[16px]">trending_down</span> -8%
+                                </span>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors group">
+<td class="px-4 py-3 text-center">
+<input class="rounded border-slate-300 dark:border-slate-600 text-primary focus:ring-primary bg-transparent" type="checkbox"/>
+</td>
+<td class="px-4 py-3">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-slate-100 dark:bg-slate-700 flex-shrink-0 bg-cover bg-center" data-alt="Gin bottle" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCJ9jMxAhBfHc8FP2cmOO_qfVqmOdD5gRKTAqjvYwwczsqEiiG5OOFX_w_GqHk3z40fURXCLgSRbkTbNGuHq-KBRz3Y4GX3Sz8ad6GFGC_5yCuxbqLfEJobjxlKUomrAwlYJTnZxrYI0kPoRMk4pQ3m482aibE7Lqj2HIMWb3k9Sqg0vVhkvn66WwGtId3hBv9617y1T8ypBxI2IW6wkwSDgd34Ke76ovgqZlQGBKRMmJ48rgKN2vciFxZLIphA9fbQHdSHDvNh7h8");'></div>
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-white">Gin Tanqueray 750ml</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">SKU: 772110</span>
+</div>
+</div>
+</td>
+<td class="px-4 py-3 text-center text-slate-600 dark:text-slate-400">R$ 139,90</td>
+<td class="px-4 py-3 text-center font-bold text-slate-800 dark:text-slate-200 bg-slate-50 dark:bg-slate-800/50 border-x border-slate-200 dark:border-slate-700">R$ 125,50</td>
+<td class="px-4 py-3 text-center text-slate-700 dark:text-slate-300">R$ 130,00</td>
+<td class="px-4 py-3 text-center text-slate-700 dark:text-slate-300">R$ 135,00</td>
+<td class="px-4 py-3 text-center text-green-800 bg-green-100 dark:text-green-200 dark:bg-green-900/30 rounded font-bold border border-green-200 dark:border-green-800/50">R$ 115,90</td>
+<td class="px-4 py-3 text-center text-slate-700 dark:text-slate-300">R$ 128,50</td>
+<td class="px-4 py-3 text-right">
+<span class="text-green-500 flex items-center justify-end gap-1 font-semibold">
+<span class="material-symbols-outlined text-[16px]">trending_up</span> +2%
+                                </span>
+</td>
+</tr>
+<!-- Row 6 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors group">
+<td class="px-4 py-3 text-center">
+<input class="rounded border-slate-300 dark:border-slate-600 text-primary focus:ring-primary bg-transparent" type="checkbox"/>
+</td>
+<td class="px-4 py-3">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-slate-100 dark:bg-slate-700 flex-shrink-0 bg-cover bg-center" data-alt="Energy drink can" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBxd0bL-og_9UYNqbxBlvSYaiAJUqPbxkMUhCPxHkQNM2rxOPSOv4-z6sqaRNklPrLi8d0PaLv1R9gc0MGY7py5b2tGSTVEVFpQWhl4jfHBmOz3z066FtwrCU-ZtK0GTchuzIMMTdMCVtNU5Di-U3w9y77wym_CmEub5VBMmRejQd--HmV9myAwbf_DlxI2bm2m3vbiSZqh5ahvkyha-doivNUSPObpOw1RS2PGrF1w1MTlTnBlOrnJB-KWGAfmXrIhBo_lS82wO0A");'></div>
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-white">Red Bull Energy Drink 250ml</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">SKU: 442991</span>
+</div>
+</div>
+</td>
+<td class="px-4 py-3 text-center text-slate-600 dark:text-slate-400">R$ 8,90</td>
+<td class="px-4 py-3 text-center font-bold text-slate-800 dark:text-slate-200 bg-slate-50 dark:bg-slate-800/50 border-x border-slate-200 dark:border-slate-700">R$ 7,95</td>
+<td class="px-4 py-3 text-center text-green-800 bg-green-100 dark:text-green-200 dark:bg-green-900/30 rounded font-bold border border-green-200 dark:border-green-800/50">R$ 7,50</td>
+<td class="px-4 py-3 text-center text-slate-700 dark:text-slate-300">R$ 8,29</td>
+<td class="px-4 py-3 text-center text-slate-700 dark:text-slate-300">R$ 7,89</td>
+<td class="px-4 py-3 text-center text-slate-700 dark:text-slate-300">R$ 8,10</td>
+<td class="px-4 py-3 text-right">
+<span class="text-slate-400 flex items-center justify-end gap-1 font-semibold">
+<span class="material-symbols-outlined text-[16px]">remove</span> 0%
+                                </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="mt-4 flex items-center justify-between text-slate-500 dark:text-slate-400 text-sm">
+<div>Mostrando 1 a 6 de 48 resultados</div>
+<div class="flex gap-1">
+<button class="px-3 py-1 rounded border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors disabled:opacity-50" disabled="">Anterior</button>
+<button class="px-3 py-1 rounded bg-primary text-white border border-primary">1</button>
+<button class="px-3 py-1 rounded border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">2</button>
+<button class="px-3 py-1 rounded border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">3</button>
+<button class="px-3 py-1 rounded border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Próxima</button>
+</div>
+</div>
+</div>
+</main>
+</body></html>
