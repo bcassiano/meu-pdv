@@ -1,4 +1,4 @@
-import React from 'react';
+import { ScrollAreaWithArrows } from '../ScrollAreaWithArrows';
 
 export function VisaoPreco() {
     return (
@@ -200,7 +200,7 @@ export function VisaoPreco() {
                     </div>
                 </div>
                 
-                <div className="overflow-x-auto">
+                <ScrollAreaWithArrows>
                     <table className="w-full text-left text-sm min-w-[800px]">
                         <thead className="bg-slate-50 dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 font-bold uppercase text-xs border-b border-slate-200 dark:border-slate-800 tracking-wider">
                             <tr>
@@ -261,7 +261,7 @@ export function VisaoPreco() {
                             </tr>
                         </tbody>
                     </table>
-                </div>
+                </ScrollAreaWithArrows>
 
                 {/* Pagination */}
                 <div className="px-6 py-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/30 dark:bg-slate-900/50 text-sm">

@@ -4,6 +4,7 @@ import React, { useState, useRef } from "react";
 import { useTranslation } from "@/locales/useTranslation";
 import Papa from "papaparse";
 import { useRouter } from "next/navigation";
+import { ScrollAreaWithArrows } from "@/components/ScrollAreaWithArrows";
 
 interface PreviewRow {
     id: number;
@@ -270,7 +271,7 @@ export default function ClientCargaInicial(): JSX.Element {
                                 <span className="text-xs text-slate-500 font-medium bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-md">Exibindo os primeiros 5 registros</span>
                             </div>
 
-                            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden overflow-x-auto shadow-sm">
+                            <ScrollAreaWithArrows className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm">
                                 <table className="w-full text-left text-sm border-collapse">
                                     <thead className="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800 text-slate-500 font-bold uppercase tracking-wider text-xs">
                                         <tr>
@@ -299,7 +300,7 @@ export default function ClientCargaInicial(): JSX.Element {
                                         ))}
                                     </tbody>
                                 </table>
-                            </div>
+                            </ScrollAreaWithArrows>
                         </section>
 
                         {/* Quality Check sidebar */}

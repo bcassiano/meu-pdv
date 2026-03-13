@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 import { ActionResponse, Usuario, UsuarioTipo } from "@/types/usuario";
+import { Profile } from "@/types/profile";
 import { salvarUsuario as registerUser } from "./actions";
 import { useTranslation } from "@/locales/useTranslation";
 import { useRouter } from "next/navigation";
@@ -14,6 +15,7 @@ export default function NovoUsuarioPage(): JSX.Element {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [showPassword, setShowPassword] = useState(false);
+    const [availableProfiles, setAvailableProfiles] = useState<string[]>([]);
     const [formData, setFormData] = useState<Omit<Usuario, "id" | "createdAt">>({
         nome: "",
         login: "",
@@ -23,10 +25,33 @@ export default function NovoUsuarioPage(): JSX.Element {
         version: "",
         imei: "",
         idioma: "pt",
-        tipo: "promotor", // Valor default válido do union
+        tipo: "", 
         equipe: "",
         ativo: true
     });
+
+    useEffect(() => {
+        const fetchProfiles = async () => {
+            try {
+                const response = await fetch('/api/usuarios/permissoes');
+                const data = await response.json();
+                if (data.success && data.profiles) {
+                    const profileNames = data.profiles.map((p: Profile) => p.id);
+                    setAvailableProfiles(profileNames);
+                    
+                    // Se houver perfis, seta o primeiro como default se o tipo estiver vazio
+                    if (profileNames.length > 0) {
+                        setFormData(prev => ({ ...prev, tipo: profileNames[0] }));
+                    }
+                }
+            } catch (error) {
+                console.error("Erro ao buscar perfis para cadastro:", error);
+                // Fallback básico se a API falhar
+                setAvailableProfiles(["promotor", "coordenador", "supervisor", "adm"]);
+            }
+        };
+        fetchProfiles();
+    }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { id, value, type } = e.target;
@@ -188,10 +213,11 @@ export default function NovoUsuarioPage(): JSX.Element {
                                             <label className="text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="tipo">{t('usuariosNovo.form.userTypeLabel')}</label>
                                             <select value={formData.tipo} onChange={handleChange} className="bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700 rounded text-sm px-4 py-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none text-slate-900 dark:text-white" id="tipo" name="tipo">
                                                 <option disabled value="">{t('usuariosNovo.form.userTypePlaceholder')}</option>
-                                                <option value="promotor">{t('usuariosNovo.form.userTypeOptionPromotor')}</option>
-                                                <option value="coordenador">{t('usuariosNovo.form.userTypeOptionCoordinator')}</option>
-                                                <option value="supervisor">{t('usuariosNovo.form.userTypeOptionSupervisor')}</option>
-                                                <option value="adm">{t('usuariosNovo.form.userTypeOptionAdmin')}</option>
+                                                {availableProfiles.map(profile => (
+                                                    <option key={profile} value={profile.toLowerCase()}>
+                                                        {profile}
+                                                    </option>
+                                                ))}
                                             </select>
                                         </div>
                                         <div className="flex flex-col gap-1.5 md:col-span-2">

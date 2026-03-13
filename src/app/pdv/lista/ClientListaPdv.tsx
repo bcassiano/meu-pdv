@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { ScrollAreaWithArrows } from "@/components/ScrollAreaWithArrows";
 import { PdvRecord } from "@/db/interfaces/IPdvRepository";
 
 export default function ClientListaPdv(): JSX.Element {
@@ -105,73 +106,73 @@ export default function ClientListaPdv(): JSX.Element {
 
             {/* Table Container */}
             <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-white/5 shadow-2xl overflow-hidden">
-                <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse">
-                        <thead>
-                            <tr className="border-b border-slate-50 dark:border-white/5">
-                                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 font-display">ID Local</th>
-                                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 font-display">Identificação</th>
-                                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 font-display">Documento</th>
-                                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 font-display">Localização</th>
-                                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 font-display">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-slate-50 dark:divide-white/5">
-                            {filteredPdvs.map((pdv, idx) => (
-                                <tr key={pdv.idLocal || `pdv-${idx}`} className="hover:bg-slate-50/50 dark:hover:bg-white/5 transition-colors group">
-                                    <td className="px-8 py-6">
-                                        <span className="font-mono text-xs font-black text-slate-400 group-hover:text-primary transition-colors">
-                                            #{displayField(pdv, 'id')}
+            <ScrollAreaWithArrows>
+                <table className="w-full text-left border-collapse">
+                    <thead>
+                        <tr className="border-b border-slate-50 dark:border-white/5">
+                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 font-display">ID Local</th>
+                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 font-display">Identificação</th>
+                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 font-display">Documento</th>
+                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 font-display">Localização</th>
+                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 font-display">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-50 dark:divide-white/5">
+                        {filteredPdvs.map((pdv, idx) => (
+                            <tr key={pdv.idLocal || `pdv-${idx}`} className="hover:bg-slate-50/50 dark:hover:bg-white/5 transition-colors group">
+                                <td className="px-8 py-6">
+                                    <span className="font-mono text-xs font-black text-slate-400 group-hover:text-primary transition-colors">
+                                        #{displayField(pdv, 'id')}
+                                    </span>
+                                </td>
+                                <td className="px-8 py-6">
+                                    <div className="flex flex-col">
+                                        <span className="text-sm font-black text-slate-900 dark:text-white truncate max-w-[300px]">
+                                            {displayField(pdv, 'nome')}
                                         </span>
-                                    </td>
-                                    <td className="px-8 py-6">
-                                        <div className="flex flex-col">
-                                            <span className="text-sm font-black text-slate-900 dark:text-white truncate max-w-[300px]">
-                                                {displayField(pdv, 'nome')}
+                                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter truncate max-w-[300px]">
+                                            {displayField(pdv, 'razao')}
+                                        </span>
+                                    </div>
+                                </td>
+                                <td className="px-8 py-6 text-sm font-bold text-slate-500 dark:text-slate-400">
+                                    {displayField(pdv, 'cnpj')}
+                                </td>
+                                <td className="px-8 py-6">
+                                    <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
+                                        <span className="material-symbols-outlined text-sm text-primary/60">location_on</span>
+                                        <span className="text-xs font-bold">
+                                            {displayField(pdv, 'local')}
+                                        </span>
+                                    </div>
+                                </td>
+                                <td className="px-8 py-6">
+                                    {(() => {
+                                        const isActive = getPdvField(pdv, 'ativo', 'ATIVO LOCAL') !== false && getPdvField(pdv, 'ativo', 'ATIVO LOCAL') !== 'NÃO';
+                                        return (
+                                            <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider border ${isActive
+                                                ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20'
+                                                : 'bg-slate-200 dark:bg-slate-800 text-slate-400 border-transparent'
+                                                }`}>
+                                                <span className={`h-1.5 w-1.5 rounded-full ${isActive ? 'bg-emerald-500 animate-pulse' : 'bg-slate-400'}`} />
+                                                {isActive ? 'Ativo' : 'Offline'}
                                             </span>
-                                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter truncate max-w-[300px]">
-                                                {displayField(pdv, 'razao')}
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td className="px-8 py-6 text-sm font-bold text-slate-500 dark:text-slate-400">
-                                        {displayField(pdv, 'cnpj')}
-                                    </td>
-                                    <td className="px-8 py-6">
-                                        <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
-                                            <span className="material-symbols-outlined text-sm text-primary/60">location_on</span>
-                                            <span className="text-xs font-bold">
-                                                {displayField(pdv, 'local')}
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td className="px-8 py-6">
-                                        {(() => {
-                                            const isActive = getPdvField(pdv, 'ativo', 'ATIVO LOCAL') !== false && getPdvField(pdv, 'ativo', 'ATIVO LOCAL') !== 'NÃO';
-                                            return (
-                                                <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider border ${isActive
-                                                    ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20'
-                                                    : 'bg-slate-200 dark:bg-slate-800 text-slate-400 border-transparent'
-                                                    }`}>
-                                                    <span className={`h-1.5 w-1.5 rounded-full ${isActive ? 'bg-emerald-500 animate-pulse' : 'bg-slate-400'}`} />
-                                                    {isActive ? 'Ativo' : 'Offline'}
-                                                </span>
-                                            );
-                                        })()}
-                                    </td>
-                                </tr>
-                            ))}
+                                        );
+                                    })()}
+                                </td>
+                            </tr>
+                        ))}
 
-                            {filteredPdvs.length === 0 && (
-                                <tr>
-                                    <td colSpan={5} className="px-8 py-20 text-center text-slate-400 font-bold uppercase tracking-widest text-xs italic">
-                                        Nenhum registro encontrado para a busca.
-                                    </td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
-                </div>
+                        {filteredPdvs.length === 0 && (
+                            <tr>
+                                <td colSpan={5} className="px-8 py-20 text-center text-slate-400 font-bold uppercase tracking-widest text-xs italic">
+                                    Nenhum registro encontrado para a busca.
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </ScrollAreaWithArrows>
             </div>
         </div>
     );

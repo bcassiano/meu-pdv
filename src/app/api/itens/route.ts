@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { FirestoreItemRepository } from '@/db/repositories/FirestoreItemRepository';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
     try {
         const repository = new FirestoreItemRepository();

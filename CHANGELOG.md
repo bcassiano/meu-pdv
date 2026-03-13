@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.5.0] - 2026-03-13
+
+### Added
+- **Módulo de Permissões**: Implementada persistência atômica e imediata de novos perfis no Firestore, resolvendo bug de perda de estado.
+- **Geolocalização**: Adicionado suporte a edição manual de coordenadas/endereço com feedback visual de precisão do GPS e badge "GPS Match".
+
+### Changed
+- **Padronização Visual**: Unificação do cabeçalho de "Itens" com o padrão Premium (Badge de módulo, tipografia `text-5xl` e descrições `text-lg`).
+- **Navegação**: Correção da lógica de destaque na barra lateral para persistir no módulo de usuários durante a alternância de abas.
+
+## [2.4.1] - 2026-03-13
+### Adicionado
+- Extensão da padronização `ScrollAreaWithArrows` para os módulos de Itens e Importação de Usuários.
+- Correção de consistência visual em tabelas globais.
+
+## [2.4.0] - 2026-03-13
+
+### Added
+- **Padrão de UX para Overflow**: Lançamento do componente `ScrollAreaWithArrows` para tratamento padronizado de conteúdo horizontal que excede a largura da tela.
+- **Governança**: Nova regra de UX introduzida no guia de governança tornando obrigatório o uso do componente para navegação intuitiva em dispositivos móveis e baixas resoluções.
+
+### Changed
+- **Header Global**: Refatoração da navegação para utilizar `ScrollAreaWithArrows`, removendo lógica manual de scroll e simplificando o componente.
+- **Dashboards e Auditoria**: Tabelas de "Visão de Ruptura" e "Visão de Preço" atualizadas com o novo padrão de navegação por setas.
+- **Gestão de Usuários e PDVs**: Padronização aplicada às tabelas principais de listagem de usuários e pontos de venda.
+
 ## [2.3.3] - 2026-03-11
 
 ### Changed

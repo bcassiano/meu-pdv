@@ -1,4 +1,4 @@
-export type UsuarioTipo = "adm" | "promotor" | "coordenador" | "supervisor";
+export type UsuarioTipo = string; // Suporta perfis dinâmicos (adm, promotor, ou novos perfis criados)
 
 export interface Usuario {
     id: string;

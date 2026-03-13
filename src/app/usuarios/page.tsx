@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
+import { ScrollAreaWithArrows } from "@/components/ScrollAreaWithArrows";
 import Image from "next/image";
 import Link from "next/link";
 import Papa from "papaparse";
@@ -11,6 +12,7 @@ import { ActionResponse, Usuario, UsuarioVisual } from "@/types/usuario";
 import { useTranslation } from "@/locales/useTranslation";
 import EditUserModal from "./EditUserModal";
 import ResetPasswordModal from "./ResetPasswordModal";
+import { Profile } from "@/types/profile";
 
 export default function GestaoUsuariosPage(): JSX.Element {
     const { t } = useTranslation();
@@ -18,6 +20,7 @@ export default function GestaoUsuariosPage(): JSX.Element {
     const [users, setUsers] = useState<UsuarioVisual[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
+    const [availableProfiles, setAvailableProfiles] = useState<Profile[]>([]);
     const [profileFilter, setProfileFilter] = useState("Todos os Perfis");
     const [statusFilter, setStatusFilter] = useState("Status: Todos");
 
@@ -25,23 +28,41 @@ export default function GestaoUsuariosPage(): JSX.Element {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isResetModalOpen, setIsResetModalOpen] = useState(false);
     const [selectedUserForAction, setSelectedUserForAction] = useState<UsuarioVisual | null>(null);
-
     const fetchUsuarios = async () => {
         setIsLoading(true);
         try {
-            const response: ActionResponse<Usuario[]> = await getUsuarios();
-            if (response.success && response.data) {
-                // Mapeia os dados do json local para o formato da UI
-                const formattedUsers: UsuarioVisual[] = response.data.map((u: Usuario) => {
-                    // Lógica visual baseada no tipo e status digitado
+            // Busca usuários e perfis em paralelo
+            const [usersRes, profilesRes] = await Promise.all([
+                getUsuarios(),
+                fetch('/api/usuarios/permissoes').then(r => r.json())
+            ]);
+
+            let profilesMap: Profile[] = [];
+            if (profilesRes.success && profilesRes.profiles) {
+                profilesMap = profilesRes.profiles;
+                setAvailableProfiles(profilesMap);
+            }
+
+            if (usersRes.success && usersRes.data) {
+                const formattedUsers: UsuarioVisual[] = usersRes.data.map((u: Usuario) => {
                     const isAtivo = u.ativo;
 
-                    let roleName = "Indefinido";
+                    // Procura o perfil correspondente
+                    const profileData = profilesMap.find(p => p.id.toLowerCase() === u.tipo.toLowerCase());
+                    
+                    let roleName = profileData ? profileData.id : "Indefinido";
                     let roleColor = "text-slate-500 bg-slate-500/10 border-slate-500/20";
-                    if (u.tipo === "promotor") { roleName = "Promotor"; roleColor = "text-amber-500 bg-amber-500/10 border-amber-500/20"; }
-                    if (u.tipo === "coordenador") { roleName = "Coordenador"; roleColor = "text-purple-400 bg-purple-500/10 border-purple-500/20"; }
-                    if (u.tipo === "supervisor") { roleName = "Supervisor"; roleColor = "text-blue-400 bg-blue-500/10 border-blue-500/20"; }
-                    if (u.tipo === "adm") { roleName = "Administrador"; roleColor = "text-emerald-500 bg-emerald-500/10 border-emerald-500/20"; }
+                    
+                    // Cores predefinidas para tipos conhecidos ou default para novos
+                    const lowerTipo = u.tipo.toLowerCase();
+                    if (lowerTipo === "promotor") { roleColor = "text-amber-500 bg-amber-500/10 border-amber-500/20"; }
+                    else if (lowerTipo === "coordenador") { roleColor = "text-purple-400 bg-purple-500/10 border-purple-500/20"; }
+                    else if (lowerTipo === "supervisor") { roleColor = "text-blue-400 bg-blue-500/10 border-blue-500/20"; }
+                    else if (lowerTipo === "adm" || lowerTipo === "administrador") { roleColor = "text-emerald-500 bg-emerald-500/10 border-emerald-500/20"; roleName = "Administrador"; }
+                    else if (profileData) {
+                        // Cor padrão para novos perfis
+                        roleColor = "text-primary bg-primary/10 border-primary/20";
+                    }
 
                     let teamDisplay = "Sem Equipe";
                     if (u.equipe === "eq1") teamDisplay = "Alpha - Operações";
@@ -65,7 +86,7 @@ export default function GestaoUsuariosPage(): JSX.Element {
                 setUsers(formattedUsers);
             }
         } catch (error) {
-            console.error("Falha ao carregar usuários:", error);
+            console.error("Falha ao carregar dados:", error);
         } finally {
             setIsLoading(false);
         }
@@ -280,7 +301,7 @@ export default function GestaoUsuariosPage(): JSX.Element {
                             </div>
                         ) : (
                             <div className="bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-white/5 rounded-[2rem] overflow-hidden shadow-xl shadow-slate-200/40 dark:shadow-none">
-                                <div className="overflow-x-auto">
+                                <ScrollAreaWithArrows>
                                     <table className="w-full text-left border-collapse whitespace-nowrap">
                                         <thead>
                                             <tr className="bg-slate-50/80 dark:bg-black/20 border-b border-slate-200 dark:border-white/5">
@@ -390,7 +411,7 @@ export default function GestaoUsuariosPage(): JSX.Element {
                                             ))}
                                         </tbody>
                                     </table>
-                                </div>
+                                </ScrollAreaWithArrows>
 
                                 {/* Enhanced Pagination Controls */}
                                 <div className="px-8 py-6 bg-slate-50/50 dark:bg-black/20 border-t border-slate-200 dark:border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">

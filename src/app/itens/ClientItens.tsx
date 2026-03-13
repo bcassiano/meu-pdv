@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { useEffect } from "react";
 import ImportModal from "@/components/ImportModal";
+import { ScrollAreaWithArrows } from "@/components/ScrollAreaWithArrows";
 import type { ItemNormalizado } from "@/lib/importadores/normalizar-itens";
 
 // ClientItens agora usa ItemNormalizado diretamente do motor de normalização.
@@ -26,17 +27,23 @@ const ClientItens: React.FC = () => {
     const [isPendingImport, setIsPendingImport] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     const loadItems = async () => {
         try {
+            setIsLoading(true);
+            setError(null);
             const response = await fetch('/api/itens');
             const data = await response.json();
             if (data.success) {
-                setItems(data.itens);
+                setItems(data.itens || []);
                 setIsPendingImport(false);
+            } else {
+                setError(data.error || 'Erro ao carregar itens');
             }
-        } catch (error) {
-            console.error('Erro ao carregar itens:', error);
+        } catch (err) {
+            console.error('Erro ao carregar itens:', err);
+            setError('Não foi possível conectar ao banco de dados');
         } finally {
             setIsLoading(false);
         }
@@ -156,6 +163,26 @@ const ClientItens: React.FC = () => {
                 </div>
             )}
 
+            {/* Estado de Erro */}
+            {!isLoading && error && (
+                <div className="flex flex-col items-center justify-center py-20 px-4 text-center bg-red-50/50 dark:bg-red-900/10 rounded-3xl border border-red-100 dark:border-red-900/20 mb-8">
+                    <div className="bg-red-100 dark:bg-red-900/30 p-4 rounded-full mb-4">
+                        <span className="material-symbols-outlined text-4xl text-red-600 dark:text-red-400 font-variation-icon">cloud_off</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-2">Erro de Conexão ou Cota</h3>
+                    <p className="text-slate-600 dark:text-slate-400 max-w-md">
+                        {error}. Isso pode ocorrer quando o limite do Firebase é atingido.
+                    </p>
+                    <button 
+                        onClick={() => loadItems()}
+                        className="mt-6 px-8 py-3 bg-[#1152d4] text-white rounded-xl hover:scale-105 transition-all shadow-lg active:scale-95 flex items-center gap-2 font-bold"
+                    >
+                        <span className="material-symbols-outlined text-[18px]">refresh</span>
+                        Tentar Novamente
+                    </button>
+                </div>
+            )}
+
             {/* Estado vazio */}
             {!isLoading && items.length === 0 && (
                 <div className="bg-white dark:bg-[#1a2332] rounded-3xl border border-dashed border-slate-200 dark:border-[#232f48] p-16 flex flex-col items-center justify-center gap-4 transition-colors duration-500">
@@ -172,7 +199,7 @@ const ClientItens: React.FC = () => {
             {/* Tabela */}
             {!isLoading && items.length > 0 && (
                 <div className="bg-white dark:bg-[#1a2332] rounded-3xl border border-slate-200 dark:border-[#232f48] shadow-xl shadow-slate-200/50 dark:shadow-none overflow-hidden transition-colors duration-500">
-                    <div className="overflow-x-auto overflow-y-hidden">
+                    <ScrollAreaWithArrows>
                         <table className="w-full text-left border-collapse min-w-[900px]">
                             <thead>
                                 <tr className="border-b border-slate-100 dark:border-[#232f48]">
@@ -235,7 +262,7 @@ const ClientItens: React.FC = () => {
                                 ))}
                             </tbody>
                         </table>
-                    </div>
+                    </ScrollAreaWithArrows>
 
                     {/* Footer / Paginação */}
                     <div className="px-6 py-5 bg-slate-50/50 dark:bg-slate-900/40 border-t border-slate-100 dark:border-[#232f48] flex flex-col sm:flex-row justify-between items-center gap-4">

@@ -19,14 +19,18 @@ export default function ItensPage(): JSX.Element {
                     ]}
                 />
 
-                <div className="flex-1 overflow-y-auto overflow-x-hidden p-6 lg:p-10 pb-24 scroll-smooth">
-                    <div className="max-w-[1400px] mx-auto space-y-8">
+                <div className="flex-1 overflow-y-auto overflow-x-hidden p-8 md:p-10 2xl:p-14 pb-24 scroll-smooth">
+                    <div className="max-w-[1400px] mx-auto space-y-10">
                         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-                            <div className="space-y-2">
-                                <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">
-                                    Catálogo de <span className="text-primary italic">SKUs e Itens</span>
+                            <div className="space-y-4">
+                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-black uppercase tracking-[0.2em] border border-primary/20">
+                                    <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+                                    Gestão de Portfólio
+                                </div>
+                                <h1 className="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+                                    Catálogo de <br /> <span className="text-primary italic">SKUs e Itens</span>
                                 </h1>
-                                <p className="text-slate-500 dark:text-slate-400 font-medium tracking-tight">
+                                <p className="text-slate-500 dark:text-slate-400 max-w-xl text-lg font-medium leading-relaxed">
                                     Gerencie os produtos ativos, configurações de caixa e unidades de medida.
                                 </p>
                             </div>

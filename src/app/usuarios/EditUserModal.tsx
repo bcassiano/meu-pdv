@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { UsuarioVisual, UsuarioTipo } from '@/types/usuario';
+import { Profile } from '@/types/profile';
 import { updateUsuarioAction } from './novo/actions';
 
 interface EditUserModalProps {
@@ -11,23 +12,41 @@ interface EditUserModalProps {
 
 export default function EditUserModal({ isOpen, onClose, user, onSuccess }: EditUserModalProps) {
     const [isLoading, setIsLoading] = useState(false);
+    const [availableProfiles, setAvailableProfiles] = useState<string[]>([]);
     const [formData, setFormData] = useState<{
         nome: string;
         tipo: UsuarioTipo;
         equipe: string;
     }>({
         nome: '',
-        tipo: 'promotor',
+        tipo: '',
         equipe: ''
     });
 
     useEffect(() => {
+        const fetchProfiles = async () => {
+            try {
+                const response = await fetch('/api/usuarios/permissoes');
+                const data = await response.json();
+                if (data.success && data.profiles) {
+                    setAvailableProfiles(data.profiles.map((p: Profile) => p.id));
+                }
+            } catch (error) {
+                console.error("Erro ao buscar perfis no modal:", error);
+                setAvailableProfiles(["promotor", "coordenador", "supervisor", "adm"]);
+            }
+        };
+        fetchProfiles();
+    }, []);
+
+    useEffect(() => {
         if (user) {
-            // Mapeia os dados da Grid de volta para os "values" do formulário de forma rudimentar/simples.
-            let tipoVal = "promotor";
-            if (user.role === "Administrador") tipoVal = "adm";
-            if (user.role === "Coordenador") tipoVal = "coordenador";
-            if (user.role === "Supervisor") tipoVal = "supervisor";
+            // Tenta encontrar o tipo correspondente baseado no nome do cargo (case insensitive)
+            const matchedProfile = availableProfiles.find(p => p.toLowerCase() === user.role.toLowerCase()) || 
+                                 (user.role === "Administrador" ? "adm" : 
+                                  user.role === "Promotor" ? "promotor" : 
+                                  user.role === "Coordenador" ? "coordenador" : 
+                                  user.role === "Supervisor" ? "supervisor" : "promotor");
 
             let eqVal = "eq1";
             if (user.team.includes("Beta")) eqVal = "eq2";
@@ -35,11 +54,11 @@ export default function EditUserModal({ isOpen, onClose, user, onSuccess }: Edit
 
             setFormData({
                 nome: user.name,
-                tipo: tipoVal as UsuarioTipo,
+                tipo: matchedProfile.toLowerCase(),
                 equipe: eqVal
             });
         }
-    }, [user]);
+    }, [user, availableProfiles]);
 
     if (!isOpen || !user) return null;
 
@@ -99,12 +118,11 @@ export default function EditUserModal({ isOpen, onClose, user, onSuccess }: Edit
                                 <select
                                     className="w-full h-12 bg-slate-50 dark:bg-black/20 border-2 border-slate-200 dark:border-white/10 rounded-xl px-4 focus:border-primary outline-none transition-colors text-slate-900 dark:text-white font-medium appearance-none"
                                     value={formData.tipo}
-                                    onChange={(e) => setFormData({ ...formData, tipo: e.target.value as UsuarioTipo })}
+                                    onChange={(e) => setFormData({ ...formData, tipo: e.target.value })}
                                 >
-                                    <option value="promotor">Promotor</option>
-                                    <option value="supervisor">Supervisor</option>
-                                    <option value="coordenador">Coordenador</option>
-                                    <option value="adm">Administrador</option>
+                                    {availableProfiles.map(p => (
+                                        <option key={p} value={p.toLowerCase()}>{p}</option>
+                                    ))}
                                 </select>
                             </div>
                             <div className="space-y-2">

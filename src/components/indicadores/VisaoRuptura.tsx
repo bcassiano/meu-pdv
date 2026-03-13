@@ -1,4 +1,5 @@
 import React from 'react';
+import { ScrollAreaWithArrows } from '../ScrollAreaWithArrows';
 
 export function VisaoRuptura() {
     return (
@@ -121,7 +122,7 @@ export function VisaoRuptura() {
 
             {/* Dense Data Table (Auditoria de Rupturas Críticas style) */}
             <div className="bg-white dark:bg-slate-800/40 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col">
-                <div className="overflow-x-auto">
+                <ScrollAreaWithArrows>
                     <table className="w-full text-left border-collapse min-w-[1000px]">
                         <thead>
                             <tr className="bg-slate-50 dark:bg-slate-900/50 border-b border-slate-200 dark:border-slate-800">
@@ -172,7 +173,7 @@ export function VisaoRuptura() {
                             ))}
                         </tbody>
                     </table>
-                </div>
+                </ScrollAreaWithArrows>
 
                 {/* Pagination */}
                 <div className="px-6 py-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/30 dark:bg-slate-900/50 text-sm">

@@ -1,10 +1,122 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 
 export default function CadastroPDVPage(): JSX.Element {
+    const [cep, setCep] = useState("");
+    const [endereco, setEndereco] = useState("");
+    const [coordenadas, setCoordenadas] = useState("-23.55052, -46.63331");
+    const [latLon, setLatLon] = useState({ lat: -23.55052, lon: -46.63331 });
+    const [precision, setPrecision] = useState<number | null>(null);
+    const [isSearching, setIsSearching] = useState(false);
+
+    const handleCepSearch = async () => {
+        if (cep.replace(/\D/g, '').length !== 8) return;
+
+        setIsSearching(true);
+        setEndereco("Buscando endereço...");
+
+        try {
+            // 1. Busca endereço via ViaCEP
+            const viaCepRes = await fetch(`https://viacep.com.br/ws/${cep.replace(/\D/g, '')}/json/`);
+            const viaCepData = await viaCepRes.json();
+
+            if (viaCepData.erro) {
+                setEndereco("CEP não encontrado.");
+                setIsSearching(false);
+                return;
+            }
+
+            const fullAddress = `${viaCepData.logradouro}, ${viaCepData.bairro}, ${viaCepData.localidade} - ${viaCepData.uf}`;
+            setEndereco(fullAddress);
+
+            // 2. Busca coordenadas via Nominatim (OpenStreetMap)
+            const query = encodeURIComponent(`${viaCepData.logradouro}, ${viaCepData.localidade}, ${viaCepData.uf}, Brazil`);
+            const geoRes = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}&limit=1`);
+            const geoData = await geoRes.json();
+
+            if (geoData && geoData.length > 0) {
+                const lat = parseFloat(geoData[0].lat);
+                const lon = parseFloat(geoData[0].lon);
+                setCoordenadas(`${lat}, ${lon}`);
+                setLatLon({ lat, lon });
+            } else {
+                setCoordenadas("Coord. não encontradas");
+            }
+
+        } catch (error) {
+            console.error("Erro na busca de CEP/Geo:", error);
+            setEndereco("Erro ao buscar dados.");
+        } finally {
+            setIsSearching(false);
+        }
+    };
+
+    const handleCepChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length > 8) value = value.slice(0, 8);
+        if (value.length > 5) {
+            value = value.replace(/^(\d{5})(\d)/, '$1-$2');
+        }
+        setCep(value);
+    };
+
+    const handleGpsRefresh = () => {
+        if (!navigator.geolocation) {
+            alert("Geolocalização não é suportada.");
+            return;
+        }
+
+        setIsSearching(true);
+        navigator.geolocation.getCurrentPosition(
+            async (position) => {
+                const { latitude: lat, longitude: lon, accuracy } = position.coords;
+                setPrecision(accuracy);
+
+                setCoordenadas(`${lat.toFixed(6)}, ${lon.toFixed(6)}`);
+                setLatLon({ lat, lon });
+                
+                try {
+                    const geoRes = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+                    const geoData = await geoRes.json();
+                    if (geoData && geoData.display_name) {
+                        // Só sobrescreve se o endereço atual estiver vazio ou for "Processando..."
+                        setEndereco((prev) => (!prev || prev.includes("Processando") ? geoData.display_name : prev));
+                        
+                        if (geoData.address && geoData.address.postcode && !cep) {
+                            setCep(geoData.address.postcode);
+                        }
+                    }
+                } catch (err) {
+                    console.error("Erro no reverse geocoding:", err);
+                } finally {
+                    setIsSearching(false);
+                }
+            },
+            (error) => {
+                const msgs: Record<number, string> = {
+                    1: "Permissão de localização negada.",
+                    2: "Sinal de GPS indisponível.",
+                    3: "Tempo limite esgotado ao buscar posição."
+                };
+                alert(msgs[error.code] || "Erro ao obter localização.");
+                setIsSearching(false);
+            },
+            { enableHighAccuracy: true, timeout: 10000 }
+        );
+    };
+
+    const handleCoordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const val = e.target.value;
+        setCoordenadas(val);
+        const parts = val.split(',').map(p => parseFloat(p.trim()));
+        if (parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
+            setLatLon({ lat: parts[0], lon: parts[1] });
+        }
+    };
+
     return (
         <div className="flex h-screen w-full overflow-hidden bg-[#f8fafc] dark:bg-[#0f172a] font-display transition-colors">
             <Sidebar />
@@ -108,9 +220,16 @@ export default function CadastroPDVPage(): JSX.Element {
                                             <p className="text-sm text-slate-400 font-medium italic">Precisão GPS em nível de porta (Meter-Level)</p>
                                         </div>
                                     </div>
-                                    <button type="button" className="inline-flex items-center gap-3 px-6 py-3 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-black uppercase tracking-widest shadow-xl hover:scale-105 transition-all">
-                                        <span className="material-symbols-outlined text-sm">my_location</span>
-                                        Force GPS Refresh
+                                    <button 
+                                        type="button" 
+                                        onClick={handleGpsRefresh}
+                                        disabled={isSearching}
+                                        className="inline-flex items-center gap-3 px-6 py-3 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-black uppercase tracking-widest shadow-xl hover:scale-105 transition-all disabled:opacity-50"
+                                    >
+                                        <span className={`material-symbols-outlined text-sm ${isSearching ? 'animate-spin' : ''}`}>
+                                            {isSearching ? 'refresh' : 'my_location'}
+                                        </span>
+                                        {isSearching ? 'Capturando...' : 'Force GPS Refresh'}
                                     </button>
                                 </div>
 
@@ -118,29 +237,76 @@ export default function CadastroPDVPage(): JSX.Element {
                                     <div className="md:col-span-2 space-y-3">
                                         <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 ml-1">CEP de Destino</label>
                                         <div className="relative">
-                                            <input className="w-full h-14 pl-6 pr-14 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent focus:border-primary focus:bg-white dark:focus:bg-slate-800 text-slate-900 dark:text-white font-mono font-bold tracking-widest text-lg transition-all outline-none" placeholder="00000-000" type="text" />
-                                            <button type="button" className="absolute right-2 top-2 h-10 w-10 flex items-center justify-center bg-white dark:bg-slate-700 rounded-xl shadow-sm hover:text-primary transition-colors">
-                                                <span className="material-symbols-outlined text-[20px]">search</span>
+                                            <input 
+                                                className="w-full h-14 pl-6 pr-14 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent focus:border-primary focus:bg-white dark:focus:bg-slate-800 text-slate-900 dark:text-white font-mono font-bold tracking-widest text-lg transition-all outline-none" 
+                                                placeholder="00000-000" 
+                                                type="text"
+                                                value={cep}
+                                                onChange={handleCepChange}
+                                                onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), handleCepSearch())}
+                                            />
+                                            <button 
+                                                type="button" 
+                                                onClick={handleCepSearch}
+                                                disabled={isSearching}
+                                                className="absolute right-2 top-2 h-10 w-10 flex items-center justify-center bg-white dark:bg-slate-700 rounded-xl shadow-sm hover:text-primary transition-colors disabled:opacity-50"
+                                            >
+                                                <span className={`material-symbols-outlined text-[20px] ${isSearching ? 'animate-spin' : ''}`}>
+                                                    {isSearching ? 'refresh' : 'search'}
+                                                </span>
                                             </button>
                                         </div>
                                     </div>
                                     <div className="md:col-span-4 space-y-3">
-                                        <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 ml-1">Endereço (Auto-Detect)</label>
-                                        <input className="w-full h-14 px-6 rounded-2xl bg-slate-200/50 dark:bg-slate-900 border-2 border-transparent text-slate-400 dark:text-slate-600 font-bold text-lg outline-none cursor-not-allowed" value="Processando dados do CEP..." readOnly type="text" />
+                                        <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 ml-1">Endereço (Auto-Detect + Editável)</label>
+                                        <input 
+                                            className={`w-full h-14 px-6 rounded-2xl border-2 focus:border-primary focus:bg-white dark:focus:bg-slate-800 font-bold text-lg outline-none transition-all ${isSearching ? 'bg-slate-200/50 dark:bg-slate-800 text-slate-400 border-transparent' : 'bg-slate-50 dark:bg-slate-800/50 text-slate-900 dark:text-white border-transparent'}`} 
+                                            value={endereco} 
+                                            onChange={(e) => setEndereco(e.target.value)}
+                                            placeholder={isSearching ? "Processando dados do CEP..." : "Aguardando CEP ou digite aqui..."}
+                                            type="text" 
+                                        />
                                     </div>
 
-                                    {/* Mapa Preview Premium */}
-                                    <div className="md:col-span-6 relative h-64 rounded-[2rem] overflow-hidden border border-slate-100 dark:border-white/5 shadow-inner">
-                                        <div className="absolute inset-0 bg-[url('https://api.mapbox.com/styles/v1/mapbox/dark-v11/static/-46.6333,-23.5505,15,0/1200x600?access_token=pk.placeholder')] bg-cover bg-center grayscale opacity-40 dark:opacity-20" />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent" />
-                                        <div className="absolute inset-0 flex flex-col items-center justify-center p-8 space-y-4">
-                                            <div className="relative">
-                                                <div className="absolute inset-0 bg-primary blur-2xl rounded-full scale-150 animate-pulse" />
-                                                <span className="material-symbols-outlined text-white text-5xl relative drop-shadow-2xl">location_on</span>
-                                            </div>
-                                            <div className="text-center group-hover:scale-105 transition-transform">
-                                                <p className="text-white font-black uppercase tracking-[0.3em] text-[10px] mb-1">Coordenadas Verificadas</p>
-                                                <p className="text-primary font-mono font-bold text-lg">-23.55052, -46.63331</p>
+                                    {/* Mapa Preview Premium Interativo */}
+                                    <div className="md:col-span-6 relative h-80 rounded-[2rem] overflow-hidden border-4 border-white dark:border-slate-800 shadow-2xl group/map">
+                                        <iframe 
+                                            title="Mapa PDV"
+                                            width="100%" 
+                                            height="100%" 
+                                            frameBorder="0" 
+                                            scrolling="no" 
+                                            marginHeight={0} 
+                                            marginWidth={0} 
+                                            src={`https://maps.google.com/maps?q=${latLon.lat},${latLon.lon}&z=16&output=embed`}
+                                            className="grayscale-[0.5] contrast-[1.1] brightness-[0.9] dark:invert dark:hue-rotate-180 dark:brightness-75 transition-all duration-700 group-hover/map:grayscale-0 group-hover/map:brightness-100"
+                                        />
+                                        
+                                        {/* Overlay de Coordenadas flutuante */}
+                                        <div className="absolute bottom-6 left-6 right-6">
+                                            <div className="bg-slate-900/90 dark:bg-black/80 backdrop-blur-md border border-white/10 p-5 rounded-2xl flex items-center justify-between shadow-2xl">
+                                                <div className="flex items-center gap-4">
+                                                    <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center">
+                                                        <span className="material-symbols-outlined text-primary text-xl">location_on</span>
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Coordenadas Verificadas</p>
+                                                        <input 
+                                                            className="bg-transparent text-white font-mono font-bold outline-none focus:text-primary transition-colors w-full"
+                                                            value={coordenadas}
+                                                            onChange={handleCoordChange}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="flex flex-col items-end gap-1">
+                                                    <div className={`flex items-center gap-2 px-3 py-1 rounded-full border ${precision && precision > 150 ? 'bg-amber-500/20 border-amber-500/30 text-amber-400' : 'bg-emerald-500/20 border-emerald-500/30 text-emerald-400'}`}>
+                                                        <span className={`h-1.5 w-1.5 rounded-full ${precision && precision > 150 ? 'bg-amber-500' : 'bg-emerald-500 animate-pulse'}`} />
+                                                        <span className="text-[10px] font-bold uppercase">{precision && precision > 150 ? 'Low Precision' : 'GPS Match'}</span>
+                                                    </div>
+                                                    {precision && (
+                                                        <span className="text-[9px] font-bold text-slate-500 uppercase tracking-tighter">Erro: {Math.round(precision)}m</span>
+                                                    )}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
